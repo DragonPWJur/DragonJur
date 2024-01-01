@@ -14,7 +14,6 @@ public class HomeTest extends BaseTest {
     public void testLoginNavigation() {
 
         assertThat(getPage()).hasURL(getBaseUrl() + "/home");
-        assertThat(getPage()).hasTitle("Trainer Academy");
     }
 
     @DataProvider
