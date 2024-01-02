@@ -15,6 +15,10 @@ abstract class BaseLocator extends BasePage {
         return getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(text));
     }
 
+    protected Locator exactButton(String text) {
+        return getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(text).setExact(true));
+    }
+
     protected Locator link(String text) {
         return getPage().getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(text));
     }
