@@ -142,4 +142,8 @@ abstract class BaseTest {
     public String getBaseUrl() {
         return baseURL;
     }
+
+    public void waitForPageLoad(String endPoint) {
+        getPage().waitForURL(getBaseUrl() + endPoint);
+    }
 }
