@@ -5,6 +5,7 @@ import com.microsoft.playwright.options.AriaRole;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.HomePage;
+import utils.ProjectProperties;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
@@ -13,19 +14,19 @@ public class HomeTest extends BaseTest {
     @Test
     public void testLoginNavigation() {
 
-        assertThat(getPage()).hasURL(getBaseUrl() + "/home");
+        assertThat(getPage()).hasURL(ProjectProperties.BASE_URL + "/home");
     }
 
     @DataProvider
     public Object[][] sideMenuItems() {
         return new Object[][]{
-                {"Home", getBaseUrl() + "/home"},
-                {"Study guide", getBaseUrl() + "/study-guide"},
-                {"Tests", getBaseUrl() + "/test-list"},
-                {"Flashcards", getBaseUrl() + "/flashcard-packs"},
-                {"Mnemonic cards", getBaseUrl() + "/mnemoniccard-list"},
-                {"Performance", getBaseUrl() + "/performance"},
-                {"Profile", getBaseUrl() + "/profile"}
+                {"Home", ProjectProperties.BASE_URL + "/home"},
+                {"Study guide", ProjectProperties.BASE_URL + "/study-guide"},
+                {"Tests", ProjectProperties.BASE_URL + "/test-list"},
+                {"Flashcards", ProjectProperties.BASE_URL + "/flashcard-packs"},
+                {"Mnemonic cards", ProjectProperties.BASE_URL + "/mnemoniccard-list"},
+                {"Performance", ProjectProperties.BASE_URL + "/performance"},
+                {"Profile", ProjectProperties.BASE_URL + "/profile"}
         };
     }
 
