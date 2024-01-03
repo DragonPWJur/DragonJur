@@ -11,6 +11,7 @@ public class TestListTest extends BaseTest {
     @Test
     public void testTutorModeWithRandomCheckboxInDomain() {
         String expectedNumberOfQuestions = "5";
+        String testTutorEndPoint = "/test-tutor";
 
         TestsPage testsPage = new HomePage(getPage(), getPlaywright())
                 .clickTestsButton()
@@ -21,8 +22,8 @@ public class TestListTest extends BaseTest {
                 .fillNumberOfQuestionsInputField(expectedNumberOfQuestions)
                 .clickGenerateStartButton();
 
-        waitForPageLoad("/test-tutor");
+        waitForPageLoad(testTutorEndPoint);
         assertThat(testsPage.headerQuestionsCount).hasText("/" + expectedNumberOfQuestions);
-        assertThat(getPage()).hasURL(getBaseUrl() + "/test-tutor");
+        assertThat(getPage()).hasURL(getBaseUrl() + testTutorEndPoint);
     }
 }
