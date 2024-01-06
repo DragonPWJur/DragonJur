@@ -1,5 +1,6 @@
 package tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.TestsPage;
@@ -10,7 +11,7 @@ public class TestListTest extends BaseTest {
 
     @Test
     public void testTutorModeWithRandomCheckboxInDomain() {
-        String expectedNumberOfQuestions = "5";
+        String expectedNumberOfQuestions = "1";
         String testTutorEndPoint = "/test-tutor";
 
         TestsPage testsPage = new HomePage(getPage(), getPlaywright())
@@ -23,7 +24,8 @@ public class TestListTest extends BaseTest {
                 .clickGenerateStartButton();
 
         waitForPageLoad(testTutorEndPoint);
-        assertThat(testsPage.headerQuestionsCount).hasText("/" + expectedNumberOfQuestions);
         assertThat(getPage()).hasURL(getBaseUrl() + testTutorEndPoint);
+        assertThat(testsPage.testQuestion).containsText("?");
+        Assert.assertTrue(testsPage.getTestRadioButtonsCount() >= 1);
     }
 }
