@@ -1,4 +1,4 @@
-browser=chrome
+browser=chromium
 base_url=
 username=
 password=

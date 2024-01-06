@@ -2,57 +2,40 @@ package tests;
 
 import com.microsoft.playwright.*;
 import org.testng.ITestResult;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+import utils.ProjectProperties;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.nio.file.Paths;
-import java.util.Properties;
 
-
-abstract class BaseTest {
+public abstract class BaseTest {
     private final Playwright playwright = Playwright.create();
     private Browser browser;
     private BrowserContext context;
     private Page page;
-    private static Properties properties;
-    private static final String ENV_WEB_OPTIONS = "WEB_OPTIONS";
-    private static final String ENV_BROWSER_OPTIONS = "BROWSER_OPTIONS";
-    private int width;
-    private int height;
-    private String baseURL;
-
 
     @BeforeSuite
     protected void launchBrowser() {
-        init_properties();
-
-        final String browserName = properties.getProperty("browser").trim();
-        final boolean isHeadless = Boolean.parseBoolean(properties.getProperty("headless").trim());
-        final double isSlow = Double.parseDouble(properties.getProperty("slowMo").trim());
-
-
-        switch (browserName) {
+        switch (ProjectProperties.BROWSER_NAME) {
             case "chromium" -> browser = playwright.chromium().launch(
-                    new BrowserType.LaunchOptions().setHeadless(isHeadless).setSlowMo(isSlow));
+                    new BrowserType.LaunchOptions().setHeadless(ProjectProperties.IS_HEADLESS).setSlowMo(ProjectProperties.IS_SLOW));
             case "firefox" -> browser = playwright.firefox().launch(
-                    new BrowserType.LaunchOptions().setHeadless(isHeadless).setSlowMo(isSlow));
+                    new BrowserType.LaunchOptions().setHeadless(ProjectProperties.IS_HEADLESS).setSlowMo(ProjectProperties.IS_SLOW));
             case "safari" -> browser = playwright.webkit().launch(
-                    new BrowserType.LaunchOptions().setHeadless(isHeadless).setSlowMo(isSlow));
+                    new BrowserType.LaunchOptions().setHeadless(ProjectProperties.IS_HEADLESS).setSlowMo(ProjectProperties.IS_SLOW));
             case "chrome" -> browser = playwright.chromium().launch(
-                    new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(isHeadless).setSlowMo(isSlow));
+                    new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(ProjectProperties.IS_HEADLESS).setSlowMo(ProjectProperties.IS_SLOW));
             default -> System.out.println("Please enter the right browser name...");
         }
-
-        width = Integer.parseInt(properties.getProperty("width"));
-        height = Integer.parseInt(properties.getProperty("height"));
-        baseURL = properties.getProperty("base_url");
     }
 
     @BeforeMethod
     protected void createContextAndPage() {
-        context = browser.newContext(new Browser.NewContextOptions().setViewportSize(width, height));
+        context = browser.newContext(new Browser.NewContextOptions()
+                .setViewportSize(ProjectProperties.SCREEN_SIZE_WIDTH, ProjectProperties.SCREEN_SIZE_HEIGHT));
         context.tracing().start(
                 new Tracing.StartOptions()
                         .setScreenshots(true)
@@ -61,7 +44,7 @@ abstract class BaseTest {
         );
         page = context.newPage();
 
-        page.navigate(baseURL);
+        page.navigate(ProjectProperties.BASE_URL);
         login();
     }
 
@@ -73,6 +56,7 @@ abstract class BaseTest {
             tracingStopOptions = new Tracing.StopOptions()
                     .setPath(Paths.get("testTracing/" + classMethodName + ".zip"));
         }
+
         context.tracing().stop(
                 tracingStopOptions
         );
@@ -87,47 +71,9 @@ abstract class BaseTest {
         playwright.close();
     }
 
-    private static void init_properties() {
-        if (properties == null) {
-            properties = new Properties();
-            if (isServerRun()) {
-
-                if (System.getenv(ENV_BROWSER_OPTIONS) != null) {
-                    for (String option : System.getenv(ENV_BROWSER_OPTIONS).split(";")) {
-                        String[] browserOptionArr = option.split("=");
-                        properties.setProperty(browserOptionArr[0], browserOptionArr[1]);
-                    }
-                }
-
-                if (System.getenv(ENV_WEB_OPTIONS) != null) {
-                    for (String option : System.getenv(ENV_WEB_OPTIONS).split(";")) {
-                        String[] webOptionArr = option.split("=");
-                        properties.setProperty(webOptionArr[0], webOptionArr[1]);
-                    }
-                }
-
-            } else {
-                try {
-                    InputStream inputStream = BaseTest.class.getClassLoader().getResourceAsStream("config.properties");
-                    if (inputStream == null) {
-                        System.out.println("ERROR: The \u001B[31mconfig.properties\u001B[0m file not found.");
-                        System.out.println("You need to create it from config.properties.TEMPLATE file.");
-                        System.exit(1);
-                    }
-                    properties.load(inputStream);
-                } catch (IOException ignore) {
-                }
-            }
-        }
-    }
-
-    static boolean isServerRun() {
-        return System.getenv("CI_RUN") != null;
-    }
-
     private void login() {
-        page.locator("//span[text()='Email']/../div/input").fill(properties.getProperty("username"));
-        page.locator("//input[@type='password']").fill(properties.getProperty("password"));
+        page.locator("//span[text()='Email']/../div/input").fill(ProjectProperties.USERNAME);
+        page.locator("//input[@type='password']").fill(ProjectProperties.PASSWORD);
         page.locator("//button[@type='submit']").click();
     }
 
@@ -137,9 +83,5 @@ abstract class BaseTest {
 
     public Playwright getPlaywright() {
         return playwright;
-    }
-
-    public String getBaseUrl() {
-        return baseURL;
     }
 }
