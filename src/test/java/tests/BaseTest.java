@@ -11,7 +11,6 @@ import utils.ProjectProperties;
 import java.lang.reflect.Method;
 import java.nio.file.Paths;
 
-
 public abstract class BaseTest {
     private final Playwright playwright = Playwright.create();
     private Browser browser;
@@ -20,7 +19,6 @@ public abstract class BaseTest {
 
     @BeforeSuite
     protected void launchBrowser() {
-
         switch (ProjectProperties.BROWSER_NAME) {
             case "chromium" -> browser = playwright.chromium().launch(
                     new BrowserType.LaunchOptions().setHeadless(ProjectProperties.IS_HEADLESS).setSlowMo(ProjectProperties.IS_SLOW));
@@ -58,6 +56,7 @@ public abstract class BaseTest {
             tracingStopOptions = new Tracing.StopOptions()
                     .setPath(Paths.get("testTracing/" + classMethodName + ".zip"));
         }
+
         context.tracing().stop(
                 tracingStopOptions
         );
