@@ -12,9 +12,4 @@ public class TestUtils {
         }
         return new Random().nextInt(1, list.count());
     }
-
-    public static void clickRandomElement(Locator list) {
-        int randomValue = getRandomNumber(list);
-        list.nth(randomValue).click();
-    }
 }
