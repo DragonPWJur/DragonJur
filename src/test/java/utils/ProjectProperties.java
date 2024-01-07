@@ -14,7 +14,7 @@ public class ProjectProperties {
 
     private static Properties properties = init_properties();
 
-    public static final String BROWSER_NAME = properties.getProperty("browser").trim();
+    public static final String BROWSER_TYPE_NAME = properties.getProperty("browserType").trim();
     public static final String BASE_URL = properties.getProperty("base_url").trim();
     public static final boolean IS_HEADLESS = Boolean.parseBoolean(properties.getProperty("headless").trim());
     public static final double IS_SLOW = Double.parseDouble(properties.getProperty("slowMo").trim());
