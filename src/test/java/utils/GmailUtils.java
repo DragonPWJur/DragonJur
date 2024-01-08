@@ -28,9 +28,9 @@ public class GmailUtils {
     public static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     public static final String TOKENS_DIRECTORY_PATH = "tokens";
     private static final String USER_ID = "me";
-    private static final String commonEmailPart = "mytestrail+";
-    private static final String emailEndPart = "@gmail.com";
-    private static final String query2 = "subject:You have been invited";
+    private static final String COMMON_EMAIL_PART = "mytestrail+";
+    private static final String EMAIL_END_PART = "@gmail.com";
+    private static final String QUERY = "subject:You have been invited";
 
 
     public static Gmail getGmailService() throws Exception {
@@ -63,10 +63,10 @@ public class GmailUtils {
     }
 
     public static String extractPasswordFromEmail(Gmail service, int numericPart) throws IOException {
-        String email = commonEmailPart + numericPart + emailEndPart;
-        String query = "to:" + email + " " + query2;
+        String email = COMMON_EMAIL_PART + numericPart + EMAIL_END_PART;
+        String combinedQuery = "to:" + email + " " + QUERY;
 
-        ListMessagesResponse response = service.users().messages().list(USER_ID).setQ(query).execute();
+        ListMessagesResponse response = service.users().messages().list(USER_ID).setQ(combinedQuery).execute();
         if (response.getMessages() != null && !response.getMessages().isEmpty()) {
             String messageId = response.getMessages().get(0).getId();
             Message message = service.users().messages().get("me", messageId).execute();
@@ -87,7 +87,7 @@ public class GmailUtils {
     }
 
     public static void main(String[] args) throws Exception {
-        int emailNumber = 10;
+        int emailNumber = 1;
 
         GmailUtils.extractPasswordFromEmail(getGmailService(), emailNumber);
     }
