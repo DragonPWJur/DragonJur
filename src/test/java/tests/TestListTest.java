@@ -6,6 +6,7 @@ import pages.HomePage;
 import pages.TestsPage;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static utils.ProjectProperties.BASE_URL;
 
 public class TestListTest extends BaseTest {
 
@@ -24,7 +25,7 @@ public class TestListTest extends BaseTest {
                 .clickGenerateStartButton();
 
         waitForPageLoad(testTutorEndPoint);
-        assertThat(getPage()).hasURL(getBaseUrl() + testTutorEndPoint);
+        assertThat(getPage()).hasURL(BASE_URL + testTutorEndPoint);
         assertThat(testsPage.testQuestion).containsText("?");
         Assert.assertTrue(testsPage.getTestRadioButtonsCount() >= 1);
     }
