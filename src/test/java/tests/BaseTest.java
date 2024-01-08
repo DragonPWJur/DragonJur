@@ -40,9 +40,12 @@ public abstract class BaseTest {
 
     @BeforeMethod
     protected void createContextAndPage(Method method) {
-        log.info("RUN " + this.getClass().getName() + "." +  method.getName());
+        log.info("RUN " + ReportUtils.getTestMethodName(method));
         context = browser.newContext(new Browser.NewContextOptions()
-                .setViewportSize(ProjectProperties.SCREEN_SIZE_WIDTH, ProjectProperties.SCREEN_SIZE_HEIGHT));
+                .setViewportSize(ProjectProperties.SCREEN_SIZE_WIDTH, ProjectProperties.SCREEN_SIZE_HEIGHT)
+                .setRecordVideoDir(Paths.get("videos/"))
+                .setRecordVideoSize(1280, 720)
+        );
         context.tracing().start(
                 new Tracing.StartOptions()
                         .setScreenshots(true)
@@ -59,21 +62,28 @@ public abstract class BaseTest {
 
     @AfterMethod
     protected void closeContext(Method method, ITestResult testResult) {
-        log.info(ReportUtils.getTestStatistics(method, testResult));
         Tracing.StopOptions tracingStopOptions = null;
-        String classMethodName = this.getClass().getName() + method.getName();
-        if (!testResult.isSuccess()) {
-            tracingStopOptions = new Tracing.StopOptions()
-                    .setPath(Paths.get("testTracing/" + classMethodName + ".zip"));
-            log.info("TRACING SAVED");
-        }
-        context.tracing().stop(
-                tracingStopOptions
-        );
+        String testMethodName = ReportUtils.getTestMethodNameWithInvocationCount(method, testResult);
 
+        log.info(ReportUtils.getTestStatistics(method, testResult));
         page.close();
+        log.info("PAGE CLOSED");
+
+        if (!testResult.isSuccess()) {
+            if (ProjectProperties.TRACING_MODE) {
+                tracingStopOptions = new Tracing.StopOptions()
+                        .setPath(Paths.get("testTracing/" + testMethodName + ".zip"));
+                log.info("TRACING SAVED");
+            }
+            if (ProjectProperties.VIDEO_MODE) {
+                page.video().saveAs(Paths.get("videos/" + testMethodName + ".webm"));
+                log.info("VIDEO SAVED");
+            }
+        }
+        context.tracing().stop(tracingStopOptions);
+        page.video().delete();
         context.close();
-        log.info("CONTEXT AND PAGE CLOSED" + ReportUtils.END_LINE);
+        log.info("CONTEXT CLOSED" + ReportUtils.END_LINE);
     }
 
     @AfterSuite
