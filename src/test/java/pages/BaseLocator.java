@@ -59,4 +59,10 @@ abstract class BaseLocator extends BasePage {
     protected void clickButton(String text) {
         button(text).click();
     }
+
+    public Locator waitForListOfElementsLoaded(String string) {
+        Locator list = getPage().locator(string);
+        list.last().waitFor();
+        return list;
+    }
 }

@@ -8,6 +8,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.ReportUtils;
 import utils.ProjectProperties;
+import utils.TestUtils;
 
 import java.lang.reflect.Method;
 import java.nio.file.Paths;
@@ -106,5 +107,9 @@ public abstract class BaseTest {
 
     public Playwright getPlaywright() {
         return playwright;
+    }
+
+    public void waitForPageLoad(String endPoint) {
+        getPage().waitForURL(ProjectProperties.BASE_URL + endPoint);
     }
 }
