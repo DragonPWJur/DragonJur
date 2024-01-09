@@ -17,23 +17,28 @@ import java.nio.file.Paths;
 @Listeners(utils.ExceptionListener.class)
 public abstract class BaseTest {
     private final Playwright playwright = Playwright.create();
-    private Browser browser;
+    private final Browser browser = BrowserManager.createBrowser(playwright);
     private BrowserContext context;
-    private Page page;
+    protected Page page;
     public static Logger log = LogManager.getLogger();
 
     @BeforeSuite
     protected void launchBrowser(ITestContext testContext) {
         log.info(ReportUtils.getReportHeader(testContext));
-        browser = BrowserManager.createBrowser(playwright);
-        log.info("BROWSER " + ProjectProperties.BROWSER_TYPE_NAME.toUpperCase() + " LAUNCHED\n");
+        assert browser != null : "ERROR: Browser is null";
+        if (browser.isConnected()) {
+            log.info("BROWSER " + ProjectProperties.BROWSER_TYPE_NAME.toUpperCase() + " LAUNCHED\n");
+        }
     }
 
     @BeforeMethod
     protected void createContextAndPage(Method method) {
-        log.info("RUN " + this.getClass().getName() + "." +  method.getName());
+        log.info("RUN " + this.getClass().getName() + "." + method.getName());
+        assert browser != null : "ERROR: Browser is null";
         context = browser.newContext(new Browser.NewContextOptions()
-                .setViewportSize(ProjectProperties.SCREEN_SIZE_WIDTH, ProjectProperties.SCREEN_SIZE_HEIGHT));
+                .setViewportSize(ProjectProperties.SCREEN_SIZE_WIDTH, ProjectProperties.SCREEN_SIZE_HEIGHT)
+                .setStorageStatePath(Paths.get("src/test/resources/state.json"))
+        );
         context.tracing().start(
                 new Tracing.StartOptions()
                         .setScreenshots(true)
@@ -44,7 +49,7 @@ public abstract class BaseTest {
         log.info("CONTEXT AND PAGE CREATED");
         page.navigate(ProjectProperties.BASE_URL);
         log.info("BASE URL OPENED");
-        login();
+//        login();
         log.info("LOGIN SUCCESSFUL");
     }
 
@@ -69,6 +74,7 @@ public abstract class BaseTest {
 
     @AfterSuite
     protected void closeBrowser() {
+        assert browser != null : "ERROR: Browser is null";
         browser.close();
         log.info("BROWSER CLOSED");
         playwright.close();
