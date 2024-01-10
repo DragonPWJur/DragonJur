@@ -17,7 +17,7 @@ import java.nio.file.Paths;
 @Listeners(utils.ExceptionListener.class)
 public abstract class BaseTest {
     private final Playwright playwright = Playwright.create();
-    private Browser browser;
+    private final Browser browser = BrowserManager.createBrowser(playwright);
     private BrowserContext context;
     private Page page;
     public static Logger log = LogManager.getLogger();
@@ -25,13 +25,14 @@ public abstract class BaseTest {
     @BeforeSuite
     protected void launchBrowser(ITestContext testContext) {
         log.info(ReportUtils.getReportHeader(testContext));
-        browser = BrowserManager.createBrowser(playwright);
-        log.info("BROWSER " + ProjectProperties.BROWSER_TYPE_NAME.toUpperCase() + " LAUNCHED\n");
+        if (browser.isConnected()) {
+            log.info("BROWSER " + browser.browserType().name().toUpperCase() + " LAUNCHED\n");
+        }
     }
 
     @BeforeMethod
     protected void createContextAndPage(Method method) {
-        log.info("RUN " + this.getClass().getName() + "." +  method.getName());
+        log.info("RUN " + this.getClass().getName() + "." + method.getName());
         context = browser.newContext(new Browser.NewContextOptions()
                 .setViewportSize(ProjectProperties.SCREEN_SIZE_WIDTH, ProjectProperties.SCREEN_SIZE_HEIGHT));
         context.tracing().start(
