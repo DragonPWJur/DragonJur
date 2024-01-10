@@ -40,11 +40,9 @@ jobs:
           path: target/surefire-reports/TEST-*.xml
           reporter: java-junit
 
-      - name: Attach artifacts on failure
+      - name: Attach test trace
         uses: actions/upload-artifact@v3
         if: failure()
         with:
-          name: Artifacts
-          path: |
-            testTracing/
-            videos/
+          name: testTracing
+          path: testTracing/
