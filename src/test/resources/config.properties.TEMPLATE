@@ -2,6 +2,7 @@ browserType=chromium
 base_url=
 username=
 password=
+commonEmailPart=
 headless=false
 slowMo=1500
 width=1920
