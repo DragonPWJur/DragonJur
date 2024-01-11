@@ -13,7 +13,7 @@ import static java.lang.Integer.parseInt;
 
 public class TestsTest extends BaseTest {
 
-    public String preconditions_1349() {
+    public String preconditions_UserCanMarkCardsForRechecking() {
         String numberOfCardsForReChecking = new FlashcardsPage(getPage(), getPlaywright())
                 .getNumberOfCardsForReChecking();
         new TestsPage(getPage(), getPlaywright()).initiateTest();
@@ -22,24 +22,24 @@ public class TestsTest extends BaseTest {
     }
 
     @Test
-    public void test_1349() {
+    public void test_UserCanMarkCardsForRechecking() {
 
-        String numberOfCardsForReChecking = preconditions_1349();
+        String numberOfCardsForReChecking = preconditions_UserCanMarkCardsForRechecking();
 
         new TestTutorPage(getPage(), getPlaywright())
-                .clickAddToFlashCard()
+                .clickAddToFlashCardButton()
                 .clickEndButton()
                 .clickYesButton()
                 .clickSkipButton()
-                .clickCloseTestButton();
+                .clickCloseTheTestButton();
 
-        Locator newNumberOfCardsForReChecking = new FlashcardsPage(getPage(), getPlaywright()).clickFlashcardsMenuButton().numberMarkedForRechecking;
+        Locator newNumberOfCardsForReChecking = new FlashcardsPage(getPage(), getPlaywright()).clickFlashcardsMenu().getNumberMarkedForRechecking();
 
         assertThat(newNumberOfCardsForReChecking).hasText(Integer.toString(parseInt(numberOfCardsForReChecking) + 1));
     }
 
     @Test
-    public void test_1350_1() {
+    public void test_UserCanMarkTheCard() {
 
         new TestsPage(getPage(), getPlaywright()).initiateTest();
 
@@ -47,11 +47,11 @@ public class TestsTest extends BaseTest {
 
         testTutorPage.clickMarkForReview();
 
-        assertThat(testTutorPage.markForReview).not().isVisible();;
-        assertThat(testTutorPage.removeFromMarked).isVisible();
+        assertThat(testTutorPage.getMarkForReviewButton()).not().isVisible();;
+        assertThat(testTutorPage.getRemoveFromMarkedButton()).isVisible();
     }
 
-    public String preconditions_1350_2() {
+    public String preconditions_AfterMarkingTheCardTheNumberOfMarkedCardsIncreasedBy1() {
 
         String numberMarkedQuestionMode = new TestsPage(getPage(), getPlaywright())
                 .getNumberMarked();
@@ -62,18 +62,18 @@ public class TestsTest extends BaseTest {
     }
 
     @Test
-    public void test_1350_2() {
+    public void test_AfterMarkingTheCardTheNumberOfMarkedCardsIncreasedBy1() {
 
-        String numberMarkedQuestionMode = preconditions_1350_2();
+        String numberMarkedQuestionMode = preconditions_AfterMarkingTheCardTheNumberOfMarkedCardsIncreasedBy1();
 
         new TestTutorPage(getPage(), getPlaywright())
                 .clickMarkForReview()
                 .clickEndButton()
                 .clickYesButton()
                 .clickSkipButton()
-                .clickCloseTestButton();
+                .clickCloseTheTestButton();
 
-        Locator newNumberMarkedQuestionMode = new TestsPage(getPage(), getPlaywright()).numberMarkedQuestionMode;
+        Locator newNumberMarkedQuestionMode = new TestsPage(getPage(), getPlaywright()).getNumberMarkedQuestionMode();
 
         assertThat(newNumberMarkedQuestionMode).hasText(Integer.toString(parseInt(numberMarkedQuestionMode) + 1));
     }

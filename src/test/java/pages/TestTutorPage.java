@@ -5,20 +5,28 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
 public class TestTutorPage extends BaseLocator {
-    public Locator addToFlashcardButton = button("Add to flashcard");
-    public Locator removeFromFlashcards = button("Remove from flashcards");
-    public Locator markForReview = button("Mark for review");
-    public Locator removeFromMarked = button("Remove from marked");
-    public Locator endButton = exactButton("End");
-    public Locator yesButton = exactButton("Yes");
-    public Locator skipButton = exactButton("Skip");
-    public Locator closeTestButton = exactButton("Close the test");
+    private final  Locator addToFlashcardButton = button("Add to flashcard");
+    private final  Locator removeFromFlashcards = button("Remove from flashcards");
+    private final  Locator markForReviewButton = button("Mark for review");
+    private final  Locator removeFromMarkedButton = button("Remove from marked");
+    private final  Locator endButton = exactButton("End");
+    private final  Locator yesButton = exactButton("Yes");
+    private final  Locator skipButton = exactButton("Skip");
+    private final  Locator closeTheTestButton = exactButton("Close the test");
 
     public TestTutorPage(Page page, Playwright playwright) {
         super(page, playwright);
     }
 
-    public TestTutorPage clickAddToFlashCard() {
+    public Locator getMarkForReviewButton() {
+        return markForReviewButton;
+    }
+
+    public Locator getRemoveFromMarkedButton() {
+        return removeFromMarkedButton;
+    }
+
+    public TestTutorPage clickAddToFlashCardButton() {
 
         if (!removeFromFlashcards.isVisible()) {
             addToFlashcardButton.click();
@@ -43,15 +51,15 @@ public class TestTutorPage extends BaseLocator {
         return this;
     }
 
-    public void clickCloseTestButton() {
-        closeTestButton.click();
+    public void clickCloseTheTestButton() {
+        closeTheTestButton.click();
     }
 
     public TestTutorPage clickMarkForReview() {
-        if (!removeFromMarked.isVisible()) {
-            markForReview.click();
+        if (!removeFromMarkedButton.isVisible()) {
+            markForReviewButton.click();
         } else {
-            removeFromMarked.click();
+            removeFromMarkedButton.click();
         }
         return this;
     }
