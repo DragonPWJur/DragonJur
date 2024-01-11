@@ -22,8 +22,6 @@ import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static tests.BaseTest.log;
-
 public class GmailUtils {
 
     public static final String CREDENTIALS_FILE_PATH = "/credentials.json";
@@ -40,7 +38,6 @@ public class GmailUtils {
         Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
-        log.info("Gmail service started");
         return service;
     }
 
