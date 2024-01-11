@@ -1,5 +1,5 @@
 browserType=chromium
-base_url=
+baseUrl=
 username=
 password=
 commonEmailPart=
