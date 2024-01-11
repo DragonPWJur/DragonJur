@@ -5,7 +5,6 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
 public class TestTutorPage extends BaseLocator {
-
     public Locator addToFlashcardButton = button("Add to flashcard");
     public Locator removeFromFlashcards = button("Remove from flashcards");
     public Locator markForReview = button("Mark for review");
@@ -23,6 +22,8 @@ public class TestTutorPage extends BaseLocator {
 
         if (!removeFromFlashcards.isVisible()) {
             addToFlashcardButton.click();
+        } else {
+            removeFromFlashcards.click();
         }
         return this;
     }
@@ -44,5 +45,14 @@ public class TestTutorPage extends BaseLocator {
 
     public void clickCloseTestButton() {
         closeTestButton.click();
+    }
+
+    public TestTutorPage clickMarkForReview() {
+        if (!removeFromMarked.isVisible()) {
+            markForReview.click();
+        } else {
+            removeFromMarked.click();
+        }
+        return this;
     }
 }

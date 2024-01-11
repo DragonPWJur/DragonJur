@@ -9,37 +9,41 @@ import static utils.TestUtils.getRandomValue;
 
 public class TestsPage extends BaseLocator {
     public Locator testsMenuButton = button("Tests");
-    public Locator numberOfQuestions = textBox();
+    public Locator numberOfQuestionsInput = textBox();
     public Locator generateStartButton = button("Generate & Start");
     public Locator cancelButtonOnPromptWindow = button("Cancel");
     public Locator promptMessageUnfinishedTest  = text("You have unfinished test. Do you want to continue?");
+    public Locator numberMarkedQuestionMode  = text("Marked").locator("span");
 
     public TestsPage(Page page, Playwright playwright) {
         super(page, playwright);
     }
 
     protected String catchSubject() {
+        List<Locator> subjects = getPage().locator("div#root form button label").all();
 
-        List<Locator> subjects = getPage().locator("div.sc-gHnmx.iEQmLh").all();
-
-        String text = getRandomValue(subjects).textContent();
-
-        String substring = text.substring(text.lastIndexOf('('));
-
-        return text.replace(substring, "").trim();
-
+        return getRandomValue(subjects).textContent();
     }
 
     public void initiateTest() {
-
         testsMenuButton.click();
         if (promptMessageUnfinishedTest.isVisible()) {
             cancelButtonOnPromptWindow.click();
         }
         clickSubject(catchSubject());
 
-        numberOfQuestions.fill("1");
+        numberOfQuestionsInput.fill("1");
         generateStartButton.click();
+    }
+
+    public void clickTestsMenuButton() {
+        testsMenuButton.click();
+    }
+
+    public String getNumberMarked() {
+        clickTestsMenuButton();
+
+        return numberMarkedQuestionMode.innerText();
     }
 }
 

@@ -11,13 +11,12 @@ public class FlashcardsPage extends BaseLocator{
 
     public Locator numberMarkedForRechecking = getPage().getByRole(
             AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Marked for re-checking"))
-            .locator("//div[2]");
+            .locator("div:nth-of-type(2)");
     public Locator flashcardsMenuButton = button("Flashcards");
 
     public FlashcardsPage(Page page, Playwright playwright) {
         super(page, playwright);
     }
-
 
     public FlashcardsPage clickFlashcardsMenuButton() {
         flashcardsMenuButton.click();
