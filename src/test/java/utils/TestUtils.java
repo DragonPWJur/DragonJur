@@ -10,7 +10,7 @@ public class TestUtils {
 
         Random random = new Random();
 
-        return listValues.get(random.nextInt(listValues.size() - 1));
+        return listValues.get(random.nextInt(listValues.size()));
     }
 
     public static int getRandomNumber(Locator list) {
