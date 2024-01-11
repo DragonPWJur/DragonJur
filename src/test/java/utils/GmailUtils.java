@@ -41,7 +41,7 @@ public class GmailUtils {
         Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
-
+        log.info("Gmail service started");
         return service;
     }
 
@@ -72,18 +72,20 @@ public class GmailUtils {
         ListMessagesResponse response = service.users().messages().list(USER_ID).setQ(combinedQuery).execute();
         if (response.getMessages() != null && !response.getMessages().isEmpty()) {
             String messageId = response.getMessages().get(0).getId();
-            Message message = service.users().messages().get(USER_ID, messageId).execute();
+            Message message = service.users().messages().get("me", messageId).execute();
             String body = new String(message.getPayload().getParts().get(0).getBody().decodeData());
 
             String[] lines = body.split("\n");
+            String passwordValue = null;
 
             for (int i = 0; i < lines.length; i++) {
                 if (lines[i].contains("Password:")) {
-                    return lines[i + 1].trim().replace("&amp;", "&");
+                    passwordValue = lines[i + 1].trim().replace("&amp;", "&");
                 }
             }
+            return passwordValue;
+        } else {
+            return null;
         }
-        log.info("Password is not found");
-        return null;
     }
 }
