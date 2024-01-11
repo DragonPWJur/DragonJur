@@ -18,4 +18,9 @@ public class TestUtils {
 
         return random.nextInt(max - min) + min;
     }
+
+    public static void clickRandomElement(Locator list) {
+        int randomValue = getRandomNumber(list);
+        list.nth(randomValue).click();
+    }
 }

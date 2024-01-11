@@ -3,7 +3,9 @@ package tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
+import pages.TestListPage;
 import pages.TestsPage;
+import utils.TestData;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static utils.ProjectProperties.BASE_URL;
@@ -12,21 +14,18 @@ public class TestListTest extends BaseTest {
 
     @Test
     public void testTutorModeWithRandomCheckboxInDomain() {
-        String expectedNumberOfQuestions = "1";
-        String testTutorEndPoint = "/test-tutor";
-
         TestsPage testsPage = new HomePage(getPage(), getPlaywright())
-                .clickTestsButton()
-                .handleDialogAndCancel()
+                .clickTestsMenu()
+                .cancelDialog(new TestListPage(getPage(), getPlaywright()))
                 .clickDomainsButton()
                 .clickRandomCheckbox()
                 .clickTutorButton()
-                .fillNumberOfQuestionsInputField(expectedNumberOfQuestions)
-                .clickGenerateStartButton();
+                .inputNumberOfQuestions("1")
+                .clickGenerateAndStartButton();
 
-        waitForPageLoad(testTutorEndPoint);
-        assertThat(getPage()).hasURL(BASE_URL + testTutorEndPoint);
-        assertThat(testsPage.testQuestion).containsText("?");
-        Assert.assertTrue(testsPage.getTestRadioButtonsCount() >= 1);
+        waitForPageLoad(TestData.testTutorEndPoint);
+        assertThat(getPage()).hasURL(BASE_URL + TestData.testTutorEndPoint);
+        assertThat(testsPage.getTestQuestion()).containsText("?");
+        Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
     }
 }

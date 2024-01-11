@@ -8,7 +8,6 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.BrowserManager;
 import utils.ProjectProperties;
-import utils.TestUtils;
 import utils.ReportUtils;
 
 import java.lang.reflect.Method;
@@ -93,15 +92,15 @@ public abstract class BaseTest {
         page.locator("//button[@type='submit']").click();
     }
 
-    public Page getPage() {
+    protected Page getPage() {
         return page;
     }
 
-    public Playwright getPlaywright() {
+    protected Playwright getPlaywright() {
         return playwright;
     }
 
-    public void waitForPageLoad(String endPoint) {
+    protected void waitForPageLoad(String endPoint) {
         getPage().waitForURL(ProjectProperties.BASE_URL + endPoint);
     }
 }
