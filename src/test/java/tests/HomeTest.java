@@ -40,7 +40,7 @@ public class HomeTest extends BaseTest {
     @Test
     public void testLocators() {
         HomePage homePage = new HomePage(getPage(), getPlaywright());
-        assertThat(homePage.studyThisButton).isVisible();
-        homePage.studyThisButton.click();
+        assertThat(homePage.getStudyThisButton()).isVisible();
+        homePage.getStudyThisButton().click();
     }
 }

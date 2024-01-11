@@ -7,14 +7,22 @@ import com.microsoft.playwright.options.AriaRole;
 
 public class TestsPage extends BaseLocator {
 
-    public Locator testQuestion = getPage().locator("#root form span");
-    public Locator testRadioButtons = getPage().getByRole(AriaRole.RADIO);
+    private final Locator testQuestion = getPage().locator("#root form span");
+    private final Locator testRadioButtons = radio();
 
-    protected TestsPage(Page page, Playwright playwright) {
+    public TestsPage(Page page, Playwright playwright) {
         super(page, playwright);
     }
 
-    public int getTestRadioButtonsCount() {
+    public int countTestRadioButtons() {
         return testRadioButtons.count();
+    }
+
+    public Locator getListTestRadioButtons() {
+        return waitForListOfElementsLoaded(testRadioButtons);
+    }
+
+    public Locator getTestQuestion() {
+        return testQuestion;
     }
 }
