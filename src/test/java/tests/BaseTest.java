@@ -6,9 +6,10 @@ import org.apache.logging.log4j.Logger;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-import utils.ReportUtils;
+import utils.BrowserManager;
 import utils.ProjectProperties;
 import utils.TestUtils;
+import utils.ReportUtils;
 
 import java.lang.reflect.Method;
 import java.nio.file.Paths;
@@ -17,7 +18,7 @@ import java.nio.file.Paths;
 @Listeners(utils.ExceptionListener.class)
 public abstract class BaseTest {
     private final Playwright playwright = Playwright.create();
-    private Browser browser;
+    private final Browser browser = BrowserManager.createBrowser(playwright);
     private BrowserContext context;
     private Page page;
     public static Logger log = LogManager.getLogger();
@@ -25,25 +26,19 @@ public abstract class BaseTest {
     @BeforeSuite
     protected void launchBrowser(ITestContext testContext) {
         log.info(ReportUtils.getReportHeader(testContext));
-        switch (ProjectProperties.BROWSER_NAME) {
-            case "chromium" -> browser = playwright.chromium().launch(
-                    new BrowserType.LaunchOptions().setHeadless(ProjectProperties.IS_HEADLESS).setSlowMo(ProjectProperties.IS_SLOW));
-            case "firefox" -> browser = playwright.firefox().launch(
-                    new BrowserType.LaunchOptions().setHeadless(ProjectProperties.IS_HEADLESS).setSlowMo(ProjectProperties.IS_SLOW));
-            case "safari" -> browser = playwright.webkit().launch(
-                    new BrowserType.LaunchOptions().setHeadless(ProjectProperties.IS_HEADLESS).setSlowMo(ProjectProperties.IS_SLOW));
-            case "chrome" -> browser = playwright.chromium().launch(
-                    new BrowserType.LaunchOptions().setChannel("chrome").setHeadless(ProjectProperties.IS_HEADLESS).setSlowMo(ProjectProperties.IS_SLOW));
-            default -> System.out.println("Please enter the right browser name...");
+        if (browser.isConnected()) {
+            log.info("BROWSER " + browser.browserType().name().toUpperCase() + " LAUNCHED\n");
         }
-        log.info("BROWSER " + ProjectProperties.BROWSER_NAME.toUpperCase() + " LAUNCHED\n");
     }
 
     @BeforeMethod
     protected void createContextAndPage(Method method) {
-        log.info("RUN " + this.getClass().getName() + "." +  method.getName());
+        log.info("RUN " + ReportUtils.getTestMethodName(method));
         context = browser.newContext(new Browser.NewContextOptions()
-                .setViewportSize(ProjectProperties.SCREEN_SIZE_WIDTH, ProjectProperties.SCREEN_SIZE_HEIGHT));
+                .setViewportSize(ProjectProperties.SCREEN_SIZE_WIDTH, ProjectProperties.SCREEN_SIZE_HEIGHT)
+                .setRecordVideoDir(Paths.get("videos/"))
+                .setRecordVideoSize(1280, 720)
+        );
         context.tracing().start(
                 new Tracing.StartOptions()
                         .setScreenshots(true)
@@ -60,21 +55,28 @@ public abstract class BaseTest {
 
     @AfterMethod
     protected void closeContext(Method method, ITestResult testResult) {
-        log.info(ReportUtils.getTestStatistics(method, testResult));
         Tracing.StopOptions tracingStopOptions = null;
-        String classMethodName = this.getClass().getName() + method.getName();
-        if (!testResult.isSuccess()) {
-            tracingStopOptions = new Tracing.StopOptions()
-                    .setPath(Paths.get("testTracing/" + classMethodName + ".zip"));
-            log.info("TRACING SAVED");
-        }
-        context.tracing().stop(
-                tracingStopOptions
-        );
+        String testMethodName = ReportUtils.getTestMethodNameWithInvocationCount(method, testResult);
 
+        log.info(ReportUtils.getTestStatistics(method, testResult));
         page.close();
+        log.info("PAGE CLOSED");
+
+        if (!testResult.isSuccess()) {
+            if (ProjectProperties.TRACING_MODE) {
+                tracingStopOptions = new Tracing.StopOptions()
+                        .setPath(Paths.get("testTracing/" + testMethodName + ".zip"));
+                log.info("TRACING SAVED");
+            }
+            if (ProjectProperties.VIDEO_MODE) {
+                page.video().saveAs(Paths.get("videos/" + testMethodName + ".webm"));
+                log.info("VIDEO SAVED");
+            }
+        }
+        context.tracing().stop(tracingStopOptions);
+        page.video().delete();
         context.close();
-        log.info("CONTEXT AND PAGE CLOSED" + ReportUtils.END_LINE);
+        log.info("CONTEXT CLOSED" + ReportUtils.END_LINE);
     }
 
     @AfterSuite
