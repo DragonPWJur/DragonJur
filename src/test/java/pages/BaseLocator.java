@@ -63,8 +63,4 @@ abstract class BaseLocator extends BasePage {
     protected void clickButton(String text) {
         button(text).click();
     }
-
-    protected void clickSubject(String subject) {
-        getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(subject)).click();
-    }
 }

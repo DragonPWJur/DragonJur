@@ -3,6 +3,7 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.options.AriaRole;
 
 import java.util.List;
 import static utils.TestUtils.getRandomValue;
@@ -29,6 +30,10 @@ public class TestsPage extends BaseLocator {
         return getRandomValue(subjects).textContent();
     }
 
+    protected void clickSubject(String subject) {
+        getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(subject)).click();
+    }
+
     public void initiateTest() {
         testsMenu.click();
         if (unfinishedTestText.isVisible()) {
@@ -49,5 +54,6 @@ public class TestsPage extends BaseLocator {
 
         return numberMarkedQuestionMode.innerText();
     }
+
 }
 
