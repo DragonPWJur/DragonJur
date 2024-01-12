@@ -2,18 +2,20 @@ package utils;
 
 import org.testng.ITestContext;
 import org.testng.ITestResult;
+import org.testng.TestListenerAdapter;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ReportUtils {
+public class ReportUtils extends TestListenerAdapter {
 
     public final static String END_LINE =
             "\n_________________________________________________________________________________________\n";
     private final static String H_LINE =
             " ==========================================================================================\n";
+
 
     public static String getCurrentDateTime() {
         Date date = new Date();
@@ -26,9 +28,9 @@ public class ReportUtils {
         int status = testResult.getStatus();
 
         return switch (status) {
-            case 1 -> "PASS";
-            case 2 -> "FAIL";
-            case 3 -> "SKIP";
+            case 1 -> LoggerUtils.ANSI_GREEN + "PASS" + LoggerUtils.ANSI_RESET;
+            case 2 -> LoggerUtils.ANSI_RED + "FAIL" + LoggerUtils.ANSI_RESET;
+            case 3 -> LoggerUtils.ANSI_YELLOW + "SKIP" + LoggerUtils.ANSI_RESET;
             default -> "UNDEFINED";
         };
     }
