@@ -23,6 +23,8 @@ public abstract class BaseTest {
 
     @BeforeSuite
     protected void launchBrowser(ITestContext testContext) {
+        LoggerUtils.log("Playwright and Browser initialized");
+
         log(ReportUtils.getReportHeader(testContext));
 
         if (browser.isConnected()) {

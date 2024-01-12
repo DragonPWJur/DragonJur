@@ -70,39 +70,46 @@ public abstract class PropertyType {
 
     private static Properties initEnvironmentProperties() {
         if (environmentProperties == null) {
-            LoggerUtils.log("environmentProperties == null");
+            LoggerUtils.log("EnvironmentProperties == null");
             environmentProperties = new Properties();
             if (isServerRun()) {
-                LoggerUtils.log("server is run");
+                LoggerUtils.log("Server is run");
 
                 if (System.getenv(PropertyType.Environment.ENV_BROWSER_OPTIONS) != null) {
                     LoggerUtils.log("ENV_BROWSER_OPTIONS != null");
-                    LoggerUtils.log(PropertyType.Environment.ENV_BROWSER_OPTIONS);
+                    LoggerUtils.log(System.getenv(PropertyType.Environment.ENV_BROWSER_OPTIONS));
                     for (String option : System.getenv(PropertyType.Environment.ENV_BROWSER_OPTIONS).split(";")) {
-                        LoggerUtils.log("split by ;");
+                        LoggerUtils.log("Split by ;");
                         String[] browserOptionArr = option.split("=");
                         LoggerUtils.log(Arrays.toString(browserOptionArr));
                         environmentProperties.setProperty(browserOptionArr[0], browserOptionArr[1]);
                     }
+                    LoggerUtils.log("ENV_BROWSER_OPTIONS - success");
                 }
-                LoggerUtils.log("ENV_BROWSER_OPTIONS == null");
 
+                LoggerUtils.log("ENV_BROWSER_OPTIONS == null");
                 if (System.getenv(PropertyType.Environment.ENV_WEB_OPTIONS) != null) {
                     LoggerUtils.log("environmentProperties != null");
                     for (String option : System.getenv(PropertyType.Environment.ENV_WEB_OPTIONS).split(";")) {
                         String[] webOptionArr = option.split("=");
                         LoggerUtils.log(Arrays.toString(webOptionArr));
                         environmentProperties.setProperty(webOptionArr[0], webOptionArr[1]);
+                        LoggerUtils.log("ENV_WEB_OPTIONS - success");
                     }
                 }
+                LoggerUtils.logError("ENV_WEB_OPTIONS == null ?");
             }
         }
+
+        LoggerUtils.log(environmentProperties.toString());
 
         return environmentProperties;
     }
 
     private static Properties initTracingProperties() {
+        LoggerUtils.log("Init tracingProperties");
         if (tracingProperties == null) {
+            LoggerUtils.log("tracingProperties == nul");
             tracingProperties = new Properties();
             try (FileInputStream fileInputStream = new FileInputStream(TRACING_PROPERTIES_PATH)) {
                 tracingProperties.load(fileInputStream);
@@ -112,6 +119,7 @@ public abstract class PropertyType {
             } catch (IOException e) {
                 throw new ExceptionInInitializerError(e);
             }
+            LoggerUtils.log(tracingProperties.toString());
         }
 
         return tracingProperties;
