@@ -3,6 +3,7 @@ package utils;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Properties;
 
 public abstract class PropertyType {
@@ -69,19 +70,28 @@ public abstract class PropertyType {
 
     private static Properties initEnvironmentProperties() {
         if (environmentProperties == null) {
+            LoggerUtils.log("environmentProperties == null");
             environmentProperties = new Properties();
             if (isServerRun()) {
+                LoggerUtils.log("server is run");
 
                 if (System.getenv(PropertyType.Environment.ENV_BROWSER_OPTIONS) != null) {
+                    LoggerUtils.log("ENV_BROWSER_OPTIONS != null");
+                    LoggerUtils.log(PropertyType.Environment.ENV_BROWSER_OPTIONS);
                     for (String option : System.getenv(PropertyType.Environment.ENV_BROWSER_OPTIONS).split(";")) {
+                        LoggerUtils.log("split by ;");
                         String[] browserOptionArr = option.split("=");
+                        LoggerUtils.log(Arrays.toString(browserOptionArr));
                         environmentProperties.setProperty(browserOptionArr[0], browserOptionArr[1]);
                     }
                 }
+                LoggerUtils.log("ENV_BROWSER_OPTIONS == null");
 
                 if (System.getenv(PropertyType.Environment.ENV_WEB_OPTIONS) != null) {
+                    LoggerUtils.log("environmentProperties != null");
                     for (String option : System.getenv(PropertyType.Environment.ENV_WEB_OPTIONS).split(";")) {
                         String[] webOptionArr = option.split("=");
+                        LoggerUtils.log(Arrays.toString(webOptionArr));
                         environmentProperties.setProperty(webOptionArr[0], webOptionArr[1]);
                     }
                 }
