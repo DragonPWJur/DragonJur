@@ -28,4 +28,22 @@ public class TestListTest extends BaseTest {
         assertThat(testsPage.getTestQuestion()).containsText("?");
         Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
     }
+
+    @Test
+    public void testTutorModeWithRandomCheckboxInChapter() {
+        TestsPage testsPage = new HomePage(getPage(), getPlaywright())
+                .clickTestsMenu()
+                .cancelDialogIfVisible()
+                .clickChaptersButton()
+                .clickRandomCheckbox()
+                .clickTutorButton()
+                .inputNumberOfQuestions("1")
+                .clickGenerateAndStartButton();
+
+        waitForPageLoad(TestData.testTutorEndPoint);
+
+        assertThat(getPage()).hasURL(BASE_URL + TestData.testTutorEndPoint);
+        assertThat(testsPage.getTestQuestion()).containsText("?");
+        Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
+    }
 }
