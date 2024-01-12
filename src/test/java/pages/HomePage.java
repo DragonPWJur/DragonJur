@@ -7,8 +7,8 @@ import com.microsoft.playwright.Playwright;
 public class HomePage extends BaseLocator {
     private final Locator studyThisButton = button("Study This");
     private final Locator testsButton = exactButton("Tests");
-    private final Locator headerModalWindow = dialog().locator("span");
-    private final Locator modalWeakestExamAreas = dialog();
+    private final Locator weakestExamAreasHeader = dialog().locator("span");
+    private final Locator weakestExamAreasModal = dialog();
 
     public HomePage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -23,8 +23,8 @@ public class HomePage extends BaseLocator {
         return studyThisButton;
     }
 
-    public Locator getModalWeakestExamAreas() {
-        return modalWeakestExamAreas;
+    public Locator getWeakestExamAreasModal() {
+        return weakestExamAreasModal;
     }
 
     public HomePage clickStudyThisButton() {
@@ -32,7 +32,7 @@ public class HomePage extends BaseLocator {
         return this;
     }
 
-    public  Locator getHeaderModalWindow() {
-        return headerModalWindow;
+    public  Locator getWeakestExamAreasHeader() {
+        return weakestExamAreasHeader;
     }
 }

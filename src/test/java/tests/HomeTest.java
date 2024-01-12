@@ -48,7 +48,8 @@ public class HomeTest extends BaseTest {
     public void testModalWindowStudyIsOpened() {
         HomePage homePage = new HomePage(getPage(), getPlaywright())
                 .clickStudyThisButton();
-        assertThat(homePage.getModalWeakestExamAreas()).isVisible();
-        assertThat(homePage.getHeaderModalWindow()).hasText("Weakest Exam Areas");
+
+        assertThat(homePage.getWeakestExamAreasModal()).isVisible();
+        assertThat(homePage.getWeakestExamAreasHeader()).hasText("Weakest Exam Areas");
     }
 }
