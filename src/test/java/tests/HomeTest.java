@@ -52,4 +52,12 @@ public class HomeTest extends BaseTest {
         assertThat(homePage.getWeakestExamAreasModal()).isVisible();
         assertThat(homePage.getWeakestExamAreasHeader()).hasText("Weakest Exam Areas");
     }
+
+    @Test
+    public void testModalWindowStudyMessage() {
+        HomePage homePage = new HomePage(getPage(), getPlaywright())
+                .clickStudyThisButton();
+
+        assertThat(homePage.getWeakestExamAreasMessage()).isVisible();
+    }
 }
