@@ -62,7 +62,7 @@ public class GmailUtils {
     }
 
     public static String extractPasswordFromEmail(Gmail service, int numericPart) throws IOException {
-        String email = ProjectProperties.COMMON_EMAIL_PART + numericPart + EMAIL_END_PART;
+        String email = PropertyType.Gmail.COMMON_EMAIL_PART + numericPart + EMAIL_END_PART;
         String combinedQuery = "to:" + email + " " + QUERY;
 
         ListMessagesResponse response = service.users().messages().list(USER_ID).setQ(combinedQuery).execute();
