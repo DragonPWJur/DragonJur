@@ -57,7 +57,7 @@ public abstract class PropertyType {
                 try (FileInputStream fileInputStream = new FileInputStream(CONFIG_PROPERTIES_PATH)) {
                     projectProperties.load(fileInputStream);
                 } catch (FileNotFoundException e) {
-                    LoggerUtils.log("ERROR: The \u001B[31mconfig.properties\u001B[0m file not found.");
+                    LoggerUtils.logError("ERROR: The \u001B[31mconfig.properties\u001B[0m file not found.");
                     LoggerUtils.log("You need to create it from config.properties.TEMPLATE file.");
                     System.exit(1);
                 } catch (IOException ignore) {

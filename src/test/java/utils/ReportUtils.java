@@ -1,15 +1,15 @@
 package utils;
 
-import org.testng.ITestContext;
-import org.testng.ITestResult;
-import org.testng.TestListenerAdapter;
+import org.testng.*;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ReportUtils extends TestListenerAdapter {
+import static utils.LoggerUtils.*;
+
+public class ReportUtils implements ITestListener {
 
     public final static String END_LINE =
             "\n_________________________________________________________________________________________\n";
@@ -24,13 +24,13 @@ public class ReportUtils extends TestListenerAdapter {
         return dateFormat.format(date);
     }
 
-    private static String getTestStatus(ITestResult testResult) {
+    public static String getTestStatus(ITestResult testResult) {
         int status = testResult.getStatus();
 
         return switch (status) {
-            case 1 -> LoggerUtils.ANSI_GREEN + "PASS" + LoggerUtils.ANSI_RESET;
-            case 2 -> LoggerUtils.ANSI_RED + "FAIL" + LoggerUtils.ANSI_RESET;
-            case 3 -> LoggerUtils.ANSI_YELLOW + "SKIP" + LoggerUtils.ANSI_RESET;
+            case 1 -> "PASS";
+            case 2 -> "FAIL";
+            case 3 -> "SKIP";
             default -> "UNDEFINED";
         };
     }
@@ -66,5 +66,15 @@ public class ReportUtils extends TestListenerAdapter {
             testMethodName += "(" + testResult.getMethod().getCurrentInvocationCount() + ")";
         }
         return testMethodName;
+    }
+
+    public static void logTestStatistic(Method method, ITestResult testResult) {
+        if (ReportUtils.getTestStatus(testResult).equals("PASS")) {
+            logSuccess(ReportUtils.getTestStatistics(method, testResult));
+        } else if (ReportUtils.getTestStatus(testResult).equals("FAIL")) {
+            logError(ReportUtils.getTestStatistics(method, testResult));
+        } else {
+            logWarning(ReportUtils.getTestStatistics(method, testResult));
+        }
     }
 }

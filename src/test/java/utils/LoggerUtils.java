@@ -2,25 +2,38 @@ package utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import tests.BaseTest;
 
 public class LoggerUtils {
-    private static final Logger logger = LogManager.getLogger();
 
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
+    private static final String error = "❌\n";
+    private static final String success = "✅\n";
+    private static final String warning = "⚠️";
+    private static final String exception = "❗";
 
+    private static final Logger logger = LogManager.getLogger(BaseTest.class.getName());
 
     public static void log(String message) {
         logger.info(message);
     }
 
     public static void logError(String message) {
-        logger.error(ANSI_RED + message + ANSI_RESET);
+        logger.error(error + message);
     }
 
-    public static void logGreen(String message) {
-        logger.info(ANSI_GREEN + message + ANSI_RESET);
+    public static void logSuccess(String message) {
+        logger.info(success + message);
+    }
+
+    public static void logWarning(String message) {
+        logger.info(warning + message);
+    }
+
+    public static void logException(String message) {
+        logger.error(exception + message);
+    }
+
+    public static void logFatal(String message) {
+        logger.fatal(error + exception + message);
     }
 }

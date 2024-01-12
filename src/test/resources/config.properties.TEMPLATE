@@ -7,5 +7,3 @@ headless=false
 slowMo=1500
 width=1920
 height=1080
-tracing=true
-video=true

@@ -24,7 +24,7 @@ public class BrowserManager {
                         .setSlowMo(PropertyType.Browser.IS_SLOW));
             }
             default -> {
-                LoggerUtils.log("!!! DEFAULT BROWSER CHROMIUM LAUNCHED\n !!!");
+                LoggerUtils.logWarning("!!! DEFAULT BROWSER CHROMIUM LAUNCHED\n !!!");
                 return playwright.chromium().launch(new BrowserType.LaunchOptions()
                         .setHeadless(PropertyType.Browser.IS_HEADLESS)
                         .setSlowMo(PropertyType.Browser.IS_SLOW));

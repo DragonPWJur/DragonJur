@@ -51,7 +51,7 @@ public abstract class BaseTest {
 
     @AfterMethod
     protected void closeContext(Method method, ITestResult testResult) {
-        log(ReportUtils.getTestStatistics(method, testResult));
+        ReportUtils.logTestStatistic(method, testResult);
 
         page.close();
         log("Page closed");
