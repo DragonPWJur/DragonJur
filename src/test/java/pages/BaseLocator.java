@@ -45,7 +45,7 @@ abstract class BaseLocator extends BasePage {
         return getPage().getByText(text);
     }
 
-    protected Locator radioByText(String text) {
+    protected Locator radio(String text) {
         return getPage().getByRole(AriaRole.RADIO, new Page.GetByRoleOptions().setName(text));
     }
 
@@ -71,20 +71,14 @@ abstract class BaseLocator extends BasePage {
         return list;
     }
 
-    protected Locator waitForListOfElementsLoaded(Locator locator) {
-        locator.last().waitFor();
-        return locator;
-    }
-
     protected Locator dialog() {
         return getPage().getByRole(AriaRole.DIALOG);
     }
 
-    public <T> T cancelDialog(T page) {
+    protected  void cancelDialog() {
         if (dialog().isVisible()) {
             getPage().onDialog(Dialog::dismiss);
             button("Cancel").click();
         }
-        return page;
     }
 }

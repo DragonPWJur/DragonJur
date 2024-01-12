@@ -43,4 +43,9 @@ public class TestListPage extends BaseLocator {
         TestUtils.clickRandomElement(listCheckboxes);
         return this;
     }
+
+    public TestListPage cancelDialogIfVisible() {
+        cancelDialog();
+        return this;
+    }
 }

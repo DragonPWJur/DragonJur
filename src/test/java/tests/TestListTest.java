@@ -3,7 +3,6 @@ package tests;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
-import pages.TestListPage;
 import pages.TestsPage;
 import utils.TestData;
 
@@ -16,7 +15,7 @@ public class TestListTest extends BaseTest {
     public void testTutorModeWithRandomCheckboxInDomain() {
         TestsPage testsPage = new HomePage(getPage(), getPlaywright())
                 .clickTestsMenu()
-                .cancelDialog(new TestListPage(getPage(), getPlaywright()))
+                .cancelDialogIfVisible()
                 .clickDomainsButton()
                 .clickRandomCheckbox()
                 .clickTutorButton()
@@ -24,6 +23,7 @@ public class TestListTest extends BaseTest {
                 .clickGenerateAndStartButton();
 
         waitForPageLoad(TestData.testTutorEndPoint);
+
         assertThat(getPage()).hasURL(BASE_URL + TestData.testTutorEndPoint);
         assertThat(testsPage.getTestQuestion()).containsText("?");
         Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
