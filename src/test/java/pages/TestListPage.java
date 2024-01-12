@@ -12,6 +12,8 @@ public class TestListPage extends BaseLocator {
     private final Locator numberOfQuestionsInputField = getPage().locator("input[name = 'numberOfQuestions']");
     private final Locator generateAndStartButton = button("Generate & Start");
     private final Locator listCheckboxes = waitForListOfElementsLoaded("button:has(input[type='checkbox'])");
+    private final Locator chaptersButton = text("Chapters");
+
 
     public TestListPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -46,6 +48,13 @@ public class TestListPage extends BaseLocator {
 
     public TestListPage cancelDialogIfVisible() {
         cancelDialog();
+        return this;
+    }
+
+    public TestListPage clickChaptersButton() {
+        if (!chaptersButton.isChecked()) {
+            chaptersButton.click();
+        }
         return this;
     }
 }
