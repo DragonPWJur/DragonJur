@@ -53,20 +53,20 @@ public class HomeTest extends BaseTest {
                 .focusWeek1Header()
                 .ensureWeek1CheckboxUnchecked();
 
-        String beforeCountPoints = homePage.getProgressbarPointsText();
-        String beforeCountSideMenuPoints = homePage.getProgressbarSideMenuPointsText();
-        Assert.assertEquals(parseInt(beforeCountSideMenuPoints), parseInt(beforeCountPoints));
+        int beforeCountPoints = homePage.getProgressbarPointsNumber();
+        int beforeCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
+        Assert.assertEquals(beforeCountSideMenuPoints, beforeCountPoints);
 
         homePage
                 .clickWeek1FirstCheckbox();
 
-        String afterCountPoints = homePage.getProgressbarPointsText();
-        String afterCountSideMenuPoints = homePage.getProgressbarSideMenuPointsText();
+        int afterCountPoints = homePage.getProgressbarPointsNumber();
+        int afterCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
 
         assertThat(homePage.getWeek1FirstCheckbox()).isChecked();
-        Assert.assertTrue(parseInt(beforeCountPoints) < parseInt(afterCountPoints));
-        Assert.assertTrue(parseInt(beforeCountSideMenuPoints) < parseInt(afterCountSideMenuPoints));
-        assertThat(homePage.getProgressbarPoints()).hasText(String.valueOf(parseInt(beforeCountPoints) + 818));
+        Assert.assertTrue(beforeCountPoints < afterCountPoints);
+        Assert.assertTrue(beforeCountSideMenuPoints < afterCountSideMenuPoints);
+        assertThat(homePage.getProgressbarPoints()).hasText(String.valueOf(beforeCountPoints + 818));
         Assert.assertEquals(homePage.getProgressbarPointsText(), homePage.getProgressbarSideMenuPointsText());
     }
 }

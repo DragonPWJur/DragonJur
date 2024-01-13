@@ -4,6 +4,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
+import static java.lang.Integer.parseInt;
+
 public class HomePage extends BaseLocator {
     private final Locator studyThisButton = button("Study This");
     private final Locator testsButton = exactButton("Tests");
@@ -70,5 +72,17 @@ public class HomePage extends BaseLocator {
     public String getProgressbarSideMenuPointsText() {
 
         return progressbarSideMenuPoints.innerText();
+    }
+
+    public int getProgressbarPointsNumber() {
+        String pointsText = getProgressbarPointsText();
+
+        return parseInt(pointsText);
+    }
+
+    public int getProgressbarSideMenuPointsNumber() {
+        String pointsText = getProgressbarSideMenuPointsText();
+
+        return parseInt(pointsText);
     }
 }
