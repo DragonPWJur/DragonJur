@@ -4,7 +4,6 @@ import com.microsoft.playwright.Locator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
-import pages.TestTutorPage;
 import pages.TestsPage;
 import utils.TestData;
 
@@ -25,9 +24,9 @@ public class TestListTest extends BaseTest {
                 .inputNumberOfQuestions("1")
                 .clickGenerateAndStartButton();
 
-        waitForPageLoad(TestData.testTutorEndPoint);
+        waitForPageLoad(TestData.TEST_TUTOR_END_POINT);
 
-        assertThat(getPage()).hasURL(BASE_URL + TestData.testTutorEndPoint);
+        assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
         assertThat(testsPage.getTestQuestion()).containsText("?");
         Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
     }

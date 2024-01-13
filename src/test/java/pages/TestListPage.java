@@ -40,6 +40,11 @@ public class TestListPage extends BaseLocator {
         return new TestsPage(getPage(), getPlaywright());
     }
 
+    public TestTutorPage clickGenerateAndStartButton1() {
+        generateAndStartButton.click();
+        return new TestTutorPage(getPage(), getPlaywright());
+    }
+
     public TestListPage clickRandomCheckbox() {
         TestUtils.clickRandomElement(listCheckboxes);
         return this;
@@ -53,4 +58,5 @@ public class TestListPage extends BaseLocator {
     public Locator getNumberMarked() {
         return numberMarked;
     }
+
 }
