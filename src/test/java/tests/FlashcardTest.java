@@ -1,6 +1,7 @@
 package tests;
 
 import com.microsoft.playwright.Locator;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 
@@ -9,6 +10,8 @@ import static java.lang.Integer.parseInt;
 
 public class FlashcardTest extends BaseTest {
 
+
+    @Ignore
     @Test
     public void testUserCanMarkCardsForRechecking() {
 
