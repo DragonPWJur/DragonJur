@@ -77,4 +77,8 @@ abstract class BaseLocator extends BasePage {
             button("Cancel").click();
         }
     }
+
+    protected Locator exactHeading(String text) {
+        return getPage().getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(text).setExact(true));
+    }
 }

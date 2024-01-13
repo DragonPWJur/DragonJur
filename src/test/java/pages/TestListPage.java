@@ -55,4 +55,10 @@ public class TestListPage extends SideMenuPage {
         testDomain2Text.click();
         return this;
     }
+
+    public TestTutorPage clickGenerateAndStartButton1() {
+        generateAndStartButton.click();
+        return new TestTutorPage(getPage(), getPlaywright());
+    }
+
 }
