@@ -8,6 +8,8 @@ import pages.HomePage;
 import utils.ProjectProperties;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static java.lang.Integer.parseInt;
+import static utils.TestData.expectedOneCheckboxProgressPoints;
 
 public class HomeTest extends BaseTest {
 
@@ -42,5 +44,23 @@ public class HomeTest extends BaseTest {
         HomePage homePage = new HomePage(getPage(), getPlaywright());
         assertThat(homePage.getStudyThisButton()).isVisible();
         homePage.getStudyThisButton().click();
+    }
+
+    @Test
+    public void testUponClickingCheckboxPointCountIncreases() {
+        HomePage homePage = new HomePage(getPage(), getPlaywright())
+                .clickHomeMenu()
+                .focusWeek1Header()
+                .verifyWeek1FirstCheckboxUnchecked();
+
+        assertThat(homePage.getProgressbarPoints()).hasText("0");
+        assertThat(homePage.getProgressbarSideMenuPoints()).hasText("0");
+
+        homePage
+                .clickWeek1FirstCheckbox();
+
+        assertThat(homePage.getWeek1FirstCheckbox()).isChecked();
+        assertThat(homePage.getProgressbarPoints()).hasText(expectedOneCheckboxProgressPoints);
+        assertThat(homePage.getProgressbarSideMenuPoints()).hasText(expectedOneCheckboxProgressPoints);
     }
 }
