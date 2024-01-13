@@ -65,6 +65,7 @@ public class HomeTest extends BaseTest {
         int afterCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
 
         assertThat(homePage.getWeek1FirstCheckbox()).isChecked();
+        getPage().waitForTimeout(3000);
         Assert.assertTrue(beforeCountPoints < afterCountPoints);
         Assert.assertTrue(beforeCountSideMenuPoints < afterCountSideMenuPoints);
         assertThat(homePage.getProgressbarPoints()).hasText(String.valueOf(beforeCountPoints + 818));
