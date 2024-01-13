@@ -2,6 +2,7 @@ package utils;
 
 import com.microsoft.playwright.Locator;
 
+import java.util.List;
 import java.util.Random;
 
 public class TestUtils {
@@ -22,5 +23,11 @@ public class TestUtils {
     public static void clickRandomElement(Locator list) {
         int randomValue = getRandomNumber(list);
         list.nth(randomValue).click();
+    }
+
+    public static  <T> T getRandomValue(List<T> listValues) {
+        Random random = new Random();
+
+        return listValues.get(random.nextInt(listValues.size()));
     }
 }
