@@ -63,10 +63,12 @@ public class HomeTest extends BaseTest {
         homePage
                 .clickWeek1FirstCheckbox();
 
+        getPage().reload();
         int afterCountPoints = homePage.getProgressbarPointsNumber();
         int afterCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
 
         assertThat(homePage.getWeek1FirstCheckbox()).isChecked();
+
         getPage().waitForTimeout(3000);
         Assert.assertTrue(beforeCountPoints < afterCountPoints);
         Assert.assertTrue(beforeCountSideMenuPoints < afterCountSideMenuPoints);
