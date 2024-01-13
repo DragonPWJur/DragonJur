@@ -33,16 +33,6 @@ public class HomePage extends BaseLocator {
         return week1FirstCheckbox;
     }
 
-    public Locator getProgressbarPoints() {
-
-        return progressbarPoints;
-    }
-
-    public Locator getProgressbarSideMenuPoints() {
-
-        return progressbarSideMenuPoints;
-    }
-
     public HomePage clickHomeMenu() {
         homeButton.click();
 
@@ -67,5 +57,15 @@ public class HomePage extends BaseLocator {
         }
 
         return this;
+    }
+
+    public String getProgressbarPointsText() {
+
+        return progressbarPoints.innerText();
+    }
+
+    public String getProgressbarSideMenuPointsText() {
+
+        return progressbarSideMenuPoints.innerText();
     }
 }

@@ -9,6 +9,7 @@ import pages.HomePage;
 import utils.ProjectProperties;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static java.lang.Integer.parseInt;
 
 public class HomeTest extends BaseTest {
 
@@ -52,11 +53,18 @@ public class HomeTest extends BaseTest {
                 .focusWeek1Header()
                 .verifyWeek1FirstCheckboxUnchecked();
 
+        String beforeCountPoints = homePage.getProgressbarPointsText();
+        String beforeCountSideMenuPoints = homePage.getProgressbarSideMenuPointsText();
+        Assert.assertEquals(parseInt(beforeCountSideMenuPoints), parseInt(beforeCountPoints));
+
         homePage
                 .clickWeek1FirstCheckbox();
 
+        String afterCountPoints = homePage.getProgressbarPointsText();
+        String afterCountSideMenuPoints = homePage.getProgressbarSideMenuPointsText();
+
         assertThat(homePage.getWeek1FirstCheckbox()).isChecked();
-        assertThat(homePage.getProgressbarPoints()).not().hasText("0");
-        assertThat(homePage.getProgressbarSideMenuPoints()).not().hasText("0");
+        Assert.assertTrue(parseInt(beforeCountPoints) < parseInt(afterCountPoints));
+        Assert.assertTrue(parseInt(beforeCountSideMenuPoints) < parseInt(afterCountSideMenuPoints));
     }
 }
