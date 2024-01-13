@@ -86,4 +86,9 @@ abstract class BaseLocator extends BasePage {
             button("Cancel").click();
         }
     }
+
+    protected Locator locator(String css) {
+
+        return getPage().locator(css);
+    }
 }

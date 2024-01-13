@@ -8,7 +8,6 @@ import pages.HomePage;
 import utils.ProjectProperties;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static java.lang.Integer.parseInt;
 import static utils.TestData.expectedOneCheckboxProgressPoints;
 
 public class HomeTest extends BaseTest {

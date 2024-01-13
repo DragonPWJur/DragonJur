@@ -4,15 +4,18 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 
 public class HomePage extends BaseLocator {
     private final Locator studyThisButton = button("Study This");
     private final Locator testsButton = exactButton("Tests");
     private final Locator homeButton = exactButton("Home");
     private final Locator week1Header = exactText("Week 1");
-    private final Locator week1FirstCheckbox = getPage().locator("//span[text()='Week 1']//following-sibling::label").first();
-    private final Locator progressbarPoints = getPage().locator("div>svg.CircularProgressbar+div>span").first();
-    private final Locator progressbarSideMenuPoints = getPage().locator("div:has(.CircularProgressbar)+span").first();
+    private final Locator week1FirstCheckbox = locator("//span[text()='Week 1']//following-sibling::label").first();
+    private final Locator progressbarPoints = locator("div>svg.CircularProgressbar+div>span").first();
+    private final Locator progressbarSideMenuPoints = locator("div:has(.CircularProgressbar)+span").first();
+    private final Locator progressbarAnimationPoints = locator("div>svg.CircularProgressbar>path.CircularProgressbar-path").last();
 
     public HomePage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -62,8 +65,11 @@ public class HomePage extends BaseLocator {
 
     public HomePage verifyWeek1FirstCheckboxUnchecked() {
         if(getWeek1FirstCheckbox().isChecked()){
-            getPage().waitForResponse("**/v2/statistics/points", week1FirstCheckbox::click);
+            week1FirstCheckbox.click();
         }
+        progressbarAnimationPoints.waitFor();
+        assertThat(progressbarAnimationPoints).hasCSS("stroke-dashoffset", "282.743px");
+
         return this;
     }
 }
