@@ -46,7 +46,7 @@ public class HomeTest extends BaseTest {
     }
 
     @Test
-    public void testUponClickingCheckboxPointCountIncreases() {
+    public void testUponClickingCheckboxPointCountIncreases() throws InterruptedException {
         HomePage homePage = new HomePage(getPage(), getPlaywright())
                 .clickHomeMenu()
                 .focusWeek1Header()
