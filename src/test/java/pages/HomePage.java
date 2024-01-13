@@ -12,7 +12,7 @@ public class HomePage extends SideMenuPage {
     private final Locator homeButton = exactButton("Home");
     private final Locator week1Header = exactText("Week 1");
     private final Locator twoWeeksButton = exactButton("2 Weeks");
-    private final Locator week1FirstCheckbox = locator("//span[text()='Week 1']//following-sibling::label").first();
+    private final Locator week1FirstCheckbox =exactText("Week 1").locator("~label").first();
     private final Locator progressbarPoints = locator("div>svg.CircularProgressbar+div>span").first();
     private final Locator progressbarSideMenuPoints = locator("div:has(.CircularProgressbar)+span").first();
 
