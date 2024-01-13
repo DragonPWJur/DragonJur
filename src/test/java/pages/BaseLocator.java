@@ -45,6 +45,11 @@ abstract class BaseLocator extends BasePage {
         return getPage().getByText(text);
     }
 
+    protected Locator exactText(String text) {
+
+        return getPage().getByText(text, new Page.GetByTextOptions().setExact(true));
+    }
+
     protected Locator radio(String text) {
         return getPage().getByRole(AriaRole.RADIO, new Page.GetByRoleOptions().setName(text));
     }
