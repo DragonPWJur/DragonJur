@@ -39,6 +39,11 @@ public class TestListPage extends BaseLocator {
         return new TestsPage(getPage(), getPlaywright());
     }
 
+    public TestTutorPage clickGenerateAndStartButton1() {
+        generateAndStartButton.click();
+        return new TestTutorPage(getPage(), getPlaywright());
+    }
+
     public TestListPage clickRandomCheckbox() {
         TestUtils.clickRandomElement(listCheckboxes);
         return this;
@@ -48,4 +53,12 @@ public class TestListPage extends BaseLocator {
         cancelDialog();
         return this;
     }
+<<<<<<< HEAD
+=======
+
+    public Locator getNumberMarked() {
+        return numberMarked;
+    }
+
+>>>>>>> d291d68... TC1348-01 created test, added methods in to the POM
 }
