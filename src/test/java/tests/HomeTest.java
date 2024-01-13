@@ -42,4 +42,29 @@ public class HomeTest extends BaseTest {
         assertThat(homePage.getStudyThisButton()).isVisible();
         homePage.getStudyThisButton().click();
     }
+
+    @Test
+    public void test_TC1359_04_Purchasing_Lifetime_Course () {
+
+        getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions()
+                        .setName("Profile"))
+                .click();
+        getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions()
+                        .setName("Add a new course"))
+                .click();
+        getPage().locator("div:nth-child(3) > .sc-jKDlA-D > .sc-dkzDqf")
+                .click();
+        getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions()
+                        .setName("Life time"))
+                .click();
+        // getPage().getByRole(AriaRole.HEADING).isVisible();
+
+        assertThat(getPage().getByText("Gold"));
+        assertThat(getPage().getByText("Silver")).not().isVisible();
+        assertThat(getPage().getByText("Bronze")).not().isVisible();
+
+        // assertThat(getPage().getByText("Life time"));
+        // assertThat(getPage().getByText("Most effective"));
+
+    }
 }
