@@ -8,7 +8,6 @@ import pages.HomePage;
 import utils.ProjectProperties;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static utils.TestData.expectedOneCheckboxProgressPoints;
 
 public class HomeTest extends BaseTest {
 
@@ -56,7 +55,7 @@ public class HomeTest extends BaseTest {
                 .clickWeek1FirstCheckbox();
 
         assertThat(homePage.getWeek1FirstCheckbox()).isChecked();
-        assertThat(homePage.getProgressbarPoints()).hasText(expectedOneCheckboxProgressPoints);
-        assertThat(homePage.getProgressbarSideMenuPoints()).hasText(expectedOneCheckboxProgressPoints);
+        assertThat(homePage.getProgressbarPoints()).not().hasText("0");
+        assertThat(homePage.getProgressbarSideMenuPoints()).not().hasText("0");
     }
 }

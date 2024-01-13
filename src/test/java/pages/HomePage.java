@@ -13,7 +13,7 @@ public class HomePage extends BaseLocator {
     private final Locator week1FirstCheckbox = locator("//span[text()='Week 1']//following-sibling::label").first();
     private final Locator progressbarPoints = locator("div>svg.CircularProgressbar+div>span").first();
     private final Locator progressbarSideMenuPoints = locator("div:has(.CircularProgressbar)+span").first();
-    private final Locator progressbarAnimationPoints = locator("div>svg.CircularProgressbar>path.CircularProgressbar-path").last();
+
 
     public HomePage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -67,9 +67,5 @@ public class HomePage extends BaseLocator {
         }
 
         return this;
-    }
-
-    public void cleanData() {
-
     }
 }
