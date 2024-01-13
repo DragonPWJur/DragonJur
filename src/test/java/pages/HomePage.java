@@ -7,6 +7,7 @@ import com.microsoft.playwright.Playwright;
 public class HomePage extends BaseLocator {
     private final Locator studyThisButton = button("Study This");
     private final Locator testsButton = exactButton("Tests");
+    private final Locator studyGuideButton = button("Study guide");
 
     public HomePage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -19,5 +20,11 @@ public class HomePage extends BaseLocator {
 
     public Locator getStudyThisButton() {
         return studyThisButton;
+    }
+
+    public StudyGuidePage clickStudyGuide() {
+        studyGuideButton.click();
+
+        return new StudyGuidePage(getPage(), getPlaywright());
     }
 }
