@@ -61,12 +61,15 @@ public class HomePage extends BaseLocator {
         return this;
     }
 
-    public HomePage verifyWeek1FirstCheckboxUnchecked() throws InterruptedException {
+    public HomePage verifyWeek1FirstCheckboxUnchecked() {
         if(getWeek1FirstCheckbox().isChecked()){
             week1FirstCheckbox.click();
         }
-        getPage().wait(1000);
 
         return this;
+    }
+
+    public void cleanData() {
+
     }
 }

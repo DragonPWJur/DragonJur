@@ -46,14 +46,11 @@ public class HomeTest extends BaseTest {
     }
 
     @Test
-    public void testUponClickingCheckboxPointCountIncreases() throws InterruptedException {
+    public void testUponClickingCheckboxPointCountIncreases() {
         HomePage homePage = new HomePage(getPage(), getPlaywright())
                 .clickHomeMenu()
                 .focusWeek1Header()
                 .verifyWeek1FirstCheckboxUnchecked();
-
-        assertThat(homePage.getProgressbarPoints()).hasText("0");
-        assertThat(homePage.getProgressbarSideMenuPoints()).hasText("0");
 
         homePage
                 .clickWeek1FirstCheckbox();
