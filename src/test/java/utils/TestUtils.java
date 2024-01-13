@@ -2,6 +2,7 @@ package utils;
 
 import com.microsoft.playwright.Locator;
 
+import java.util.List;
 import java.util.Random;
 
 public class TestUtils {
@@ -33,6 +34,12 @@ public class TestUtils {
     }
 
     public static String addNumber(String text, int number) {
-        return getString(getInt(text) + number);
+        return getString(getInt(text) + number); 
+    }
+
+    public static  <T> T getRandomValue(List<T> listValues) {
+        Random random = new Random();
+
+        return listValues.get(random.nextInt(listValues.size()));
     }
 }
