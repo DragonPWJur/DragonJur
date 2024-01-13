@@ -67,8 +67,10 @@ public class HomePage extends BaseLocator {
         if(getWeek1FirstCheckbox().isChecked()){
             week1FirstCheckbox.click();
         }
-        progressbarAnimationPoints.waitFor();
-        assertThat(progressbarAnimationPoints).hasCSS("stroke-dashoffset", "282.743px");
+        progressbarPoints.waitFor();
+
+        assertThat(week1FirstCheckbox).not().isChecked();
+        assertThat(progressbarPoints).hasText("0");
 
         return this;
     }
