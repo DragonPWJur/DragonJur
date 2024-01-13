@@ -4,7 +4,6 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
-
 public class HomePage extends BaseLocator {
     private final Locator studyThisButton = button("Study This");
     private final Locator testsButton = exactButton("Tests");
@@ -13,7 +12,6 @@ public class HomePage extends BaseLocator {
     private final Locator week1FirstCheckbox = locator("//span[text()='Week 1']//following-sibling::label").first();
     private final Locator progressbarPoints = locator("div>svg.CircularProgressbar+div>span").first();
     private final Locator progressbarSideMenuPoints = locator("div:has(.CircularProgressbar)+span").first();
-
 
     public HomePage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -31,6 +29,11 @@ public class HomePage extends BaseLocator {
     public Locator getWeek1FirstCheckbox() {
 
         return week1FirstCheckbox;
+    }
+
+    public Locator getProgressbarPoints() {
+
+        return progressbarPoints;
     }
 
     public HomePage clickHomeMenu() {
@@ -51,7 +54,7 @@ public class HomePage extends BaseLocator {
         return this;
     }
 
-    public HomePage verifyWeek1FirstCheckboxUnchecked() {
+    public HomePage ensureWeek1CheckboxUnchecked() {
         if(getWeek1FirstCheckbox().isChecked()){
             week1FirstCheckbox.click();
         }

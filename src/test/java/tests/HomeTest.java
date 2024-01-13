@@ -51,7 +51,7 @@ public class HomeTest extends BaseTest {
         HomePage homePage = new HomePage(getPage(), getPlaywright())
                 .clickHomeMenu()
                 .focusWeek1Header()
-                .verifyWeek1FirstCheckboxUnchecked();
+                .ensureWeek1CheckboxUnchecked();
 
         String beforeCountPoints = homePage.getProgressbarPointsText();
         String beforeCountSideMenuPoints = homePage.getProgressbarSideMenuPointsText();
@@ -66,5 +66,7 @@ public class HomeTest extends BaseTest {
         assertThat(homePage.getWeek1FirstCheckbox()).isChecked();
         Assert.assertTrue(parseInt(beforeCountPoints) < parseInt(afterCountPoints));
         Assert.assertTrue(parseInt(beforeCountSideMenuPoints) < parseInt(afterCountSideMenuPoints));
+        assertThat(homePage.getProgressbarPoints()).hasText(String.valueOf(parseInt(beforeCountPoints) + 818));
+        Assert.assertEquals(homePage.getProgressbarPointsText(), homePage.getProgressbarSideMenuPointsText());
     }
 }
