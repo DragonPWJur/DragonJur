@@ -51,10 +51,11 @@ public class HomeTest extends BaseTest {
                 .clickHomeMenu()
                 .clickTwoWeeksButton()
                 .focusWeek1Header()
-                .ensureWeek1CheckboxUnchecked();
+                .clickWeek1CheckboxIfVisible();
 
         int beforeCountPoints = homePage.getProgressbarPointsNumber();
         int beforeCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
+
         Assert.assertEquals(beforeCountSideMenuPoints, beforeCountPoints);
 
         homePage

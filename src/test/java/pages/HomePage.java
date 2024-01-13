@@ -63,7 +63,7 @@ public class HomePage extends BaseLocator {
         return this;
     }
 
-    public HomePage ensureWeek1CheckboxUnchecked() {
+    public HomePage clickWeek1CheckboxIfVisible() {
         if(getWeek1FirstCheckbox().isChecked()){
             week1FirstCheckbox.click();
         }
