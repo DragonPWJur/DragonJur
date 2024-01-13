@@ -9,7 +9,6 @@ import pages.HomePage;
 import utils.ProjectProperties;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static java.lang.Integer.parseInt;
 
 public class HomeTest extends BaseTest {
 
@@ -50,6 +49,7 @@ public class HomeTest extends BaseTest {
     public void testUponClickingCheckboxPointCountIncreases() {
         HomePage homePage = new HomePage(getPage(), getPlaywright())
                 .clickHomeMenu()
+                .clickTwoWeeksButton()
                 .focusWeek1Header()
                 .ensureWeek1CheckboxUnchecked();
 

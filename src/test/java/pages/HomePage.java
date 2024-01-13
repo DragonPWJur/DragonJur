@@ -11,6 +11,7 @@ public class HomePage extends BaseLocator {
     private final Locator testsButton = exactButton("Tests");
     private final Locator homeButton = exactButton("Home");
     private final Locator week1Header = exactText("Week 1");
+    private final Locator twoWeeksButton = exactButton("2 Weeks");
     private final Locator week1FirstCheckbox = locator("//span[text()='Week 1']//following-sibling::label").first();
     private final Locator progressbarPoints = locator("div>svg.CircularProgressbar+div>span").first();
     private final Locator progressbarSideMenuPoints = locator("div:has(.CircularProgressbar)+span").first();
@@ -46,6 +47,12 @@ public class HomePage extends BaseLocator {
 
     public HomePage focusWeek1Header() {
         week1Header.focus();
+
+        return this;
+    }
+
+    public HomePage clickTwoWeeksButton() {
+        twoWeeksButton.click();
 
         return this;
     }
