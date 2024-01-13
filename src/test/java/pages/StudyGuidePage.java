@@ -5,7 +5,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
 public class StudyGuidePage extends BaseLocator {
-    private final Locator wordList = waitForListLoadedGetByText("Projections");
+    private final Locator wordList = waitForListLoadedGetByText("dada");
     private final Locator noteButton = button(getWordText());
     private final Locator noteTextAria = locator("//textarea");
     private final Locator saveButton = button("Save");
@@ -24,7 +24,7 @@ public class StudyGuidePage extends BaseLocator {
     }
 
     public Locator getWordFromList() {
-        return wordList.nth(1);
+        return wordList.last();
     }
 
     public StudyGuidePage clickNoteSaveButton() {
@@ -41,7 +41,7 @@ public class StudyGuidePage extends BaseLocator {
 
 
     public StudyGuidePage doubleClickWord() {
-        wordList.nth(1).dblclick();
+        wordList.last().dblclick();
 
         return this;
     }
@@ -53,6 +53,6 @@ public class StudyGuidePage extends BaseLocator {
     }
 
     public String getWordText() {
-        return wordList.nth(1).textContent();
+        return wordList.last().textContent();
     }
 }
