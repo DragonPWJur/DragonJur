@@ -3,10 +3,10 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
-
 import static java.lang.Integer.parseInt;
 
-public class HomePage extends BaseLocator {
+public class HomePage extends SideMenuPage {
+
     private final Locator studyThisButton = button("Study This");
     private final Locator testsButton = exactButton("Tests");
     private final Locator homeButton = exactButton("Home");
@@ -26,6 +26,7 @@ public class HomePage extends BaseLocator {
     }
 
     public Locator getStudyThisButton() {
+
         return studyThisButton;
     }
 

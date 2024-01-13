@@ -23,4 +23,16 @@ public class TestUtils {
         int randomValue = getRandomNumber(list);
         list.nth(randomValue).click();
     }
+
+    public static int getInt(String text) {
+        return Integer.parseInt(text);
+    }
+
+    public static String getString(int number) {
+        return Integer.toString(number);
+    }
+
+    public static String addNumber(String text, int number) {
+        return getString(getInt(text) + number);
+    }
 }
