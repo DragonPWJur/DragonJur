@@ -53,6 +53,8 @@ public class HomeTest extends BaseTest {
                 .focusWeek1Header()
                 .clickWeek1CheckboxIfVisible();
 
+        getPage().reload();
+        getPage().waitForTimeout(3000);
         int beforeCountPoints = homePage.getProgressbarPointsNumber();
         int beforeCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
 
