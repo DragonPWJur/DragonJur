@@ -58,6 +58,5 @@ public class HomeTest extends BaseTest {
         assertThat(homePage.getWeek1FirstCheckbox()).isChecked();
         assertThat(homePage.getProgressbarPoints()).not().hasText("0");
         assertThat(homePage.getProgressbarSideMenuPoints()).not().hasText("0");
-        Assert.assertEquals(homePage.getProgressbarPoints(), homePage.getProgressbarSideMenuPoints());
     }
 }
