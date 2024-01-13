@@ -61,9 +61,12 @@ public class HomePage extends BaseLocator {
     }
 
     public HomePage verifyWeek1FirstCheckboxUnchecked() {
-        if(getWeek1FirstCheckbox().isChecked()){
-            week1FirstCheckbox.click();
-        }
+
+        getPage().waitForResponse("**/v2/statistics/points", ()-> {
+            if(getWeek1FirstCheckbox().isChecked()){
+                week1FirstCheckbox.click();
+            }
+        });
         return this;
     }
 }
