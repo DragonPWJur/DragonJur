@@ -28,7 +28,7 @@ jobs:
       - name: Run tests
         run: mvn test
         env:
-          BROWSER_OPTIONS: browserType=chromium;width=1920;height=1080;headless=true;slowMo=0;tracing=true;video=true
+          BROWSER_OPTIONS: browserType=chromium;width=1366;height=768;headless=true;slowMo=0;tracing=true;video=true
           WEB_OPTIONS: username=${{ secrets.USERNAME }};password=${{ secrets.PASSWORD }};baseUrl=${{ secrets.BASE_URL }};commonEmailPart=${{ secrets.COMMON_EMAIL_PART }}
           CI_RUN: true
 
