@@ -4,7 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
-class ProfilePage extends SideMenuPage {
+public class ProfilePage extends SideMenuPage {
 
     private final Locator resetCourseResultsButton = exactButton("Reset current course results");
     private final Locator yesButton = exactButton("Yes");
