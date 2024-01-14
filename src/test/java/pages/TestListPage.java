@@ -16,7 +16,6 @@ public class TestListPage extends SideMenuPage {
     private final Locator testDomain2Text = text("Test domain 2");
     private final Locator chaptersButton = text("Chapters");
 
-
     public TestListPage(Page page, Playwright playwright) {
         super(page, playwright);
     }
