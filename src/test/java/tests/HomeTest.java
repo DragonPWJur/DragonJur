@@ -2,6 +2,7 @@ package tests;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.HomePage;
@@ -51,5 +52,35 @@ public class HomeTest extends BaseTest {
                 .resetCourseResults();
 
         assertThat(new HomePage(getPage(), getPlaywright()).getProgressbarPoints()).hasText("0");
+    }
+
+    @Test
+    public void testUponClickingCheckboxPointCountIncreases() {
+        new PreconditionPage(getPage(), getPlaywright())
+                .resetCourseResults();
+
+        HomePage homePage = new HomePage(getPage(), getPlaywright())
+                .clickHomeMenu()
+                .clickTwoWeeksButton()
+                .focusWeek1Header();
+
+        int beforeCountPoints = homePage.getProgressbarPointsNumber();
+        int beforeCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
+
+        Assert.assertEquals(beforeCountSideMenuPoints, beforeCountPoints);
+
+        homePage
+                .clickWeek1FirstCheckbox();
+
+        getPage().waitForTimeout(2000);
+        int afterCountPoints = homePage.getProgressbarPointsNumber();
+        int afterCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
+
+        assertThat(homePage.getWeek1FirstCheckbox()).isChecked();
+
+        Assert.assertTrue(beforeCountPoints < afterCountPoints);
+        Assert.assertTrue(beforeCountSideMenuPoints < afterCountSideMenuPoints);
+        assertThat(homePage.getProgressbarPoints()).hasText(String.valueOf(beforeCountPoints + 818));
+        Assert.assertEquals(homePage.getProgressbarPointsText(), homePage.getProgressbarSideMenuPointsText());
     }
 }
