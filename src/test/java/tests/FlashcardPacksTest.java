@@ -38,10 +38,9 @@ public class FlashcardPacksTest extends BaseTest {
     public void testUserCanMarkCardsForRecheckingRandom() {
 
         PreconditionPage preconditionPage = new PreconditionPage(getPage(), getPlaywright());
-        String numberOfCardsForReCheckingBefore = preconditionPage.getCurrentNumberOfCardForRechecking();
-
         preconditionPage.resetCourseResults();
         preconditionPage.startTest(TestData.ONE);
+        String numberOfCardsForReCheckingBefore = preconditionPage.getCurrentNumberOfCardForRechecking();
 
         String numberOfCardsForReCheckingAfter = new TestTutorPage(getPage(), getPlaywright())
                 .clickAddToFlashCardButton()
