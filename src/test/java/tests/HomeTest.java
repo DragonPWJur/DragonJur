@@ -86,7 +86,6 @@ public class HomeTest extends BaseTest {
 
     @Test
     public void testStreaksModalWindowIsAppeared() {
-
         HomePage homePage = new HomePage(getPage(), getPlaywright())
                 .clickHomeMenu()
                 .clickStreaksButton();
