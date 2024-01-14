@@ -15,7 +15,6 @@ public class TestListPage extends SideMenuPage {
     private final Locator numberMarked = text("Marked").locator("span");
     private final Locator testDomain2Text = text("Test domain 2");
 
-
     public TestListPage(Page page, Playwright playwright) {
         super(page, playwright);
     }
