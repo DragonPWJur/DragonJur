@@ -61,8 +61,8 @@ abstract class BaseLocator extends BasePage {
         return getPage().getByRole(AriaRole.IMG, new Page.GetByRoleOptions().setName(text));
     }
 
-    protected void clickButton(String text) {
-        button(text).click();
+    protected Locator dialog() {
+        return getPage().getByRole(AriaRole.DIALOG);
     }
 
     protected Locator waitForListOfElementsLoaded(String string) {
@@ -71,11 +71,7 @@ abstract class BaseLocator extends BasePage {
         return list;
     }
 
-    protected Locator dialog() {
-        return getPage().getByRole(AriaRole.DIALOG);
-    }
-
-    protected  void cancelDialog() {
+    protected void cancelDialog() {
         if (dialog().isVisible()) {
             getPage().onDialog(Dialog::dismiss);
             button("Cancel").click();
