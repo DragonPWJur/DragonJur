@@ -56,14 +56,14 @@ public class HomeTest extends BaseTest {
 
     @Test
     public void testUponClickingCheckboxPointCountIncreases() {
+        new PreconditionPage(getPage(), getPlaywright())
+                .resetCourseResults();
+
         HomePage homePage = new HomePage(getPage(), getPlaywright())
                 .clickHomeMenu()
                 .clickTwoWeeksButton()
-                .focusWeek1Header()
-                .clickWeek1CheckboxIfVisible();
+                .focusWeek1Header();
 
-        getPage().reload();
-        getPage().waitForTimeout(3000);
         int beforeCountPoints = homePage.getProgressbarPointsNumber();
         int beforeCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
 
