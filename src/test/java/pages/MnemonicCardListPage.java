@@ -8,12 +8,9 @@ import utils.TestUtils;
 public class MnemonicCardListPage extends SideMenuPage {
     private final Locator listOfStacks = waitForListOfElementsLoaded("button:has(span)");
 
-
     protected MnemonicCardListPage(Page page, Playwright playwright) {
         super(page, playwright);
     }
-
-
 
     public String[] getRandomStackText() {
         String text = TestUtils.getRandomTextValue(listOfStacks);
