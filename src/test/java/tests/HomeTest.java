@@ -83,4 +83,14 @@ public class HomeTest extends BaseTest {
         assertThat(homePage.getProgressbarPoints()).hasText(String.valueOf(beforeCountPoints + 818));
         Assert.assertEquals(homePage.getProgressbarPointsText(), homePage.getProgressbarSideMenuPointsText());
     }
+
+    @Test
+    public void testStreaksModalWindowIsAppeared() {
+
+        HomePage homePage = new HomePage(getPage(), getPlaywright())
+                .clickHomeMenu()
+                .clickStreaksButton();
+
+        assertThat(homePage.getStreaksModalWindow()).isVisible();
+    }
 }
