@@ -72,7 +72,7 @@ public class HomeTest extends BaseTest {
         homePage
                 .clickWeek1FirstCheckbox();
 
-        getPage().waitForTimeout(3000);
+        getPage().waitForTimeout(2000);
         int afterCountPoints = homePage.getProgressbarPointsNumber();
         int afterCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
 
