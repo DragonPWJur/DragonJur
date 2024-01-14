@@ -33,4 +33,24 @@ public class FlashcardPacksTest extends BaseTest {
 
         Assert.assertEquals(numberOfCardsForReCheckingAfter, TestUtils.addNumber(numberOfCardsForReCheckingBefore, 1));
     }
+
+    @Test
+    public void testUserCanMarkCardsForRecheckingRandom() {
+
+        PreconditionPage preconditionPage = new PreconditionPage(getPage(), getPlaywright());
+        preconditionPage.resetCourseResults();
+        String numberOfCardsForReCheckingBefore = preconditionPage.getCurrentNumberOfCardForRechecking();
+        preconditionPage.startTest(TestData.ONE);        
+
+        String numberOfCardsForReCheckingAfter = new TestTutorPage(getPage(), getPlaywright())
+                .clickAddToFlashCardButton()
+                .clickEndButton()
+                .clickYesButton()
+                .clickSkipButton()
+                .clickCloseTheTestButton()
+                .clickFlashcardsMenu()
+                .getNumberMarkedForRechecking();
+
+        Assert.assertEquals(numberOfCardsForReCheckingAfter, TestUtils.addNumber(numberOfCardsForReCheckingBefore, 1));
+    }
 }
