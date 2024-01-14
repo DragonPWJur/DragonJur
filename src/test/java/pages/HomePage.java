@@ -6,23 +6,17 @@ import com.microsoft.playwright.Playwright;
 import static java.lang.Integer.parseInt;
 
 public class HomePage extends SideMenuPage {
-
     private final Locator studyThisButton = button("Study This");
+    private final Locator progressbarPoints = locator("div>svg.CircularProgressbar+div>span").first();
     private final Locator testsButton = exactButton("Tests");
     private final Locator homeButton = exactButton("Home");
     private final Locator week1Header = exactText("Week 1");
     private final Locator twoWeeksButton = exactButton("2 Weeks");
     private final Locator week1FirstCheckbox =exactText("Week 1").locator("~label").first();
-    private final Locator progressbarPoints = locator("div>svg.CircularProgressbar+div>span").first();
     private final Locator progressbarSideMenuPoints = locator("div:has(.CircularProgressbar)+span").first();
 
     public HomePage(Page page, Playwright playwright) {
         super(page, playwright);
-    }
-
-    public TestListPage clickTestsMenu() {
-        testsButton.click();
-        return new TestListPage(getPage(), getPlaywright());
     }
 
     public Locator getStudyThisButton() {
@@ -30,14 +24,19 @@ public class HomePage extends SideMenuPage {
         return studyThisButton;
     }
 
+    public Locator getProgressbarPoints() {
+
+        return progressbarPoints;
+    }
+
     public Locator getWeek1FirstCheckbox() {
 
         return week1FirstCheckbox;
     }
 
-    public Locator getProgressbarPoints() {
-
-        return progressbarPoints;
+    public TestListPage clickTestsMenu() {
+        testsButton.click();
+        return new TestListPage(getPage(), getPlaywright());
     }
 
     public HomePage clickHomeMenu() {

@@ -13,6 +13,7 @@ public class TestTutorPage extends SideMenuPage {
     private final  Locator endButton = exactButton("End");
     private final  Locator yesButton = exactButton("Yes");
     private final  Locator skipButton = exactButton("Skip");
+    private final  Locator reportAProblem = exactButton("Report a problem");
 
     public TestTutorPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -26,8 +27,13 @@ public class TestTutorPage extends SideMenuPage {
 
     public void clickRemoveFromFlashcardsButtonIfVisible() {
 
-        if (removeFromFlashcards.isVisible()) {
-            removeFromFlashcards.click();
+        reportAProblem.waitFor();
+        if (reportAProblem.isVisible()) {
+            if (removeFromFlashcards.isVisible()) {
+                removeFromFlashcards.click();
+            }
+        } else {
+            System.out.println("reportAProblem not visible");
         }
     }
 

@@ -38,4 +38,12 @@ public class PreconditionPage extends BasePage {
                 .clickSkipButton()
                 .clickCloseTheTestButton();
     }
+
+    public void resetCourseResults() {
+        new HomePage(getPage(), getPlaywright())
+                .clickProfileMenu()
+                .clickResetCourseResultsButton()
+                .clickYesButton()
+                .clickHomeMenu();
+    }
 }

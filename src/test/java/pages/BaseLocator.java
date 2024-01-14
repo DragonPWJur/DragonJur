@@ -76,6 +76,11 @@ abstract class BaseLocator extends BasePage {
         return list;
     }
 
+    protected Locator locator(String css) {
+
+        return getPage().locator(css);
+    }
+
     protected void cancelDialog() {
         if (dialog().isVisible()) {
             getPage().onDialog(Dialog::dismiss);
