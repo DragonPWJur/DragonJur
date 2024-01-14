@@ -10,9 +10,6 @@ public class FlashcardsPackIDTest extends BaseTest {
 
     @Test
     public void test_StartFlashCardPack() {
-        new HomePage(getPage(), getPlaywright())
-                .clickFlashcardsMenu();
-
         FlashcardPacksPage flashcardPacksPage = new HomePage(getPage(), getPlaywright())
                 .clickFlashcardsMenu();
 
