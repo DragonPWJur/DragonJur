@@ -2,10 +2,15 @@ package tests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.FlashcardPacksPage;
+import pages.FlashcardsPackIDPage;
+import pages.HomePage;
 import pages.PreconditionPage;
 import pages.TestTutorPage;
 import utils.TestData;
 import utils.TestUtils;
+
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class FlashcardPacksTest extends BaseTest {
 
@@ -53,4 +58,26 @@ public class FlashcardPacksTest extends BaseTest {
 
         Assert.assertEquals(numberOfCardsForReCheckingAfter, TestUtils.addNumber(numberOfCardsForReCheckingBefore, 1));
     }
+
+    @Test
+    public void test_StartFlashCardPack() {
+
+        FlashcardPacksPage flashcardPacksPage = new HomePage(getPage(), getPlaywright())
+                .clickFlashcardsMenu();
+
+        int randomIndex = TestUtils.getRandomNumber(flashcardPacksPage.getFlashcardsPacksToLearn());
+
+        new PreconditionPage(getPage(), getPlaywright())
+                .startFlashcardPack(randomIndex);
+
+        flashcardPacksPage
+                .clickRandomFlashcardPack(randomIndex)
+                .clickGotButton();
+
+        FlashcardsPackIDPage FlashcardsPackIDPage = new FlashcardsPackIDPage(getPage(), getPlaywright());
+
+        Assert.assertTrue(getPage().url().contains(TestData.FLASHCARDS_PACK_ID_END_POINT));
+        assertThat(FlashcardsPackIDPage.getQuestionHeading()).hasText(TestData.QUESTION);
+    }
+
 }
