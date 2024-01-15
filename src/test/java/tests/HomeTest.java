@@ -98,7 +98,6 @@ public class HomeTest extends BaseTest {
 
     @Test
     public void testTheSingleNonActiveCheckboxCanBeChecked() {
-
         Locator listCheckboxes = new PreconditionPage(getPage(), getPlaywright())
                 .checkboxUnderTheLearningSchedulerSection();
 
