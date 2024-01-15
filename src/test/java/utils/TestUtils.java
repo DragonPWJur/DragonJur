@@ -11,6 +11,7 @@ public class TestUtils {
         if (list.count() == 0) {
             return 0;
         }
+
         return new Random().nextInt(1, list.count());
     }
 
@@ -37,7 +38,7 @@ public class TestUtils {
         return getString(getInt(text) + number); 
     }
 
-    public static  <T> T getRandomValue(List<T> listValues) {
+    public static <T> T getRandomValue(List<T> listValues) {
         Random random = new Random();
 
         return listValues.get(random.nextInt(listValues.size()));
