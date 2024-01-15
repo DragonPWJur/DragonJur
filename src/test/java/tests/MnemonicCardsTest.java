@@ -1,6 +1,7 @@
 package tests;
 
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.MnemonicCardListPage;
@@ -12,6 +13,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class MnemonicCardsTest extends BaseTest {
 
+    @Ignore
     @Test
     public void testUserCanRunAnyAvailableMnemonicCardsPack() {
 

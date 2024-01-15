@@ -11,7 +11,7 @@ abstract class SideMenuPage extends BaseLocator{
     private final Locator testsButton = exactButton("Tests");
     private final Locator profileButton = exactButton("Profile");
     private final Locator mnemonicCardsButton = exactButton("Mnemonic cards");
-
+    private final Locator studyGuideButton = button("Study guide");
 
     protected SideMenuPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -42,5 +42,11 @@ abstract class SideMenuPage extends BaseLocator{
         mnemonicCardsButton.click();
 
         return new MnemonicCardListPage(getPage(), getPlaywright());
+    }
+
+    public StudyGuidePage clickStudyGuide() {
+        studyGuideButton.click();
+
+        return new StudyGuidePage(getPage(), getPlaywright());
     }
 }
