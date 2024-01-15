@@ -1,6 +1,9 @@
 package tests;
 
-import com.microsoft.playwright.*;
+import com.microsoft.playwright.Browser;
+import com.microsoft.playwright.BrowserContext;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.Playwright;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
@@ -85,9 +88,9 @@ public abstract class BaseTest {
             page.fill("form input:only-child", ProjectProperties.USERNAME);
             page.fill("input[type='password']", ProjectProperties.PASSWORD);
             page.click("button[type='submit']");
-
-            waitForPageLoad(TestData.HOME_END_POINT);
         }
+        waitForPageLoad(TestData.HOME_END_POINT);
+
         if (page.url().equals(ProjectProperties.BASE_URL + TestData.HOME_END_POINT)) {
             log("Login successful");
         } else {
