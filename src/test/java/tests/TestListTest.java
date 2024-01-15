@@ -1,6 +1,5 @@
 package tests;
 
-import com.microsoft.playwright.Locator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
