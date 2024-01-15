@@ -66,6 +66,10 @@ abstract class BaseLocator extends BasePage {
         return getPage().getByRole(AriaRole.IMG, new Page.GetByRoleOptions().setName(text));
     }
 
+    protected Locator dialog() {
+        return getPage().getByRole(AriaRole.DIALOG);
+    }
+
     protected Locator waitForListOfElementsLoaded(String string) {
         Locator list = getPage().locator(string);
         list.last().waitFor();
@@ -79,10 +83,6 @@ abstract class BaseLocator extends BasePage {
         return list;
     }
 
-    protected Locator dialog() {
-        return getPage().getByRole(AriaRole.DIALOG);
-    }
-
     protected void cancelDialog() {
         if (dialog().isVisible()) {
             getPage().onDialog(Dialog::dismiss);
@@ -90,7 +90,7 @@ abstract class BaseLocator extends BasePage {
         }
     }
 
-    protected Locator locator(String string) {
-        return getPage().locator(string);
+    protected Locator locator(String css) {
+        return getPage().locator(css);
     }
 }
