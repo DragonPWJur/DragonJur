@@ -1,12 +1,13 @@
 package utils;
 
-import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static utils.LoggerUtils.*;
 
 public class ReportUtils {
 
@@ -42,7 +43,7 @@ public class ReportUtils {
         return minutes + " min " + seconds + " sec " + milliseconds + " ms";
     }
 
-    public static String getReportHeader(ITestContext testContext) {
+    public static String getReportHeader() {
         String header = "\tT E S T     R E P O R T\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "\n";
         String currentDate = "\tDate:" + getCurrentDateTime() + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "\n";
 
@@ -50,11 +51,12 @@ public class ReportUtils {
     }
 
     public static String getTestStatistics(Method method, ITestResult testResult) {
-        return "\n\n" + getTestMethodNameWithInvocationCount(method, testResult)
+        return "\n" + getTestMethodNameWithInvocationCount(method, testResult)
                 + "   ----   " + getTestStatus(testResult) + "\t Run Time: " + getTestRunTime(testResult) + "\n";
     }
 
     public static String getTestMethodName(Method method) {
+        System.out.println(method.getName());
         return method.getDeclaringClass().getName() + "." + method.getName();
     }
 
@@ -64,5 +66,15 @@ public class ReportUtils {
             testMethodName += "(" + testResult.getMethod().getCurrentInvocationCount() + ")";
         }
         return testMethodName;
+    }
+
+    public static void logTestStatistic(Method method, ITestResult testResult) {
+        if (getTestStatus(testResult).equals("PASS")) {
+            logSuccess(getTestStatistics(method, testResult));
+        } else if (getTestStatus(testResult).equals("FAIL")) {
+            logError(ReportUtils.getTestStatistics(method, testResult));
+        } else {
+            logWarning(ReportUtils.getTestStatistics(method, testResult));
+        }
     }
 }
