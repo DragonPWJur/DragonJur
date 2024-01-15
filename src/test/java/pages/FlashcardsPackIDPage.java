@@ -20,10 +20,8 @@ public class FlashcardsPackIDPage extends SideMenuPage {
         return questionHeading;
     }
 
-    public FlashcardsPackIDPage clickGotButton() {
-        if (gotButton.isVisible()) {
-            gotButton.click();
-        }
+    public FlashcardsPackIDPage clickGotButtonIfVisible() {
+        gotButton.click();
         return this;
     }
 

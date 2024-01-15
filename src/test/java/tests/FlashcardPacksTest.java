@@ -73,7 +73,7 @@ public class FlashcardPacksTest extends BaseTest {
 
         flashcardPacksPage
                 .clickRandomFlashcardPack(randomIndex)
-                .clickGotButton();
+                .clickGotButtonIfVisible();
 
         FlashcardsPackIDPage FlashcardsPackIDPage = new FlashcardsPackIDPage(getPage(), getPlaywright());
 

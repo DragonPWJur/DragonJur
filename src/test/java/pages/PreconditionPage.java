@@ -62,7 +62,7 @@ public class PreconditionPage extends BasePage {
 
         flashcardPacksPage
                 .clickRandomFlashcardPack(randomIndex)
-                .clickGotButton()
+                .clickGotButtonIfVisible()
                 .clickFlashcardsBackButton()
                 .clickYesButton();
     }
