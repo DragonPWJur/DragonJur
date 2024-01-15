@@ -1,18 +1,14 @@
 package tests;
 
 import com.microsoft.playwright.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-import utils.BrowserManager;
-import utils.ProjectProperties;
-import utils.ReportUtils;
+import utils.*;
 
 import java.lang.reflect.Method;
-import java.nio.file.Paths;
 
+import static utils.LoggerUtils.*;
 
 @Listeners(utils.ExceptionListener.class)
 public abstract class BaseTest {
@@ -20,76 +16,81 @@ public abstract class BaseTest {
     private final Browser browser = BrowserManager.createBrowser(playwright);
     private BrowserContext context;
     private Page page;
-    public static Logger log = LogManager.getLogger();
 
     @BeforeSuite
     protected void launchBrowser(ITestContext testContext) {
-        log.info(ReportUtils.getReportHeader(testContext));
+        log("Playwright and Browser initialized");
+
+        log(ReportUtils.getReportHeader());
+
         if (browser.isConnected()) {
-            log.info("BROWSER " + browser.browserType().name().toUpperCase() + " LAUNCHED\n");
+            log("Browser " + browser.browserType().name().toUpperCase() + " launched\n");
+        } else {
+            logFatal("FATAL: BROWSER " + browser.browserType().name().toUpperCase() + " IS NOT CONNECTED\n");
+            System.exit(1);
         }
     }
 
     @BeforeMethod
     protected void createContextAndPage(Method method) {
-        log.info("RUN " + ReportUtils.getTestMethodName(method));
-        context = browser.newContext(new Browser.NewContextOptions()
-                .setViewportSize(ProjectProperties.SCREEN_SIZE_WIDTH, ProjectProperties.SCREEN_SIZE_HEIGHT)
-                .setRecordVideoDir(Paths.get("videos/"))
-                .setRecordVideoSize(1280, 720)
-        );
-        context.tracing().start(
-                new Tracing.StartOptions()
-                        .setScreenshots(true)
-                        .setSnapshots(true)
-                        .setSources(true)
-        );
+        log("Run " + ReportUtils.getTestMethodName(method));
+
+        context = BrowserManager.createContext(browser);
+        log("Context created");
+
+        TracingUtils.startTracing(context);
+        log("Tracing started");
+
         page = context.newPage();
-        log.info("CONTEXT AND PAGE CREATED");
+        log("Page created");
+
         page.navigate(ProjectProperties.BASE_URL);
-        log.info("BASE URL OPENED");
+        log("Base URL opened");
+
         login();
-        log.info("LOGIN SUCCESSFUL");
     }
 
     @AfterMethod
     protected void closeContext(Method method, ITestResult testResult) {
-        Tracing.StopOptions tracingStopOptions = null;
-        String testMethodName = ReportUtils.getTestMethodNameWithInvocationCount(method, testResult);
+        ReportUtils.logTestStatistic(method, testResult);
 
-        log.info(ReportUtils.getTestStatistics(method, testResult));
         page.close();
-        log.info("PAGE CLOSED");
+        log("Page closed");
 
-        if (!testResult.isSuccess()) {
-            if (ProjectProperties.TRACING_MODE) {
-                tracingStopOptions = new Tracing.StopOptions()
-                        .setPath(Paths.get("testTracing/" + testMethodName + ".zip"));
-                log.info("TRACING SAVED");
-            }
-            if (ProjectProperties.VIDEO_MODE) {
-                page.video().saveAs(Paths.get("videos/" + testMethodName + ".webm"));
-                log.info("VIDEO SAVED");
-            }
-        }
-        context.tracing().stop(tracingStopOptions);
-        page.video().delete();
+        TracingUtils.stopTracing(page, context, method, testResult);
+        log("Tracing stopped");
+
         context.close();
-        log.info("CONTEXT CLOSED" + ReportUtils.END_LINE);
+        log("Context closed" + ReportUtils.END_LINE);
     }
 
     @AfterSuite
     protected void closeBrowser() {
         browser.close();
-        log.info("BROWSER CLOSED");
+        log("Browser closed");
+
         playwright.close();
-        log.info("PLAYWRIGHT CLOSED");
+        log("Playwright closed");
     }
 
     private void login() {
-        page.locator("//span[text()='Email']/../div/input").fill(ProjectProperties.USERNAME);
-        page.locator("//input[@type='password']").fill(ProjectProperties.PASSWORD);
-        page.locator("//button[@type='submit']").click();
+        if(!page.url().equals(ProjectProperties.BASE_URL + TestData.SIGN_IN_END_POINT)) {
+            waitForPageLoad(TestData.SIGN_IN_END_POINT);
+        } else {
+            log("On " + TestData.SIGN_IN_END_POINT);
+        }
+
+        page.fill("form input:only-child", ProjectProperties.USERNAME);
+        page.fill("input[type='password']", ProjectProperties.PASSWORD);
+        page.click("button[type='submit']");
+
+        waitForPageLoad(TestData.HOME_END_POINT);
+
+        if(page.url().equals(ProjectProperties.BASE_URL + TestData.HOME_END_POINT)) {
+            log("Login successful");
+        } else {
+            logError("ERROR: Unsuccessful login");
+        }
     }
 
     protected Page getPage() {

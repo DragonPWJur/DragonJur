@@ -38,4 +38,32 @@ public class PreconditionPage extends BasePage {
                 .clickSkipButton()
                 .clickCloseTheTestButton();
     }
+
+    public void resetCourseResults() {
+        new HomePage(getPage(), getPlaywright())
+                .clickProfileMenu()
+                .clickResetCourseResultsButton()
+                .clickYesButton()
+                .clickHomeMenu();
+    }
+
+    public void startTest(String numberOfQuestions) {
+        new HomePage(getPage(), getPlaywright())
+                .clickTestsMenu()
+                .cancelDialogIfVisible()
+                .clickDomainsButton()
+                .clickRandomCheckbox()
+                .inputNumberOfQuestions(numberOfQuestions)
+                .clickGenerateAndStartButton();
+    }
+
+    public void startFlashcardPack(int randomIndex) {
+        FlashcardPacksPage flashcardPacksPage = new HomePage(getPage(), getPlaywright()).clickFlashcardsMenu();
+
+        flashcardPacksPage
+                .clickRandomFlashcardPack(randomIndex)
+                .clickGotButtonIfVisible()
+                .clickFlashcardsBackButton()
+                .clickYesButton();
+    }
 }
