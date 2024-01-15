@@ -1,5 +1,7 @@
 package utils;
 
+import static utils.ProjectProperties.BASE_URL;
+
 public class TestData {
 
       public static final String TEST_TUTOR_END_POINT = "/test-tutor";

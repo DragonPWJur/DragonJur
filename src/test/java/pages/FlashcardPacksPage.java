@@ -9,7 +9,7 @@ import java.util.List;
 public class FlashcardPacksPage extends SideMenuPage {
 
     private final Locator markedForRecheckingButton = button("Marked for re-checking").locator("div:nth-of-type(2)");
-    protected final Locator flashcardsPacksToLearn = getPage().locator("//div[contains(text(),'Learned')]");
+    protected final Locator flashcardsPacksToLearn = waitForListOfElementsLoaded("//div[contains(text(),'Learned')]");
 
     public FlashcardPacksPage(Page page, Playwright playwright) {
         super(page, playwright);

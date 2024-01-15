@@ -11,6 +11,7 @@ import utils.TestData;
 import utils.TestUtils;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static utils.ProjectProperties.BASE_URL;
 
 public class FlashcardPacksTest extends BaseTest {
 
@@ -76,7 +77,7 @@ public class FlashcardPacksTest extends BaseTest {
 
         FlashcardsPackIDPage FlashcardsPackIDPage = new FlashcardsPackIDPage(getPage(), getPlaywright());
 
-        Assert.assertTrue(getPage().url().contains(TestData.FLASHCARDS_PACK_ID_END_POINT));
+        Assert.assertTrue(getPage().url().contains(BASE_URL + TestData.FLASHCARDS_PACK_ID_END_POINT));
         assertThat(FlashcardsPackIDPage.getQuestionHeading()).hasText(TestData.QUESTION);
     }
 
