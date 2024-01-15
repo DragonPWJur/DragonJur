@@ -7,13 +7,15 @@ import static java.lang.Integer.parseInt;
 
 public class HomePage extends SideMenuPage {
     private final Locator studyThisButton = button("Study This");
-    private final Locator progressbarPoints = locator("div>svg.CircularProgressbar+div>span").first();
     private final Locator testsButton = exactButton("Tests");
     private final Locator homeButton = exactButton("Home");
     private final Locator week1Header = exactText("Week 1");
     private final Locator twoWeeksButton = exactButton("2 Weeks");
     private final Locator week1FirstCheckbox =exactText("Week 1").locator("~label").first();
+    private final Locator progressbarPoints = locator("div>svg.CircularProgressbar+div>span").first();
     private final Locator progressbarSideMenuPoints = locator("div:has(.CircularProgressbar)+span").first();
+    private final Locator streaksButton = getPage().locator("button>svg+p").last();
+    private final Locator streaksModalWindow = getPage().locator("div[role='dialog']");
 
     public HomePage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -32,6 +34,11 @@ public class HomePage extends SideMenuPage {
     public Locator getWeek1FirstCheckbox() {
 
         return week1FirstCheckbox;
+    }
+
+    public Locator getStreaksModalWindow() {
+
+        return streaksModalWindow;
     }
 
     public TestListPage clickTestsMenu() {
@@ -91,5 +98,11 @@ public class HomePage extends SideMenuPage {
         String pointsText = getProgressbarSideMenuPointsText();
 
         return parseInt(pointsText);
+    }
+
+    public HomePage clickStreaksButton() {
+        streaksButton.click();
+
+        return this;
     }
 }

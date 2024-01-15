@@ -42,4 +42,10 @@ public class TestUtils {
 
         return listValues.get(random.nextInt(listValues.size()));
     }
+
+    public static String getRandomTextValue(Locator listValues) {
+
+        return listValues.all().get(getRandomNumber(listValues)).innerText();
+    }
 }
+

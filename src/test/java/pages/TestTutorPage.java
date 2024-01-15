@@ -19,6 +19,10 @@ public class TestTutorPage extends SideMenuPage {
         super(page, playwright);
     }
 
+    public Locator getRemoveFromMarkedButton() {
+        return removeFromMarkedButton;
+    }
+
     public TestTutorPage clickAddToFlashCardButton() {
         addToFlashcardButton.click();
 
@@ -35,6 +39,12 @@ public class TestTutorPage extends SideMenuPage {
         } else {
             System.out.println("reportAProblem not visible");
         }
+    }
+
+    public TestTutorPage clickMarkForReviewButton() {
+        markForReviewButton.click();
+
+        return this;
     }
 
     public TestTutorPage clickEndButton() {
