@@ -19,6 +19,10 @@ public class TestListPage extends SideMenuPage {
         super(page, playwright);
     }
 
+    public Locator getNumberMarked() {
+        return numberMarked;
+    }
+
     public TestListPage clickDomainsButton() {
         if (!domainsButton.isChecked()) {
             domainsButton.click();
