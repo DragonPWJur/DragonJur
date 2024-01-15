@@ -76,9 +76,11 @@ abstract class BaseLocator extends BasePage {
         return list;
     }
 
-    protected Locator locator(String css) {
+    public Locator waitForListLoadedGetByText(String string) {
+        Locator list = getPage().getByText(string);
+        list.last().waitFor();
 
-        return getPage().locator(css);
+        return list;
     }
 
     protected void cancelDialog() {
@@ -86,5 +88,9 @@ abstract class BaseLocator extends BasePage {
             getPage().onDialog(Dialog::dismiss);
             button("Cancel").click();
         }
+    }
+
+    protected Locator locator(String css) {
+        return getPage().locator(css);
     }
 }
