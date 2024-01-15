@@ -58,7 +58,7 @@ public class ProjectProperties {
         return properties;
     }
 
-    static boolean isServerRun() {
+    public static boolean isServerRun() {
         return System.getenv("CI_RUN") != null;
     }
 }

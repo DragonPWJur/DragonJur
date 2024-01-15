@@ -7,6 +7,8 @@ import com.microsoft.playwright.Playwright;
 
 import java.nio.file.Paths;
 
+import static utils.ProjectProperties.isServerRun;
+
 public class BrowserManager {
     public static Browser createBrowser(Playwright playwright) {
 
@@ -36,10 +38,20 @@ public class BrowserManager {
     }
 
     public static BrowserContext createContext(Browser browser) {
-        return browser.newContext(new Browser.NewContextOptions()
-                .setViewportSize(ProjectProperties.SCREEN_SIZE_WIDTH, ProjectProperties.SCREEN_SIZE_HEIGHT)
-                .setRecordVideoDir(Paths.get("videos/"))
-                .setRecordVideoSize(1280, 720)
-        );
+
+        if (isServerRun()) {
+            return browser.newContext(new Browser.NewContextOptions()
+                    .setViewportSize(ProjectProperties.SCREEN_SIZE_WIDTH, ProjectProperties.SCREEN_SIZE_HEIGHT)
+                    .setRecordVideoDir(Paths.get("videos/"))
+                    .setRecordVideoSize(1280, 720)
+                    .setStorageStatePath(Paths.get("src/test/resources/state1000.json"))
+            );
+        } else {
+            return browser.newContext(new Browser.NewContextOptions()
+                    .setViewportSize(ProjectProperties.SCREEN_SIZE_WIDTH, ProjectProperties.SCREEN_SIZE_HEIGHT)
+                    .setRecordVideoDir(Paths.get("videos/"))
+                    .setRecordVideoSize(1280, 720)
+            );
+        }
     }
 }

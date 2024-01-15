@@ -9,6 +9,7 @@ import utils.*;
 import java.lang.reflect.Method;
 
 import static utils.LoggerUtils.*;
+import static utils.ProjectProperties.isServerRun;
 
 @Listeners(utils.ExceptionListener.class)
 public abstract class BaseTest {
@@ -74,19 +75,20 @@ public abstract class BaseTest {
     }
 
     private void login() {
-        if(!page.url().equals(ProjectProperties.BASE_URL + TestData.SIGN_IN_END_POINT)) {
-            waitForPageLoad(TestData.SIGN_IN_END_POINT);
-        } else {
-            log("On " + TestData.SIGN_IN_END_POINT);
+        if (!isServerRun()) {
+            if (!page.url().equals(ProjectProperties.BASE_URL + TestData.SIGN_IN_END_POINT)) {
+                waitForPageLoad(TestData.SIGN_IN_END_POINT);
+            } else {
+                log("On " + TestData.SIGN_IN_END_POINT);
+            }
+
+            page.fill("form input:only-child", ProjectProperties.USERNAME);
+            page.fill("input[type='password']", ProjectProperties.PASSWORD);
+            page.click("button[type='submit']");
+
+            waitForPageLoad(TestData.HOME_END_POINT);
         }
-
-        page.fill("form input:only-child", ProjectProperties.USERNAME);
-        page.fill("input[type='password']", ProjectProperties.PASSWORD);
-        page.click("button[type='submit']");
-
-        waitForPageLoad(TestData.HOME_END_POINT);
-
-        if(page.url().equals(ProjectProperties.BASE_URL + TestData.HOME_END_POINT)) {
+        if (page.url().equals(ProjectProperties.BASE_URL + TestData.HOME_END_POINT)) {
             log("Login successful");
         } else {
             logError("ERROR: Unsuccessful login");
