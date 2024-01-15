@@ -16,9 +16,21 @@ public class HomePage extends SideMenuPage {
     private final Locator progressbarSideMenuPoints = locator("div:has(.CircularProgressbar)+span").first();
     private final Locator streaksButton = getPage().locator("button>svg+p").last();
     private final Locator streaksModalWindow = getPage().locator("div[role='dialog']");
+    private final Locator listOfTimeButton = getPage().locator("span+div>div>button");
+    private final Locator listCheckboxes = waitForListOfElementsLoaded("label:has(input)");
 
     public HomePage(Page page, Playwright playwright) {
         super(page, playwright);
+    }
+
+    public Locator getListCheckboxes() {
+
+        return listCheckboxes;
+    }
+
+    public Locator getListOfTimeButton() {
+
+        return listOfTimeButton;
     }
 
     public Locator getStudyThisButton() {
@@ -104,5 +116,19 @@ public class HomePage extends SideMenuPage {
         streaksButton.click();
 
         return this;
+    }
+    public HomePage checkNthCheckbox(int number) {
+        listCheckboxes.nth(number).click();
+
+        return this;
+    }
+
+    public Locator getNthCheckbox(int number) {
+
+        return listCheckboxes.nth(number);
+    }
+
+    public void clickNthTimeButton(int number) {
+        listOfTimeButton.nth(number).click();
     }
 }

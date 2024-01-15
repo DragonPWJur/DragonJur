@@ -1,7 +1,9 @@
 package pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import utils.TestUtils;
 
 public class PreconditionPage extends BasePage {
 
@@ -65,5 +67,18 @@ public class PreconditionPage extends BasePage {
                 .clickGotButtonIfVisible()
                 .clickFlashcardsBackButton()
                 .clickYesButton();
+    }
+
+    public Locator checkboxUnderTheLearningSchedulerSection() {
+        resetCourseResults();
+
+        Locator listOfTimeButton = new HomePage(getPage(), getPlaywright())
+                .getListOfTimeButton();
+
+        new HomePage(getPage(), getPlaywright())
+                .clickNthTimeButton(TestUtils.getRandomInt(0, listOfTimeButton.count()));
+
+        return new HomePage(getPage(), getPlaywright())
+                .getListCheckboxes();
     }
 }

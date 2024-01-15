@@ -1,5 +1,6 @@
 package tests;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import org.testng.Assert;
@@ -8,6 +9,8 @@ import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.PreconditionPage;
 import utils.ProjectProperties;
+import utils.TestData;
+import utils.TestUtils;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
@@ -91,5 +94,27 @@ public class HomeTest extends BaseTest {
                 .clickStreaksButton();
 
         assertThat(homePage.getStreaksModalWindow()).isVisible();
+    }
+
+    @Test
+    public void testTheSingleNonActiveCheckboxCanBeChecked() {
+
+        Locator listCheckboxes = new PreconditionPage(getPage(), getPlaywright())
+                .checkboxUnderTheLearningSchedulerSection();
+
+        boolean allUnchecked = listCheckboxes.all().stream().noneMatch(Locator::isChecked);
+
+        Assert.assertTrue(listCheckboxes.count() > 0);
+        Assert.assertTrue(allUnchecked);
+
+        int randomCheckbox = TestUtils.getRandomInt(0, listCheckboxes.count());
+        Locator checkedCheckbox = new HomePage(getPage(), getPlaywright())
+                .checkNthCheckbox(randomCheckbox)
+                .getNthCheckbox(randomCheckbox);
+
+        Locator checkedCheckboxImage = checkedCheckbox.locator(TestData.CHECKBOX_IMAGE_LOCATOR);
+
+        assertThat(checkedCheckbox).isChecked();
+        assertThat(checkedCheckboxImage).hasAttribute(TestData.ATTRIBUTE_FILL, TestData.COLOR_CHECKED_CHECKBOX);
     }
 }
