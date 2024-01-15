@@ -51,7 +51,9 @@ public class TestListPage extends SideMenuPage {
     }
 
     public TestListPage cancelDialogIfVisible() {
-        cancelDialog();
+        if(dialog().isVisible()) {
+            cancelDialog();
+        }
         return this;
     }
 
