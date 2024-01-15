@@ -17,7 +17,7 @@ public class TestListPage extends SideMenuPage {
     private final Locator chaptersButton = text("Chapters");
     private final Locator timedButton = exactButton("Timed");
     private final Locator startTestButton = exactButton("Start test");
-    private final Locator startTButtonModalWindowWithQuestions = exactButton("Start");
+    private final Locator startTButton = exactButton("Start");
 
     public TestListPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -51,9 +51,7 @@ public class TestListPage extends SideMenuPage {
     }
 
     public TestListPage cancelDialogIfVisible() {
-        if(dialog().isVisible()) {
-            cancelDialog();
-        }
+        cancelDialog();
         return this;
     }
 
@@ -75,19 +73,19 @@ public class TestListPage extends SideMenuPage {
         return this;
     }
 
-    public TestListPage clickStartTestButtonModalTimedTest() {
+    public TestListPage clickStartTestButton() {
         startTestButton.click();
 
         return this;
     }
 
-    public TestTimedPage clickStartOnTheModalWindowWithQuestions() {
-        startTButtonModalWindowWithQuestions.click();
+    public TestTimedPage clickStartButton() {
+        startTButton.click();
 
         return new TestTimedPage(getPage(), getPlaywright());
     }
 
-    public TestListPage clickGenerateStartButton() {
+    public TestListPage clickGenerateAndStartButton1() {
         generateAndStartButton.click();
         return this;
     }
