@@ -17,7 +17,7 @@ public class TestListPage extends SideMenuPage {
     private final Locator chaptersButton = text("Chapters");
     private final Locator timedButton = exactButton("Timed");
     private final Locator startTestButton = exactButton("Start test");
-    private final Locator startTButton = exactButton("Start");
+    private final Locator startButton = exactButton("Start");
 
     public TestListPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -80,7 +80,7 @@ public class TestListPage extends SideMenuPage {
     }
 
     public TestTimedPage clickStartButton() {
-        startTButton.click();
+        startButton.click();
 
         return new TestTimedPage(getPage(), getPlaywright());
     }

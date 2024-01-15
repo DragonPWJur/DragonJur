@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestTimedPage extends SideMenuPage {
-    private final Locator radioButtonLocator = radio();
-    private final List<Locator> radioButtons = new ArrayList<>();
+    private final List<Locator> radioButtons = radio().all();
     private final Locator timer = locator("header div div:has(button)>div");
     private final Locator questionMarkText = text("?");
 
@@ -18,10 +17,6 @@ public class TestTimedPage extends SideMenuPage {
     }
 
     public int getAnswersCount() {
-        for (int i = 0; i < radioButtonLocator.count(); i++) {
-            radioButtons.add(radioButtonLocator);
-        }
-
         return radioButtons.size();
     }
 
