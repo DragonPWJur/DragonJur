@@ -4,7 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
-public class TestsPage extends BaseLocator {
+public class TestsPage extends SideMenuPage {
 
     private final Locator testQuestion = getPage().locator("#root form span");
     private final Locator testRadioButtons = radio();
