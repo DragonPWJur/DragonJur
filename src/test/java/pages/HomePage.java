@@ -16,8 +16,6 @@ public class HomePage extends SideMenuPage {
     private final Locator progressbarSideMenuPoints = locator("div:has(.CircularProgressbar)+span").first();
     private final Locator streaksButton = getPage().locator("button>svg+p").last();
     private final Locator streaksModalWindow = getPage().locator("div[role='dialog']");
-    private final Locator studyGuideButton = button("Study guide");
-
 
     public HomePage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -106,11 +104,5 @@ public class HomePage extends SideMenuPage {
         streaksButton.click();
 
         return this;
-    }
-
-    public StudyGuidePage clickStudyGuide() {
-        studyGuideButton.click();
-
-        return new StudyGuidePage(getPage(), getPlaywright());
     }
 }
