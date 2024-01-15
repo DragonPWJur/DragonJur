@@ -56,4 +56,14 @@ public class PreconditionPage extends BasePage {
                 .inputNumberOfQuestions(numberOfQuestions)
                 .clickGenerateAndStartButton();
     }
+
+    public void startFlashcardPack(int randomIndex) {
+        FlashcardPacksPage flashcardPacksPage = new HomePage(getPage(), getPlaywright()).clickFlashcardsMenu();
+
+        flashcardPacksPage
+                .clickRandomFlashcardPack(randomIndex)
+                .clickGotButtonIfVisible()
+                .clickFlashcardsBackButton()
+                .clickYesButton();
+    }
 }

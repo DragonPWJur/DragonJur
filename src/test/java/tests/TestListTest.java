@@ -31,6 +31,24 @@ public class TestListTest extends BaseTest {
     }
 
     @Test
+    public void testTutorModeWithRandomCheckboxInChapter() {
+        TestsPage testsPage = new HomePage(getPage(), getPlaywright())
+                .clickTestsMenu()
+                .cancelDialogIfVisible()
+                .clickChaptersButton()
+                .clickRandomCheckbox()
+                .clickTutorButton()
+                .inputNumberOfQuestions("1")
+                .clickGenerateAndStartButton();
+
+        waitForPageLoad(TestData.TEST_TUTOR_END_POINT);
+
+        assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
+//        assertThat(testsPage.getTestQuestion()).containsText("?");
+        Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
+    }
+
+    @Test
     public void testRunTimedMode() {
           TestTimedPage testTimedPage  = new HomePage(getPage(), getPlaywright())
                 .clickTestsMenu()

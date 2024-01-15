@@ -14,6 +14,7 @@ public class TestListPage extends SideMenuPage {
     private final Locator listCheckboxes = waitForListOfElementsLoaded("button:has(input[type='checkbox'])");
     private final Locator numberMarked = text("Marked").locator("span");
     private final Locator testDomain2Text = text("Test domain 2");
+    private final Locator chaptersButton = text("Chapters");
     private final Locator timedButton = exactButton("Timed");
     private final Locator startTestButton = exactButton("Start test");
     private final Locator startTButtonModalWindowWithQuestions = exactButton("Start");
@@ -56,6 +57,13 @@ public class TestListPage extends SideMenuPage {
 
     public TestListPage clickTestDomain2CheckBox() {
         testDomain2Text.click();
+        return this;
+    }
+
+    public TestListPage clickChaptersButton() {
+        if (!chaptersButton.isChecked()) {
+            chaptersButton.click();
+        }
         return this;
     }
 
