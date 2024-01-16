@@ -22,4 +22,17 @@ public class TestTutorTest extends BaseTest  {
 
         assertThat(removeFromMarkedButton).isVisible();
     }
+
+    @Test
+    public void testSuccessfulReportSubmission() {
+        new PreconditionPage(getPage(), getPlaywright()).startTest(TestData.ONE);
+
+        TestTutorPage testTutorPage = new TestTutorPage(getPage(), getPlaywright())
+                .clickReportButton()
+                .inputSymbolsIntoReportAProblemTextarea()
+                .clickSendButton();
+
+        assertThat(testTutorPage.getReportAProblemModal()).isVisible();
+        assertThat(testTutorPage.getReportSentSuccessfullyMessage()).hasText(TestData.REPORT_MESSAGE);
+    }
 }

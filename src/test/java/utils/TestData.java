@@ -16,4 +16,6 @@ public class TestData {
       public final static String BACKGROUND_COLOR = "background-color";
       public final static String RGBA_62_48_179_0_2 = "rgba(62, 48, 179, 0.2)";
       public final static String RGBA_0_0_0_0 = "rgba(0, 0, 0, 0)";
+      public final static String candidateChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+      public final static String REPORT_MESSAGE = "The report has been sent successfully";
 }
