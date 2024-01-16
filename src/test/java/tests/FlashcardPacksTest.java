@@ -1,17 +1,17 @@
 package tests;
 
-import com.microsoft.playwright.Dialog;
-import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.*;
+import pages.FlashcardPacksPage;
+import pages.FlashcardsPackIDPage;
+import pages.HomePage;
+import pages.PreconditionPage;
+import pages.TestTutorPage;
+import utils.ProjectProperties;
 import utils.TestData;
 import utils.TestUtils;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static utils.ProjectProperties.BASE_URL;
 
 public class FlashcardPacksTest extends BaseTest {
 
@@ -45,11 +45,8 @@ public class FlashcardPacksTest extends BaseTest {
 
         PreconditionPage preconditionPage = new PreconditionPage(getPage(), getPlaywright());
         preconditionPage.resetCourseResults();
-        new ProfilePage(getPage(), getPlaywright())
-                .closeNotification();
-
         String numberOfCardsForReCheckingBefore = preconditionPage.getCurrentNumberOfCardForRechecking();
-        preconditionPage.startTest(TestData.ONE);
+        preconditionPage.startTest(TestData.ONE);        
 
         String numberOfCardsForReCheckingAfter = new TestTutorPage(getPage(), getPlaywright())
                 .clickAddToFlashCardButton()
@@ -72,7 +69,7 @@ public class FlashcardPacksTest extends BaseTest {
         int randomIndex = TestUtils.getRandomNumber(flashcardPacksPage.getFlashcardsPacksToLearn());
 
         new PreconditionPage(getPage(), getPlaywright())
-                .startFlashcardPack(randomIndex);
+                .startFlashcardPackAndGoBack(randomIndex);
 
         flashcardPacksPage
                 .clickRandomFlashcardPack(randomIndex)
@@ -80,7 +77,7 @@ public class FlashcardPacksTest extends BaseTest {
 
         FlashcardsPackIDPage FlashcardsPackIDPage = new FlashcardsPackIDPage(getPage(), getPlaywright());
 
-        Assert.assertTrue(getPage().url().contains(BASE_URL + TestData.FLASHCARDS_PACK_ID_END_POINT));
+        Assert.assertTrue(getPage().url().contains(ProjectProperties.BASE_URL + TestData.FLASHCARDS_PACK_ID_END_POINT));
         assertThat(FlashcardsPackIDPage.getQuestionHeading()).hasText(TestData.QUESTION);
     }
 
