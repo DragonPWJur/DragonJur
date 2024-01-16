@@ -5,13 +5,16 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import utils.TestUtils;
 
-public class TestListPage extends BaseLocator {
+public class TestListPage extends SideMenuPage {
 
     private final Locator domainsButton = text("Domains");
     private final Locator tutorButton = button("Tutor");
     private final Locator numberOfQuestionsInputField = getPage().locator("input[name = 'numberOfQuestions']");
     private final Locator generateAndStartButton = button("Generate & Start");
     private final Locator listCheckboxes = waitForListOfElementsLoaded("button:has(input[type='checkbox'])");
+    private final Locator numberMarked = text("Marked").locator("span");
+    private final Locator testDomain2Text = text("Test domain 2");
+    private final Locator chaptersButton = text("Chapters");
 
     public TestListPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -46,6 +49,18 @@ public class TestListPage extends BaseLocator {
 
     public TestListPage cancelDialogIfVisible() {
         cancelDialog();
+        return this;
+    }
+
+    public TestListPage clickTestDomain2CheckBox() {
+        testDomain2Text.click();
+        return this;
+    }
+
+    public TestListPage clickChaptersButton() {
+        if (!chaptersButton.isChecked()) {
+            chaptersButton.click();
+        }
         return this;
     }
 }
