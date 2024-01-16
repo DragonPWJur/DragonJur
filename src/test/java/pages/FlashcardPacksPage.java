@@ -3,13 +3,12 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
-
-import java.util.List;
+import utils.TestUtils;
 
 public class FlashcardPacksPage extends SideMenuPage {
 
     private final Locator markedForRecheckingButton = button("Marked for re-checking").locator("div:nth-of-type(2)");
-    protected final Locator flashcardsPacksToLearn = waitForListOfElementsLoaded("//div[contains(text(),'Learned')]");
+    protected final Locator flashcardsPacksToLearn = locator("//div[contains(text(),'Learned')]");
 
     public FlashcardPacksPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -20,17 +19,12 @@ public class FlashcardPacksPage extends SideMenuPage {
     }
 
     public Locator getFlashcardsPacksToLearn() {
-
-        return flashcardsPacksToLearn;
+        return waitForListOfElementsLoaded(flashcardsPacksToLearn);
     }
 
-    public List<Locator> allFlashcardsPacksToLearn() {
-
-        return flashcardsPacksToLearn.all();
-    }
-
-    public FlashcardsPackIDPage clickRandomFlashcardPack(int randomIndex) {
-        allFlashcardsPacksToLearn().get(randomIndex).click();
+    public FlashcardsPackIDPage clickRandomFlashcardPack() {
+        int randomIndex = TestUtils.getRandomNumber(getFlashcardsPacksToLearn());
+        getFlashcardsPacksToLearn().nth(randomIndex).click();
 
         return new FlashcardsPackIDPage(getPage(), getPlaywright());
     }

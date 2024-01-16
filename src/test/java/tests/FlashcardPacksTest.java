@@ -66,13 +66,11 @@ public class FlashcardPacksTest extends BaseTest {
         FlashcardPacksPage flashcardPacksPage = new HomePage(getPage(), getPlaywright())
                 .clickFlashcardsMenu();
 
-        int randomIndex = TestUtils.getRandomNumber(flashcardPacksPage.getFlashcardsPacksToLearn());
-
         new PreconditionPage(getPage(), getPlaywright())
-                .startFlashcardPackAndGoBack(randomIndex);
+                .startFlashcardPackAndGoBack();
 
         flashcardPacksPage
-                .clickRandomFlashcardPack(randomIndex)
+                .clickRandomFlashcardPack()
                 .clickGotButtonIfVisible();
 
         FlashcardsPackIDPage FlashcardsPackIDPage = new FlashcardsPackIDPage(getPage(), getPlaywright());
