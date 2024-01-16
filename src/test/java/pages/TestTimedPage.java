@@ -4,11 +4,10 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class TestTimedPage extends SideMenuPage {
-    private final List<Locator> radioButtons = radio().all();
+    private final Locator radioButtons = waitForLocatorOfElementsLoaded(radio());
     private final Locator timer = locator("header div div:has(button)>div");
     private final Locator questionMarkText = text("?");
 
@@ -17,7 +16,7 @@ public class TestTimedPage extends SideMenuPage {
     }
 
     public int getAnswersCount() {
-        return radioButtons.size();
+        return radioButtons.count();
     }
 
     public Locator getTimer() {

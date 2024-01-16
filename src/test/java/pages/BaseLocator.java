@@ -75,6 +75,11 @@ abstract class BaseLocator extends BasePage {
         list.last().waitFor();
         return list;
     }
+    protected Locator waitForLocatorOfElementsLoaded(Locator locator) {
+        locator.last().waitFor();
+
+        return locator;
+    }
 
     public Locator waitForListLoadedGetByText(String string) {
         Locator list = getPage().getByText(string);
@@ -84,7 +89,7 @@ abstract class BaseLocator extends BasePage {
     }
 
     protected void cancelDialog() {
-        if (dialog().isVisible()) {
+        if (dialog().isVisible() && button("Cancel").isVisible()) {
             getPage().onDialog(Dialog::dismiss);
             button("Cancel").click();
         }
