@@ -63,4 +63,9 @@ public class TestListPage extends SideMenuPage {
         }
         return this;
     }
+
+    public TestTutorPage clickGenerateAndStartButton1() {
+        generateAndStartButton.click();
+        return new TestTutorPage(getPage(), getPlaywright());
+    }
 }
