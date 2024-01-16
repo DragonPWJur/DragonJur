@@ -49,8 +49,10 @@ public abstract class BaseTest {
 
         APIUtils.customerSignIn(playwright);
         log("Customer successfully signed in via API");
+
         APIUtils.cleanData();
         log("Course data cleared");
+
         login();
     }
 
