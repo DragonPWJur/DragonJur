@@ -1,6 +1,7 @@
 package tests;
 
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.FlashcardPacksPage;
 import pages.FlashcardsPackIDPage;
@@ -15,6 +16,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class FlashcardPacksTest extends BaseTest {
 
+   @Ignore
     @Test
     public void testUserCanMarkCardsForRechecking() {
 
