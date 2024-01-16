@@ -64,6 +64,7 @@ abstract class BaseLocator extends BasePage {
     protected List<Locator> radioAll() {
         radio().first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
         radio().last().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED));
+
         return radio().all();
     }
 
