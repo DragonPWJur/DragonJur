@@ -8,8 +8,7 @@ import java.util.List;
 
 
 public class TestTimedPage extends SideMenuPage {
-    private final List<Locator> radioButtons = radio().all();
-    private final Locator radioButton = radio();
+    private final List<Locator> radioButtons = radioButtonsAll();
     private final Locator timer = locator("header div div:has(button)>div");
     private final Locator questionMarkText = text("?");
 
@@ -18,13 +17,7 @@ public class TestTimedPage extends SideMenuPage {
     }
 
     public int getAnswersCount() {
-        try {
-            waitForLastElementFromListElementsLoaded(radioButton);
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
-
-        return radioButtons.size();
+       return radioButtons.size();
     }
 
     public Locator getTimer() {
