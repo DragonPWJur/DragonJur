@@ -39,14 +39,6 @@ public class PreconditionPage extends BasePage {
                 .clickCloseTheTestButton();
     }
 
-    public void resetCourseResults() {
-        new HomePage(getPage(), getPlaywright())
-                .clickProfileMenu()
-                .clickResetCourseResultsButton()
-                .clickYesButton()
-                .clickHomeMenu();
-    }
-
     public void startTest(String numberOfQuestions) {
         new HomePage(getPage(), getPlaywright())
                 .clickTestsMenu()
