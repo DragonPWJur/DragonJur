@@ -14,8 +14,8 @@ import static utils.LoggerUtils.*;
 public abstract class BaseTest {
     private final Playwright playwright = Playwright.create();
     private final Browser browser = BrowserManager.createBrowser(playwright);
-    private APIRequest request = playwright.request();
-    private APIRequestContext  requestContext = request.newContext();
+    private final APIRequest request = playwright.request();
+    private final APIRequestContext  requestContext = request.newContext();
     private BrowserContext context;
     private Page page;
 
