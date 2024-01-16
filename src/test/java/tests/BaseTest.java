@@ -14,6 +14,8 @@ import static utils.LoggerUtils.*;
 public abstract class BaseTest {
     private final Playwright playwright = Playwright.create();
     private final Browser browser = BrowserManager.createBrowser(playwright);
+    private APIRequest request = playwright.request();
+    private APIRequestContext  requestContext = request.newContext();
     private BrowserContext context;
     private Page page;
 
@@ -47,6 +49,7 @@ public abstract class BaseTest {
         page.navigate(ProjectProperties.BASE_URL);
         log("Base URL opened");
 
+        APIUtils.signInAndCleanData(requestContext);
         login();
     }
 
