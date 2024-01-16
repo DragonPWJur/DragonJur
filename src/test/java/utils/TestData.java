@@ -19,14 +19,6 @@ public class TestData {
       public static final String BACKGROUND_COLOR = "background-color";
       public static final String RGBA_62_48_179_0_2 = "rgba(62, 48, 179, 0.2)";
       public static final String RGBA_0_0_0_0 = "rgba(0, 0, 0, 0)";
-      public final static String FLASHCARDS = "Flashcards";
-      public final static String GOT_IT = "Got it";
-      public final static String YES = "Yes";
-      public final static String QUESTION = "Question";
       public static final String TEST_TIMED_END_POINT = "/test-timed";
       public static final String QUESTION_MARK = "?";
-
-      public final static String BACKGROUND_COLOR = "background-color";
-      public final static String RGBA_62_48_179_0_2 = "rgba(62, 48, 179, 0.2)";
-      public final static String RGBA_0_0_0_0 = "rgba(0, 0, 0, 0)";
 }
