@@ -8,6 +8,7 @@ public class ProfilePage extends SideMenuPage {
 
     private final Locator resetCourseResultsButton = exactButton("Reset current course results");
     private final Locator yesButton = exactButton("Yes");
+    private final Locator notificationMessage = text("Your course results successfully reset");
 
     public ProfilePage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -22,6 +23,13 @@ public class ProfilePage extends SideMenuPage {
     public ProfilePage clickYesButton() {
         yesButton.click();
 
+        return this;
+    }
+
+    public ProfilePage closeNotification() {
+        if (notificationMessage.isVisible()) {
+            notificationMessage.click();
+        }
         return this;
     }
 }

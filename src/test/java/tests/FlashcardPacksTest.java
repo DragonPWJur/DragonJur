@@ -1,12 +1,12 @@
 package tests;
 
+import com.microsoft.playwright.Dialog;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.FlashcardPacksPage;
-import pages.FlashcardsPackIDPage;
-import pages.HomePage;
-import pages.PreconditionPage;
-import pages.TestTutorPage;
+import pages.*;
 import utils.TestData;
 import utils.TestUtils;
 
@@ -45,8 +45,11 @@ public class FlashcardPacksTest extends BaseTest {
 
         PreconditionPage preconditionPage = new PreconditionPage(getPage(), getPlaywright());
         preconditionPage.resetCourseResults();
+        new ProfilePage(getPage(), getPlaywright())
+                .closeNotification();
+
         String numberOfCardsForReCheckingBefore = preconditionPage.getCurrentNumberOfCardForRechecking();
-        preconditionPage.startTest(TestData.ONE);        
+        preconditionPage.startTest(TestData.ONE);
 
         String numberOfCardsForReCheckingAfter = new TestTutorPage(getPage(), getPlaywright())
                 .clickAddToFlashCardButton()
