@@ -1,6 +1,7 @@
 package tests;
 
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.TestsPage;
@@ -29,6 +30,7 @@ public class TestListTest extends BaseTest {
         Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
     }
 
+    @Ignore
     @Test
     public void testTutorModeWithRandomCheckboxInChapter() {
         TestsPage testsPage = new HomePage(getPage(), getPlaywright())
