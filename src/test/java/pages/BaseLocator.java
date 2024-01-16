@@ -75,7 +75,7 @@ abstract class BaseLocator extends BasePage {
         list.last().waitFor();
         return list;
     }
-    protected Locator waitForLocatorOfElementsLoaded(Locator locator) {
+    protected Locator waitForLastElementFromListElementsLoaded(Locator locator) {
         locator.last().waitFor();
 
         return locator;
