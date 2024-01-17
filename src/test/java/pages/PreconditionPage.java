@@ -56,7 +56,8 @@ public class PreconditionPage extends BasePage {
                 .clickDomainsButton()
                 .clickRandomCheckbox()
                 .inputNumberOfQuestions(numberOfQuestions)
-                .clickGenerateAndStartButton();
+                .clickGenerateAndStartButton()
+        ;
     }
 
     public void startFlashcardPackAndGoBack(int randomIndex) {
