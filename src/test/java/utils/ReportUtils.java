@@ -4,26 +4,25 @@ import org.testng.ITestResult;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static utils.LoggerUtils.*;
 
 public class ReportUtils {
 
-    public final static String END_LINE =
-            "\n_________________________________________________________________________________________\n";
-    private final static String H_LINE =
-            " ==========================================================================================\n";
+    public final static String END_LINE = String.format("%n%s", "—".repeat(90));
+    private final static String H_LINE = String.format("%s%n", "=".repeat(90));
 
     public static String getCurrentDateTime() {
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, hh:mma");
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd, hh:mma");
 
-        return dateFormat.format(date);
+        return now.format(dateTimeFormat);
     }
 
-    private static String getTestStatus(ITestResult testResult) {
+    public static String getTestStatus(ITestResult testResult) {
         int status = testResult.getStatus();
 
         return switch (status) {
@@ -34,20 +33,24 @@ public class ReportUtils {
         };
     }
 
-    private static String getTestRunTime(ITestResult testResult) {
+    public static String getTestRunTime(ITestResult testResult) {
         final long time = testResult.getEndMillis() - testResult.getStartMillis();
-        int minutes = (int) ((time / 1000) / 60);
-        int seconds = (int) (time / 1000) % 60;
-        int milliseconds = (int) (time % 1000);
+        Duration duration = Duration.ofMillis(time);
 
-        return minutes + " min " + seconds + " sec " + milliseconds + " ms";
+        long minutes = duration.toMinutes();
+        long seconds = duration.minusMinutes(minutes).getSeconds();
+        long milliseconds = duration.toMillis() % 1000;
+
+        return String.format("%d min %d sec %d ms", minutes, seconds, milliseconds);
     }
 
     public static String getReportHeader() {
-        String header = "\tT E S T     R E P O R T\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "\n";
-        String currentDate = "\tDate:" + getCurrentDateTime() + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "\n";
+        String headerAndDate = """
+                T E S T     R E P O R T 
+                Date: %s 
+                """.formatted(getCurrentDateTime());
 
-        return "\n" + H_LINE + header + currentDate + H_LINE;
+        return "\n" + H_LINE + headerAndDate + H_LINE;
     }
 
     public static String getTestStatistics(Method method, ITestResult testResult) {
@@ -56,7 +59,6 @@ public class ReportUtils {
     }
 
     public static String getTestMethodName(Method method) {
-        System.out.println(method.getName());
         return method.getDeclaringClass().getName() + "." + method.getName();
     }
 

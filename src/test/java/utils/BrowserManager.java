@@ -8,20 +8,23 @@ import com.microsoft.playwright.Playwright;
 import java.nio.file.Paths;
 
 public class BrowserManager {
-    public static Browser createBrowser(Playwright playwright) {
+    public static Browser createBrowser(Playwright playwright, Class<?> testClass) {
 
         switch (ProjectProperties.BROWSER_TYPE_NAME) {
             case "chromium" -> {
+                LoggerUtils.log("Browser Chromium for " + testClass.getSimpleName() + " launched");
                 return playwright.chromium().launch(new BrowserType.LaunchOptions()
                         .setHeadless(ProjectProperties.IS_HEADLESS)
                         .setSlowMo(ProjectProperties.IS_SLOW));
             }
             case "firefox" -> {
+                LoggerUtils.log("Browser Firefox for " + testClass.getSimpleName() + " launched");
                 return playwright.firefox().launch(new BrowserType.LaunchOptions()
                         .setHeadless(ProjectProperties.IS_HEADLESS)
                         .setSlowMo(ProjectProperties.IS_SLOW));
             }
             case "webkit" -> {
+                LoggerUtils.log("Browser Webkit for " + testClass.getSimpleName() + " launched");
                 return playwright.webkit().launch(new BrowserType.LaunchOptions()
                         .setHeadless(ProjectProperties.IS_HEADLESS)
                         .setSlowMo(ProjectProperties.IS_SLOW));
