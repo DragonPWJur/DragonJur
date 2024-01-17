@@ -11,16 +11,20 @@ public class TestListPage extends SideMenuPage {
     private final Locator tutorButton = button("Tutor");
     private final Locator numberOfQuestionsInputField = getPage().locator("input[name = 'numberOfQuestions']");
     private final Locator generateAndStartButton = button("Generate & Start");
-    private final Locator listCheckboxes = waitForListOfElementsLoaded("button:has(input[type='checkbox'])");
+    private final Locator listCheckboxes = locator("button:has(input[type='checkbox'])");
     private final Locator numberMarked = text("Marked").locator("span");
     private final Locator testDomain2Text = text("Test domain 2");
+    private final Locator chaptersButton = text("Chapters");
+    private final Locator timedButton = exactButton("Timed");
+    private final Locator startTestButton = exactButton("Start test");
+    private final Locator startButton = exactButton("Start");
 
     public TestListPage(Page page, Playwright playwright) {
         super(page, playwright);
     }
 
-    public Locator getNumberMarked() {
-        return numberMarked;
+    public Locator getListCheckboxes() {
+        return waitForListOfElementsLoaded(listCheckboxes);
     }
 
     public TestListPage clickDomainsButton() {
@@ -46,7 +50,7 @@ public class TestListPage extends SideMenuPage {
     }
 
     public TestListPage clickRandomCheckbox() {
-        TestUtils.clickRandomElement(listCheckboxes);
+        TestUtils.clickRandomElement(getListCheckboxes());
         return this;
     }
 
@@ -59,4 +63,44 @@ public class TestListPage extends SideMenuPage {
         testDomain2Text.click();
         return this;
     }
+
+    public TestListPage clickChaptersButton() {
+        if (!chaptersButton.isChecked()) {
+            chaptersButton.click();
+        }
+        return this;
+    }
+
+    public TestTutorPage clickGenerateAndStartButton2() {
+        generateAndStartButton.click();
+        return new TestTutorPage(getPage(), getPlaywright());
+    }
+
+    public TestListPage clickTimedButton() {
+        timedButton.click();
+
+        return this;
+    }
+
+    public TestListPage clickStartTestButton() {
+        startTestButton.click();
+
+        return this;
+    }
+
+    public TestTimedPage clickStartButton() {
+        startButton.click();
+
+        return new TestTimedPage(getPage(), getPlaywright());
+    }
+
+    public TestListPage clickGenerateAndStartButton1() {
+        generateAndStartButton.click();
+        return this;
+    }
+
+    public Locator getNumberMarked() {
+        return numberMarked;
+    }
 }
+
