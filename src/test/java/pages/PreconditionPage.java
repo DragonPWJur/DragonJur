@@ -21,9 +21,12 @@ public class PreconditionPage extends BasePage {
     }
 
     public String getCurrentNumberOfCardForRechecking() {
-        return new HomePage(getPage(), getPlaywright())
+        String numberMarkedForRechecking = new HomePage(getPage(), getPlaywright())
                 .clickFlashcardsMenu()
                 .getNumberMarkedForRechecking();
+
+        new TestsPage(getPage(), getPlaywright()).clickHomeMenu();
+        return numberMarkedForRechecking;
     }
 
     public void clickRemoveFromFlashcardsButtonIfVisible() {
@@ -39,16 +42,9 @@ public class PreconditionPage extends BasePage {
                 .clickCloseTheTestButton();
     }
 
-    public void resetCourseResults() {
-        new HomePage(getPage(), getPlaywright())
-                .clickProfileMenu()
-                .clickResetCourseResultsButton()
-                .clickYesButton()
-                .clickHomeMenu();
-    }
-
     public void startTest(String numberOfQuestions) {
         new HomePage(getPage(), getPlaywright())
+                .clickHomeMenu()
                 .clickTestsMenu()
                 .cancelDialogIfVisible()
                 .clickDomainsButton()
@@ -57,12 +53,21 @@ public class PreconditionPage extends BasePage {
                 .clickGenerateAndStartButton();
     }
 
-    public void startFlashcardPackAndGoBack(int randomIndex) {
+    public void startFlashcardPackAndGoBack(int index) {
         new HomePage(getPage(), getPlaywright())
                 .clickFlashcardsMenu()
-                .clickRandomFlashcardPack(randomIndex)
+                .clickRandomFlashcardPack(index)
                 .clickGotButtonIfVisible()
                 .clickFlashcardsBackButton()
                 .clickYesButton();
+    }
+
+    public boolean checkIfListCheckBoxesIsNotEmptyAndAllUnchecked() {
+
+        HomePage homePage = new HomePage(getPage(), getPlaywright());
+        if (homePage.isListCheckBoxesNotEmpty()) {
+            return homePage.areAllCheckBoxesUnchecked();
+        }
+        return false;
     }
 }

@@ -3,6 +3,10 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import utils.TestUtils;
+
+import java.util.List;
+
 import static java.lang.Integer.parseInt;
 
 public class HomePage extends SideMenuPage {
@@ -11,11 +15,15 @@ public class HomePage extends SideMenuPage {
     private final Locator homeButton = exactButton("Home");
     private final Locator week1Header = exactText("Week 1");
     private final Locator twoWeeksButton = exactButton("2 Weeks");
-    private final Locator week1FirstCheckbox =exactText("Week 1").locator("~label").first();
+    private final Locator week1FirstCheckbox = exactText("Week 1").locator("~label").first();
     private final Locator progressbarPoints = locator("div>svg.CircularProgressbar+div>span").first();
     private final Locator progressbarSideMenuPoints = locator("div:has(.CircularProgressbar)+span").first();
-    private final Locator streaksButton = getPage().locator("button>svg+p").last();
-    private final Locator streaksModalWindow = getPage().locator("div[role='dialog']");
+    private final Locator streaksButton = locator("button>svg+p").last();
+    private final Locator streaksModalWindow = locator("div[role='dialog']");
+    private final List<Locator> listCheckboxes = checkBoxesAll("label:has(input)");
+    private final Locator checkboxImage = locator("label:has(input) svg");
+
+    private final int checkBoxNumber = TestUtils.getRandomInt(0, listCheckboxes.size());
 
     public HomePage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -70,14 +78,6 @@ public class HomePage extends SideMenuPage {
         return this;
     }
 
-    public HomePage clickWeek1CheckboxIfVisible() {
-        if(getWeek1FirstCheckbox().isChecked()){
-            week1FirstCheckbox.click();
-        }
-
-        return this;
-    }
-
     public String getProgressbarPointsText() {
 
         return progressbarPoints.innerText();
@@ -104,5 +104,37 @@ public class HomePage extends SideMenuPage {
         streaksButton.click();
 
         return this;
+    }
+
+    public Locator getNthCheckbox(int number) {
+
+        return listCheckboxes.get(number);
+    }
+
+    public  HomePage clickRandomCheckBox(){
+        getNthCheckbox(checkBoxNumber).click();
+        System.out.println("checkBoxNumber " + checkBoxNumber);
+
+        return this;
+    }
+
+    protected boolean isListCheckBoxesNotEmpty() {
+
+        return !listCheckboxes.isEmpty();
+    }
+
+    protected boolean areAllCheckBoxesUnchecked() {
+
+       return listCheckboxes.stream().noneMatch(Locator::isChecked);
+    }
+
+    public boolean isCheckBoxChecked() {
+
+        return listCheckboxes.get(checkBoxNumber).isChecked();
+    }
+
+    public Locator getCheckboxImage() {
+
+        return checkboxImage;
     }
 }
