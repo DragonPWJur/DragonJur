@@ -12,6 +12,8 @@ public class TestListPage extends SideMenuPage {
     private final Locator numberOfQuestionsInputField = getPage().locator("input[name = 'numberOfQuestions']");
     private final Locator generateAndStartButton = button("Generate & Start");
     private final Locator listCheckboxes = locator("button:has(input[type='checkbox'])");
+//    private final List<Locator> listCheckboxes = checkBoxesAll("button:has(input[type='checkbox'])");
+//    private final Locator listCheckboxes1 = locator("input[type='checkbox'][name*='Questions']");
     private final Locator numberMarked = text("Marked").locator("span");
     private final Locator testDomain2Text = text("Test domain 2");
     private final Locator chaptersButton = text("Chapters");
@@ -52,6 +54,11 @@ public class TestListPage extends SideMenuPage {
     public TestListPage clickRandomCheckbox() {
         TestUtils.clickRandomElement(getListCheckboxes());
         return this;
+    }
+
+    public String clickRandomCheckboxAndReturnItsName() {
+        return TestUtils.clickRandomElementAndReturnText(getListCheckboxes())
+                .replaceAll("\\((\\d+)\\)", "").replace("(", "").replace(")", "");
     }
 
     public TestListPage cancelDialogIfVisible() {
@@ -97,6 +104,10 @@ public class TestListPage extends SideMenuPage {
     public TestListPage clickGenerateAndStartButton1() {
         generateAndStartButton.click();
         return this;
+    }
+
+    public Locator checkboxWithExactText(String text) {
+        return getListCheckboxes().getByText(text);
     }
 }
 

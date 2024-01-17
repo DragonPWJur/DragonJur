@@ -26,6 +26,13 @@ public class TestUtils {
         list.nth(randomValue).click();
     }
 
+    public static String clickRandomElementAndReturnText(Locator list) {
+        int randomValue = getRandomNumber(list);
+        list.nth(randomValue).click();
+
+        return list.nth(randomValue).textContent();
+    }
+
     public static int getInt(String text) {
         return Integer.parseInt(text);
     }

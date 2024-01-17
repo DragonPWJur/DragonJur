@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
+import pages.TestListPage;
 import pages.TestTimedPage;
 import pages.TestsPage;
 import utils.TestData;
@@ -12,6 +13,20 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 import static utils.ProjectProperties.BASE_URL;
 
 public class TestListTest extends BaseTest {
+
+    @Test
+    public void testTheSingleCheckboxCanBeChecked() {
+        String checkboxText =
+                new HomePage(getPage(), getPlaywright())
+                .clickTestsMenu()
+                .cancelDialogIfVisible()
+                .clickDomainsButton()
+                .clickRandomCheckboxAndReturnItsName();
+        getPage().waitForTimeout(3000);
+        new TestListPage(getPage(), getPlaywright()).checkboxWithExactText(checkboxText).click();
+
+        assertThat(new TestListPage(getPage(), getPlaywright()).checkboxWithExactText(checkboxText)).isChecked();
+    }
 
     @Test
     public void testTutorModeWithRandomCheckboxInDomain() {
