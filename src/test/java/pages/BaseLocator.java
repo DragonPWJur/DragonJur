@@ -120,4 +120,8 @@ abstract class BaseLocator extends BasePage {
         locator.last().waitFor();
         return locator;
     }
+
+    protected Locator numberMarked() {
+        return text("Marked").getByText("1");
+    }
 }
