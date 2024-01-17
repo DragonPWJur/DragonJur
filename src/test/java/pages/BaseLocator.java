@@ -76,10 +76,9 @@ abstract class BaseLocator extends BasePage {
         return getPage().getByRole(AriaRole.DIALOG);
     }
 
-    protected Locator waitForListOfElementsLoaded(String string) {
-        Locator list = getPage().locator(string);
-        list.last().waitFor();
-        return list;
+    protected Locator waitForListOfElementsLoaded(Locator locator) {
+        locator.last().waitFor();
+        return locator;
     }
     protected List<Locator> radioButtonsAll() {
         radio().first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));

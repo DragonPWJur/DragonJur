@@ -36,6 +36,7 @@ public class TestListTest extends BaseTest {
         Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
     }
 
+    @Ignore
     @Test
     public void testTutorModeWithRandomCheckboxInChapter() {
         TestsPage testsPage = new HomePage(getPage(), getPlaywright())

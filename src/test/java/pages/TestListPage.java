@@ -12,7 +12,7 @@ public class TestListPage extends SideMenuPage {
     private final Locator tutorButton = button("Tutor");
     private final Locator numberOfQuestionsInputField = getPage().locator("input[name = 'numberOfQuestions']");
     private final Locator generateAndStartButton = button("Generate & Start");
-    private final Locator listCheckboxes = waitForListOfElementsLoaded("button:has(input[type='checkbox'])");
+    private final Locator listCheckboxes = locator("button:has(input[type='checkbox'])");
     private final Locator numberMarked = text("Marked").locator("span");
     private final Locator testDomain2Text = text("Test domain 2");
     private final Locator chaptersButton = text("Chapters");
@@ -22,6 +22,10 @@ public class TestListPage extends SideMenuPage {
 
     public TestListPage(Page page, Playwright playwright) {
         super(page, playwright);
+    }
+
+    public Locator getListCheckboxes() {
+        return waitForListOfElementsLoaded(listCheckboxes);
     }
 
     @Step("Click 'Domains' button")
@@ -52,7 +56,7 @@ public class TestListPage extends SideMenuPage {
 
     @Step("Click random checkbox")
     public TestListPage clickRandomCheckbox() {
-        TestUtils.clickRandomElement(listCheckboxes);
+        TestUtils.clickRandomElement(getListCheckboxes());
         return this;
     }
 

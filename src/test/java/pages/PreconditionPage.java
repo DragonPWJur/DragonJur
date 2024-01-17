@@ -49,10 +49,10 @@ public class PreconditionPage extends BasePage {
                 .clickGenerateAndStartButton();
     }
 
-    public void startFlashcardPackAndGoBack(int randomIndex) {
+    public void startFlashcardPackAndGoBack(int index) {
         new HomePage(getPage(), getPlaywright())
                 .clickFlashcardsMenu()
-                .clickRandomFlashcardPack(randomIndex)
+                .clickRandomFlashcardPack(index)
                 .clickGotButtonIfVisible()
                 .clickFlashcardsBackButton()
                 .clickYesButton();
