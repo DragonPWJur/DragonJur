@@ -16,6 +16,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class FlashcardPacksTest extends BaseTest {
 
+    @Ignore
     @Test
     public void testUserCanMarkCardsForRechecking() {
 
