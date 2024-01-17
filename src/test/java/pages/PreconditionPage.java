@@ -39,14 +39,6 @@ public class PreconditionPage extends BasePage {
                 .clickCloseTheTestButton();
     }
 
-    public void resetCourseResults() {
-        new HomePage(getPage(), getPlaywright())
-                .clickProfileMenu()
-                .clickResetCourseResultsButton()
-                .clickYesButton()
-                .clickHomeMenu();
-    }
-
     public void startTest(String numberOfQuestions) {
         new HomePage(getPage(), getPlaywright())
                 .clickTestsMenu()
@@ -57,12 +49,21 @@ public class PreconditionPage extends BasePage {
                 .clickGenerateAndStartButton();
     }
 
-    public void startFlashcardPackAndGoBack(int randomIndex) {
+    public void startFlashcardPackAndGoBack(int index) {
         new HomePage(getPage(), getPlaywright())
                 .clickFlashcardsMenu()
-                .clickRandomFlashcardPack(randomIndex)
+                .clickRandomFlashcardPack(index)
                 .clickGotButtonIfVisible()
                 .clickFlashcardsBackButton()
                 .clickYesButton();
+    }
+
+    public boolean checkIfListCheckBoxesIsNotEmptyAndAllUnchecked() {
+
+        HomePage homePage = new HomePage(getPage(), getPlaywright());
+        if (homePage.isListCheckBoxesNotEmpty()) {
+            return homePage.areAllCheckBoxesUnchecked();
+        }
+        return false;
     }
 }

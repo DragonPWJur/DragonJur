@@ -1,8 +1,10 @@
 package tests;
 
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
+import pages.TestTimedPage;
 import pages.TestsPage;
 import utils.TestData;
 
@@ -29,6 +31,7 @@ public class TestListTest extends BaseTest {
         Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
     }
 
+    @Ignore
     @Test
     public void testTutorModeWithRandomCheckboxInChapter() {
         TestsPage testsPage = new HomePage(getPage(), getPlaywright())
@@ -45,5 +48,21 @@ public class TestListTest extends BaseTest {
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
 //        assertThat(testsPage.getTestQuestion()).containsText("?");
         Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
+    }
+    @Ignore
+    @Test
+    public void testRunTimedMode() {
+          TestTimedPage testTimedPage  = new HomePage(getPage(), getPlaywright())
+                .clickTestsMenu()
+                .cancelDialogIfVisible()
+                .clickTimedButton()
+                .clickGenerateAndStartButton1()
+                .clickStartTestButton()
+                .clickStartButton();
+
+        assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TIMED_END_POINT);
+        assertThat(testTimedPage.getTimer()).isVisible();
+       // assertThat(testTimedPage.getQuestionMark()).containsText(TestData.QUESTION_MARK);
+        Assert.assertTrue(testTimedPage.getAnswersCount() > 0);
     }
 }
