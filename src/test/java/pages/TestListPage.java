@@ -10,10 +10,10 @@ public class TestListPage extends SideMenuPage {
 
     private final Locator domainsButton = text("Domains");
     private final Locator tutorButton = button("Tutor");
-    private final Locator numberOfQuestionsInputField = getPage().locator("input[name = 'numberOfQuestions']");
+    private final Locator numberOfQuestionsInputField = locator("input[name = 'numberOfQuestions']");
     private final Locator generateAndStartButton = button("Generate & Start");
     private final Locator listCheckboxes = locator("button:has(input[type='checkbox'])");
-    private final Locator numberMarked = text("Marked").locator("span");
+    private final Locator numberMarked = numberMarked();
     private final Locator testDomain2Text = text("Test domain 2");
     private final Locator chaptersButton = text("Chapters");
     private final Locator timedButton = exactButton("Timed");
@@ -74,6 +74,8 @@ public class TestListPage extends SideMenuPage {
     public TestListPage clickChaptersButton() {
         if (!chaptersButton.isChecked()) {
             chaptersButton.click();
+            getPage().waitForTimeout(2000);
+            getPage().reload();
         }
         return this;
     }
@@ -104,6 +106,10 @@ public class TestListPage extends SideMenuPage {
     public TestListPage clickGenerateAndStartButton1() {
         generateAndStartButton.click();
         return this;
+    }
+
+    public Locator getNumberMarked() {
+        return numberMarked;
     }
 }
 
