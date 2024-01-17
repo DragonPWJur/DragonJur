@@ -93,6 +93,11 @@ public class HomeTest extends BaseTest {
         new PreconditionPage(getPage(), getPlaywright())
                 .checkIfListCheckBoxesIsNotEmptyAndAllUnchecked();
 
+        List<Locator> listOfTimeButton = new HomePage(getPage(), getPlaywright())
+                .getListOfTimeButton().all();
+        int randomButton = TestUtils.getRandomInt(0, listOfTimeButton.size());
+        new HomePage(getPage(), getPlaywright()).clickNthTimeButton(randomButton);
+
         List<Locator> checkBoxesList = new HomePage(getPage(), getPlaywright())
                 .getListCheckboxes();
 
