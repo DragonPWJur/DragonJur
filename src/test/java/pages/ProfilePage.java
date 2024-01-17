@@ -6,22 +6,15 @@ import com.microsoft.playwright.Playwright;
 
 public class ProfilePage extends SideMenuPage {
 
-    private final Locator resetCourseResultsButton = exactButton("Reset current course results");
-    private final Locator yesButton = exactButton("Yes");
+    private final Locator addANewCourseButton = button("Add a new course");
 
     public ProfilePage(Page page, Playwright playwright) {
         super(page, playwright);
     }
 
-    public ProfilePage clickResetCourseResultsButton() {
-        resetCourseResultsButton.click();
+    public AddNewCoursePage clickAddANewCourseButton() {
+        addANewCourseButton.click();
 
-        return this;
-    }
-
-    public ProfilePage clickYesButton() {
-        yesButton.click();
-
-        return this;
+        return new AddNewCoursePage(getPage(), getPlaywright());
     }
 }

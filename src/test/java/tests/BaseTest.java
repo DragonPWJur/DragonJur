@@ -7,13 +7,14 @@ import org.testng.annotations.*;
 import utils.*;
 
 import java.lang.reflect.Method;
+import java.nio.file.Paths;
 
 import static utils.LoggerUtils.*;
 
 @Listeners(utils.ExceptionListener.class)
 public abstract class BaseTest {
     private final Playwright playwright = Playwright.create();
-    private final Browser browser = BrowserManager.createBrowser(playwright);
+    private final Browser browser = BrowserManager.createBrowser(playwright, getClass());
     private BrowserContext context;
     private Page page;
 
@@ -48,6 +49,13 @@ public abstract class BaseTest {
         log("Base URL opened");
 
         login();
+        context.storageState(new BrowserContext.StorageStateOptions().setPath(Paths.get("tokens/user.json")));
+
+        APIUtils.parseUserToken();
+        log("User token successfully received");
+
+        APIUtils.cleanData(playwright);
+        log("Course data cleared");
     }
 
     @AfterMethod
