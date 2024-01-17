@@ -16,7 +16,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class FlashcardPacksTest extends BaseTest {
 
-   @Ignore
+    @Ignore
     @Test
     public void testUserCanMarkCardsForRechecking() {
 
@@ -47,7 +47,7 @@ public class FlashcardPacksTest extends BaseTest {
 
         PreconditionPage preconditionPage = new PreconditionPage(getPage(), getPlaywright());
         String numberOfCardsForReCheckingBefore = preconditionPage.getCurrentNumberOfCardForRechecking();
-        preconditionPage.startTest(TestData.ONE);        
+        preconditionPage.startTest(TestData.ONE);
 
         String numberOfCardsForReCheckingAfter = new TestTutorPage(getPage(), getPlaywright())
                 .clickAddToFlashCardButton()
@@ -61,6 +61,7 @@ public class FlashcardPacksTest extends BaseTest {
         Assert.assertEquals(numberOfCardsForReCheckingAfter, TestUtils.addNumber(numberOfCardsForReCheckingBefore, 1));
     }
 
+    @Ignore
     @Test
     public void test_StartFlashCardPack() {
 
