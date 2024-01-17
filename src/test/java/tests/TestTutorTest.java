@@ -43,4 +43,5 @@ public class TestTutorTest extends BaseTest {
         assertThat(testTutorPage.getH3HeaderExplanationText()).isVisible();
         Assert.assertFalse(testTutorPage.getExplanationText().isEmpty(), "Explanation text is empty");
     }
+
 }
