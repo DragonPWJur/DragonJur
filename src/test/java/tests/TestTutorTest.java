@@ -13,7 +13,6 @@ public class TestTutorTest extends BaseTest  {
     @Test
     public void testUserCanMarkTheCard() {
         PreconditionPage preconditionPage = new PreconditionPage(getPage(), getPlaywright());
-        preconditionPage.resetCourseResults();
         preconditionPage.startTest(TestData.ONE);
 
         Locator removeFromMarkedButton = new TestTutorPage(getPage(), getPlaywright())

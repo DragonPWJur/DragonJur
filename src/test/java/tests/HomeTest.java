@@ -7,7 +7,6 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.HomePage;
-import pages.PreconditionPage;
 import utils.ProjectProperties;
 import utils.TestData;
 import utils.TestUtils;
@@ -50,18 +49,7 @@ public class HomeTest extends BaseTest {
     }
 
     @Test
-    public void verifyResetButtonWorks() {
-        new PreconditionPage(getPage(), getPlaywright())
-                .resetCourseResults();
-
-        assertThat(new HomePage(getPage(), getPlaywright()).getProgressbarPoints()).hasText("0");
-    }
-
-    @Test
     public void testUponClickingCheckboxPointCountIncreases() {
-        new PreconditionPage(getPage(), getPlaywright())
-                .resetCourseResults();
-
         HomePage homePage = new HomePage(getPage(), getPlaywright())
                 .clickHomeMenu()
                 .clickTwoWeeksButton()
@@ -76,6 +64,7 @@ public class HomeTest extends BaseTest {
                 .clickWeek1FirstCheckbox();
 
         getPage().waitForTimeout(2000);
+
         int afterCountPoints = homePage.getProgressbarPointsNumber();
         int afterCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
 

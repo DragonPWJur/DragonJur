@@ -5,6 +5,9 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.options.WaitForSelectorState;
+
+import java.util.List;
 
 abstract class BaseLocator extends BasePage {
 
@@ -75,6 +78,12 @@ abstract class BaseLocator extends BasePage {
         list.last().waitFor();
         return list;
     }
+    protected List<Locator> radioButtonsAll() {
+        radio().first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        radio().last().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED));
+
+        return radio().all();
+    }
 
     public Locator waitForListLoadedGetByText(String string) {
         Locator list = getPage().getByText(string);
@@ -84,7 +93,7 @@ abstract class BaseLocator extends BasePage {
     }
 
     protected void cancelDialog() {
-        if (dialog().isVisible()) {
+        if (dialog().isVisible() && button("Cancel").isVisible()) {
             getPage().onDialog(Dialog::dismiss);
             button("Cancel").click();
         }
