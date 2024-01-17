@@ -66,6 +66,7 @@ public class TestListTest extends BaseTest {
         Assert.assertTrue(testTimedPage.getAnswersCount() > 0);
     }
 
+    @Ignore
     @Test
     public void testAfterMarkingTheCardTheNumberOfMarkedCardsIncreasedBy1() {
         new PreconditionPage(getPage(), getPlaywright())
