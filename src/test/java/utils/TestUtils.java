@@ -48,5 +48,15 @@ public class TestUtils {
 
         return listValues.all().get(getRandomNumber(listValues)).innerText();
     }
+
+    public static String geteRandomString(int length) {
+        String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder randomString = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            randomString.append(chars.charAt(new Random().nextInt(chars.length())));
+        }
+
+        return randomString.toString();
+    }
 }
 

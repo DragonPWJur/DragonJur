@@ -44,4 +44,16 @@ public class TestTutorTest extends BaseTest {
         Assert.assertFalse(testTutorPage.getExplanationText().isEmpty(), "Explanation text is empty");
     }
 
+    @Test
+    public void testSuccessfulReportSubmission() {
+        new PreconditionPage(getPage(), getPlaywright()).startTest(TestData.ONE);
+
+        TestTutorPage testTutorPage = new TestTutorPage(getPage(), getPlaywright())
+                .clickReportButton()
+                .inputSymbolsIntoReportAProblemTextarea()
+                .clickSendButton();
+
+        assertThat(testTutorPage.getReportAProblemModal()).isVisible();
+        assertThat(testTutorPage.getReportSentSuccessfullyMessage()).hasText(TestData.REPORT_MESSAGE);
+    }
 }
