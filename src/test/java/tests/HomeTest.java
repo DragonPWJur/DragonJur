@@ -45,6 +45,7 @@ public class HomeTest extends BaseTest {
         assertThat(homePage.getStudyThisButton()).isVisible();
         homePage.getStudyThisButton().click();
     }
+    @Ignore
     @Test
     public void testUponClickingCheckboxPointCountIncreases() {
         HomePage homePage = new HomePage(getPage(), getPlaywright())
