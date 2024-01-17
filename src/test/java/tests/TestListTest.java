@@ -1,11 +1,10 @@
 package tests;
 
+import com.microsoft.playwright.Locator;
 import org.testng.Assert;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
-import pages.HomePage;
-import pages.TestTimedPage;
-import pages.TestsPage;
+import pages.*;
 import utils.TestData;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
@@ -49,10 +48,11 @@ public class TestListTest extends BaseTest {
 //        assertThat(testsPage.getTestQuestion()).containsText("?");
         Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
     }
+
     @Ignore
     @Test
     public void testRunTimedMode() {
-          TestTimedPage testTimedPage  = new HomePage(getPage(), getPlaywright())
+        TestTimedPage testTimedPage = new HomePage(getPage(), getPlaywright())
                 .clickTestsMenu()
                 .cancelDialogIfVisible()
                 .clickTimedButton()
@@ -62,7 +62,23 @@ public class TestListTest extends BaseTest {
 
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TIMED_END_POINT);
         assertThat(testTimedPage.getTimer()).isVisible();
-       // assertThat(testTimedPage.getQuestionMark()).containsText(TestData.QUESTION_MARK);
+        // assertThat(testTimedPage.getQuestionMark()).containsText(TestData.QUESTION_MARK);
         Assert.assertTrue(testTimedPage.getAnswersCount() > 0);
+    }
+
+    @Test
+    public void testAfterMarkingTheCardTheNumberOfMarkedCardsIncreasedBy1() {
+        new PreconditionPage(getPage(), getPlaywright())
+                .startTest(TestData.ONE);
+
+        Locator numberMarked = new TestTutorPage(getPage(), getPlaywright())
+                .clickMarkForReviewButton()
+                .clickEndButton()
+                .clickYesButton()
+                .clickSkipButton()
+                .clickCloseTheTestButton()
+                .getNumberMarked();
+
+        assertThat(numberMarked).isVisible();
     }
 }
