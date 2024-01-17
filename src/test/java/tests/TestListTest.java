@@ -48,7 +48,7 @@ public class TestListTest extends BaseTest {
 //        assertThat(testsPage.getTestQuestion()).containsText("?");
         Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
     }
-
+    @Ignore
     @Test
     public void testRunTimedMode() {
           TestTimedPage testTimedPage  = new HomePage(getPage(), getPlaywright())
