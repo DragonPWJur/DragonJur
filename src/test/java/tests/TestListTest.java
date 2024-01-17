@@ -68,8 +68,8 @@ public class TestListTest extends BaseTest {
 
     @Test
     public void testAfterMarkingTheCardTheNumberOfMarkedCardsIncreasedBy1() {
-        PreconditionPage preconditionPage = new PreconditionPage(getPage(), getPlaywright());
-        preconditionPage.startTest(TestData.ONE);
+        new PreconditionPage(getPage(), getPlaywright())
+                .startTest(TestData.ONE);
 
         Locator numberMarked = new TestTutorPage(getPage(), getPlaywright())
                 .clickMarkForReviewButton()
