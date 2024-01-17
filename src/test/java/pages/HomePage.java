@@ -3,6 +3,9 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+
+import java.util.List;
+
 import static java.lang.Integer.parseInt;
 
 public class HomePage extends SideMenuPage {
@@ -17,13 +20,13 @@ public class HomePage extends SideMenuPage {
     private final Locator streaksButton = getPage().locator("button>svg+p").last();
     private final Locator streaksModalWindow = getPage().locator("div[role='dialog']");
     private final Locator listOfTimeButton = getPage().locator("span+div>div>button");
-    private final Locator listCheckboxes = waitForListOfElementsLoaded("label:has(input)");
+    private final List<Locator> listCheckboxes = checkBoxesAll("label:has(input)");
 
     public HomePage(Page page, Playwright playwright) {
         super(page, playwright);
     }
 
-    public Locator getListCheckboxes() {
+    public List<Locator> getListCheckboxes() {
 
         return listCheckboxes;
     }
@@ -118,17 +121,27 @@ public class HomePage extends SideMenuPage {
         return this;
     }
     public HomePage checkNthCheckbox(int number) {
-        listCheckboxes.nth(number).click();
+        listCheckboxes.get(number).click();
 
         return this;
     }
 
     public Locator getNthCheckbox(int number) {
 
-        return listCheckboxes.nth(number);
+        return listCheckboxes.get(number);
     }
 
     public void clickNthTimeButton(int number) {
         listOfTimeButton.nth(number).click();
+    }
+
+    protected boolean isListCheckBoxesNotEmpty() {
+
+        return !listCheckboxes.isEmpty();
+    }
+
+    protected boolean areAllCheckBoxesUnchecked() {
+
+       return listCheckboxes.stream().noneMatch(Locator::isChecked);
     }
 }

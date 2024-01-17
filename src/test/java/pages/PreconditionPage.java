@@ -1,6 +1,5 @@
 package pages;
 
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import utils.TestUtils;
@@ -45,7 +44,6 @@ public class PreconditionPage extends BasePage {
         new HomePage(getPage(), getPlaywright())
                 .clickTestsMenu()
                 .cancelDialogIfVisible()
-                .clickDomainsButton()
                 .clickRandomCheckbox()
                 .inputNumberOfQuestions(numberOfQuestions)
                 .clickGenerateAndStartButton()
@@ -61,16 +59,13 @@ public class PreconditionPage extends BasePage {
                 .clickYesButton();
     }
 
-    public Locator checkboxUnderTheLearningSchedulerSection() {
-        resetCourseResults();
+    public void checkIfListCheckBoxesIsNotEmptyAndAllUnchecked() {
 
-        Locator listOfTimeButton = new HomePage(getPage(), getPlaywright())
-                .getListOfTimeButton();
-
-        new HomePage(getPage(), getPlaywright())
-                .clickNthTimeButton(TestUtils.getRandomInt(0, listOfTimeButton.count()));
-
-        return new HomePage(getPage(), getPlaywright())
-                .getListCheckboxes();
+        HomePage homePage = new HomePage(getPage(), getPlaywright());
+        if (homePage.isListCheckBoxesNotEmpty()) {
+            if (homePage.areAllCheckBoxesUnchecked()) {
+                return ;
+            }
+        }
     }
 }

@@ -47,7 +47,7 @@ public class FlashcardPacksTest extends BaseTest {
 
         PreconditionPage preconditionPage = new PreconditionPage(getPage(), getPlaywright());
         String numberOfCardsForReCheckingBefore = preconditionPage.getCurrentNumberOfCardForRechecking();
-        preconditionPage.startTest(TestData.ONE);        
+        preconditionPage.startTest(TestData.ONE);
 
         String numberOfCardsForReCheckingAfter = new TestTutorPage(getPage(), getPlaywright())
                 .clickAddToFlashCardButton()
