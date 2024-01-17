@@ -3,6 +3,8 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import io.qameta.allure.Step;
+
 import static java.lang.Integer.parseInt;
 
 public class HomePage extends SideMenuPage {
@@ -41,6 +43,7 @@ public class HomePage extends SideMenuPage {
         return streaksModalWindow;
     }
 
+    @Step("Click 'Tests' button on sidemenu")
     public TestListPage clickTestsMenu() {
         testsButton.click();
         return new TestListPage(getPage(), getPlaywright());

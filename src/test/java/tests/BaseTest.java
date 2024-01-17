@@ -60,6 +60,8 @@ public abstract class BaseTest {
     protected void closeContext(Method method, ITestResult testResult) {
         ReportUtils.logTestStatistic(method, testResult);
 
+        ReportUtils.addScreenshotToAllureReportForFailedTestsOnCI(page,testResult);
+
         page.close();
         log("Page closed");
 

@@ -1,5 +1,7 @@
 package utils;
 
+import com.microsoft.playwright.Page;
+import io.qameta.allure.Allure;
 import org.testng.ITestResult;
 import org.testng.annotations.Test;
 
@@ -8,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static utils.LoggerUtils.*;
+import static utils.ProjectProperties.isServerRun;
 
 public class ReportUtils {
 
@@ -75,6 +78,17 @@ public class ReportUtils {
             logError(ReportUtils.getTestStatistics(method, testResult));
         } else {
             logWarning(ReportUtils.getTestStatistics(method, testResult));
+        }
+    }
+
+    public static void addScreenshotToAllureReportForFailedTestsOnCI(Page page, ITestResult testResult) {
+        if (!testResult.isSuccess() && isServerRun()) {
+            Allure.getLifecycle().addAttachment(
+                    "screenshot", "image/png", "png",
+                    page.screenshot(new Page.ScreenshotOptions()
+                            .setFullPage(true))
+            );
+            log("Screenshot added to Allure report");
         }
     }
 }
