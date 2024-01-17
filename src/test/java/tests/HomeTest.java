@@ -91,25 +91,19 @@ public class HomeTest extends BaseTest {
 
     @Test
     public void testTheSingleNonActiveCheckboxCanBeChecked() {
-        new PreconditionPage(getPage(), getPlaywright())
-                .checkIfListCheckBoxesIsNotEmptyAndAllUnchecked();
+        Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
+                .checkIfListCheckBoxesIsNotEmptyAndAllUnchecked(), "Precondition is not reached.");
 
-        List<Locator> listOfTimeButton = new HomePage(getPage(), getPlaywright())
-                .getListOfTimeButton().all();
-        int randomButton = TestUtils.getRandomInt(0, listOfTimeButton.size());
-        new HomePage(getPage(), getPlaywright()).clickNthTimeButton(randomButton);
+        HomePage homePage = new HomePage(getPage(), getPlaywright());
 
-        List<Locator> checkBoxesList = new HomePage(getPage(), getPlaywright())
-                .getListCheckboxes();
+        boolean isCheckBoxChecked = homePage
+                .clickRandomCheckBox()
+                .isCheckBoxChecked();
 
-        int randomCheckbox = TestUtils.getRandomInt(0, checkBoxesList.size());
-        Locator checkedCheckbox = new HomePage(getPage(), getPlaywright())
-                .checkNthCheckbox(randomCheckbox)
-                .getNthCheckbox(randomCheckbox);
+        Locator checkboxImage = homePage.getCheckboxImage();
 
-        Locator checkedCheckboxImage = checkedCheckbox.locator(TestData.CHECKBOX_IMAGE_LOCATOR);
-
-        assertThat(checkedCheckbox).isChecked();
-        assertThat(checkedCheckboxImage).hasAttribute(TestData.ATTRIBUTE_FILL, TestData.COLOR_CHECKED_CHECKBOX);
+        Assert.assertTrue(isCheckBoxChecked, "Randomly checked checkbox is expected to be checked, but unchecked.");
+        assertThat(checkboxImage).hasCount(1);
+        assertThat(checkboxImage).isVisible();
     }
 }

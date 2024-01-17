@@ -82,6 +82,11 @@ abstract class BaseLocator extends BasePage {
         return getPage().locator(css);
     }
 
+    protected Locator checkBoxImage(int number) {
+
+        return locator("label:has(input):nth-child(" + (number)  + ") svg");
+    }
+
     protected List<Locator> checkBoxesAll(String css) {
 
         locator(css).first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
@@ -103,7 +108,7 @@ abstract class BaseLocator extends BasePage {
         return list;
     }
 
-    public Locator waitForListLoadedGetByText(String string) {
+    protected Locator waitForListLoadedGetByText(String string) {
         Locator list = getPage().getByText(string);
         list.last().waitFor();
 
