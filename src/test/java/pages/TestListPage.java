@@ -64,7 +64,7 @@ public class TestListPage extends SideMenuPage {
         return this;
     }
 
-    public TestTutorPage clickGenerateAndStartButton1() {
+    public TestTutorPage clickGenerateAndStartButton2() {
         generateAndStartButton.click();
         return new TestTutorPage(getPage(), getPlaywright());
     }

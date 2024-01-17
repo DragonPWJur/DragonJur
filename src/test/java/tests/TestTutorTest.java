@@ -35,7 +35,7 @@ public class TestTutorTest extends BaseTest {
                 .clickRandomCheckbox()
                 .clickTutorButton()
                 .inputNumberOfQuestions(TestData.ONE)
-                .clickGenerateAndStartButton1()
+                .clickGenerateAndStartButton2()
                 .clickCorrectAnswerRadioButton()
                 .clickConfirmButton();
 
