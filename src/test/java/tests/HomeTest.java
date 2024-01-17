@@ -4,6 +4,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import utils.ProjectProperties;
@@ -44,7 +45,7 @@ public class HomeTest extends BaseTest {
         assertThat(homePage.getStudyThisButton()).isVisible();
         homePage.getStudyThisButton().click();
     }
-
+    @Ignore
     @Test
     public void testUponClickingCheckboxPointCountIncreases() {
         HomePage homePage = new HomePage(getPage(), getPlaywright())

@@ -21,4 +21,6 @@ public class TestData {
       public static final String RGBA_0_0_0_0 = "rgba(0, 0, 0, 0)";
       public static final String TEST_TIMED_END_POINT = "/test-timed";
       public static final String QUESTION_MARK = "?";
+      public static final String EXPLANATION = "Explanation";
+
 }
