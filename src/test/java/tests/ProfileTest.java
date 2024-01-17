@@ -16,4 +16,15 @@ public class ProfileTest extends BaseTest{
 
         assertThat(getPage()).hasURL(ProjectProperties.BASE_URL + "/profile");
     }
+
+    @Test
+    public void testAddNewCourseButtonNavigation() {
+
+        new HomePage(getPage(), getPlaywright())
+                .clickProfileMenu()
+                .clickAddANewCourseButton();
+
+        assertThat(getPage()).hasURL(ProjectProperties.BASE_URL + "/add-new-course");
+        assertThat(getPage().getByTitle("Add a new course"));
+    }
 }
