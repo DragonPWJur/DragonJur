@@ -102,10 +102,11 @@ abstract class BaseLocator extends BasePage {
         return radio().all();
     }
 
-    protected Locator waitForListOfElementsLoaded(String string) {
-        Locator list = getPage().locator(string);
-        list.last().waitFor();
-        return list;
+    protected void cancelDialog() {
+        if (dialog().isVisible() && button("Cancel").isVisible()) {
+            getPage().onDialog(Dialog::dismiss);
+            button("Cancel").click();
+        }
     }
 
     protected Locator waitForListLoadedGetByText(String string) {
@@ -115,10 +116,8 @@ abstract class BaseLocator extends BasePage {
         return list;
     }
 
-    protected void cancelDialog() {
-        if (dialog().isVisible() && button("Cancel").isVisible()) {
-            getPage().onDialog(Dialog::dismiss);
-            button("Cancel").click();
-        }
+    protected Locator waitForListOfElementsLoaded(Locator locator) {
+        locator.last().waitFor();
+        return locator;
     }
 }
