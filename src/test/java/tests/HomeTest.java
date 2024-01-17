@@ -8,6 +8,7 @@ import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import utils.ProjectProperties;
+import utils.TestData;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
@@ -45,7 +46,7 @@ public class HomeTest extends BaseTest {
         assertThat(homePage.getStudyThisButton()).isVisible();
         homePage.getStudyThisButton().click();
     }
-    @Ignore
+
     @Test
     public void testUponClickingCheckboxPointCountIncreases() {
         HomePage homePage = new HomePage(getPage(), getPlaywright())
@@ -70,7 +71,7 @@ public class HomeTest extends BaseTest {
 
         Assert.assertTrue(beforeCountPoints < afterCountPoints);
         Assert.assertTrue(beforeCountSideMenuPoints < afterCountSideMenuPoints);
-        assertThat(homePage.getProgressbarPoints()).hasText(String.valueOf(beforeCountPoints + 818));
+        assertThat(homePage.getProgressbarPoints()).hasText(TestData.CHECKBOX_POINTS);
         Assert.assertEquals(homePage.getProgressbarPointsText(), homePage.getProgressbarSideMenuPointsText());
     }
 
