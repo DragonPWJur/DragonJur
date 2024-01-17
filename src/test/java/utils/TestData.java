@@ -24,4 +24,5 @@ public class TestData {
       public final static String CHECKBOX_IMAGE_LOCATOR = ":has(svg) path";
       public final static String ATTRIBUTE_FILL = "fill";
       public final static String COLOR_CHECKED_CHECKBOX =  "#3e30b3";
+      public static final String EXPLANATION = "Explanation";
 }

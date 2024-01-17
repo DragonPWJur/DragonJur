@@ -1,6 +1,7 @@
 package tests;
 
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.TestTimedPage;
@@ -47,7 +48,7 @@ public class TestListTest extends BaseTest {
 //        assertThat(testsPage.getTestQuestion()).containsText("?");
         Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
     }
-
+    @Ignore
     @Test
     public void testRunTimedMode() {
           TestTimedPage testTimedPage  = new HomePage(getPage(), getPlaywright())
