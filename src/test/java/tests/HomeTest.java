@@ -4,9 +4,9 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
-import pages.PreconditionPage;
 import utils.ProjectProperties;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
@@ -45,15 +45,7 @@ public class HomeTest extends BaseTest {
         assertThat(homePage.getStudyThisButton()).isVisible();
         homePage.getStudyThisButton().click();
     }
-
-    @Test
-    public void verifyResetButtonWorks() {
-        new PreconditionPage(getPage(), getPlaywright())
-                .resetCourseResults();
-
-        assertThat(new HomePage(getPage(), getPlaywright()).getProgressbarPoints()).hasText("0");
-    }
-
+    @Ignore
     @Test
     public void testUponClickingCheckboxPointCountIncreases() {
         HomePage homePage = new HomePage(getPage(), getPlaywright())

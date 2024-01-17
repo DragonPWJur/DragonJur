@@ -46,7 +46,6 @@ public class FlashcardPacksTest extends BaseTest {
     public void testUserCanMarkCardsForRecheckingRandom() {
 
         PreconditionPage preconditionPage = new PreconditionPage(getPage(), getPlaywright());
-        preconditionPage.resetCourseResults();
         String numberOfCardsForReCheckingBefore = preconditionPage.getCurrentNumberOfCardForRechecking();
         preconditionPage.startTest(TestData.ONE);        
 
@@ -82,5 +81,4 @@ public class FlashcardPacksTest extends BaseTest {
         Assert.assertTrue(getPage().url().contains(ProjectProperties.BASE_URL + TestData.FLASHCARDS_PACK_ID_END_POINT));
         assertThat(FlashcardsPackIDPage.getQuestionHeading()).hasText(TestData.QUESTION);
     }
-
 }
