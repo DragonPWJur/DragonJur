@@ -6,33 +6,33 @@ import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.RequestOptions;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class APIUtils {
     private static APIRequest request;
     private static APIRequestContext  requestContext;
     private static String userToken;
 
-    private static final String DIRECTION_ID = "da57d06c-d744-43ba-bb74-df4e4d02b8a9";
+    public static void parseUserToken() {
+        String relative = "tokens/user.json";
+        String jsonString;
 
-    public static void customerSignIn(Playwright playwright) {
-        request = playwright.request();
-        requestContext = request.newContext();
-        Map<String, String> requestBody = new HashMap();
-        requestBody.put("directionId", DIRECTION_ID);
-        requestBody.put("email", ProjectProperties.USERNAME);
-        requestBody.put("password", ProjectProperties.PASSWORD);
-
-        String apiLoginResponse = requestContext.post(ProjectProperties.API_BASE_URL + TestData.AUTH_CUSTOMER_SIGN_IN_END_POINT,
-                RequestOptions.create()
-                        .setHeader("Content-Type", "application/json")
-                        .setData(requestBody)).text();
-        JSONObject apiLoginResponseJSON = new JSONObject(apiLoginResponse);
-        userToken = apiLoginResponseJSON.getString("token");
+        try {
+            jsonString = new String(Files.readAllBytes(Paths.get(relative)));
+            JSONObject apiLoginResponseJSON = new JSONObject(jsonString);
+            String jsonValue = apiLoginResponseJSON.getJSONArray("origins").getJSONObject(0).getJSONArray("localStorage").getJSONObject(2).getString("value");
+            userToken = new JSONObject((new JSONObject(jsonValue)).getString("auth")).getString("accessToken");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void cleanData() {
+    public static void cleanData(Playwright playwright) {
+        request = playwright.request();
+        requestContext = request.newContext();
         requestContext.delete(ProjectProperties.API_BASE_URL + TestData.RESET_COURSE_RESULTS_END_POINT,
                 RequestOptions.create()
                         .setHeader("Authorization","Bearer " + userToken));

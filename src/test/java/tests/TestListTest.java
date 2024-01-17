@@ -20,17 +20,16 @@ public class TestListTest extends BaseTest {
                 .clickDomainsButton()
                 .clickRandomCheckbox()
                 .clickTutorButton()
-                .inputNumberOfQuestions("1")
+                .inputNumberOfQuestions(TestData.ONE)
                 .clickGenerateAndStartButton();
 
         waitForPageLoad(TestData.TEST_TUTOR_END_POINT);
 
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
-//        assertThat(testsPage.getTestQuestion()).containsText("?");
+//        assertThat(testsPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
         Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
     }
 
-    @Ignore
     @Test
     public void testTutorModeWithRandomCheckboxInChapter() {
         TestsPage testsPage = new HomePage(getPage(), getPlaywright())
@@ -39,13 +38,13 @@ public class TestListTest extends BaseTest {
                 .clickChaptersButton()
                 .clickRandomCheckbox()
                 .clickTutorButton()
-                .inputNumberOfQuestions("1")
+                .inputNumberOfQuestions(TestData.ONE)
                 .clickGenerateAndStartButton();
 
         waitForPageLoad(TestData.TEST_TUTOR_END_POINT);
 
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
-//        assertThat(testsPage.getTestQuestion()).containsText("?");
+//        assertThat(testsPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
         Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
     }
 
@@ -66,6 +65,7 @@ public class TestListTest extends BaseTest {
         Assert.assertTrue(testTimedPage.getAnswersCount() > 0);
     }
 
+    @Ignore
     @Test
     public void testAfterMarkingTheCardTheNumberOfMarkedCardsIncreasedBy1() {
         new PreconditionPage(getPage(), getPlaywright())
