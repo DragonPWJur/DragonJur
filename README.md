@@ -35,5 +35,5 @@ The project is structured as follows:
 ####
 * Generate local <b>allure report</b>: `mvn allure:serve`
 ####
-* Check the last allure report on CI: [Allure Report]
+* Check the last allure report on CI: [Allure Report] (https://dragonpwjur.github.io/DragonJur/)
 
