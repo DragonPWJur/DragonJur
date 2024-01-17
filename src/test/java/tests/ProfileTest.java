@@ -7,7 +7,7 @@ import utils.ProjectProperties;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class ProfileTest extends BaseTest{
-    protected static final String expectedUrl = ProjectProperties.BASE_URL + "/profile";
+    protected final String urlProfilePage = ProjectProperties.BASE_URL + "/profile";
 
     @Test
     public void testNavigationToTheProfilePage() {
@@ -15,6 +15,6 @@ public class ProfileTest extends BaseTest{
         new HomePage(getPage(), getPlaywright())
                 .clickProfileMenu();
 
-        assertThat(getPage()).hasURL(expectedUrl);
+        assertThat(getPage()).hasURL(urlProfilePage);
     }
 }
