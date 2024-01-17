@@ -3,7 +3,6 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
-import utils.TestData;
 import utils.TestUtils;
 
 import java.util.List;
@@ -79,14 +78,6 @@ public class HomePage extends SideMenuPage {
         return this;
     }
 
-    public HomePage clickWeek1CheckboxIfVisible() {
-        if(getWeek1FirstCheckbox().isChecked()){
-            week1FirstCheckbox.click();
-        }
-
-        return this;
-    }
-
     public String getProgressbarPointsText() {
 
         return progressbarPoints.innerText();
@@ -111,11 +102,6 @@ public class HomePage extends SideMenuPage {
 
     public HomePage clickStreaksButton() {
         streaksButton.click();
-
-        return this;
-    }
-    public HomePage checkNthCheckbox(int number) {
-        listCheckboxes.get(number).click();
 
         return this;
     }

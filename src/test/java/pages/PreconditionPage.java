@@ -2,7 +2,6 @@ package pages;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
-import utils.TestUtils;
 
 public class PreconditionPage extends BasePage {
 
@@ -47,8 +46,7 @@ public class PreconditionPage extends BasePage {
                 .clickDomainsButton()
                 .clickRandomCheckbox()
                 .inputNumberOfQuestions(numberOfQuestions)
-                .clickGenerateAndStartButton()
-        ;
+                .clickGenerateAndStartButton();
     }
 
     public void startFlashcardPackAndGoBack(int index) {

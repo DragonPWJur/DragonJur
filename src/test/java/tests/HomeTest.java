@@ -10,10 +10,6 @@ import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.PreconditionPage;
 import utils.ProjectProperties;
-import utils.TestData;
-import utils.TestUtils;
-
-import java.util.List;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
