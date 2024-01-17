@@ -73,25 +73,33 @@ abstract class BaseLocator extends BasePage {
     }
 
     protected Locator dialog() {
+
         return getPage().getByRole(AriaRole.DIALOG);
     }
 
-    protected Locator waitForListOfElementsLoaded(Locator locator) {
-        locator.last().waitFor();
-        return locator;
+    protected Locator locator(String css) {
+
+        return getPage().locator(css);
     }
+
+    protected Locator checkBoxImage(int number) {
+
+        return locator("label:has(input):nth-child(" + (number)  + ") svg");
+    }
+
+    protected List<Locator> checkBoxesAll(String css) {
+
+        locator(css).first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        locator(css).last().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED));
+
+        return locator(css).all();
+    }
+
     protected List<Locator> radioButtonsAll() {
         radio().first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
         radio().last().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED));
 
         return radio().all();
-    }
-
-    public Locator waitForListLoadedGetByText(String string) {
-        Locator list = getPage().getByText(string);
-        list.last().waitFor();
-
-        return list;
     }
 
     protected void cancelDialog() {
@@ -101,7 +109,15 @@ abstract class BaseLocator extends BasePage {
         }
     }
 
-    protected Locator locator(String css) {
-        return getPage().locator(css);
+    protected Locator waitForListLoadedGetByText(String string) {
+        Locator list = getPage().getByText(string);
+        list.last().waitFor();
+
+        return list;
+    }
+
+    protected Locator waitForListOfElementsLoaded(Locator locator) {
+        locator.last().waitFor();
+        return locator;
     }
 }

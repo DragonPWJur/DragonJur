@@ -1,5 +1,6 @@
 package tests;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import org.testng.Assert;
@@ -7,6 +8,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
+import pages.PreconditionPage;
 import utils.ProjectProperties;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
@@ -81,5 +83,23 @@ public class HomeTest extends BaseTest {
                 .clickStreaksButton();
 
         assertThat(homePage.getStreaksModalWindow()).isVisible();
+    }
+
+    @Test
+    public void testTheSingleNonActiveCheckboxCanBeChecked() {
+        Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
+                .checkIfListCheckBoxesIsNotEmptyAndAllUnchecked(), "Precondition is not reached.");
+
+        HomePage homePage = new HomePage(getPage(), getPlaywright());
+
+        boolean isCheckBoxChecked = homePage
+                .clickRandomCheckBox()
+                .isCheckBoxChecked();
+
+        Locator checkboxImage = homePage.getCheckboxImage();
+
+        Assert.assertTrue(isCheckBoxChecked, "Randomly checked checkbox is expected to be checked, but unchecked.");
+        assertThat(checkboxImage).hasCount(1);
+        assertThat(checkboxImage).isVisible();
     }
 }

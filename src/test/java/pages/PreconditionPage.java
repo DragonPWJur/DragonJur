@@ -57,4 +57,13 @@ public class PreconditionPage extends BasePage {
                 .clickFlashcardsBackButton()
                 .clickYesButton();
     }
+
+    public boolean checkIfListCheckBoxesIsNotEmptyAndAllUnchecked() {
+
+        HomePage homePage = new HomePage(getPage(), getPlaywright());
+        if (homePage.isListCheckBoxesNotEmpty()) {
+            return homePage.areAllCheckBoxesUnchecked();
+        }
+        return false;
+    }
 }
