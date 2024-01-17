@@ -18,7 +18,7 @@ public class ProfileTest extends BaseTest{
     }
 
     @Test
-    public void testAddNewCoursePageFromProfile() {
+    public void testAddNewCourseButtonNavigation() {
 
         new HomePage(getPage(), getPlaywright())
                 .clickProfileMenu()
