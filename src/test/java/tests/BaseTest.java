@@ -7,6 +7,7 @@ import org.testng.annotations.*;
 import utils.*;
 
 import java.lang.reflect.Method;
+import java.nio.file.Paths;
 
 import static utils.LoggerUtils.*;
 
@@ -47,10 +48,10 @@ public abstract class BaseTest {
         page.navigate(ProjectProperties.BASE_URL);
         log("Base URL opened");
 
-        APIUtils.customerSignIn(playwright);
-        log("Customer successfully signed in via API");
+        APIUtils.getCustomerToken();
+        log("Customer token successfully received");
 
-        APIUtils.cleanData();
+        APIUtils.cleanData(playwright);
         log("Course data cleared");
 
         login();
@@ -91,6 +92,8 @@ public abstract class BaseTest {
         page.click("button[type='submit']");
 
         waitForPageLoad(TestData.HOME_END_POINT);
+
+        context.storageState(new BrowserContext.StorageStateOptions().setPath(Paths.get("tokens/user.json")));
 
         if(page.url().equals(ProjectProperties.BASE_URL + TestData.HOME_END_POINT)) {
             log("Login successful");
