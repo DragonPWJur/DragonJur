@@ -66,11 +66,13 @@ public class FlashcardPacksTest extends BaseTest {
         FlashcardPacksPage flashcardPacksPage = new HomePage(getPage(), getPlaywright())
                 .clickFlashcardsMenu();
 
+        int randomIndex = TestUtils.getRandomNumber(flashcardPacksPage.getFlashcardsPacksToLearn());
+
         new PreconditionPage(getPage(), getPlaywright())
-                .startFlashcardPackAndGoBack();
+                .startFlashcardPackAndGoBack(randomIndex);
 
         flashcardPacksPage
-                .clickRandomFlashcardPack()
+                .clickRandomFlashcardPack(randomIndex)
                 .clickGotButtonIfVisible();
 
         FlashcardsPackIDPage FlashcardsPackIDPage = new FlashcardsPackIDPage(getPage(), getPlaywright());
@@ -78,5 +80,4 @@ public class FlashcardPacksTest extends BaseTest {
         Assert.assertTrue(getPage().url().contains(ProjectProperties.BASE_URL + TestData.FLASHCARDS_PACK_ID_END_POINT));
         assertThat(FlashcardsPackIDPage.getQuestionHeading()).hasText(TestData.QUESTION);
     }
-
 }

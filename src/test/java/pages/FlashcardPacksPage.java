@@ -3,7 +3,6 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
-import utils.TestUtils;
 
 public class FlashcardPacksPage extends SideMenuPage {
 
@@ -22,8 +21,7 @@ public class FlashcardPacksPage extends SideMenuPage {
         return waitForListOfElementsLoaded(flashcardsPacksToLearn);
     }
 
-    public FlashcardsPackIDPage clickRandomFlashcardPack() {
-        int randomIndex = TestUtils.getRandomNumber(getFlashcardsPacksToLearn());
+    public FlashcardsPackIDPage clickRandomFlashcardPack(int randomIndex) {
         getFlashcardsPacksToLearn().nth(randomIndex).click();
 
         return new FlashcardsPackIDPage(getPage(), getPlaywright());
