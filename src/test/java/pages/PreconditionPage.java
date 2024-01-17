@@ -73,10 +73,6 @@ public class PreconditionPage extends BasePage {
 
     public void checkIfListCheckBoxesIsNotEmptyAndOneIsUnchecked() {
 
-//        HomePage homePage = new HomePage(getPage(), getPlaywright())
-//                .clickRandomCheckBox()
-
-
 
     }
 }
