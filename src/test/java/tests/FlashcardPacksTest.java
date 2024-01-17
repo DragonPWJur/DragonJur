@@ -16,7 +16,6 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class FlashcardPacksTest extends BaseTest {
 
-    @Ignore
     @Test
     public void testUserCanMarkCardsForRechecking() {
 
@@ -42,7 +41,6 @@ public class FlashcardPacksTest extends BaseTest {
         Assert.assertEquals(numberOfCardsForReCheckingAfter, TestUtils.addNumber(numberOfCardsForReCheckingBefore, 1));
     }
 
-    @Ignore
     @Test
     public void testUserCanMarkCardsForRecheckingRandom() {
 

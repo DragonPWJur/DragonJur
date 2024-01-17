@@ -40,7 +40,7 @@ public class PreconditionPage extends BasePage {
     }
 
     public void startTest(String numberOfQuestions) {
-        new HomePage(getPage(), getPlaywright())
+        new TestsPage(getPage(), getPlaywright())
                 .clickTestsMenu()
                 .cancelDialogIfVisible()
                 .clickDomainsButton()
