@@ -8,6 +8,8 @@ import utils.TestUtils;
 public class MnemonicCardListPage extends SideMenuPage {
     private final Locator listOfStacks = locator("button:has(span)");
 
+    private final String[] randomStack = getRandomStackText();
+
     protected MnemonicCardListPage(Page page, Playwright playwright) {
         super(page, playwright);
     }
@@ -25,9 +27,17 @@ public class MnemonicCardListPage extends SideMenuPage {
         return arrayOfNamesAndQuantity;
     }
 
-    public MnemonicCardListPage clickStack(String text) {
-        exactText(text).click();
+    public String getExpectedStackName() {
 
-        return this;
+        return randomStack[0];
+    }
+
+    public String getExpectedStackQuantity() {
+
+        return randomStack[1];
+    }
+
+    public void clickRandomMnemonicCardsStack() {
+        exactText(getExpectedStackName()).click();
     }
 }
