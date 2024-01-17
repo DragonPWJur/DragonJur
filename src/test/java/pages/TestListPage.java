@@ -74,6 +74,11 @@ public class TestListPage extends SideMenuPage {
         return this;
     }
 
+    public TestTutorPage clickGenerateAndStartButton2() {
+        generateAndStartButton.click();
+        return new TestTutorPage(getPage(), getPlaywright());
+    }
+
     public TestListPage clickTimedButton() {
         timedButton.click();
 
@@ -97,3 +102,4 @@ public class TestListPage extends SideMenuPage {
         return this;
     }
 }
+
