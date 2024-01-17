@@ -67,6 +67,8 @@ public class TestListPage extends SideMenuPage {
     public TestListPage clickChaptersButton() {
         if (!chaptersButton.isChecked()) {
             chaptersButton.click();
+            getPage().waitForTimeout(2000);
+            getPage().reload();
         }
         return this;
     }
