@@ -15,7 +15,7 @@ public class APIUtils {
     private static APIRequestContext  requestContext;
     private static String userToken;
 
-    public static void getCustomerToken() {
+    public static void parseUserToken() {
         String relative = "tokens/user.json";
         String jsonString;
 

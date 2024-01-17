@@ -48,13 +48,14 @@ public abstract class BaseTest {
         page.navigate(ProjectProperties.BASE_URL);
         log("Base URL opened");
 
-        APIUtils.getCustomerToken();
-        log("Customer token successfully received");
+        login();
+        context.storageState(new BrowserContext.StorageStateOptions().setPath(Paths.get("tokens/user.json")));
+
+        APIUtils.parseUserToken();
+        log("User token successfully received");
 
         APIUtils.cleanData(playwright);
         log("Course data cleared");
-
-        login();
     }
 
     @AfterMethod
@@ -92,8 +93,6 @@ public abstract class BaseTest {
         page.click("button[type='submit']");
 
         waitForPageLoad(TestData.HOME_END_POINT);
-
-        context.storageState(new BrowserContext.StorageStateOptions().setPath(Paths.get("tokens/user.json")));
 
         if(page.url().equals(ProjectProperties.BASE_URL + TestData.HOME_END_POINT)) {
             log("Login successful");
