@@ -5,7 +5,10 @@ import io.qameta.allure.Allure;
 import org.testng.ITestResult;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -86,9 +89,20 @@ public class ReportUtils {
             Allure.getLifecycle().addAttachment(
                     "screenshot", "image/png", "png",
                     page.screenshot(new Page.ScreenshotOptions()
-                            .setFullPage(true))
-            );
+                            .setFullPage(true)));
             log("Screenshot added to Allure report");
+        }
+    }
+
+    public static void addVideoAndTracingToAllureReportForFailedTestsOnCI(Method testMethod, ITestResult testResult) throws IOException {
+        if (!testResult.isSuccess() && isServerRun()) {
+            Allure.getLifecycle().addAttachment("video", "videos/webm", "webm",
+                    Files.readAllBytes(Paths.get("videos/" + testMethod.getName() + ".webm")));
+            log("Video added to Allure report");
+
+            Allure.getLifecycle().addAttachment("tracing", "archive/zip", "zip",
+                    Files.readAllBytes(Paths.get("testTracing/" + testMethod.getName() + ".zip")));
+            log("Tracing added to Allure report");
         }
     }
 }
