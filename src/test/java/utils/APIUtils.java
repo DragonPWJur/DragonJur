@@ -26,7 +26,7 @@ public class APIUtils {
             userToken = new JSONObject((new JSONObject(jsonValue)).getString("auth")).getString("accessToken");
         }
         catch (IOException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
