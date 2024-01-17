@@ -44,6 +44,7 @@ public class PreconditionPage extends BasePage {
         new HomePage(getPage(), getPlaywright())
                 .clickTestsMenu()
                 .cancelDialogIfVisible()
+                .clickDomainsButton()
                 .clickRandomCheckbox()
                 .inputNumberOfQuestions(numberOfQuestions)
                 .clickGenerateAndStartButton()
