@@ -15,6 +15,9 @@ public class TestListPage extends SideMenuPage {
     private final Locator numberMarked = text("Marked").locator("span");
     private final Locator testDomain2Text = text("Test domain 2");
     private final Locator chaptersButton = text("Chapters");
+    private final Locator timedButton = exactButton("Timed");
+    private final Locator startTestButton = exactButton("Start test");
+    private final Locator startButton = exactButton("Start");
 
     public TestListPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -68,4 +71,28 @@ public class TestListPage extends SideMenuPage {
         generateAndStartButton.click();
         return new TestTutorPage(getPage(), getPlaywright());
     }
+
+    public TestListPage clickTimedButton() {
+        timedButton.click();
+
+        return this;
+    }
+
+    public TestListPage clickStartTestButton() {
+        startTestButton.click();
+
+        return this;
+    }
+
+    public TestTimedPage clickStartButton() {
+        startButton.click();
+
+        return new TestTimedPage(getPage(), getPlaywright());
+    }
+
+    public TestListPage clickGenerateAndStartButton1() {
+        generateAndStartButton.click();
+        return this;
+    }
 }
+
