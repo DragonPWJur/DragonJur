@@ -10,7 +10,7 @@ import java.util.List;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-public class SearchTest extends BaseTest{
+public class SearchTest extends BaseTest {
 
     private final String EXISTING_KEYWORD = "stand";
 
@@ -28,19 +28,19 @@ public class SearchTest extends BaseTest{
     }
 
     @Test
-        public void testSearchByExistingKeyWord() {
-            List<Locator> listOfMatches = new ArrayList<>();
+    public void testSearchByExistingKeyWord() {
+        List<Locator> listOfMatches = new ArrayList<>();
 
-            listOfMatches.add(getPage().locator("button:not(:has(> *))"));
+        listOfMatches.add(getPage().locator("button:not(:has(> *))"));
 
-            getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Study guide")).click();
+        getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Study guide")).click();
 
-            getPage().getByPlaceholder("Search").fill(EXISTING_KEYWORD);
+        getPage().getByPlaceholder("Search").fill(EXISTING_KEYWORD);
 
-            for (int i = 3; i <= listOfMatches.size(); i++) {
-                assertThat(getPage()
-                        .locator("listOfMatches.get(i)"))
-                        .hasText(EXISTING_KEYWORD);
-            }
+        for (int i = 3; i <= listOfMatches.size(); i++) {
+            assertThat(getPage()
+                    .locator("listOfMatches.get(i)"))
+                    .hasText(EXISTING_KEYWORD);
         }
+    }
 }
