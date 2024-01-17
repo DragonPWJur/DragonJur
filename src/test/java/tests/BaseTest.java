@@ -47,6 +47,12 @@ public abstract class BaseTest {
         page.navigate(ProjectProperties.BASE_URL);
         log("Base URL opened");
 
+        APIUtils.customerSignIn(playwright);
+        log("Customer successfully signed in via API");
+
+        APIUtils.cleanData();
+        log("Course data cleared");
+
         login();
     }
 
