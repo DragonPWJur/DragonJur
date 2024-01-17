@@ -42,7 +42,6 @@ public class FlashcardPacksTest extends BaseTest {
         Assert.assertEquals(numberOfCardsForReCheckingAfter, TestUtils.addNumber(numberOfCardsForReCheckingBefore, 1));
     }
 
-    @Ignore
     @Test
     public void testUserCanMarkCardsForRecheckingRandom() {
 
