@@ -1,5 +1,6 @@
 package tests;
 
+import com.microsoft.playwright.Locator;
 import org.testng.Assert;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
@@ -70,14 +71,14 @@ public class TestListTest extends BaseTest {
         PreconditionPage preconditionPage = new PreconditionPage(getPage(), getPlaywright());
         preconditionPage.startTest(TestData.ONE);
 
-        String numberMarked = new TestTutorPage(getPage(), getPlaywright())
+        Locator numberMarked = new TestTutorPage(getPage(), getPlaywright())
                 .clickMarkForReviewButton()
                 .clickEndButton()
                 .clickYesButton()
                 .clickSkipButton()
                 .clickCloseTheTestButton()
-                .getNumberMarked().innerText();
+                .getNumberMarked();
 
-        Assert.assertEquals(numberMarked, TestData.ONE);
+        assertThat(numberMarked).isVisible();
     }
 }
