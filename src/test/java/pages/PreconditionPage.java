@@ -70,4 +70,13 @@ public class PreconditionPage extends BasePage {
         }
         return false;
     }
+
+    public void checkIfListCheckBoxesIsNotEmptyAndOneIsUnchecked() {
+
+//        HomePage homePage = new HomePage(getPage(), getPlaywright())
+//                .clickRandomCheckBox()
+
+
+
+    }
 }
