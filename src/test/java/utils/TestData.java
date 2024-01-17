@@ -22,6 +22,5 @@ public class TestData {
     public static final String QUESTION_MARK = "?";
     public static final String EXPLANATION = "Explanation";
     public static final String CHECKBOX_POINTS = "833";
-    public static final String candidateChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     public static final String REPORT_MESSAGE = "The report has been sent successfully";
 }

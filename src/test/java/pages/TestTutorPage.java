@@ -17,13 +17,13 @@ public class TestTutorPage extends SideMenuPage {
     private final Locator skipButton = exactButton("Skip");
     private final Locator reportAProblem = exactButton("Report a problem");
     private final Locator correctAnswerRadioButton = text("Correct Answer");
-    private final Locator correctAnswerBackgroundColor = getPage().locator("[fill='#55B47D']");
-    private final Locator h3Header = getPage().locator("h3");
+    private final Locator correctAnswerBackgroundColor = locator("[fill='#55B47D']");
+    private final Locator h3Header = locator("h3");
     private final Locator h3HeaderExplanationText = exactHeading("Explanation");
     private final Locator confirmButton = button("Confirm");
     private final Locator explanationTextSpan = getPage().locator("h3~div>span");
     private final Locator reportAProblemModal = dialog();
-    private final Locator describeTheProblemTextarea = getPage().getByRole(AriaRole.TEXTBOX);
+    private final Locator describeTheProblemTextarea = textbox();
     private final Locator sendButton = button("Send");
     private final Locator closeButton = button("Close");
     private final Locator reportSentSuccessfullyMessage = exactText("The report has been sent successfully");
@@ -112,7 +112,7 @@ public class TestTutorPage extends SideMenuPage {
 
     public TestTutorPage inputSymbolsIntoReportAProblemTextarea() {
         if (describeTheProblemTextarea.isVisible()) {
-            describeTheProblemTextarea.fill(TestUtils.geteRandomString(10) + " " + TestUtils.geteRandomString(5));
+            describeTheProblemTextarea.fill(TestUtils.geteRandomString(10));
         }
         return this;
     }
