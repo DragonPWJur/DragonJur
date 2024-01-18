@@ -37,13 +37,25 @@ public class PreconditionPage extends BasePage {
                 .clickGenerateAndStartButton();
     }
 
+    public int getCurrentNumberOfFlashcardPack() {
+        int flashcardsPackRandomNumber = new HomePage(getPage(), getPlaywright())
+                .clickFlashcardsMenu()
+                .getNumberOfFlashcardsPack();
+
+        new FlashcardPacksPage(getPage(), getPlaywright()).clickHomeMenu();
+
+        return flashcardsPackRandomNumber;
+    }
+
     public void startFlashcardPackAndGoBack(int index) {
         new HomePage(getPage(), getPlaywright())
+                .clickHomeMenu()
                 .clickFlashcardsMenu()
-                .clickRandomFlashcardPack(index)
+                .clickNthFlashcardPack(index)
                 .clickGotButtonIfVisible()
                 .clickFlashcardsBackButton()
-                .clickYesButton();
+                .clickYesButton()
+                .clickHomeMenu();
     }
 
     public boolean checkIfListCheckBoxesIsNotEmptyAndAllUnchecked() {

@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.PreconditionPage;
+import pages.TestListPage;
 import pages.TestTutorPage;
 import utils.TestData;
 
@@ -64,7 +65,22 @@ public class TestTutorTest extends BaseTest {
     @Test(description = "TC1344-01 The single non-active Checkbox can be checked.")
     @Description("Objective: To verify that a non-active checkbox ca be successfully checked.")
     @Story("Tests")
-    @TmsLink("l3twyfx5esxv")
+    @TmsLink("9lf328qwx4bv")
+    public void testTheSingleCheckboxCanBeChecked() {
+        String checkboxText = new HomePage(getPage(), getPlaywright())
+                .clickTestsMenu()
+                .cancelDialogIfVisible()
+                .clickDomainsButton()
+                .clickRandomCheckboxAndReturnItsName();
+
+        assertThat(new TestListPage(getPage(), getPlaywright()).checkIcon(checkboxText)).isVisible();
+    }
+
+    @Test(description = "TC1344-02 Execute Tutor Mode with a randomly selected checkbox in the Domain section.")
+    @Description("Objective: To verify that User can successfully activate Tutor mode by checking a random checkbox " +
+            "in the Domain section and entering valid data in the ‘Number of Questions’ field.")
+    @Story("Tests")
+    @TmsLink("9a0yelvj0jdh")
     public void testTutorModeWithRandomCheckboxInDomain() {
         TestTutorPage testTutorPage = new HomePage(getPage(), getPlaywright())
                 .clickTestsMenu()

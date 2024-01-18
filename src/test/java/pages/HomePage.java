@@ -52,7 +52,7 @@ public class HomePage extends BaseSideMenu {
         return streaksModalWindow;
     }
 
-    @Step("Click 'Tests' button on sidemenu")
+    @Step("Click 'Tests' button on side menu")
     public TestListPage clickTestsMenu() {
         testsButton.click();
         return new TestListPage(getPage(), getPlaywright());
