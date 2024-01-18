@@ -9,12 +9,12 @@ public class TestListPage extends SideMenuPage {
 
     private final Locator domainsButton = text("Domains");
     private final Locator tutorButton = button("Tutor");
-    private final Locator numberOfQuestionsInputField = getPage().locator("input[name = 'numberOfQuestions']");
+    private final Locator numberOfQuestionsInputField = locator("input[name = 'numberOfQuestions']");
     private final Locator generateAndStartButton = button("Generate & Start");
-    private final Locator listCheckboxes = locator("button:has(input[type='checkbox'])");
-//    private final List<Locator> listCheckboxes = checkBoxesAll("button:has(input[type='checkbox'])");
-//    private final Locator listCheckboxes1 = locator("input[type='checkbox'][name*='Questions']");
-    private final Locator numberMarked = text("Marked").locator("span");
+    Locator listCheckboxes = locator("button label span");
+//    private final Locator listCheckboxes = locator("button:has(input[type='checkbox'])");
+//    Locator listCheckboxes = locator("input[type='checkbox'][name*='Questions']");
+    private final Locator numberMarked = numberMarked();
     private final Locator testDomain2Text = text("Test domain 2");
     private final Locator chaptersButton = text("Chapters");
     private final Locator timedButton = exactButton("Timed");
@@ -57,8 +57,10 @@ public class TestListPage extends SideMenuPage {
     }
 
     public String clickRandomCheckboxAndReturnItsName() {
-        return TestUtils.clickRandomElementAndReturnText(getListCheckboxes())
-                .replaceAll("\\((\\d+)\\)", "").replace("(", "").replace(")", "");
+        int randomValue = TestUtils.getRandomNumber(listCheckboxes);
+        listCheckboxes.nth(randomValue).click();
+
+        return listCheckboxes.nth(randomValue).textContent();
     }
 
     public TestListPage cancelDialogIfVisible() {
@@ -74,6 +76,8 @@ public class TestListPage extends SideMenuPage {
     public TestListPage clickChaptersButton() {
         if (!chaptersButton.isChecked()) {
             chaptersButton.click();
+            getPage().waitForTimeout(2000);
+            getPage().reload();
         }
         return this;
     }
@@ -106,8 +110,12 @@ public class TestListPage extends SideMenuPage {
         return this;
     }
 
+    public Locator getNumberMarked() {
+        return numberMarked;
+    }
+
     public Locator checkboxWithExactText(String text) {
-        return getListCheckboxes().getByText(text);
+        return listCheckboxes.getByText(text).locator("svg");
     }
 }
 

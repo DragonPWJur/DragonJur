@@ -26,13 +26,6 @@ public class TestUtils {
         list.nth(randomValue).click();
     }
 
-    public static String clickRandomElementAndReturnText(Locator list) {
-        int randomValue = getRandomNumber(list);
-        list.nth(randomValue).click();
-
-        return list.nth(randomValue).textContent();
-    }
-
     public static int getInt(String text) {
         return Integer.parseInt(text);
     }
@@ -54,6 +47,16 @@ public class TestUtils {
     public static String getRandomTextValue(Locator listValues) {
 
         return listValues.all().get(getRandomNumber(listValues)).innerText();
+    }
+
+    public static String geteRandomString(int length) {
+        String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder randomString = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            randomString.append(chars.charAt(new Random().nextInt(chars.length())));
+        }
+
+        return randomString.toString();
     }
 }
 
