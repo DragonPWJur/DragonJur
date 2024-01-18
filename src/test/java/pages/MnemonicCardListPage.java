@@ -40,4 +40,10 @@ public class MnemonicCardListPage extends SideMenuPage {
     public void clickRandomMnemonicCardsStack() {
         exactText(getExpectedStackName()).click();
     }
+
+    public MnemonicCardsPage clickRandomMnemonicCardsStackAndGo() {
+        exactText(getExpectedStackName()).click();
+
+        return new MnemonicCardsPage(getPage(), getPlaywright());
+    }
 }
