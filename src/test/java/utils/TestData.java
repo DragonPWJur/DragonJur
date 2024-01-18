@@ -7,6 +7,7 @@ public class TestData {
     public static final String TEST_TUTOR_END_POINT = "/test-tutor";
     public static final String TEST_TIMED_END_POINT = "/test-timed";
     public static final String MNEMONIC_CARDS_END_POINT = "/mnemonic-cards/";
+    public static final String MNEMONIC_CARD_PRACTICE_END_POINT = "/mnemonic-card-practice/";
     public static final String FLASHCARDS_PACK_ID_END_POINT = "/flashcards?packId";
     public static final String AUTH_CUSTOMER_SIGN_IN_END_POINT = "/auth/customer/signIn";
     public static final String RESET_COURSE_RESULTS_END_POINT = "/courses/results";
@@ -23,4 +24,6 @@ public class TestData {
     public static final String EXPLANATION = "Explanation";
     public static final String CHECKBOX_POINTS = "833";
     public static final String REPORT_MESSAGE = "The report has been sent successfully";
+    public static final String PRACTICE = "Practice";
+
 }

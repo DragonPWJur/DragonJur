@@ -1,14 +1,20 @@
 package utils;
 
+import com.microsoft.playwright.Page;
+import io.qameta.allure.Allure;
 import org.testng.ITestResult;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static utils.LoggerUtils.*;
+import static utils.ProjectProperties.isServerRun;
 
 public class ReportUtils {
 
@@ -77,6 +83,28 @@ public class ReportUtils {
             logError(ReportUtils.getTestStatistics(method, testResult));
         } else {
             logWarning(ReportUtils.getTestStatistics(method, testResult));
+        }
+    }
+
+    public static void addScreenshotToAllureReportForFailedTestsOnCI(Page page, ITestResult testResult) {
+        if (!testResult.isSuccess() && isServerRun()) {
+            Allure.getLifecycle().addAttachment(
+                    "screenshot", "image/png", "png",
+                    page.screenshot(new Page.ScreenshotOptions()
+                            .setFullPage(true)));
+            log("Screenshot added to Allure report");
+        }
+    }
+
+    public static void addVideoAndTracingToAllureReportForFailedTestsOnCI(Method testMethod, ITestResult testResult) throws IOException {
+        if (!testResult.isSuccess() && isServerRun()) {
+            Allure.getLifecycle().addAttachment("video", "videos/webm", "webm",
+                    Files.readAllBytes(Paths.get("videos/" + testMethod.getName() + ".webm")));
+            log("Video added to Allure report");
+
+            Allure.getLifecycle().addAttachment("tracing", "archive/zip", "zip",
+                    Files.readAllBytes(Paths.get("testTracing/" + testMethod.getName() + ".zip")));
+            log("Tracing added to Allure report");
         }
     }
 }
