@@ -3,7 +3,6 @@ package tests;
 import org.testng.Assert;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
-import pages.FlashcardPacksPage;
 import pages.FlashcardsPackIDPage;
 import pages.HomePage;
 import pages.PreconditionPage;
@@ -61,23 +60,17 @@ public class FlashcardPacksTest extends BaseTest {
         Assert.assertEquals(numberOfCardsForReCheckingAfter, TestUtils.addNumber(numberOfCardsForReCheckingBefore, 1));
     }
 
-    @Ignore
     @Test
     public void test_StartFlashCardPack() {
+        PreconditionPage preconditionPage = new PreconditionPage(getPage(), getPlaywright());
+        int currentRandomIndex = preconditionPage.getCurrentNumberOfFlashcardPack();
+        preconditionPage.startFlashcardPackAndGoBack(currentRandomIndex);
 
-        FlashcardPacksPage flashcardPacksPage = new HomePage(getPage(), getPlaywright())
-                .clickFlashcardsMenu();
-
-        int randomIndex = TestUtils.getRandomNumber(flashcardPacksPage.getFlashcardsPacksToLearn());
-
-        new PreconditionPage(getPage(), getPlaywright())
-                .startFlashcardPackAndGoBack(randomIndex);
-
-        flashcardPacksPage
-                .clickRandomFlashcardPack(randomIndex)
+        FlashcardsPackIDPage FlashcardsPackIDPage = new HomePage(getPage(), getPlaywright())
+                .clickHomeMenu()
+                .clickFlashcardsMenu()
+                .clickNthFlashcardPack(currentRandomIndex)
                 .clickGotButtonIfVisible();
-
-        FlashcardsPackIDPage FlashcardsPackIDPage = new FlashcardsPackIDPage(getPage(), getPlaywright());
 
         Assert.assertTrue(getPage().url().contains(ProjectProperties.BASE_URL + TestData.FLASHCARDS_PACK_ID_END_POINT));
         assertThat(FlashcardsPackIDPage.getQuestionHeading()).hasText(TestData.QUESTION);
