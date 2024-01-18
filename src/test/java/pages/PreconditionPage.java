@@ -9,17 +9,6 @@ public class PreconditionPage extends BasePage {
         super(page, playwright);
     }
 
-    public void startTestDomain2(String numberOfQuestions) {
-
-        new HomePage(getPage(), getPlaywright())
-                .clickTestsMenu()
-                .cancelDialogIfVisible()
-                .clickDomainsButton()
-                .clickTestDomain2CheckBox()
-                .inputNumberOfQuestions(numberOfQuestions)
-                .clickGenerateAndStartButton();
-    }
-
     public String getCurrentNumberOfCardForRechecking() {
         String numberMarkedForRechecking = new HomePage(getPage(), getPlaywright())
                 .clickFlashcardsMenu()
@@ -27,11 +16,6 @@ public class PreconditionPage extends BasePage {
 
         new TestsPage(getPage(), getPlaywright()).clickHomeMenu();
         return numberMarkedForRechecking;
-    }
-
-    public void clickRemoveFromFlashcardsButtonIfVisible() {
-        new TestTutorPage(getPage(), getPlaywright())
-                .clickRemoveFromFlashcardsButtonIfVisible();
     }
 
     public void endTest() {

@@ -3,6 +3,7 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import io.qameta.allure.Step;
 import utils.TestUtils;
 
 public class TestListPage extends SideMenuPage {
@@ -27,6 +28,7 @@ public class TestListPage extends SideMenuPage {
         return waitForListOfElementsLoaded(listCheckboxes);
     }
 
+    @Step("Click 'Domains' button")
     public TestListPage clickDomainsButton() {
         if (!domainsButton.isChecked()) {
             domainsButton.click();
@@ -34,26 +36,31 @@ public class TestListPage extends SideMenuPage {
         return this;
     }
 
+    @Step("Click 'Tutor' button")
     public TestListPage clickTutorButton() {
         tutorButton.click();
         return this;
     }
 
+    @Step("Set '{number}' as number of questions")
     public TestListPage inputNumberOfQuestions(String number) {
         numberOfQuestionsInputField.fill(number);
         return this;
     }
 
+    @Step("Click 'Generate and Start' button")
     public TestsPage clickGenerateAndStartButton() {
         generateAndStartButton.click();
         return new TestsPage(getPage(), getPlaywright());
     }
 
+    @Step("Click random checkbox")
     public TestListPage clickRandomCheckbox() {
         TestUtils.clickRandomElement(getListCheckboxes());
         return this;
     }
 
+    @Step("Cancel the dialog")
     public TestListPage cancelDialogIfVisible() {
         cancelDialog();
         return this;

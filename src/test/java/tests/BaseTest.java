@@ -6,6 +6,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.*;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Paths;
 
@@ -59,14 +60,18 @@ public abstract class BaseTest {
     }
 
     @AfterMethod
-    protected void closeContext(Method method, ITestResult testResult) {
+    protected void closeContext(Method method, ITestResult testResult) throws IOException {
         ReportUtils.logTestStatistic(method, testResult);
+
+        ReportUtils.addScreenshotToAllureReportForFailedTestsOnCI(page,testResult);
 
         page.close();
         log("Page closed");
 
         TracingUtils.stopTracing(page, context, method, testResult);
         log("Tracing stopped");
+
+        ReportUtils.addVideoAndTracingToAllureReportForFailedTestsOnCI(method, testResult);
 
         context.close();
         log("Context closed" + ReportUtils.END_LINE);
