@@ -44,3 +44,6 @@ build/
 .DS_Store
 
 keys.json
+# Allure Report
+allure-results/
+.allure/

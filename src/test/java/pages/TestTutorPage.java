@@ -57,18 +57,6 @@ public class TestTutorPage extends SideMenuPage {
         return this;
     }
 
-    public void clickRemoveFromFlashcardsButtonIfVisible() {
-
-        reportAProblem.waitFor();
-        if (reportAProblem.isVisible()) {
-            if (removeFromFlashcards.isVisible()) {
-                removeFromFlashcards.click();
-            }
-        } else {
-            System.out.println("reportAProblem not visible");
-        }
-    }
-
     public TestTutorPage clickMarkForReviewButton() {
         markForReviewButton.click();
 

@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import com.microsoft.playwright.Locator;
 import org.testng.Assert;
 import org.testng.annotations.Ignore;
@@ -16,19 +17,25 @@ import static utils.ProjectProperties.BASE_URL;
 
 public class TestListTest extends BaseTest {
 
-    @Test
+    @Test(description = "TC1344-01 The single non-active Checkbox can be checked.")
+    @Description("Objective: To verify that a non-active checkbox ca be successfully checked.")
+    @Story("Tests")
+    @TmsLink("9lf328qwx4bv")
     public void testTheSingleCheckboxCanBeChecked() {
-        String checkboxText =
-                new HomePage(getPage(), getPlaywright())
+        String checkboxText = new HomePage(getPage(), getPlaywright())
                         .clickTestsMenu()
                         .cancelDialogIfVisible()
                         .clickDomainsButton()
                         .clickRandomCheckboxAndReturnItsName();
 
-        assertThat(new TestListPage(getPage(), getPlaywright()).checkboxWithExactText(checkboxText)).isVisible();
+        assertThat(new TestListPage(getPage(), getPlaywright()).checkIcon(checkboxText)).isVisible();
     }
 
-    @Test
+    @Test(description = "TC1344-02 Execute Tutor Mode with a randomly selected checkbox in the Domain section.")
+    @Description("Objective: To verify that User can successfully activate Tutor mode by checking a random checkbox " +
+            "in the Domain section and entering valid data in the ‘Number of Questions’ field.")
+    @Story("Tests")
+    @TmsLink("9a0yelvj0jdh")
     public void testTutorModeWithRandomCheckboxInDomain() {
         TestsPage testsPage = new HomePage(getPage(), getPlaywright())
                 .clickTestsMenu()
