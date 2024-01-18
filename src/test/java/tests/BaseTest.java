@@ -71,8 +71,6 @@ public abstract class BaseTest {
         page.navigate(ProjectProperties.BASE_URL);
         log("Base URL opened");
 
-//        context.storageState(new BrowserContext.StorageStateOptions().setPath(Paths.get("tokens/user.json")));
-
     }
 
     @AfterMethod
