@@ -12,7 +12,7 @@ public class TestListPage extends SideMenuPage {
     private final Locator tutorButton = button("Tutor");
     private final Locator numberOfQuestionsInputField = locator("input[name = 'numberOfQuestions']");
     private final Locator generateAndStartButton = button("Generate & Start");
-    private final Locator listCheckboxes = locator("button:has(input[type='checkbox'])");
+    Locator listCheckboxes = locator("button label span");
     private final Locator numberMarked = numberMarked();
     private final Locator testDomain2Text = text("Test domain 2");
     private final Locator chaptersButton = text("Chapters");
@@ -60,7 +60,14 @@ public class TestListPage extends SideMenuPage {
         return this;
     }
 
-    @Step("Cancel the dialog")
+    @Step("Select a checkbox randomly and retrieve its name")
+    public String clickRandomCheckboxAndReturnItsName() {
+        int randomValue = TestUtils.getRandomNumber(listCheckboxes);
+        listCheckboxes.nth(randomValue).click();
+
+        return listCheckboxes.nth(randomValue).textContent();
+    }
+
     public TestListPage cancelDialogIfVisible() {
         cancelDialog();
         return this;
@@ -110,6 +117,10 @@ public class TestListPage extends SideMenuPage {
 
     public Locator getNumberMarked() {
         return numberMarked;
+    }
+
+    public Locator checkIcon(String text) {
+        return listCheckboxes.getByText(text).locator("svg");
     }
 }
 
