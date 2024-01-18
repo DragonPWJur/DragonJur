@@ -120,6 +120,12 @@ public class HomePage extends SideMenuPage {
         return this;
     }
 
+    public HomePage clickAllCheckBoxes() {
+        listCheckboxes.forEach(Locator::click);
+
+        return this;
+    }
+
     public HomePage getAllCheckedBoxesChecked() {
 
         for (Locator checkBox: listCheckboxes) {
