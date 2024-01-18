@@ -43,6 +43,9 @@ public abstract class BaseTest {
         playwright.close();
         log("Playwright closed");
 
+        APIUtils.parseUserToken();
+        log("User token successfully extracted from cookies");
+
         playwright = Playwright.create();
         log("Playwright initialized");
 
@@ -52,9 +55,6 @@ public abstract class BaseTest {
     @BeforeMethod
     protected void createContextAndPage(Method method) {
         log("Run " + ReportUtils.getTestMethodName(method));
-
-        APIUtils.parseUserToken();
-        log("User token successfully extracted from cookies");
 
         APIUtils.cleanData(playwright);
         log("API: Course data cleared");
