@@ -71,7 +71,6 @@ public class TestListTest extends BaseTest {
         Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
     }
 
-    @Ignore
     @Test
     public void testRunTimedMode() {
         TestTimedPage testTimedPage = new HomePage(getPage(), getPlaywright())
@@ -84,7 +83,7 @@ public class TestListTest extends BaseTest {
 
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TIMED_END_POINT);
         assertThat(testTimedPage.getTimer()).isVisible();
-//        assertThat(testTimedPage.getQuestionMark()).containsText(TestData.QUESTION_MARK);
+        assertThat(testTimedPage.getQuestionMark()).containsText(TestData.QUESTION_MARK);
         Assert.assertTrue(testTimedPage.getAnswersCount() > 0);
     }
 
