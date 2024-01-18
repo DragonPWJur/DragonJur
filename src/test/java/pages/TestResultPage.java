@@ -4,7 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
-public class TestResultPage extends SideMenuPage {
+public class TestResultPage extends BaseSideMenu {
 
     private final Locator closeTheTestButton = exactButton("Close the test");
 

@@ -4,7 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
-public class MnemonicCardsPage extends SideMenuPage {
+public class MnemonicCardsPage extends BaseSideMenu {
 
     private final Locator mnemonicCardHeader = locator("div~span").first();
     private final Locator mnemonicCardTotalQuantity = locator("div~span").last();

@@ -4,7 +4,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
-public class FlashcardsPackIDPage extends SideMenuPage {
+public class FlashcardsPackIDPage extends BaseSideMenu {
+
     private final Locator questionHeading = getPage().locator( "span.sc-iBkjds.gpMBxJ.sc-dGBNLl.igYIXR");
     private final Locator gotButton = button("Got it");
     private final Locator flashcardsBackButton = button( "Flashcards /");

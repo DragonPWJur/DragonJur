@@ -6,7 +6,7 @@ import com.microsoft.playwright.Playwright;
 import io.qameta.allure.Step;
 import utils.TestUtils;
 
-public class TestListPage extends SideMenuPage {
+public class TestListPage extends BaseSideMenu {
 
     private final Locator domainsButton = text("Domains");
     private final Locator tutorButton = button("Tutor");

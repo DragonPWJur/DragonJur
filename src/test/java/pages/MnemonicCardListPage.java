@@ -5,7 +5,8 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import utils.TestUtils;
 
-public class MnemonicCardListPage extends SideMenuPage {
+public class MnemonicCardListPage extends BaseSideMenu {
+
     private final Locator listOfStacks = locator("button:has(span)");
 
     private final String[] randomStack = getRandomStackText();

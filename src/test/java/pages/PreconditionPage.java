@@ -14,7 +14,7 @@ public class PreconditionPage extends BasePage {
                 .clickFlashcardsMenu()
                 .getNumberMarkedForRechecking();
 
-        new TestsPage(getPage(), getPlaywright()).clickHomeMenu();
+        new FlashcardPacksPage(getPage(), getPlaywright()).clickHomeMenu();
         return numberMarkedForRechecking;
     }
 

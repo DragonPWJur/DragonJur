@@ -4,7 +4,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
-public class StudyGuidePage extends SideMenuPage {
+public class StudyGuidePage extends BaseSideMenu {
+
     private final Locator wordList = waitForListLoadedGetByText("Projections");
     private final Locator noteButton = button(getWordText());
     private final Locator noteTextAria = locator("//textarea");

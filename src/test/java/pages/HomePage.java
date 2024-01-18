@@ -11,7 +11,8 @@ import io.qameta.allure.Step;
 
 import static java.lang.Integer.parseInt;
 
-public class HomePage extends SideMenuPage {
+public class HomePage extends BaseSideMenu {
+
     private final Locator studyThisButton = button("Study This");
     private final Locator testsButton = exactButton("Tests");
     private final Locator homeButton = exactButton("Home");
