@@ -49,9 +49,9 @@ public class TestListPage extends SideMenuPage {
     }
 
     @Step("Click 'Generate and Start' button")
-    public TestsPage clickGenerateAndStartButton() {
+    public TestTutorPage clickGenerateAndStartButton() {
         generateAndStartButton.click();
-        return new TestsPage(getPage(), getPlaywright());
+        return new TestTutorPage(getPage(), getPlaywright());
     }
 
     @Step("Click random checkbox")

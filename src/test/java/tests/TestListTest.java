@@ -18,7 +18,7 @@ public class TestListTest extends BaseTest {
     @Story("Tests")
     @TmsLink("l3twyfx5esxv")
     public void testTutorModeWithRandomCheckboxInDomain() {
-        TestsPage testsPage = new HomePage(getPage(), getPlaywright())
+        TestTutorPage testTutorPage = new HomePage(getPage(), getPlaywright())
                 .clickTestsMenu()
                 .cancelDialogIfVisible()
                 .clickDomainsButton()
@@ -31,12 +31,12 @@ public class TestListTest extends BaseTest {
 
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
 //        assertThat(testsPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
-        Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
+        Assert.assertTrue(testTutorPage.countTestRadioButtons() >= 1);
     }
 
     @Test
     public void testTutorModeWithRandomCheckboxInChapter() {
-        TestsPage testsPage = new HomePage(getPage(), getPlaywright())
+        TestTutorPage testTutorPage = new HomePage(getPage(), getPlaywright())
                 .clickTestsMenu()
                 .cancelDialogIfVisible()
                 .clickChaptersButton()
@@ -49,7 +49,7 @@ public class TestListTest extends BaseTest {
 
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
 //        assertThat(testsPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
-        Assert.assertTrue(testsPage.countTestRadioButtons() >= 1);
+        Assert.assertTrue(testTutorPage.countTestRadioButtons() >= 1);
     }
 
     @Ignore

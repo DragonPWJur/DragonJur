@@ -6,7 +6,7 @@ import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.AriaRole;
 import utils.TestUtils;
 
-public class TestTutorPage extends SideMenuPage {
+public class TestTutorPage extends TestsPage {
 
     private final Locator markForReviewButton = button("Mark for review");
     private final Locator removeFromMarkedButton = button("Remove from marked");
@@ -27,6 +27,7 @@ public class TestTutorPage extends SideMenuPage {
     private final Locator sendButton = button("Send");
     private final Locator closeButton = button("Close");
     private final Locator reportSentSuccessfullyMessage = exactText("The report has been sent successfully");
+    private final Locator testRadioButtons = radio();
 
     public TestTutorPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -122,5 +123,9 @@ public class TestTutorPage extends SideMenuPage {
 
     public Locator getReportAProblemModal() {
         return reportAProblemModal;
+    }
+
+    public int countTestRadioButtons() {
+        return testRadioButtons.count();
     }
 }

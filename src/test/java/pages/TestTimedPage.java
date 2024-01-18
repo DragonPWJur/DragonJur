@@ -7,7 +7,7 @@ import com.microsoft.playwright.Playwright;
 import java.util.List;
 
 
-public class TestTimedPage extends SideMenuPage {
+public class TestTimedPage extends TestsPage {
     private final List<Locator> radioButtons = radioButtonsAll();
     private final Locator timer = locator("header div div:has(button)>div");
     private final Locator questionMarkText = text("?");
