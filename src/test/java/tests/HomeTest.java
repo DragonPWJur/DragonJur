@@ -103,45 +103,21 @@ public class HomeTest extends BaseTest {
         assertThat(checkboxImage).isVisible();
     }
 
-//    TC1341-02 - Deactivation of Already Active single Checkbox.
-//
-//    Objective:  To verify the functionality where an active checkbox becomes inactive upon being clicked again.
-//
-//
-//    Preconditions:
-//    User is logged in to the application.
-//    User has navigated to the Home page.
-//    At least one checkbox is shown under the Learning Scheduler section
-//    A single checkbox is checked (has a “checked” state).
-//    Test Steps:
-//    Click on the checkbox that is in a “checked” state.
-//    Expected Results:
-//    After selecting the active checkbox, it should transition to an unchecked state.
-//1. Assert that after clicking on the “checked” checkbox,  the “checked” state is removed.
-//2. Assert that the “checked” image is no longer displayed inside the box.
-
     @Test
     public void testDeactivationOfAlreadyActiveSingleCheckbox() {
 
+        Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
+                .checkIfListCheckBoxesIsNotEmptyAndOneIsChecked(), "Precondition is not reached.");
 
+        HomePage homePage = new HomePage(getPage(), getPlaywright());
 
+        boolean allUnchecked = homePage
+                .clickCheckedBox()
+                .areAllCheckBoxesUnchecked();
 
+        Locator checkboxImage = homePage.getCheckboxImage();
 
-//        Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
-//                .checkIfListCheckBoxesIsNotEmptyAndAllUnchecked(), "Precondition is not reached.");
-//
-//        HomePage homePage = new HomePage(getPage(), getPlaywright());
-//
-//        boolean isCheckBoxChecked = homePage
-//                .clickRandomCheckBox()
-//                .isCheckBoxChecked();
-//
-//        Locator checkboxImage = homePage.getCheckboxImage();
-//
-//        Assert.assertTrue(isCheckBoxChecked, "Randomly checked checkbox is expected to be checked, but unchecked.");
-//        assertThat(checkboxImage).hasCount(1);
-//        assertThat(checkboxImage).isVisible();
+        Assert.assertTrue(allUnchecked, "All checkboxes are expected to be unchecked, but checked.");
+        Assert.assertFalse(checkboxImage.isVisible(), "All images of checkboxes are expected to be not visible, but visible");
     }
-
-
 }

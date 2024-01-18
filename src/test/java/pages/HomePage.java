@@ -113,7 +113,6 @@ public class HomePage extends SideMenuPage {
 
     public  HomePage clickRandomCheckBox(){
         getNthCheckbox(checkBoxNumber).click();
-        System.out.println("checkBoxNumber " + checkBoxNumber);
 
         return this;
     }
@@ -123,7 +122,7 @@ public class HomePage extends SideMenuPage {
         return !listCheckboxes.isEmpty();
     }
 
-    protected boolean areAllCheckBoxesUnchecked() {
+    public boolean areAllCheckBoxesUnchecked() {
 
        return listCheckboxes.stream().noneMatch(Locator::isChecked);
     }
@@ -136,5 +135,21 @@ public class HomePage extends SideMenuPage {
     public Locator getCheckboxImage() {
 
         return checkboxImage;
+    }
+
+    public List<Locator> getListCheckedCheckBoxes() {
+
+        return listCheckboxes.stream().filter(Locator::isChecked).toList();
+    }
+
+    public HomePage clickCheckedBox() {
+
+        for (Locator checkBox : listCheckboxes) {
+            if (checkBox.isChecked()) {
+                checkBox.click();
+                break;
+            }
+        }
+        return this;
     }
 }
