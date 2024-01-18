@@ -102,4 +102,22 @@ public class HomeTest extends BaseTest {
         assertThat(checkboxImage).hasCount(1);
         assertThat(checkboxImage).isVisible();
     }
+
+    @Test
+    public void testDeactivationOfAlreadyActiveSingleCheckbox() {
+
+        Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
+                .checkIfListCheckBoxesIsNotEmptyAndOneIsChecked(), "Precondition is not reached.");
+
+        HomePage homePage = new HomePage(getPage(), getPlaywright());
+
+        boolean allUnchecked = homePage
+                .clickCheckedBox()
+                .areAllCheckBoxesUnchecked();
+
+        Locator checkboxImage = homePage.getCheckboxImage();
+
+        Assert.assertTrue(allUnchecked, "All checkboxes are expected to be unchecked, but checked.");
+        Assert.assertFalse(checkboxImage.isVisible(), "All images of checkboxes are expected to be not visible, but visible");
+    }
 }
