@@ -66,4 +66,15 @@ public class PreconditionPage extends BasePage {
         }
         return false;
     }
+
+    public boolean checkIfListCheckBoxesIsNotEmptyAndOneIsChecked() {
+
+        HomePage homePage = new HomePage(getPage(), getPlaywright());
+        if (homePage.isListCheckBoxesNotEmpty()) {
+            homePage.clickRandomCheckBox();
+
+            return homePage.getListCheckedCheckBoxes().size() == 1;
+        }
+        return false;
+    }
 }
