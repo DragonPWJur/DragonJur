@@ -43,8 +43,8 @@ public abstract class BaseTest {
         playwright.close();
         log("Playwright closed");
 
-        APIUtils.parseUserToken();
-        log("User token successfully extracted from cookies");
+        LoginUtils.parseUserToken();
+        log("User token extracted from cookies");
 
         playwright = Playwright.create();
         log("Playwright initialized");
