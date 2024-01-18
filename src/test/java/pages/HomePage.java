@@ -120,8 +120,13 @@ public class HomePage extends SideMenuPage {
         return this;
     }
 
-    public HomePage clickAllCheckBoxes() {
-        listCheckboxes.forEach(Locator::click);
+    public HomePage getAllCheckedBoxesChecked() {
+
+        for (Locator checkBox: listCheckboxes) {
+            if (!checkBox.isChecked()) {
+                checkBox.click();
+            }
+        }
 
         return this;
     }
@@ -151,7 +156,7 @@ public class HomePage extends SideMenuPage {
         return listCheckboxes.get(checkBoxNumber).isChecked();
     }
 
-    public Locator getUncheckBox() {
+    public Locator getUncheckedBox() {
 
         return listCheckboxes.get(checkBoxNumber);
     }

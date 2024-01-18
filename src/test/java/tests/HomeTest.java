@@ -131,7 +131,7 @@ public class HomeTest extends BaseTest {
 
         homePage.clickRandomCheckBox();
 
-        Locator uncheckedBox = homePage.getUncheckBox();
+        Locator uncheckedBox = homePage.getUncheckedBox();
         Locator checkboxImage = homePage.getCheckboxImage(uncheckedBox);
         boolean allOtherCheckboxesCheckAndHaveImage = homePage.areAllOtherCheckBoxesCheckedAndHaveImageExceptUncheckedOne(uncheckedBox);
 

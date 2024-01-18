@@ -81,8 +81,9 @@ public class PreconditionPage extends BasePage {
     public boolean checkIfListCheckBoxesIsNotEmptyAndAllCheckBoxesAreCheckedAndHaveImages() {
 
         HomePage homePage = new HomePage(getPage(), getPlaywright());
+
         if (homePage.isListCheckBoxesNotEmpty()) {
-            homePage.clickAllCheckBoxes();
+            homePage.getAllCheckedBoxesChecked();
             if (homePage.areAllCheckBoxesChecked()) {
                 return homePage.areAllCheckBoxesHaveImage();
             }
