@@ -41,4 +41,21 @@ public final class TracingUtils {
 
         context.tracing().stop(tracingStopOptions);
     }
+
+    public static void stopTracingForUILogin(Page page, BrowserContext context) {
+        Tracing.StopOptions tracingStopOptions = null;
+
+        if (LoginUtils.getTracingSave()) {
+            tracingStopOptions = new Tracing.StopOptions()
+                    .setPath(Paths.get("testTracing/uiLogin.zip"));
+            log("Tracing for UI login saved");
+            page.video().saveAs(Paths.get("videos/uiLogin.webm"));
+            log("Video for UI login saved");
+            page.video().delete();
+        } else {
+            page.video().delete();
+        }
+
+        context.tracing().stop(tracingStopOptions);
+    }
 }

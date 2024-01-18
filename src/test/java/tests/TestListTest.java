@@ -27,7 +27,7 @@ public class TestListTest extends BaseTest {
                 .inputNumberOfQuestions(TestData.ONE)
                 .clickGenerateAndStartButton();
 
-        waitForPageLoad(TestData.TEST_TUTOR_END_POINT);
+        waitForPageLoad(getPage(), TestData.TEST_TUTOR_END_POINT);
 
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
 //        assertThat(testsPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
@@ -45,7 +45,7 @@ public class TestListTest extends BaseTest {
                 .inputNumberOfQuestions(TestData.ONE)
                 .clickGenerateAndStartButton();
 
-        waitForPageLoad(TestData.TEST_TUTOR_END_POINT);
+        waitForPageLoad(getPage(), TestData.TEST_TUTOR_END_POINT);
 
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
 //        assertThat(testsPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);

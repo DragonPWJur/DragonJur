@@ -16,7 +16,7 @@ public class APIUtils {
     private static String userToken;
 
     public static void parseUserToken() {
-        String relative = "tokens/user.json";
+        String relative = "src/test/resources/state.json";
         String jsonString;
 
         try {
