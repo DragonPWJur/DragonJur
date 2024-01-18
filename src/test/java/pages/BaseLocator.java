@@ -77,6 +77,11 @@ abstract class BaseLocator extends BasePage {
         return getPage().getByRole(AriaRole.DIALOG);
     }
 
+    protected Locator buttonInBanner(String text) {
+        return getPage().getByRole(AriaRole.BANNER)
+                .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(text));
+    }
+
     protected Locator locator(String css) {
 
         return getPage().locator(css);

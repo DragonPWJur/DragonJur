@@ -3,6 +3,7 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import utils.TestUtils;
 
 public class TestTutorPage extends SideMenuPage {
 
@@ -20,6 +21,9 @@ public class TestTutorPage extends SideMenuPage {
     private final Locator h3HeaderExplanationText = exactHeading("Explanation");
     private final Locator confirmButton = button("Confirm");
     private final Locator explanationTextSpan = getPage().locator("h3~div>span");
+    private final Locator nextQuestionButton = button("Next question");
+    private final Locator finishTestButton = button("Finish test");
+    private final Locator listOfIncorrectAnswers = locator("//label[not(contains(text(), 'Correct Answer'))]");
 
     public TestTutorPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -43,6 +47,10 @@ public class TestTutorPage extends SideMenuPage {
 
     public String getExplanationText() {
         return explanationTextSpan.innerText();
+    }
+
+    public Locator getListOfIncorrectAnswers() {
+        return listOfIncorrectAnswers;
     }
 
     public TestTutorPage clickAddToFlashCardButton() {
@@ -94,6 +102,22 @@ public class TestTutorPage extends SideMenuPage {
 
     public TestTutorPage clickConfirmButton() {
         confirmButton.click();
+        return this;
+    }
+
+    public void clickNextQuestionButton() {
+        nextQuestionButton.click();
+    }
+
+    public TestTutorPage clickFinishTestButton() {
+        finishTestButton.click();
+
+        return this;
+    }
+
+    public TestTutorPage clickRandomIncorrectAnswer() {
+        TestUtils.clickRandomElement(getListOfIncorrectAnswers());
+
         return this;
     }
 }

@@ -18,6 +18,8 @@ public class TestListPage extends SideMenuPage {
     private final Locator timedButton = exactButton("Timed");
     private final Locator startTestButton = exactButton("Start test");
     private final Locator startButton = exactButton("Start");
+    private final Locator automationTestingForStatsText = text("Automation testing for stats");
+    private final Locator historyAndCivilizationForStatsText = text("History and Civilization for Stats");
 
     public TestListPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -102,5 +104,16 @@ public class TestListPage extends SideMenuPage {
     public Locator getNumberMarked() {
         return numberMarked;
     }
-}
 
+    public TestListPage clickAutomationTestingForStatsCheckBox() {
+        automationTestingForStatsText.click();
+
+        return this;
+    }
+
+    public TestListPage clickHistoryAndCivilizationForStatsCheckBox() {
+        historyAndCivilizationForStatsText.click();
+
+        return this;
+    }
+}

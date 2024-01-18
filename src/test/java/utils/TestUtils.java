@@ -48,5 +48,8 @@ public class TestUtils {
 
         return listValues.all().get(getRandomNumber(listValues)).innerText();
     }
-}
 
+    public static double getPercentageOfNumber(int forNumber, int fromNumber) {
+        return Math.round(((double) forNumber / fromNumber * 100) * 10) / 10.0;
+    }
+}
