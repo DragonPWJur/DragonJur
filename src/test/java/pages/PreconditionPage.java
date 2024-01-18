@@ -77,4 +77,16 @@ public class PreconditionPage extends BasePage {
         }
         return false;
     }
+
+    public boolean checkIfListCheckBoxesIsNotEmptyAndAllCheckBoxesAreCheckedAndHaveImages() {
+
+        HomePage homePage = new HomePage(getPage(), getPlaywright());
+        if (homePage.isListCheckBoxesNotEmpty()) {
+            homePage.clickAllCheckBoxes();
+            if (homePage.areAllCheckBoxesChecked()) {
+                return homePage.areAllCheckBoxesHaveImage();
+            }
+        }
+        return false;
+    }
 }

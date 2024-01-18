@@ -120,4 +120,23 @@ public class HomeTest extends BaseTest {
         Assert.assertTrue(allUnchecked, "All checkboxes are expected to be unchecked, but checked.");
         Assert.assertFalse(checkboxImage.isVisible(), "All images of checkboxes are expected to be not visible, but visible");
     }
+
+    @Test
+    public void testDeactivationOfSingleAlreadyActiveCheckboxWhenAllCheckboxesAreActive() {
+
+        Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
+                .checkIfListCheckBoxesIsNotEmptyAndAllCheckBoxesAreCheckedAndHaveImages(), "Precondition is not reached.");
+
+        HomePage homePage = new HomePage(getPage(), getPlaywright());
+
+        homePage.clickRandomCheckBox();
+
+        Locator uncheckedBox = homePage.getUncheckBox();
+        Locator checkboxImage = homePage.getCheckboxImage(uncheckedBox);
+        boolean allOtherCheckboxesCheckAndHaveImage = homePage.areAllOtherCheckBoxesCheckedAndHaveImageExceptUncheckedOne(uncheckedBox);
+
+        assertThat(uncheckedBox).not().isChecked();
+        assertThat(checkboxImage).not().isVisible();
+        Assert.assertTrue(allOtherCheckboxesCheckAndHaveImage, "All other checkboxes are remains in state “checked” and have image");
+    }
 }

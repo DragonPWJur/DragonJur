@@ -120,6 +120,12 @@ public class HomePage extends SideMenuPage {
         return this;
     }
 
+    public HomePage clickAllCheckBoxes() {
+        listCheckboxes.forEach(Locator::click);
+
+        return this;
+    }
+
     protected boolean isListCheckBoxesNotEmpty() {
 
         return !listCheckboxes.isEmpty();
@@ -130,9 +136,24 @@ public class HomePage extends SideMenuPage {
        return listCheckboxes.stream().noneMatch(Locator::isChecked);
     }
 
+    protected boolean areAllCheckBoxesChecked() {
+
+        return listCheckboxes.stream().allMatch(x -> x.locator("svg").isVisible());
+    }
+
+    protected boolean areAllCheckBoxesHaveImage() {
+
+        return listCheckboxes.stream().allMatch(Locator::isChecked);
+    }
+
     public boolean isCheckBoxChecked() {
 
         return listCheckboxes.get(checkBoxNumber).isChecked();
+    }
+
+    public Locator getUncheckBox() {
+
+        return listCheckboxes.get(checkBoxNumber);
     }
 
     public Locator getCheckboxImage() {
@@ -140,7 +161,12 @@ public class HomePage extends SideMenuPage {
         return checkboxImage;
     }
 
-    public List<Locator> getListCheckedCheckBoxes() {
+    public Locator getCheckboxImage(Locator checkBox) {
+
+        return checkBox.locator("svg");
+    }
+
+    protected List<Locator> getListCheckedCheckBoxes() {
 
         return listCheckboxes.stream().filter(Locator::isChecked).toList();
     }
@@ -154,5 +180,16 @@ public class HomePage extends SideMenuPage {
             }
         }
         return this;
+    }
+
+    public boolean areAllOtherCheckBoxesCheckedAndHaveImageExceptUncheckedOne(Locator uncheckedBox) {
+
+        List<Locator> listCheckedBoxes = listCheckboxes
+                .stream()
+                .filter(x -> x != uncheckedBox)
+                .toList();
+
+        return listCheckedBoxes.stream().allMatch(Locator::isChecked)
+                && listCheckedBoxes.stream().allMatch(x -> x.locator("svg").isVisible());
     }
 }
