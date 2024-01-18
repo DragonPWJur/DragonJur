@@ -6,7 +6,7 @@ import com.microsoft.playwright.Playwright;
 
 public class MnemonicCardPracticePage extends BaseLocator {
 
-    private final Locator mnemonicCardPracticeHeader = locator("div~span");
+    private final Locator mnemonicCardPracticeHeader = locator("header>div>span");
     private final Locator answersToQuestion = text("Answers to question");
     private final Locator mnemonicWords = text("Mnemonic words");
 
@@ -16,10 +16,6 @@ public class MnemonicCardPracticePage extends BaseLocator {
 
     public Locator getMnemonicCardPracticeHeader() {
         return mnemonicCardPracticeHeader;
-    }
-
-    public String getMnemonicCardHeaderText() {
-        return getMnemonicCardPracticeHeader().nth(0).innerText();
     }
 
     public Locator getAnswersToQuestion() {

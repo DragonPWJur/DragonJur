@@ -19,7 +19,7 @@ public class MnemonicCardPracticeTest extends BaseTest {
                 .clickStartPracticeButton();
 
         Assert.assertTrue(getPage().url().contains(ProjectProperties.BASE_URL + TestData.MNEMONIC_CARD_PRACTICE_END_POINT));
-        Assert.assertEquals(mnemonicCardPracticePage.getMnemonicCardHeaderText(), TestData.PRACTICE);
+        assertThat(mnemonicCardPracticePage.getMnemonicCardPracticeHeader()).hasText(TestData.PRACTICE);
         assertThat(mnemonicCardPracticePage.getAnswersToQuestion()).isVisible();
         assertThat(mnemonicCardPracticePage.getMnemonicWords()).isVisible();
     }
