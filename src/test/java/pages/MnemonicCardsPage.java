@@ -8,6 +8,7 @@ public class MnemonicCardsPage extends SideMenuPage {
 
     private final Locator mnemonicCardHeader = locator("div~span").first();
     private final Locator mnemonicCardTotalQuantity = locator("div~span").last();
+    private final Locator startPracticeButton = button("Start practice");
 
     public MnemonicCardsPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -29,5 +30,11 @@ public class MnemonicCardsPage extends SideMenuPage {
 
     public Locator getMnemonicCardTotalQuantity() {
         return mnemonicCardTotalQuantity;
+    }
+
+    public MnemonicCardPracticePage clickStartPracticeButton() {
+        startPracticeButton.click();
+
+        return new MnemonicCardPracticePage(getPage(), getPlaywright());
     }
 }

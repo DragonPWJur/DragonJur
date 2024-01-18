@@ -7,6 +7,8 @@ import utils.TestUtils;
 
 import java.util.List;
 
+import io.qameta.allure.Step;
+
 import static java.lang.Integer.parseInt;
 
 public class HomePage extends SideMenuPage {
@@ -49,6 +51,7 @@ public class HomePage extends SideMenuPage {
         return streaksModalWindow;
     }
 
+    @Step("Click 'Tests' button on side menu")
     public TestListPage clickTestsMenu() {
         testsButton.click();
         return new TestListPage(getPage(), getPlaywright());
@@ -113,7 +116,6 @@ public class HomePage extends SideMenuPage {
 
     public  HomePage clickRandomCheckBox(){
         getNthCheckbox(checkBoxNumber).click();
-        System.out.println("checkBoxNumber " + checkBoxNumber);
 
         return this;
     }
@@ -123,7 +125,7 @@ public class HomePage extends SideMenuPage {
         return !listCheckboxes.isEmpty();
     }
 
-    protected boolean areAllCheckBoxesUnchecked() {
+    public boolean areAllCheckBoxesUnchecked() {
 
        return listCheckboxes.stream().noneMatch(Locator::isChecked);
     }
@@ -136,5 +138,21 @@ public class HomePage extends SideMenuPage {
     public Locator getCheckboxImage() {
 
         return checkboxImage;
+    }
+
+    public List<Locator> getListCheckedCheckBoxes() {
+
+        return listCheckboxes.stream().filter(Locator::isChecked).toList();
+    }
+
+    public HomePage clickCheckedBox() {
+
+        for (Locator checkBox : listCheckboxes) {
+            if (checkBox.isChecked()) {
+                checkBox.click();
+                break;
+            }
+        }
+        return this;
     }
 }

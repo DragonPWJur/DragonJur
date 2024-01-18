@@ -9,17 +9,6 @@ public class PreconditionPage extends BasePage {
         super(page, playwright);
     }
 
-    public void startTestDomain2(String numberOfQuestions) {
-
-        new HomePage(getPage(), getPlaywright())
-                .clickTestsMenu()
-                .cancelDialogIfVisible()
-                .clickDomainsButton()
-                .clickTestDomain2CheckBox()
-                .inputNumberOfQuestions(numberOfQuestions)
-                .clickGenerateAndStartButton();
-    }
-
     public String getCurrentNumberOfCardForRechecking() {
         String numberMarkedForRechecking = new HomePage(getPage(), getPlaywright())
                 .clickFlashcardsMenu()
@@ -27,11 +16,6 @@ public class PreconditionPage extends BasePage {
 
         new TestsPage(getPage(), getPlaywright()).clickHomeMenu();
         return numberMarkedForRechecking;
-    }
-
-    public void clickRemoveFromFlashcardsButtonIfVisible() {
-        new TestTutorPage(getPage(), getPlaywright())
-                .clickRemoveFromFlashcardsButtonIfVisible();
     }
 
     public void endTest() {
@@ -53,13 +37,25 @@ public class PreconditionPage extends BasePage {
                 .clickGenerateAndStartButton();
     }
 
+    public int getCurrentNumberOfFlashcardPack() {
+        int flashcardsPackRandomNumber = new HomePage(getPage(), getPlaywright())
+                .clickFlashcardsMenu()
+                .getNumberOfFlashcardsPack();
+
+        new FlashcardPacksPage(getPage(), getPlaywright()).clickHomeMenu();
+
+        return flashcardsPackRandomNumber;
+    }
+
     public void startFlashcardPackAndGoBack(int index) {
         new HomePage(getPage(), getPlaywright())
+                .clickHomeMenu()
                 .clickFlashcardsMenu()
-                .clickRandomFlashcardPack(index)
+                .clickNthFlashcardPack(index)
                 .clickGotButtonIfVisible()
                 .clickFlashcardsBackButton()
-                .clickYesButton();
+                .clickYesButton()
+                .clickHomeMenu();
     }
 
     public boolean checkIfListCheckBoxesIsNotEmptyAndAllUnchecked() {
@@ -67,6 +63,17 @@ public class PreconditionPage extends BasePage {
         HomePage homePage = new HomePage(getPage(), getPlaywright());
         if (homePage.isListCheckBoxesNotEmpty()) {
             return homePage.areAllCheckBoxesUnchecked();
+        }
+        return false;
+    }
+
+    public boolean checkIfListCheckBoxesIsNotEmptyAndOneIsChecked() {
+
+        HomePage homePage = new HomePage(getPage(), getPlaywright());
+        if (homePage.isListCheckBoxesNotEmpty()) {
+            homePage.clickRandomCheckBox();
+
+            return homePage.getListCheckedCheckBoxes().size() == 1;
         }
         return false;
     }
