@@ -6,6 +6,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.*;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.file.Paths;
 
@@ -14,7 +15,7 @@ import static utils.LoggerUtils.*;
 @Listeners(utils.ExceptionListener.class)
 public abstract class BaseTest {
     private final Playwright playwright = Playwright.create();
-    private final Browser browser = BrowserManager.createBrowser(playwright);
+    private final Browser browser = BrowserManager.createBrowser(playwright, getClass());
     private BrowserContext context;
     private Page page;
 
@@ -59,14 +60,18 @@ public abstract class BaseTest {
     }
 
     @AfterMethod
-    protected void closeContext(Method method, ITestResult testResult) {
+    protected void closeContext(Method method, ITestResult testResult) throws IOException {
         ReportUtils.logTestStatistic(method, testResult);
+
+        ReportUtils.addScreenshotToAllureReportForFailedTestsOnCI(page,testResult);
 
         page.close();
         log("Page closed");
 
         TracingUtils.stopTracing(page, context, method, testResult);
         log("Tracing stopped");
+
+        ReportUtils.addVideoAndTracingToAllureReportForFailedTestsOnCI(method, testResult);
 
         context.close();
         log("Context closed" + ReportUtils.END_LINE);

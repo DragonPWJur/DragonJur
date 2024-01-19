@@ -129,4 +129,8 @@ abstract class BaseLocator extends BasePage {
     protected Locator numberMarked() {
         return text("Marked").getByText("1");
     }
+
+    protected Locator textbox() {
+        return getPage().getByRole(AriaRole.TEXTBOX);
+    }
 }

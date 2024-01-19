@@ -1,29 +1,34 @@
 package utils;
 
+import com.microsoft.playwright.Page;
+import io.qameta.allure.Allure;
 import org.testng.ITestResult;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static utils.LoggerUtils.*;
+import static utils.ProjectProperties.isServerRun;
 
 public class ReportUtils {
 
-    public final static String END_LINE =
-            "\n_________________________________________________________________________________________\n";
-    private final static String H_LINE =
-            " ==========================================================================================\n";
+    public final static String END_LINE = String.format("%n%s", "—".repeat(90));
+    private final static String H_LINE = String.format("%s%n", "=".repeat(90));
 
     public static String getCurrentDateTime() {
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd, hh:mma");
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd, hh:mma");
 
-        return dateFormat.format(date);
+        return now.format(dateTimeFormat);
     }
 
-    private static String getTestStatus(ITestResult testResult) {
+    public static String getTestStatus(ITestResult testResult) {
         int status = testResult.getStatus();
 
         return switch (status) {
@@ -34,20 +39,24 @@ public class ReportUtils {
         };
     }
 
-    private static String getTestRunTime(ITestResult testResult) {
+    public static String getTestRunTime(ITestResult testResult) {
         final long time = testResult.getEndMillis() - testResult.getStartMillis();
-        int minutes = (int) ((time / 1000) / 60);
-        int seconds = (int) (time / 1000) % 60;
-        int milliseconds = (int) (time % 1000);
+        Duration duration = Duration.ofMillis(time);
 
-        return minutes + " min " + seconds + " sec " + milliseconds + " ms";
+        long minutes = duration.toMinutes();
+        long seconds = duration.minusMinutes(minutes).getSeconds();
+        long milliseconds = duration.toMillis() % 1000;
+
+        return String.format("%d min %d sec %d ms", minutes, seconds, milliseconds);
     }
 
     public static String getReportHeader() {
-        String header = "\tT E S T     R E P O R T\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "\n";
-        String currentDate = "\tDate:" + getCurrentDateTime() + "\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + "\n";
+        String headerAndDate = """
+                T E S T     R E P O R T 
+                Date: %s 
+                """.formatted(getCurrentDateTime());
 
-        return "\n" + H_LINE + header + currentDate + H_LINE;
+        return "\n" + H_LINE + headerAndDate + H_LINE;
     }
 
     public static String getTestStatistics(Method method, ITestResult testResult) {
@@ -56,7 +65,6 @@ public class ReportUtils {
     }
 
     public static String getTestMethodName(Method method) {
-        System.out.println(method.getName());
         return method.getDeclaringClass().getName() + "." + method.getName();
     }
 
@@ -75,6 +83,28 @@ public class ReportUtils {
             logError(ReportUtils.getTestStatistics(method, testResult));
         } else {
             logWarning(ReportUtils.getTestStatistics(method, testResult));
+        }
+    }
+
+    public static void addScreenshotToAllureReportForFailedTestsOnCI(Page page, ITestResult testResult) {
+        if (!testResult.isSuccess() && isServerRun()) {
+            Allure.getLifecycle().addAttachment(
+                    "screenshot", "image/png", "png",
+                    page.screenshot(new Page.ScreenshotOptions()
+                            .setFullPage(true)));
+            log("Screenshot added to Allure report");
+        }
+    }
+
+    public static void addVideoAndTracingToAllureReportForFailedTestsOnCI(Method testMethod, ITestResult testResult) throws IOException {
+        if (!testResult.isSuccess() && isServerRun()) {
+            Allure.getLifecycle().addAttachment("video", "videos/webm", "webm",
+                    Files.readAllBytes(Paths.get("videos/" + testMethod.getName() + ".webm")));
+            log("Video added to Allure report");
+
+            Allure.getLifecycle().addAttachment("tracing", "archive/zip", "zip",
+                    Files.readAllBytes(Paths.get("testTracing/" + testMethod.getName() + ".zip")));
+            log("Tracing added to Allure report");
         }
     }
 }

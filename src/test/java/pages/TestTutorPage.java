@@ -16,14 +16,19 @@ public class TestTutorPage extends SideMenuPage {
     private final Locator skipButton = exactButton("Skip");
     private final Locator reportAProblem = exactButton("Report a problem");
     private final Locator correctAnswerRadioButton = text("Correct Answer");
-    private final Locator correctAnswerBackgroundColor = getPage().locator("[fill='#55B47D']");
-    private final Locator h3Header = getPage().locator("h3");
+    private final Locator correctAnswerBackgroundColor = locator("[fill='#55B47D']");
+    private final Locator h3Header = locator("h3");
     private final Locator h3HeaderExplanationText = exactHeading("Explanation");
     private final Locator confirmButton = button("Confirm");
     private final Locator explanationTextSpan = getPage().locator("h3~div>span");
     private final Locator nextQuestionButton = button("Next question");
     private final Locator finishTestButton = button("Finish test");
     private final Locator listOfIncorrectAnswers = locator("//label[not(contains(text(), 'Correct Answer'))]");
+    private final Locator reportAProblemModal = dialog();
+    private final Locator describeTheProblemTextarea = textbox();
+    private final Locator sendButton = button("Send");
+    private final Locator closeButton = button("Close");
+    private final Locator reportSentSuccessfullyMessage = exactText("The report has been sent successfully");
 
     public TestTutorPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -57,18 +62,6 @@ public class TestTutorPage extends SideMenuPage {
         addToFlashcardButton.click();
 
         return this;
-    }
-
-    public void clickRemoveFromFlashcardsButtonIfVisible() {
-
-        reportAProblem.waitFor();
-        if (reportAProblem.isVisible()) {
-            if (removeFromFlashcards.isVisible()) {
-                removeFromFlashcards.click();
-            }
-        } else {
-            System.out.println("reportAProblem not visible");
-        }
     }
 
     public TestTutorPage clickMarkForReviewButton() {
@@ -105,6 +98,7 @@ public class TestTutorPage extends SideMenuPage {
         return this;
     }
 
+
     public void clickNextQuestionButton() {
         nextQuestionButton.click();
     }
@@ -119,5 +113,37 @@ public class TestTutorPage extends SideMenuPage {
         TestUtils.clickRandomElement(getListOfIncorrectAnswers());
 
         return this;
+    }
+
+    public TestTutorPage clickReportButton() {
+        reportAProblem.click();
+
+        return this;
+    }
+
+    public TestTutorPage inputSymbolsIntoReportAProblemTextarea() {
+        if (describeTheProblemTextarea.isVisible()) {
+            describeTheProblemTextarea.fill(TestUtils.geteRandomString(10));
+        }
+        return this;
+    }
+
+    public TestTutorPage clickSendButton() {
+        sendButton.click();
+
+        return this;
+    }
+
+    public Locator getReportSentSuccessfullyMessage() {
+        closeButton.waitFor();
+        if (closeButton.isVisible()) {
+            return reportSentSuccessfullyMessage;
+        }
+
+        return null;
+    }
+
+    public Locator getReportAProblemModal() {
+        return reportAProblemModal;
     }
 }

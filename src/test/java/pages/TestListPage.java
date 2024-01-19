@@ -3,6 +3,7 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import io.qameta.allure.Step;
 import utils.TestUtils;
 
 public class TestListPage extends SideMenuPage {
@@ -11,7 +12,7 @@ public class TestListPage extends SideMenuPage {
     private final Locator tutorButton = button("Tutor");
     private final Locator numberOfQuestionsInputField = locator("input[name = 'numberOfQuestions']");
     private final Locator generateAndStartButton = button("Generate & Start");
-    private final Locator listCheckboxes = locator("button:has(input[type='checkbox'])");
+    Locator listCheckboxes = locator("button label span");
     private final Locator numberMarked = numberMarked();
     private final Locator testDomain2Text = text("Test domain 2");
     private final Locator chaptersButton = text("Chapters");
@@ -29,6 +30,7 @@ public class TestListPage extends SideMenuPage {
         return waitForListOfElementsLoaded(listCheckboxes);
     }
 
+    @Step("Click 'Domains' button")
     public TestListPage clickDomainsButton() {
         if (!domainsButton.isChecked()) {
             domainsButton.click();
@@ -36,24 +38,36 @@ public class TestListPage extends SideMenuPage {
         return this;
     }
 
+    @Step("Click 'Tutor' button")
     public TestListPage clickTutorButton() {
         tutorButton.click();
         return this;
     }
 
+    @Step("Set '{number}' as number of questions")
     public TestListPage inputNumberOfQuestions(String number) {
         numberOfQuestionsInputField.fill(number);
         return this;
     }
 
+    @Step("Click 'Generate and Start' button")
     public TestsPage clickGenerateAndStartButton() {
         generateAndStartButton.click();
         return new TestsPage(getPage(), getPlaywright());
     }
 
+    @Step("Click random checkbox")
     public TestListPage clickRandomCheckbox() {
         TestUtils.clickRandomElement(getListCheckboxes());
         return this;
+    }
+
+    @Step("Select a checkbox randomly and retrieve its name")
+    public String clickRandomCheckboxAndReturnItsName() {
+        int randomValue = TestUtils.getRandomNumber(listCheckboxes);
+        listCheckboxes.nth(randomValue).click();
+
+        return listCheckboxes.nth(randomValue).textContent();
     }
 
     public TestListPage cancelDialogIfVisible() {
@@ -69,6 +83,8 @@ public class TestListPage extends SideMenuPage {
     public TestListPage clickChaptersButton() {
         if (!chaptersButton.isChecked()) {
             chaptersButton.click();
+            getPage().waitForTimeout(2000);
+            getPage().reload();
         }
         return this;
     }
@@ -103,6 +119,10 @@ public class TestListPage extends SideMenuPage {
 
     public Locator getNumberMarked() {
         return numberMarked;
+    }
+
+    public Locator checkIcon(String text) {
+        return listCheckboxes.getByText(text).locator("svg");
     }
 
     public TestListPage clickAutomationTestingForStatsCheckBox() {
