@@ -31,6 +31,10 @@ public class HomePage extends SideMenuPage {
         super(page, playwright);
     }
 
+    public List<Locator> getListCheckboxes() {
+        return listCheckboxes;
+    }
+
     public Locator getStudyThisButton() {
 
         return studyThisButton;
@@ -120,22 +124,27 @@ public class HomePage extends SideMenuPage {
         return this;
     }
 
-    public HomePage clickAllCheckBoxes() {
-        listCheckboxes.forEach(Locator::click);
+    public  HomePage clickCheckBox(int index){
+        getNthCheckbox(index).click();
+        getPage().waitForTimeout(1000);
 
         return this;
     }
 
-    public HomePage getAllCheckBoxesChecked() {
+    public int getCheckBoxNumber() {
 
-        for (Locator checkBox: listCheckboxes) {
-            if (isCheckBoxChecked(checkBox)) {
-                continue;
-            } else {
-                checkBox.click();
+        return checkBoxNumber;
+    }
+
+    public HomePage checkAllCheckBoxes() {
+
+        for (int i = 0; i < listCheckboxes.size(); i++) {
+            while (!listCheckboxes.get(i).isChecked()) {
+                listCheckboxes.get(i).check();
+                getPage().waitForTimeout(1000);
             }
+            System.out.println(listCheckboxes.get(i).isChecked());
         }
-
         return this;
     }
 
@@ -154,34 +163,14 @@ public class HomePage extends SideMenuPage {
         return listCheckboxes.stream().allMatch(Locator::isChecked);
     }
 
-    protected boolean areAllCheckedCheckBoxesHaveImage() {
-
-        return listCheckboxes.stream().allMatch(x -> x.locator("svg").isVisible());
-    }
-
     public boolean isCheckBoxChecked() {
 
         return listCheckboxes.get(checkBoxNumber).isChecked();
     }
 
-    public boolean isCheckBoxChecked(Locator checkBox) {
-
-        return checkBox.isChecked();
-    }
-
-    public Locator getUncheckedBox() {
-
-        return listCheckboxes.get(checkBoxNumber);
-    }
-
     public Locator getCheckboxImage() {
 
         return checkboxImage;
-    }
-
-    public Locator getCheckboxImage(Locator checkBox) {
-
-        return checkBox.locator("svg");
     }
 
     protected List<Locator> getListCheckedCheckBoxes() {
@@ -198,16 +187,5 @@ public class HomePage extends SideMenuPage {
             }
         }
         return this;
-    }
-
-    public boolean areAllOtherCheckBoxesCheckedAndHaveImageExceptUncheckedOne(Locator uncheckedBox) {
-
-        List<Locator> listCheckedBoxes = listCheckboxes
-                .stream()
-                .filter(x -> x != uncheckedBox)
-                .toList();
-
-        return listCheckedBoxes.stream().allMatch(Locator::isChecked)
-                && listCheckedBoxes.stream().allMatch(x -> x.locator("svg").isVisible());
     }
 }

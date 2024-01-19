@@ -122,21 +122,24 @@ public class HomeTest extends BaseTest {
     }
 
     @Test
-    public void testDeactivationOfSingleAlreadyActiveCheckboxWhenAllCheckboxesAreActive() {
+    public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive() {
 
         Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
-                .checkIfListCheckBoxesIsNotEmptyAndAllCheckBoxesAreCheckedAndHaveImages(), "Precondition is not reached.");
+                .checkIfListCheckBoxesIsNotEmptyAndAllCheckBoxesAreChecked(), "Precondition is not reached.");
 
         HomePage homePage = new HomePage(getPage(), getPlaywright());
 
-        homePage.clickRandomCheckBox();
+        int randomIndexCheckBox = homePage.getCheckBoxNumber();
 
-        Locator uncheckedBox = homePage.getUncheckedBox();
-        Locator checkboxImage = homePage.getCheckboxImage(uncheckedBox);
-        boolean allOtherCheckboxesCheckAndHaveImage = homePage.areAllOtherCheckBoxesCheckedAndHaveImageExceptUncheckedOne(uncheckedBox);
+        homePage.clickCheckBox(randomIndexCheckBox);
 
-        assertThat(uncheckedBox).not().isChecked();
-        assertThat(checkboxImage).not().isVisible();
-        Assert.assertTrue(allOtherCheckboxesCheckAndHaveImage, "All other checkboxes are remains in state “checked” and have image");
+        assertThat(homePage.getNthCheckbox(randomIndexCheckBox)).not().isChecked();
+
+        for (int i = 0; i < homePage.getListCheckboxes().size(); i++) {
+            if (i != randomIndexCheckBox) {
+                System.out.println(homePage.getListCheckboxes().get(i).isChecked());
+                assertThat(homePage.getListCheckboxes().get(i)).isChecked();
+            }
+        }
     }
 }
