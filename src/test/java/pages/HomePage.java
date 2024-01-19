@@ -131,7 +131,6 @@ public class HomePage extends SideMenuPage {
         for (Locator checkBox: listCheckboxes) {
             if (!checkBox.isChecked()) {
                 checkBox.click();
-                isCheckBoxChecked();
             }
         }
 
@@ -150,12 +149,12 @@ public class HomePage extends SideMenuPage {
 
     protected boolean areAllCheckBoxesChecked() {
 
-        return listCheckboxes.stream().allMatch(x -> x.locator("svg").isVisible());
+        return listCheckboxes.stream().allMatch(Locator::isChecked);
     }
 
-    protected boolean areAllCheckBoxesHaveImage() {
+    protected boolean areAllCheckedCheckBoxesHaveImage() {
 
-        return listCheckboxes.stream().allMatch(Locator::isChecked);
+        return listCheckboxes.stream().allMatch(x -> x.locator("svg").isVisible());
     }
 
     public boolean isCheckBoxChecked() {
