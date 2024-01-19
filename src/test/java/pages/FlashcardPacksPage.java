@@ -2,39 +2,50 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
 import utils.TestUtils;
 
-public class FlashcardPacksPage extends SideMenuPage {
+import java.util.List;
 
-    private final Locator markedForRecheckingButton = button("Marked for re-checking").locator("div:nth-of-type(2)");
-    private final Locator listOfFlashcardsPacksToLearn = locator("//div[contains(text(),'Learned')]");
+public final class FlashcardPacksPage extends BaseSideMenu {
 
-    private final int flashcardsPackNumber = getRandomFlashcardsPacksToLearnNumber();
+    private final Locator markedForRecheckingButton = button("Marked for re-checking");
+    private final Locator packToLearnButton = button("Learned");
+    private final List<Locator> allPacksToLearnButtons = allButtons(packToLearnButton);
 
-    public FlashcardPacksPage(Page page, Playwright playwright) {
-        super(page, playwright);
+    private final int randomPackIndex = TestUtils.getRandomNumber(allPacksToLearnButtons);
+
+    public FlashcardPacksPage(Page page) {
+        super(page);
     }
 
-    public String getNumberMarkedForRechecking() {
-        return markedForRecheckingButton.innerText();
+    int getRandomPackIndex() {
+        return randomPackIndex;
     }
 
-    public Locator getFlashcardsPacksToLearn() {
-        return waitForListOfElementsLoaded(listOfFlashcardsPacksToLearn);
+    private String[] getFlashcardsPackSplitText() {
+        return allPacksToLearnButtons.get(randomPackIndex).innerText().trim().split("\n");
+    }
+
+    public String getAmountOfCardsMarkedForRechecking() {
+        String[] textToArray = markedForRecheckingButton.innerText().trim().split("\n");
+
+        return textToArray[textToArray.length - 1];
+    }
+
+    public String getFlashcardsPackName() {
+        return getFlashcardsPackSplitText()[0];
+    }
+
+    public String getAmountOfCardsInPack() {
+        return getFlashcardsPackSplitText()[1]
+                .trim()
+                .split(" ")[0]
+                .split("/")[1];
     }
 
     public FlashcardsPackIDPage clickNthFlashcardPack(int randomIndex) {
-        getFlashcardsPacksToLearn().nth(randomIndex).click();
+        allPacksToLearnButtons.get(randomIndex).click();
 
-        return new FlashcardsPackIDPage(getPage(), getPlaywright());
-    }
-
-    public int getRandomFlashcardsPacksToLearnNumber() {
-        return TestUtils.getRandomNumber(getFlashcardsPacksToLearn());
-    }
-
-    public int getNumberOfFlashcardsPack() {
-        return flashcardsPackNumber;
+        return new FlashcardsPackIDPage(getPage());
     }
 }

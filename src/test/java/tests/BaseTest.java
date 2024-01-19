@@ -19,18 +19,34 @@ public abstract class BaseTest {
     private BrowserContext context;
     private Page page;
 
+    private String getPlaywrightId() {
+        String[] text = playwright.toString().split("impl.");
+        return text[text.length - 1];
+    }
+
+    private String getBrowserId() {
+        String[] text = browser.toString().split("impl.");
+        return text[text.length - 1];
+    }
+
     @BeforeSuite
     protected void launchBrowser(ITestContext testContext) {
-        log("Playwright and Browser initialized");
-
         log(ReportUtils.getReportHeader());
 
+        if(playwright != null) {
+            log("Playwright " + getPlaywrightId() + " created.");
+        } else {
+            logFatal("FATAL: PLAYWRIGHT IS NOT CREATED\n");
+        }
+
         if (browser.isConnected()) {
-            log("Browser " + browser.browserType().name().toUpperCase() + " launched\n");
+            log("Browser " + browser.browserType().name().toUpperCase() + " " + getBrowserId() + " launched.\n");
         } else {
             logFatal("FATAL: BROWSER " + browser.browserType().name().toUpperCase() + " IS NOT CONNECTED\n");
             System.exit(1);
         }
+
+        log(ReportUtils.END_LINE);
     }
 
     @BeforeMethod

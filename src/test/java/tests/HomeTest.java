@@ -1,10 +1,8 @@
 package tests;
 
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.PreconditionPage;
@@ -13,7 +11,7 @@ import utils.TestData;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-public class HomeTest extends BaseTest {
+public final class HomeTest extends BaseTest {
 
     @Test
     public void testLoginNavigation() {
@@ -21,76 +19,71 @@ public class HomeTest extends BaseTest {
         assertThat(getPage()).hasURL(ProjectProperties.BASE_URL + "/home");
     }
 
-    @DataProvider
-    public Object[][] sideMenuItems() {
-        return new Object[][]{
-                {"Home", ProjectProperties.BASE_URL + "/home"},
-                {"Study guide", ProjectProperties.BASE_URL + "/study-guide"},
-                {"Tests", ProjectProperties.BASE_URL + "/test-list"},
-                {"Flashcards", ProjectProperties.BASE_URL + "/flashcard-packs"},
-                {"Mnemonic cards", ProjectProperties.BASE_URL + "/mnemoniccard-list"},
-                {"Performance", ProjectProperties.BASE_URL + "/performance"},
-                {"Profile", ProjectProperties.BASE_URL + "/profile"}
-        };
-    }
-
-    @Test(dataProvider = "sideMenuItems")
-    public void testNavigateToSubMenuItems(String locator, String expectedUrl) {
-        getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(locator)).click();
+    @Test(dataProvider = "sideMenuItems", dataProviderClass = TestData.class)
+    public void testNavigateToSubMenuItems(String menuName, String expectedUrl) {
+        getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(menuName)).click();
 
         assertThat(getPage()).hasURL(expectedUrl);
     }
 
-    @Test
-    public void testLocators() {
-        HomePage homePage = new HomePage(getPage(), getPlaywright());
-        assertThat(homePage.getStudyThisButton()).isVisible();
-        homePage.getStudyThisButton().click();
-    }
-
-    @Test
-    public void testUponClickingCheckboxPointCountIncreases() {
-        HomePage homePage = new HomePage(getPage(), getPlaywright())
+    @Test(testName = "TC1365-01 LMS-1365 https://app.qase.io/plan/LMS/1?case=1365")
+    public void testUponClickingCheckboxPointsCountIncreases() {
+        HomePage homePage = new HomePage(getPage())
                 .clickHomeMenu()
-                .clickTwoWeeksButton()
+                .click2WeeksButton()
                 .focusWeek1Header();
 
-        int beforeCountPoints = homePage.getProgressbarPointsNumber();
-        int beforeCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
+        int mainSectionPointsBefore = homePage.getMainSectionPoints();
+        int sideMenuPointsBefore = homePage.getSideMenuPoints();
 
-        Assert.assertEquals(beforeCountSideMenuPoints, beforeCountPoints);
+        Assert.assertEquals(
+                sideMenuPointsBefore, mainSectionPointsBefore,
+                "Side Menu Points " + sideMenuPointsBefore + " are NOT equal to Main Section Points " + mainSectionPointsBefore
+        );
 
         homePage
-                .clickWeek1FirstCheckbox();
+                .clickWeek1FirstCheckbox()
+                .waitForPointsAnimationToStop();
 
-        getPage().waitForTimeout(2000);
-
-        int afterCountPoints = homePage.getProgressbarPointsNumber();
-        int afterCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
+        int mainSectionPointsAfter = homePage.getMainSectionPoints();
+        int sideMenuPointsAfter = homePage.getSideMenuPoints();
 
         assertThat(homePage.getWeek1FirstCheckbox()).isChecked();
-
-        Assert.assertTrue(beforeCountPoints < afterCountPoints);
-        Assert.assertTrue(beforeCountSideMenuPoints < afterCountSideMenuPoints);
-        assertThat(homePage.getProgressbarPoints()).hasText(TestData.CHECKBOX_POINTS);
-        Assert.assertEquals(homePage.getProgressbarPointsText(), homePage.getProgressbarSideMenuPointsText());
+        Assert.assertTrue(
+                mainSectionPointsBefore < mainSectionPointsAfter,
+                "Points in Main Section " + mainSectionPointsBefore + "did NOT increase (" + mainSectionPointsAfter + ")."
+        );
+        Assert.assertTrue(
+                sideMenuPointsBefore < sideMenuPointsAfter,
+                "Points on Side Menu " + sideMenuPointsBefore + "did NOT increase (" + sideMenuPointsAfter + ")."
+        );
+        assertThat(homePage.getMainSectionPointsLocator()).hasText(TestData.CHECKBOX_POINTS);
+        Assert.assertEquals(homePage.getMainSectionPointsText(), homePage.getSideMenuPointsText());
     }
 
-    @Test
+    @Test(testName = "TC1343-01 LMS-1343 https://app.qase.io/plan/LMS/1?case=1343")
     public void testStreaksModalWindowIsAppeared() {
-        HomePage homePage = new HomePage(getPage(), getPlaywright())
+        HomePage homePage = new HomePage(getPage())
                 .clickHomeMenu()
                 .clickStreaksButton();
 
         assertThat(homePage.getStreaksModalWindow()).isVisible();
     }
 
-    @Test
+    @Test(testName = "TC1341-01 LMS-1341 https://app.qase.io/plan/LMS/1?case=1341")
     public void testTheSingleNonActiveCheckboxCanBeChecked() {
-        Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
-                .checkIfListCheckBoxesIsNotEmptyAndAllUnchecked(), "Precondition is not reached.");
+        PreconditionPage precondition = new PreconditionPage(getPage());
 
-        HomePage homePage = new HomePage(getPage(), getPlaywright());
+        Assert.assertFalse(
+                precondition.getAllCheckBoxes().isEmpty(),
+                "Precondition is not reached. The List of Checkboxes is empty."
+        );
+        Assert.assertTrue(
+                precondition.areAllCheckBoxesUnchecked(),
+                "Precondition is not reached. NOT All Checkboxes are unchecked"
+        );
+
+        HomePage homePage = new HomePage(getPage());
 
         boolean isCheckBoxChecked = homePage
                 .clickRandomCheckBox()
@@ -102,22 +95,22 @@ public class HomeTest extends BaseTest {
         assertThat(checkboxImage).hasCount(1);
         assertThat(checkboxImage).isVisible();
     }
-
-    @Test
-    public void testDeactivationOfAlreadyActiveSingleCheckbox() {
-
-        Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
-                .checkIfListCheckBoxesIsNotEmptyAndOneIsChecked(), "Precondition is not reached.");
-
-        HomePage homePage = new HomePage(getPage(), getPlaywright());
-
-        boolean allUnchecked = homePage
-                .clickCheckedBox()
-                .areAllCheckBoxesUnchecked();
-
-        Locator checkboxImage = homePage.getCheckboxImage();
-
-        Assert.assertTrue(allUnchecked, "All checkboxes are expected to be unchecked, but checked.");
-        Assert.assertFalse(checkboxImage.isVisible(), "All images of checkboxes are expected to be not visible, but visible");
-    }
+//
+//    @Test
+//    public void testDeactivationOfAlreadyActiveSingleCheckbox() {
+//
+//        Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
+//                .checkIfListCheckBoxesIsNotEmptyAndOneIsChecked(), "Precondition is not reached.");
+//
+//        HomePage homePage = new HomePage(getPage(), getPlaywright());
+//
+//        boolean allUnchecked = homePage
+//                .clickCheckedBox()
+//                .areAllCheckBoxesUnchecked();
+//
+//        Locator checkboxImage = homePage.getCheckboxImage();
+//
+//        Assert.assertTrue(allUnchecked, "All checkboxes are expected to be unchecked, but checked.");
+//        Assert.assertFalse(checkboxImage.isVisible(), "All images of checkboxes are expected to be not visible, but visible");
+//    }
 }

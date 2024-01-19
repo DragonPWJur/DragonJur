@@ -2,18 +2,18 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
+import io.qameta.allure.Step;
 import utils.TestUtils;
 
-public class TestTutorPage extends SideMenuPage {
+public class TestTutorPage extends BaseSideMenu {
 
     private final Locator markForReviewButton = button("Mark for review");
     private final Locator removeFromMarkedButton = button("Remove from marked");
     private final Locator addToFlashcardButton = button("Add to flashcard");
     private final Locator removeFromFlashcards = button("Remove from flashcards");
     private final Locator endButton = exactButton("End");
-    private final Locator yesButton = exactButton("Yes");
-    private final Locator skipButton = exactButton("Skip");
+
+
     private final Locator reportAProblem = exactButton("Report a problem");
     private final Locator correctAnswerRadioButton = text("Correct Answer");
     private final Locator correctAnswerBackgroundColor = locator("[fill='#55B47D']");
@@ -27,8 +27,8 @@ public class TestTutorPage extends SideMenuPage {
     private final Locator closeButton = button("Close");
     private final Locator reportSentSuccessfullyMessage = exactText("The report has been sent successfully");
 
-    public TestTutorPage(Page page, Playwright playwright) {
-        super(page, playwright);
+    public TestTutorPage(Page page) {
+        super(page);
     }
 
     public Locator getRemoveFromMarkedButton() {
@@ -51,6 +51,7 @@ public class TestTutorPage extends SideMenuPage {
         return explanationTextSpan.innerText();
     }
 
+    @Step("Click 'Add to flashcard' button to mark current test question for re-checking.")
     public TestTutorPage clickAddToFlashCardButton() {
         addToFlashcardButton.click();
 
@@ -63,22 +64,11 @@ public class TestTutorPage extends SideMenuPage {
         return this;
     }
 
+    @Step("Click 'End' button to end the test")
     public TestTutorPage clickEndButton() {
         endButton.click();
 
         return this;
-    }
-
-    public TestTutorPage clickYesButton() {
-        yesButton.click();
-
-        return this;
-    }
-
-    public TestResultPage clickSkipButton() {
-        skipButton.click();
-
-        return new TestResultPage(getPage(), getPlaywright());
     }
 
     public TestTutorPage clickCorrectAnswerRadioButton() {

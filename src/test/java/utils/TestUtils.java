@@ -7,6 +7,12 @@ import java.util.Random;
 
 public class TestUtils {
 
+    public static <T> T getRandomValue(List<T> listValues) {
+        Random random = new Random();
+
+        return listValues.get(random.nextInt(listValues.size()));
+    }
+
     public static int getRandomNumber(Locator list) {
         if (list.count() == 0) {
             return 0;
@@ -14,6 +20,12 @@ public class TestUtils {
 
         return new Random().nextInt(1, list.count());
     }
+
+    public static int getRandomNumber(List<Locator> list) {
+
+        return new Random().nextInt(0, list.size() - 1);
+    }
+
 
     public static int getRandomInt(int min, int max) {
         Random random = new Random();
@@ -34,15 +46,11 @@ public class TestUtils {
         return Integer.toString(number);
     }
 
-    public static String addNumber(String text, int number) {
+    public static String add(String text, int number) {
         return getString(getInt(text) + number); 
     }
 
-    public static <T> T getRandomValue(List<T> listValues) {
-        Random random = new Random();
 
-        return listValues.get(random.nextInt(listValues.size()));
-    }
 
     public static String getRandomTextValue(Locator listValues) {
 

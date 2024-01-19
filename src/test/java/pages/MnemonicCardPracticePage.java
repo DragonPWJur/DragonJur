@@ -10,8 +10,8 @@ public class MnemonicCardPracticePage extends BaseLocator {
     private final Locator answersToQuestion = text("Answers to question");
     private final Locator mnemonicWords = text("Mnemonic words");
 
-    protected MnemonicCardPracticePage(Page page, Playwright playwright) {
-        super(page, playwright);
+    protected MnemonicCardPracticePage(Page page) {
+        super(page);
     }
 
     public Locator getMnemonicCardPracticeHeader() {

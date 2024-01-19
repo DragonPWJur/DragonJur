@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import utils.GmailUtils;
 
 @Listeners(utils.ExceptionListener.class)
-public class GmailTest {
+public final class GmailTest {
 
     @Ignore
     @Test

@@ -1,80 +1,95 @@
 package pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
+import io.qameta.allure.Step;
 
-public class PreconditionPage extends BasePage {
+import java.util.List;
 
-    public PreconditionPage(Page page, Playwright playwright) {
-        super(page, playwright);
+public final class PreconditionPage extends BasePage {
+
+    private int flashcardsPackRandomIndex;
+    private String flashcardsPackName;
+    private String flashcardsPackCardsAmount;
+
+
+    public int getFlashcardsPackRandomIndex() {
+        return flashcardsPackRandomIndex;
     }
 
-    public String getCurrentNumberOfCardForRechecking() {
-        String numberMarkedForRechecking = new HomePage(getPage(), getPlaywright())
+    public String getFlashcardsPackName() {
+        return flashcardsPackName;
+    }
+
+    public String getFlashcardsPackCardsAmount() {
+        return flashcardsPackCardsAmount;
+    }
+
+    public PreconditionPage(Page page) {
+        super(page);
+    }
+
+    @Step("Precondition: Save the initial amount of 'Marked for re-checking' cards.")
+    public String getInitialAmountOfCardsMarkedForRechecking() {
+        String amountMarkedForRechecking = new HomePage(getPage())
                 .clickFlashcardsMenu()
-                .getNumberMarkedForRechecking();
+                .getAmountOfCardsMarkedForRechecking();
 
-        new TestsPage(getPage(), getPlaywright()).clickHomeMenu();
-        return numberMarkedForRechecking;
+        new TestsPage(getPage()).clickHomeMenu();
+
+        return amountMarkedForRechecking;
     }
 
-    public void endTest() {
-        new TestTutorPage(getPage(), getPlaywright())
-                .clickEndButton()
-                .clickYesButton()
-                .clickSkipButton()
-                .clickCloseTheTestButton();
-    }
-
-    public void startTest(String numberOfQuestions) {
-        new HomePage(getPage(), getPlaywright())
+//    public void endTest() {
+//        new TestTutorPage(getPage())
+//                .clickEndButton()
+//                .clickYesButton()
+//                .clickSkipButton()
+//                .clickCloseTheTestButton();
+//    }
+//
+    @Step("Precondition: Start random domain test with {number} question(s).")
+    public TestTutorPage startRandomDomainTest(String number) {
+        new HomePage(getPage())
                 .clickHomeMenu()
                 .clickTestsMenu()
                 .cancelDialogIfVisible()
-                .clickDomainsButton()
+                .clickDomainsButtonIfNotActive()
                 .clickRandomCheckbox()
-                .inputNumberOfQuestions(numberOfQuestions)
+                .inputNumberOfQuestions(number)
                 .clickGenerateAndStartButton();
+
+        return new TestTutorPage(getPage());
     }
 
-    public int getCurrentNumberOfFlashcardPack() {
-        int flashcardsPackRandomNumber = new HomePage(getPage(), getPlaywright())
-                .clickFlashcardsMenu()
-                .getNumberOfFlashcardsPack();
+    public void collectRandomFlashcardPackInfo() {
+        FlashcardPacksPage flashcardPacksPage = new HomePage(getPage()).clickFlashcardsMenu();
 
-        new FlashcardPacksPage(getPage(), getPlaywright()).clickHomeMenu();
+        this.flashcardsPackRandomIndex =  flashcardPacksPage.getRandomPackIndex();
+        this.flashcardsPackCardsAmount = flashcardPacksPage.getAmountOfCardsInPack();
+        this.flashcardsPackName = flashcardPacksPage.getFlashcardsPackName();
 
-        return flashcardsPackRandomNumber;
+        flashcardPacksPage.clickHomeMenu();
     }
 
-    public void startFlashcardPackAndGoBack(int index) {
-        new HomePage(getPage(), getPlaywright())
-                .clickHomeMenu()
-                .clickFlashcardsMenu()
-                .clickNthFlashcardPack(index)
-                .clickGotButtonIfVisible()
-                .clickFlashcardsBackButton()
-                .clickYesButton()
-                .clickHomeMenu();
+    public List<Locator> getAllCheckBoxes() {
+
+        return new HomePage(getPage()).getAllCheckboxes();
     }
 
-    public boolean checkIfListCheckBoxesIsNotEmptyAndAllUnchecked() {
-
-        HomePage homePage = new HomePage(getPage(), getPlaywright());
-        if (homePage.isListCheckBoxesNotEmpty()) {
-            return homePage.areAllCheckBoxesUnchecked();
-        }
-        return false;
+    public boolean areAllCheckBoxesUnchecked() {
+        return new HomePage(getPage()).areAllCheckBoxesUnchecked();
     }
 
-    public boolean checkIfListCheckBoxesIsNotEmptyAndOneIsChecked() {
 
-        HomePage homePage = new HomePage(getPage(), getPlaywright());
-        if (homePage.isListCheckBoxesNotEmpty()) {
-            homePage.clickRandomCheckBox();
-
-            return homePage.getListCheckedCheckBoxes().size() == 1;
-        }
-        return false;
-    }
+//    public boolean checkIfListCheckBoxesIsNotEmptyAndOneIsChecked() {
+//
+//        HomePage homePage = new HomePage(getPage(), getPlaywright());
+//        if (homePage.isListCheckBoxesNotEmpty()) {
+//            homePage.clickRandomCheckBox();
+//
+//            return homePage.getListCheckedCheckBoxes().size() == 1;
+//        }
+//        return false;
+//    }
 }

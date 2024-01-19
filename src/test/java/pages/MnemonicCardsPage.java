@@ -2,16 +2,15 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
 
-public class MnemonicCardsPage extends SideMenuPage {
+public class MnemonicCardsPage extends BaseSideMenu {
 
     private final Locator mnemonicCardHeader = locator("div~span").first();
     private final Locator mnemonicCardTotalQuantity = locator("div~span").last();
     private final Locator startPracticeButton = button("Start practice");
 
-    public MnemonicCardsPage(Page page, Playwright playwright) {
-        super(page, playwright);
+    public MnemonicCardsPage(Page page) {
+        super(page);
     }
 
     public String getMnemonicCardHeaderText() {
@@ -35,6 +34,6 @@ public class MnemonicCardsPage extends SideMenuPage {
     public MnemonicCardPracticePage clickStartPracticeButton() {
         startPracticeButton.click();
 
-        return new MnemonicCardPracticePage(getPage(), getPlaywright());
+        return new MnemonicCardPracticePage(getPage());
     }
 }
