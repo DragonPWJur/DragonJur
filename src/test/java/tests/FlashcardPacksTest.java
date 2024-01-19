@@ -50,4 +50,29 @@ public class FlashcardPacksTest extends BaseTest {
         Assert.assertTrue(getPage().url().contains(ProjectProperties.BASE_URL + TestData.FLASHCARDS_PACK_ID_END_POINT));
         assertThat(FlashcardsPackIDPage.getQuestionHeading()).hasText(TestData.QUESTION);
     }
+
+    @Test
+    public void testUserCanLeaveYesMark() {
+        PreconditionPage preconditionPage = new PreconditionPage(getPage(), getPlaywright());
+        int currentRandomIndex = preconditionPage.getCurrentNumberOfFlashcardPack();
+//        preconditionPage.startFlashcardPackAndGoBack(currentRandomIndex);
+
+        FlashcardsPackIDPage flashcardsPackIDPage = new HomePage(getPage(), getPlaywright())
+                .clickHomeMenu()
+                .clickFlashcardsMenu()
+                .clickNthFlashcardPack(currentRandomIndex)
+                .clickGotButtonIfVisible()
+                .clickShowAnswerButton();
+
+        assertThat(flashcardsPackIDPage.getQuestionHeading()).isVisible();
+        assertThat(flashcardsPackIDPage.getAnswerHeading()).isVisible();
+
+//        String yesBefore
+        flashcardsPackIDPage.clickYesMarkButton();
+//        String yesAfter
+        assertThat(flashcardsPackIDPage.getResetResultsButton()).isVisible();
+
+
+
+    }
 }

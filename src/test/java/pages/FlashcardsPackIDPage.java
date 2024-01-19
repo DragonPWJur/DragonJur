@@ -5,10 +5,15 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
 public class FlashcardsPackIDPage extends SideMenuPage {
-    private final Locator questionHeading = getPage().locator( "span.sc-iBkjds.gpMBxJ.sc-dGBNLl.igYIXR");
+    private final Locator questionHeading = text("Answer");
     private final Locator gotButton = button("Got it");
     private final Locator flashcardsBackButton = button( "Flashcards /");
     private final Locator yesButton = button("Yes");
+    private final Locator showAnswerButton = button("Show answer");
+//    private final Locator questionHeaderOnFlashcardBackside = text("Question");
+    private final Locator answerHeading = text("Answer");
+    private final Locator yesMarkButton = button("Yes");
+    private final Locator resetResultsButton = button("Reset results");
 
     public FlashcardsPackIDPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -17,6 +22,21 @@ public class FlashcardsPackIDPage extends SideMenuPage {
     public Locator getQuestionHeading() {
 
         return questionHeading;
+    }
+
+//    public Locator getQuestionHeaderOnFlashcardBackside() {
+//
+//        return questionHeaderOnFlashcardBackside;
+//    }
+
+    public Locator getAnswerHeading() {
+
+        return answerHeading;
+    }
+
+    public Locator getResetResultsButton() {
+
+        return resetResultsButton;
     }
 
     public FlashcardsPackIDPage clickGotButtonIfVisible() {
@@ -34,5 +54,17 @@ public class FlashcardsPackIDPage extends SideMenuPage {
         yesButton.click();
 
         return new FlashcardPacksPage(getPage(), getPlaywright());
+    }
+
+    public FlashcardsPackIDPage clickShowAnswerButton() {
+        showAnswerButton.click();
+
+        return this;
+    }
+
+    public FlashcardsPackIDPage clickYesMarkButton() {
+        yesMarkButton.click();
+
+        return this;
     }
 }
