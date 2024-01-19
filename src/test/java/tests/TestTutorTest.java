@@ -84,9 +84,9 @@ public class TestTutorTest extends BaseTest {
         Assert.assertTrue(beforeHomeCountPoints < testCongratulationCountPoints,
                 "On Congratulation pop-up, expected points after tests to be increased, but didn't");
 
-        int testCountPoints2 = testTutorPage
-                .clickTestNextButton()
-                .getTestProgressbarPointsNumber();
+        testTutorPage.clickTestNextButton();
+        getPage().waitForTimeout(1000);
+        int testCountPoints2 = testTutorPage.getTestProgressbarPointsNumber();
 
         Assert.assertTrue(beforeHomeCountPoints < testCountPoints2,
                 "On test progress bar pop-up, expected points after test to be be increased, but didn't.");
