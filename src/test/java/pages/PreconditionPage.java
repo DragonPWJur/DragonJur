@@ -128,6 +128,7 @@ public class PreconditionPage extends BasePage {
         new PerformancePage(getPage(), getPlaywright()).clickHomeMenu();
 
         return numberOfQuestions;
+    }
 
     public boolean checkIfListCheckBoxesIsNotEmptyAndOneIsChecked() {
 
