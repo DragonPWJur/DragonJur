@@ -56,4 +56,62 @@ public class TestTutorTest extends BaseTest {
         assertThat(testTutorPage.getReportAProblemModal()).isVisible();
         assertThat(testTutorPage.getReportSentSuccessfullyMessage()).hasText(TestData.REPORT_MESSAGE);
     }
+
+    @Test
+    public void getTestResult() {
+
+        HomePage homePage = new HomePage(getPage(), getPlaywright());
+        int beforeHomeCountPoints = homePage.getProgressbarPointsNumber();
+        int beforeHomeCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
+
+        TestTutorPage testTutorPage = new HomePage(getPage(), getPlaywright())
+                .clickTestsMenu()
+                .cancelDialogIfVisible()
+                .clickDomainsButton()
+                .clickRandomCheckbox()
+                .inputNumberOfQuestions(TestData.ONE)
+                .clickGenerateAndStartButton2()
+                .clickCorrectAnswerRadioButton()
+                .clickConfirmButton()
+                .clickEndButton()
+                .clickYesButton();
+
+        getPage().waitForTimeout(1000);
+
+        int testCongratulationCountPoints = testTutorPage
+                .getCongratulationPoints();
+
+        System.out.println("test Congratulation CountPoints1 " + testCongratulationCountPoints);
+        System.out.println("Congratulation points number " + testTutorPage.getCongratulationPointsText());
+
+        Assert.assertTrue(beforeHomeCountPoints < testCongratulationCountPoints);
+
+        int testCountPoints2 = testTutorPage
+                .clickTestNextButton()
+                .getTestProgressbarPointsNumber();
+
+        System.out.println("test progressBarr CountPoints2: " + testCountPoints2);
+
+        Assert.assertTrue(beforeHomeCountPoints < testCountPoints2);
+        Assert.assertEquals(String.valueOf(testCongratulationCountPoints), testTutorPage.getTestProgressbarPointsText());
+
+        testTutorPage
+                .clickTestOkButton()
+                .clickCloseTheTestButton()
+                .clickHomeMenu();
+
+        int afterHomeCountPoints = homePage.getProgressbarPointsNumber();
+        int afterHomeCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
+
+        System.out.println("afterHomeCountPoints: " + afterHomeCountPoints);
+        System.out.println("afterHomeCountSideMenuPoints: " + afterHomeCountPoints);
+
+        Assert.assertTrue(beforeHomeCountPoints < afterHomeCountPoints);
+        Assert.assertTrue(beforeHomeCountSideMenuPoints < afterHomeCountSideMenuPoints);
+        assertThat(homePage.getProgressbarPoints()).hasText(TestData.CORRECT_ANSWER_POINTS);
+
+        Assert.assertEquals(homePage.getProgressbarPointsText(), homePage.getProgressbarSideMenuPointsText());
+        Assert.assertEquals(String.valueOf(testCongratulationCountPoints), homePage.getProgressbarPointsText());
+        Assert.assertEquals(String.valueOf(testCountPoints2), homePage.getProgressbarPointsText());
+    }
 }
