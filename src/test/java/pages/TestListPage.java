@@ -20,6 +20,8 @@ public class TestListPage extends BaseSideMenu {
     private final Locator timedButton = exactButton("Timed");
     private final Locator startTestButton = exactButton("Start test");
     private final Locator startButton = exactButton("Start");
+    private final Locator automationTestingForStatsText = text("Automation testing for stats");
+    private final Locator historyAndCivilizationForStatsText = text("History and Civilization for Stats");
 
     public TestListPage(Page page) {
         super(page);
@@ -69,55 +71,66 @@ public class TestListPage extends BaseSideMenu {
         cancelDialog();
         return this;
     }
-//
-//    public TestListPage clickTestDomain2CheckBox() {
-//        testDomain2Text.click();
-//        return this;
-//    }
-//
-//    public TestListPage clickChaptersButton() {
-//        if (!chaptersButton.isChecked()) {
-//            chaptersButton.click();
-//            getPage().waitForTimeout(2000);
-//            getPage().reload();
-//        }
-//        return this;
-//    }
-//
-//    public TestTutorPage clickGenerateAndStartButton2() {
-//        generateAndStartButton.click();
-//        return new TestTutorPage(getPage(), getPlaywright());
-//    }
-//
-//    public TestListPage clickTimedButton() {
-//        timedButton.click();
-//
-//        return this;
-//    }
-//
-//    public TestListPage clickStartTestButton() {
-//        startTestButton.click();
-//
-//        return this;
-//    }
-//
-//    public TestTimedPage clickStartButton() {
-//        startButton.click();
-//
-//        return new TestTimedPage(getPage(), getPlaywright());
-//    }
-//
-//    public TestListPage clickGenerateAndStartButton1() {
-//        generateAndStartButton.click();
-//        return this;
-//    }
-//
-//    public Locator getNumberMarked() {
-//        return numberMarked;
-//    }
-//
-//    public Locator checkIcon(String text) {
-//        return listCheckboxes.getByText(text).locator("svg");
-//    }
-}
 
+    public TestListPage clickTestDomain2CheckBox() {
+        testDomain2Text.click();
+        return this;
+    }
+
+    public TestListPage clickChaptersButton() {
+        if (!chaptersButton.isChecked()) {
+            chaptersButton.click();
+            getPage().waitForTimeout(2000);
+            getPage().reload();
+        }
+        return this;
+    }
+
+    public TestTutorPage clickGenerateAndStartButton2() {
+        generateAndStartButton.click();
+        return new TestTutorPage(getPage(), getPlaywright());
+    }
+
+    public TestListPage clickTimedButton() {
+        timedButton.click();
+
+        return this;
+    }
+
+    public TestListPage clickStartTestButton() {
+        startTestButton.click();
+
+        return this;
+    }
+
+    public TestTimedPage clickStartButton() {
+        startButton.click();
+
+        return new TestTimedPage(getPage(), getPlaywright());
+    }
+
+    public TestListPage clickGenerateAndStartButton1() {
+        generateAndStartButton.click();
+        return this;
+    }
+
+    public Locator getNumberMarked() {
+        return numberMarked;
+    }
+
+    public Locator checkIcon(String text) {
+        return listCheckboxes.getByText(text).locator("svg");
+    }
+
+    public TestListPage clickAutomationTestingForStatsCheckBox() {
+        automationTestingForStatsText.click();
+
+        return this;
+    }
+
+    public TestListPage clickHistoryAndCivilizationForStatsCheckBox() {
+        historyAndCivilizationForStatsText.click();
+
+        return this;
+    }
+}

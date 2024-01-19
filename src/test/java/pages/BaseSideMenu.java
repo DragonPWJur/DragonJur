@@ -50,10 +50,19 @@ abstract class BaseSideMenu extends BaseModal {
         return new MnemonicCardListPage(getPage());
     }
 
+    @Step("Click side menu 'Performance'")
+    public PerformancePage clickPerformanceMenu() {
+
+        performanceButton.click();
+        return new PerformancePage(getPage());
+    }
+
     @Step("Click side menu 'Profile'")
     public ProfilePage clickProfileMenu() {
         profileButton.click();
 
         return new ProfilePage(getPage());
     }
+
+
 }
