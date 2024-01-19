@@ -3,7 +3,7 @@ package pages;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
-public class TestTutorPage extends BaseTestsPage<TestTutorPage> {
+public final class TestTutorPage extends BaseTestsPage<TestTutorPage> {
 
     public TestTutorPage(Page page, Playwright playwright) {
         super(page, playwright);

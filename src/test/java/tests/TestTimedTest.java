@@ -23,7 +23,7 @@ public class TestTimedTest extends BaseTest {
 
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TIMED_END_POINT);
         assertThat(testTimedPage.getTimer()).isVisible();
-        assertThat(testTimedPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
-        Assert.assertTrue(testTimedPage.countTestRadioButtons() > 0);
+        assertThat(testTimedPage.getQuestionMark()).containsText(TestData.QUESTION_MARK);
+        Assert.assertTrue(testTimedPage.getAnswersCount() > 0);
     }
 }

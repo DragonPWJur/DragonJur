@@ -5,10 +5,14 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import utils.TestUtils;
 
+import java.util.List;
+
 abstract class BaseTestsPage<Self extends BaseTestsPage<Self>> extends BaseLocator {
 
     private final Locator testQuestion = getPage().locator("#root form span");
+    private final Locator questionMarkText = text("?");
     private final Locator testRadioButtons = radio();
+    private final List<Locator> radioButtons = radioButtonsAll();
     private final Locator markForReviewButton = button("Mark for review");
     private final Locator removeFromMarkedButton = button("Remove from marked");
     private final Locator addToFlashcardButton = button("Add to flashcard");
@@ -89,6 +93,14 @@ abstract class BaseTestsPage<Self extends BaseTestsPage<Self>> extends BaseLocat
         skipButton.click();
 
         return new TestResultPage(getPage(), getPlaywright());
+    }
+
+    public int getAnswersCount() {
+        return radioButtons.size();
+    }
+
+    public Locator getQuestionMark() {
+        return questionMarkText;
     }
 
     public Self clickCorrectAnswerRadioButton() {

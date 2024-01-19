@@ -4,7 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
-public class TestTimedPage extends BaseTestsPage<TestTimedPage> {
+public final class TestTimedPage extends BaseTestsPage<TestTimedPage> {
 
     private final Locator timer = locator("header div div:has(button)>div");
 
