@@ -129,7 +129,9 @@ public class HomePage extends SideMenuPage {
     public HomePage getAllCheckBoxesChecked() {
 
         for (Locator checkBox: listCheckboxes) {
-            if (!checkBox.isChecked()) {
+            if (checkBox.isChecked()) {
+                continue;
+            } else {
                 checkBox.click();
             }
         }
