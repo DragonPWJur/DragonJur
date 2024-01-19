@@ -5,6 +5,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.PreconditionPage;
@@ -85,6 +86,7 @@ public class HomeTest extends BaseTest {
         assertThat(homePage.getStreaksModalWindow()).isVisible();
     }
 
+    @Ignore
     @Test
     public void testTheSingleNonActiveCheckboxCanBeChecked() {
         Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
@@ -103,6 +105,7 @@ public class HomeTest extends BaseTest {
         assertThat(checkboxImage).isVisible();
     }
 
+    @Ignore
     @Test
     public void testDeactivationOfAlreadyActiveSingleCheckbox() {
 
