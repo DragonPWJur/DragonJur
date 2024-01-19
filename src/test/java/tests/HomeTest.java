@@ -86,7 +86,6 @@ public class HomeTest extends BaseTest {
         assertThat(homePage.getStreaksModalWindow()).isVisible();
     }
 
-    @Ignore
     @Test
     public void testTheSingleNonActiveCheckboxCanBeChecked() {
         Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
