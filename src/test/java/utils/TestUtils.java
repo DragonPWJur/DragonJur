@@ -58,5 +58,8 @@ public class TestUtils {
 
         return randomString.toString();
     }
-}
 
+    public static double getPercentageOfNumber(int forNumber, int fromNumber) {
+        return Math.round(((double) forNumber / fromNumber * 100) * 10) / 10.0;
+    }
+}

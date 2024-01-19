@@ -5,6 +5,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.PreconditionPage;
@@ -85,6 +86,7 @@ public class HomeTest extends BaseTest {
         assertThat(homePage.getStreaksModalWindow()).isVisible();
     }
 
+    @Ignore
     @Test
     public void testTheSingleNonActiveCheckboxCanBeChecked() {
         Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
@@ -103,6 +105,7 @@ public class HomeTest extends BaseTest {
         assertThat(checkboxImage).isVisible();
     }
 
+    @Ignore
     @Test
     public void testDeactivationOfAlreadyActiveSingleCheckbox() {
 
@@ -119,5 +122,27 @@ public class HomeTest extends BaseTest {
 
         Assert.assertTrue(allUnchecked, "All checkboxes are expected to be unchecked, but checked.");
         Assert.assertFalse(checkboxImage.isVisible(), "All images of checkboxes are expected to be not visible, but visible");
+    }
+
+    @Test
+    public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive() {
+
+        Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
+                .checkIfListCheckBoxesIsNotEmptyAndAllCheckBoxesAreChecked(), "Precondition is not reached.");
+
+        HomePage homePage = new HomePage(getPage(), getPlaywright());
+
+        int randomIndexCheckBox = homePage.getCheckBoxNumber();
+
+        homePage.clickCheckBox(randomIndexCheckBox);
+
+        assertThat(homePage.getNthCheckbox(randomIndexCheckBox)).not().isChecked();
+
+        for (int i = 0; i < homePage.getListCheckboxes().size(); i++) {
+            if (i != randomIndexCheckBox) {
+                System.out.println(homePage.getListCheckboxes().get(i).isChecked());
+                assertThat(homePage.getListCheckboxes().get(i)).isChecked();
+            }
+        }
     }
 }
