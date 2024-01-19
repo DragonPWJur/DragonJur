@@ -31,6 +31,10 @@ public class HomePage extends SideMenuPage {
         super(page, playwright);
     }
 
+    public List<Locator> getListCheckboxes() {
+        return listCheckboxes;
+    }
+
     public Locator getStudyThisButton() {
 
         return studyThisButton;
@@ -120,6 +124,30 @@ public class HomePage extends SideMenuPage {
         return this;
     }
 
+    public  HomePage clickCheckBox(int index){
+        getNthCheckbox(index).click();
+        getPage().waitForTimeout(1000);
+
+        return this;
+    }
+
+    public int getCheckBoxNumber() {
+
+        return checkBoxNumber;
+    }
+
+    public HomePage checkAllCheckBoxes() {
+
+        for (int i = 0; i < listCheckboxes.size(); i++) {
+            while (!listCheckboxes.get(i).isChecked()) {
+                listCheckboxes.get(i).check();
+                getPage().waitForTimeout(1000);
+            }
+            System.out.println(listCheckboxes.get(i).isChecked());
+        }
+        return this;
+    }
+
     protected boolean isListCheckBoxesNotEmpty() {
 
         return !listCheckboxes.isEmpty();
@@ -128,6 +156,11 @@ public class HomePage extends SideMenuPage {
     public boolean areAllCheckBoxesUnchecked() {
 
        return listCheckboxes.stream().noneMatch(Locator::isChecked);
+    }
+
+    protected boolean areAllCheckBoxesChecked() {
+
+        return listCheckboxes.stream().allMatch(Locator::isChecked);
     }
 
     public boolean isCheckBoxChecked() {
@@ -140,7 +173,7 @@ public class HomePage extends SideMenuPage {
         return checkboxImage;
     }
 
-    public List<Locator> getListCheckedCheckBoxes() {
+    protected List<Locator> getListCheckedCheckBoxes() {
 
         return listCheckboxes.stream().filter(Locator::isChecked).toList();
     }
