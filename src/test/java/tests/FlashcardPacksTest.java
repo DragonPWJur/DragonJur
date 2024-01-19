@@ -45,7 +45,7 @@ public class FlashcardPacksTest extends BaseTest {
                 .clickHomeMenu()
                 .clickFlashcardsMenu()
                 .clickNthFlashcardPack(currentRandomIndex)
-                .clickGotButtonIfVisible();
+                .clickGotItButtonIfVisible();
 
         Assert.assertTrue(getPage().url().contains(ProjectProperties.BASE_URL + TestData.FLASHCARDS_PACK_ID_END_POINT));
         assertThat(FlashcardsPackIDPage.getQuestionHeading()).hasText(TestData.QUESTION);
@@ -60,23 +60,19 @@ public class FlashcardPacksTest extends BaseTest {
                 .clickHomeMenu()
                 .clickFlashcardsMenu()
                 .clickNthFlashcardPack(currentRandomIndex)
-                .clickGotButtonIfVisible()
+                .clickGotItButtonIfVisible()
                 .clickShowAnswerButton();
 
         assertThat(flashcardsPackIDPage.getQuestionHeading()).isVisible();
         assertThat(flashcardsPackIDPage.getAnswerHeading()).isVisible();
 
         String numberOfYesMarksBefore = flashcardsPackIDPage.getNumberOfYesMarks().innerText();
-        System.out.println(numberOfYesMarksBefore);
 
         flashcardsPackIDPage.clickYesMarkButton();
         String numberOfYesMarksAfter = flashcardsPackIDPage.getNumberOfYesMarks().innerText();
-        System.out.println(numberOfYesMarksAfter);
 
-        Assert.assertEquals(numberOfYesMarksAfter, TestUtils.addNumber(numberOfYesMarksBefore, 1));
+        Assert.assertEquals(numberOfYesMarksAfter, flashcardsPackIDPage.increaseByOne(numberOfYesMarksBefore),
+                "Expected 'Yes Mark' number to increase by 1 after clicking the 'Yes Mark' button.");
         assertThat(flashcardsPackIDPage.getResetResultsButton()).isVisible();
-
-
-//        getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes"))
     }
 }
