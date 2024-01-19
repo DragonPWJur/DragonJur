@@ -83,7 +83,7 @@ public class PreconditionPage extends BasePage {
         HomePage homePage = new HomePage(getPage(), getPlaywright());
 
         if (homePage.isListCheckBoxesNotEmpty()) {
-            homePage.getAllCheckedBoxesChecked();
+            homePage.getAllCheckBoxesChecked();
             if (homePage.areAllCheckBoxesChecked()) {
                 return homePage.areAllCheckBoxesHaveImage();
             }
