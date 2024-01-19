@@ -55,7 +55,6 @@ public class FlashcardPacksTest extends BaseTest {
     public void testUserCanLeaveYesMark() {
         PreconditionPage preconditionPage = new PreconditionPage(getPage(), getPlaywright());
         int currentRandomIndex = preconditionPage.getCurrentNumberOfFlashcardPack();
-//        preconditionPage.startFlashcardPackAndGoBack(currentRandomIndex);
 
         FlashcardsPackIDPage flashcardsPackIDPage = new HomePage(getPage(), getPlaywright())
                 .clickHomeMenu()
@@ -67,12 +66,17 @@ public class FlashcardPacksTest extends BaseTest {
         assertThat(flashcardsPackIDPage.getQuestionHeading()).isVisible();
         assertThat(flashcardsPackIDPage.getAnswerHeading()).isVisible();
 
-//        String yesBefore
+        String numberOfYesMarksBefore = flashcardsPackIDPage.getNumberOfYesMarks().innerText();
+        System.out.println(numberOfYesMarksBefore);
+
         flashcardsPackIDPage.clickYesMarkButton();
-//        String yesAfter
+        String numberOfYesMarksAfter = flashcardsPackIDPage.getNumberOfYesMarks().innerText();
+        System.out.println(numberOfYesMarksAfter);
+
+        Assert.assertEquals(numberOfYesMarksAfter, TestUtils.addNumber(numberOfYesMarksBefore, 1));
         assertThat(flashcardsPackIDPage.getResetResultsButton()).isVisible();
 
 
-
+//        getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Yes"))
     }
 }

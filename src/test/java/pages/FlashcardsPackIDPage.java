@@ -14,6 +14,7 @@ public class FlashcardsPackIDPage extends SideMenuPage {
     private final Locator answerHeading = text("Answer");
     private final Locator yesMarkButton = button("Yes");
     private final Locator resetResultsButton = button("Reset results");
+    private final Locator numberOfYesMarks = text("\nYes");
 
     public FlashcardsPackIDPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -24,11 +25,6 @@ public class FlashcardsPackIDPage extends SideMenuPage {
         return questionHeading;
     }
 
-//    public Locator getQuestionHeaderOnFlashcardBackside() {
-//
-//        return questionHeaderOnFlashcardBackside;
-//    }
-
     public Locator getAnswerHeading() {
 
         return answerHeading;
@@ -37,6 +33,11 @@ public class FlashcardsPackIDPage extends SideMenuPage {
     public Locator getResetResultsButton() {
 
         return resetResultsButton;
+    }
+
+    public Locator getNumberOfYesMarks() {
+
+        return numberOfYesMarks;
     }
 
     public FlashcardsPackIDPage clickGotButtonIfVisible() {
