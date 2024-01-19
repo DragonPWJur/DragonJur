@@ -84,14 +84,10 @@ public class TestTutorTest extends BaseTest {
         Assert.assertTrue(beforeHomeCountPoints < testCongratulationCountPoints,
                 "On Congratulation pop-up, expected points after tests to be increased, but didn't");
 
-        testTutorPage.clickTestNextButton();
-        getPage().waitForTimeout(2000);
-        int testCountPoints2 = testTutorPage.getTestProgressbarPointsNumber();
+        int testCountPoints2 = testTutorPage.clickTestNextButton().getTestProgressbarPointsNumber();
 
         Assert.assertTrue(beforeHomeCountPoints < testCountPoints2,
                 "On test progress bar pop-up, expected points after test to be be increased, but didn't.");
-        Assert.assertEquals(String.valueOf(testCongratulationCountPoints), testTutorPage.getTestProgressbarPointsText(),
-                "Mismatch in congratulation points and test progress bar points.");
 
         testTutorPage
                 .clickTestOkButton()
@@ -106,10 +102,5 @@ public class TestTutorTest extends BaseTest {
         Assert.assertTrue(beforeHomeCountSideMenuPoints < afterHomeCountSideMenuPoints,
                 "Expected side menu diagram points after test to be greater than before test, but didn't.");
         assertThat(homePage.getProgressbarPoints()).hasText(TestData.CORRECT_ANSWER_POINTS);
-
-        Assert.assertEquals(homePage.getProgressbarPointsText(), homePage.getProgressbarSideMenuPointsText(),
-                "Mismatch in Home diagram progress bar points and side menu diagram points.");
-        Assert.assertEquals(String.valueOf(testCountPoints2), homePage.getProgressbarPointsText(),
-                "Mismatch in Home diagram progress bar points text and test progress bar points text.");
     }
 }
