@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.nio.file.Paths;
 
 import static utils.LoggerUtils.log;
+import static utils.LoginUtils.getIsLoginSuccessful;
 
 public final class TracingUtils {
 
@@ -45,7 +46,7 @@ public final class TracingUtils {
     public static void stopTracingForUILogin(Page page, BrowserContext context) {
         Tracing.StopOptions tracingStopOptions = null;
 
-        if (LoginUtils.getTracingSave()) {
+        if (!getIsLoginSuccessful()) {
             tracingStopOptions = new Tracing.StopOptions()
                     .setPath(Paths.get("testTracing/uiLogin.zip"));
             log("Tracing for UI login saved");

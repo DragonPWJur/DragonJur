@@ -35,13 +35,7 @@ public abstract class BaseTest {
             System.exit(1);
         }
 
-        LoginUtils.collectCookies(browser);
-
-        browser.close();
-        log("Browser closed");
-
-        playwright.close();
-        log("Playwright closed");
+        LoginUtils.loginAndCollectCookies(playwright, browser);
 
         LoginUtils.parseUserToken();
         log("User token extracted from cookies");
@@ -56,7 +50,7 @@ public abstract class BaseTest {
     protected void createContextAndPage(Method method) {
         log("Run " + ReportUtils.getTestMethodName(method));
 
-        APIUtils.cleanData(playwright);
+        APIServises.cleanData(playwright);
         log("API: Course data cleared");
 
         context = BrowserManager.createContextWithCookies(browser);
@@ -108,7 +102,7 @@ public abstract class BaseTest {
         return playwright;
     }
 
-    public static void waitForPageLoad(Page page, String endPoint) {
+    protected static void waitForPageLoad(Page page, String endPoint) {
         page.waitForURL(ProjectProperties.BASE_URL + endPoint);
     }
 }

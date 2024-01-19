@@ -51,7 +51,7 @@ public class BrowserManager {
                 .setViewportSize(ProjectProperties.SCREEN_SIZE_WIDTH, ProjectProperties.SCREEN_SIZE_HEIGHT)
                 .setRecordVideoDir(Paths.get("videos/"))
                 .setRecordVideoSize(1280, 720)
-                .setStorageStatePath(Paths.get("src/test/resources/state.json"))
+                .setStorageStatePath(Paths.get(LoginUtils.COOKIES_FILE_PATH))
         );
     }
 }

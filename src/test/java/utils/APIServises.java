@@ -7,7 +7,7 @@ import com.microsoft.playwright.options.RequestOptions;
 
 import static utils.LoginUtils.getUserToken;
 
-public class APIUtils {
+public class APIServises {
     public static void cleanData(Playwright playwright) {
         APIRequest request = playwright.request();
         APIRequestContext requestContext = request.newContext();
