@@ -128,4 +128,8 @@ abstract class BaseLocator extends BasePage {
     protected Locator textbox() {
         return getPage().getByRole(AriaRole.TEXTBOX);
     }
+
+    protected Locator placeholder(String text) {
+        return getPage().getByPlaceholder(text);
+    }
 }

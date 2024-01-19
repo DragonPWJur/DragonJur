@@ -1,5 +1,7 @@
 package utils;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class TestData {
 
     public static final String HOME_END_POINT = "/home";
@@ -25,5 +27,6 @@ public class TestData {
     public static final String CHECKBOX_POINTS = "833";
     public static final String REPORT_MESSAGE = "The report has been sent successfully";
     public static final String PRACTICE = "Practice";
+    public static final String NOTHING_FOUND_MESSAGE = "Nothing found. Try to use other key words";
 
 }
