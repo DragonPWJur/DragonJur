@@ -76,7 +76,7 @@ public class TestTutorTest extends BaseTest {
                 .clickEndButton()
                 .clickYesButton();
 
-        getPage().waitForTimeout(1000);
+        getPage().waitForTimeout(2000);
 
         int testCongratulationCountPoints = testTutorPage
                 .getCongratulationPoints();
@@ -85,7 +85,7 @@ public class TestTutorTest extends BaseTest {
                 "On Congratulation pop-up, expected points after tests to be increased, but didn't");
 
         testTutorPage.clickTestNextButton();
-        getPage().waitForTimeout(1000);
+        getPage().waitForTimeout(2000);
         int testCountPoints2 = testTutorPage.getTestProgressbarPointsNumber();
 
         Assert.assertTrue(beforeHomeCountPoints < testCountPoints2,
