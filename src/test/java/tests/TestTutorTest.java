@@ -81,16 +81,11 @@ public class TestTutorTest extends BaseTest {
         int testCongratulationCountPoints = testTutorPage
                 .getCongratulationPoints();
 
-        System.out.println("test Congratulation CountPoints1 " + testCongratulationCountPoints);
-        System.out.println("Congratulation points number " + testTutorPage.getCongratulationPointsText());
-
         Assert.assertTrue(beforeHomeCountPoints < testCongratulationCountPoints);
 
         int testCountPoints2 = testTutorPage
                 .clickTestNextButton()
                 .getTestProgressbarPointsNumber();
-
-        System.out.println("test progressBarr CountPoints2: " + testCountPoints2);
 
         Assert.assertTrue(beforeHomeCountPoints < testCountPoints2);
         Assert.assertEquals(String.valueOf(testCongratulationCountPoints), testTutorPage.getTestProgressbarPointsText());
@@ -102,9 +97,6 @@ public class TestTutorTest extends BaseTest {
 
         int afterHomeCountPoints = homePage.getProgressbarPointsNumber();
         int afterHomeCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
-
-        System.out.println("afterHomeCountPoints: " + afterHomeCountPoints);
-        System.out.println("afterHomeCountSideMenuPoints: " + afterHomeCountPoints);
 
         Assert.assertTrue(beforeHomeCountPoints < afterHomeCountPoints);
         Assert.assertTrue(beforeHomeCountSideMenuPoints < afterHomeCountSideMenuPoints);
