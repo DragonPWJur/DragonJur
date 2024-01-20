@@ -15,7 +15,10 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 import static utils.ProjectProperties.BASE_URL;
 
 public class PerformanceTest extends BaseTest {
-    @Test
+    @Test(description = "TC1356-02 - Displaying Statistics for Tests")
+    @Description("Objective: To confirm the accurate display of statistics for Tests in the Performance section.")
+    @Story("Performance")
+    @TmsLink("p0i1q95cgr11")
     public void testDisplayingStatisticsForTests() {
         PreconditionPage preconditionPage = new PreconditionPage(getPage(), getPlaywright());
         int numbersOfQuestion = preconditionPage.checkNumberOfQuestions();

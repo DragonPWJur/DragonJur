@@ -42,6 +42,7 @@ public class PerformancePage extends BaseSideMenu {
         return this;
     }
 
+    @Step("Click on “Tests” in the drop-down menu")
     public PerformancePage clickTestsButtonInBanner() {
         testsButtonInBanner.click();
 
