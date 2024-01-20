@@ -102,7 +102,7 @@ public abstract class BaseTest {
         return playwright;
     }
 
-    protected static void waitForPageLoad(Page page, String endPoint) {
-        page.waitForURL(ProjectProperties.BASE_URL + endPoint);
+    protected void waitForPageLoad(String endPoint) {
+        getPage().waitForURL(ProjectProperties.BASE_URL + endPoint);
     }
 }
