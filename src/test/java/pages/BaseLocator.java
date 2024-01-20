@@ -114,13 +114,6 @@ abstract class BaseLocator extends BasePage {
         }
     }
 
-    protected Locator waitForListLoadedGetByText(String string) {
-        Locator list = getPage().getByText(string);
-        list.last().waitFor();
-
-        return list;
-    }
-
     protected Locator waitForListOfElementsLoaded(Locator locator) {
         locator.last().waitFor();
         return locator;

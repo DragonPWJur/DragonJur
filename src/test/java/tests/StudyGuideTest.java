@@ -13,26 +13,30 @@ public class StudyGuideTest extends BaseTest {
     public void testCreatingANote() {
         StudyGuidePage studyGuidePage = new HomePage(getPage(), getPlaywright())
                 .clickStudyGuide()
-                .doubleClickWord()
+                .doubleClickOnWord()
                 .inputNoteText()
                 .clickNoteSaveButton()
                 .clickHighlightsAndNotesButton();
 
         assertThat(studyGuidePage.getNoteTextAria()).not().isVisible();
-        assertThat(studyGuidePage.getWordFromList()).not().hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_0_0_0_0);
-        assertThat(studyGuidePage.getWordFromList()).hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_62_48_179_0_2);
-        assertThat(studyGuidePage.getNoteButton()).isVisible();
+        assertThat(studyGuidePage.getWord())
+                .not().hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_0_0_0_0);
+        assertThat(studyGuidePage.getWord())
+                .hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_62_48_179_0_2);
+        assertThat(studyGuidePage.getNoteButtonForWord()).isVisible();
     }
 
     @Test
     public void testExecutingWordHighlightingByDoubleClick() {
         StudyGuidePage studyGuidePage = new HomePage(getPage(), getPlaywright())
                 .clickStudyGuide()
-                .doubleClickWord();
+                .doubleClickOnWord();
 
         assertThat(studyGuidePage.getNoteTextAria()).isVisible();
-        assertThat(studyGuidePage.getWordFromList()).not().hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_0_0_0_0);
-        assertThat(studyGuidePage.getWordFromList()).hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_62_48_179_0_2);
+        assertThat(studyGuidePage.getWord())
+                .not().hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_0_0_0_0);
+        assertThat(studyGuidePage.getWord())
+                .hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_62_48_179_0_2);
     }
 
     @Test
