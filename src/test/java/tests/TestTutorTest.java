@@ -109,7 +109,7 @@ public class TestTutorTest extends BaseTest {
                 .inputNumberOfQuestions(TestData.ONE)
                 .clickGenerateAndStartButton();
 
-        waitForPageLoad(TestData.TEST_TUTOR_END_POINT);
+        waitForPageLoad( TestData.TEST_TUTOR_END_POINT);
 
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
         assertThat(testTutorPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
