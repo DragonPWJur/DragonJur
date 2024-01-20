@@ -123,7 +123,7 @@ public class HomeTest extends BaseTest {
         Assert.assertTrue(allUnchecked, "All checkboxes are expected to be unchecked, but checked.");
         Assert.assertFalse(checkboxImage.isVisible(), "All images of checkboxes are expected to be not visible, but visible");
     }
-@Ignore
+
     @Test
     public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive() {
 
