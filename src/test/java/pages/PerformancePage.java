@@ -7,6 +7,8 @@ import com.microsoft.playwright.Playwright;
 public class PerformancePage extends BaseSideMenu {
     private final Locator overallButton = button("Overall");
     private final Locator testsButtonInBanner = buttonInBanner("Tests");
+    private final Locator overallButtonInBanner = buttonInBanner("Overall").nth(1);
+    private final Locator allFlashcardsButtonInBanner = buttonInBanner("All flashcards");
     private final Locator dropdownLocator = locator(".bIQFHP");
     private final Locator totalTests = text("Tests").locator("~span");
     private final Locator correctPercentageText = exactText("Total:")
@@ -45,22 +47,27 @@ public class PerformancePage extends BaseSideMenu {
     }
 
     public Locator getSettedFilter() {
+
         return dropdownLocator;
     }
 
     public int getNumberOfQuestions() {
+
         return Integer.parseInt(totalTests.innerText().replaceAll("[^0-9]", ""));
     }
 
     public double getCorrectPercentage() {
+
         return Double.parseDouble(correctPercentageText.innerText().replace("%", ""));
     }
 
     public int getCorrectNumbers() {
+
         return Integer.parseInt(correctNumberText.innerText());
     }
 
     public double getIncorrectPercentage() {
+
         return Double.parseDouble(incorrectPercentageText.innerText().replace("%", ""));
     }
 
@@ -72,5 +79,20 @@ public class PerformancePage extends BaseSideMenu {
         lastTestLocator.click();
 
         return this;
+    }
+
+    public Locator getTestsButtonInBanner() {
+
+        return testsButtonInBanner;
+    }
+
+    public Locator getOverallButtonInBanner() {
+
+        return overallButtonInBanner;
+    }
+
+    public Locator getAllFlashcardsButtonInBanner() {
+
+        return allFlashcardsButtonInBanner;
     }
 }

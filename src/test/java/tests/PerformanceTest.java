@@ -53,4 +53,20 @@ public class PerformanceTest extends BaseTest {
         Assert.assertEquals(performancePage.getIncorrectPercentage(), expectedIncorrectPercentageForTest);
         Assert.assertEquals(performancePage.getIncorrectNumbers(), 0);
     }
+
+    @Test
+    public void testShowDropdownMenuInPerformanceSection() {
+        PerformancePage performancePage = new PerformancePage(getPage(), getPlaywright()).clickPerformanceMenu();
+
+        assertThat(performancePage.getOverallButtonInBanner()).isHidden();
+        assertThat(performancePage.getTestsButtonInBanner()).isHidden();
+        assertThat(performancePage.getAllFlashcardsButtonInBanner()).isHidden();
+
+        performancePage.clickOverallDropdown();
+
+        assertThat(performancePage.getOverallButtonInBanner()).isVisible();
+        assertThat(performancePage.getTestsButtonInBanner()).isVisible();
+        assertThat(performancePage.getAllFlashcardsButtonInBanner()).isVisible();
+    }
 }
+
