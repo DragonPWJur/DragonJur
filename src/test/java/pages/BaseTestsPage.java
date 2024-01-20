@@ -6,6 +6,9 @@ import com.microsoft.playwright.Playwright;
 import utils.TestUtils;
 
 import java.util.List;
+import java.util.regex.Pattern;
+
+import static java.lang.Integer.parseInt;
 
 abstract class BaseTestsPage<Self extends BaseTestsPage<Self>> extends BaseLocator {
 
@@ -32,6 +35,15 @@ abstract class BaseTestsPage<Self extends BaseTestsPage<Self>> extends BaseLocat
     private final Locator sendButton = button("Send");
     private final Locator closeButton = button("Close");
     private final Locator reportSentSuccessfullyMessage = exactText("The report has been sent successfully");
+    private final Locator nextQuestionButton = button("Next question");
+    private final Locator finishTestButton = button("Finish test");
+    private final Locator listOfIncorrectAnswers = locator("//label[not(contains(text(), 'Correct Answer'))]");
+    private final Locator congratulationPoints = locator("div[role='dialog']")
+            .locator("span")
+            .filter(new Locator.FilterOptions().setHasText(Pattern.compile("\\d+")));
+    private final Locator nextButton = exactButton("Next");
+    private final Locator testProgressbarPoints = locator("div>svg.CircularProgressbar+div>span").first();
+    private final Locator okButton = exactButton("Ok");
 
     protected BaseTestsPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -143,5 +155,56 @@ abstract class BaseTestsPage<Self extends BaseTestsPage<Self>> extends BaseLocat
 
     public Locator getReportAProblemModal() {
         return reportAProblemModal;
+    }
+
+    public Locator getListOfIncorrectAnswers() {
+        return listOfIncorrectAnswers;
+    }
+
+    public void clickNextQuestionButton() {
+        nextQuestionButton.click();
+    }
+
+    public Self clickFinishTestButton() {
+        finishTestButton.click();
+
+        return (Self) this;
+    }
+
+    public Self clickRandomIncorrectAnswer() {
+        TestUtils.clickRandomElement(getListOfIncorrectAnswers());
+
+        return (Self) this;
+    }
+
+    public String getCongratulationPointsText() {
+        return congratulationPoints.innerText();
+    }
+
+    public int getCongratulationPoints() {
+        String pointsText = getCongratulationPointsText();
+
+        return parseInt(pointsText);
+    }
+
+    public Self clickTestNextButton() {
+        nextButton.click();
+
+        return (Self) this;
+    }
+    public String getTestProgressbarPointsText() {
+        return testProgressbarPoints.innerText();
+    }
+
+    public int getTestProgressbarPointsNumber() {
+        String pointsText = getTestProgressbarPointsText();
+
+        return parseInt(pointsText);
+    }
+
+    public TestResultPage clickTestOkButton() {
+        okButton.click();
+
+        return new TestResultPage(getPage(), getPlaywright());
     }
 }

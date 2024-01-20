@@ -3,6 +3,7 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import utils.TestUtils;
 
 public class StudyGuidePage extends BaseSideMenu {
 
@@ -11,6 +12,9 @@ public class StudyGuidePage extends BaseSideMenu {
     private final Locator noteTextAria = locator("//textarea");
     private final Locator saveButton = button("Save");
     private final Locator highlightsAndNotesButton = button("Highlights and notes");
+    private final Locator searchField = placeholder("Search");
+    private final Locator nothingFoundMessage = text("Nothing found. Try to use other key words");
+    private final Locator searchResultField = locator("div:has(input[placeholder='Search']) + div>div");
 
     public StudyGuidePage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -26,6 +30,14 @@ public class StudyGuidePage extends BaseSideMenu {
 
     public Locator getWordFromList() {
         return wordList.nth(1);
+    }
+
+    public Locator getNothingFoundMessage() {
+        return nothingFoundMessage;
+    }
+
+    public Locator getSearchResultField() {
+        return searchResultField;
     }
 
     public StudyGuidePage clickNoteSaveButton() {
@@ -55,5 +67,11 @@ public class StudyGuidePage extends BaseSideMenu {
 
     public String getWordText() {
         return wordList.nth(1).textContent();
+    }
+
+    public StudyGuidePage inputRandomStringInSearchField() {
+        searchField.fill(TestUtils.geteRandomString(10));
+
+        return this;
     }
 }

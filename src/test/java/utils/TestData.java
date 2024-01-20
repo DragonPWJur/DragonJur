@@ -11,6 +11,7 @@ public class TestData {
     public static final String FLASHCARDS_PACK_ID_END_POINT = "/flashcards?packId";
     public static final String AUTH_CUSTOMER_SIGN_IN_END_POINT = "/auth/customer/signIn";
     public static final String RESET_COURSE_RESULTS_END_POINT = "/courses/results";
+    public static final String PERFORMANCE_END_POINT = "/performance";
 
     public static final String ONE = "1";
     public static final String FLASHCARDS = "Flashcards";
@@ -25,5 +26,7 @@ public class TestData {
     public static final String CHECKBOX_POINTS = "833";
     public static final String REPORT_MESSAGE = "The report has been sent successfully";
     public static final String PRACTICE = "Practice";
+    public static final String NOTHING_FOUND_MESSAGE = "Nothing found. Try to use other key words";
+    public static final String CORRECT_ANSWER_POINTS = "38";
 
 }

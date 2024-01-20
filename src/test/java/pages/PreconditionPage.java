@@ -67,6 +67,69 @@ public class PreconditionPage extends BasePage {
         return false;
     }
 
+    public void startTestDomainForStats(String nameTest, String numberOfQuestions) {
+        TestListPage testListPage = new HomePage(getPage(), getPlaywright())
+                .clickTestsMenu()
+                .cancelDialogIfVisible()
+                .clickDomainsButton();
+        if(nameTest.equals("Automation testing for stats")) {
+            testListPage
+                    .clickAutomationTestingForStatsCheckBox()
+                    .inputNumberOfQuestions(numberOfQuestions)
+                    .clickGenerateAndStartButton2();
+        } else if(nameTest.equals("History and Civilization for Stats")) {
+            testListPage
+                    .clickHistoryAndCivilizationForStatsCheckBox()
+                    .inputNumberOfQuestions(numberOfQuestions)
+                    .clickGenerateAndStartButton2();
+        }
+    }
+
+    public void passTestAllAnswersCorrect(int numberOfQuestions) {
+        TestTutorPage testTutorPage = new TestTutorPage(getPage(), getPlaywright());
+        for (int numOfQuestion = 1; numOfQuestion < numberOfQuestions; numOfQuestion++) {
+            testTutorPage
+                    .clickCorrectAnswerRadioButton()
+                    .clickConfirmButton()
+                    .clickNextQuestionButton();
+        }
+
+        testTutorPage
+                .clickCorrectAnswerRadioButton()
+                .clickConfirmButton()
+                .clickFinishTestButton()
+                .clickSkipButton()
+                .clickCloseTheTestButton()
+                .clickHomeMenu();
+    }
+
+    public void passTestOneAnswersIncorrect(int numberOfQuestions) {
+        TestTutorPage testTutorPage = new TestTutorPage(getPage(), getPlaywright());
+        for (int numOfQuestion = 1; numOfQuestion < numberOfQuestions; numOfQuestion++) {
+            testTutorPage
+                    .clickCorrectAnswerRadioButton()
+                    .clickConfirmButton()
+                    .clickNextQuestionButton();
+        }
+
+        testTutorPage
+                .clickRandomIncorrectAnswer()
+                .clickConfirmButton()
+                .clickFinishTestButton()
+                .clickSkipButton()
+                .clickCloseTheTestButton()
+                .clickHomeMenu();
+    }
+
+    public int checkNumberOfQuestions() {
+        int numberOfQuestions = new HomePage(getPage(), getPlaywright())
+                .clickPerformanceMenu()
+                .getNumberOfQuestions();
+        new PerformancePage(getPage(), getPlaywright()).clickHomeMenu();
+
+        return numberOfQuestions;
+    }
+
     public boolean checkIfListCheckBoxesIsNotEmptyAndOneIsChecked() {
 
         HomePage homePage = new HomePage(getPage(), getPlaywright());
