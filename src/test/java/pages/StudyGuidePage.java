@@ -3,6 +3,8 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.options.BoundingBox;
+import utils.TestData;
 import utils.TestUtils;
 
 public class StudyGuidePage extends BaseSideMenu {
@@ -71,6 +73,24 @@ public class StudyGuidePage extends BaseSideMenu {
 
     public StudyGuidePage inputRandomStringInSearchField() {
         searchField.fill(TestUtils.geteRandomString(10));
+
+        return this;
+    }
+
+    public Locator getMultipleWords() {
+        Locator list = getPage().getByText(TestData.LONG_BONES);
+        list.first().waitFor();
+        return list.nth(1);
+    }
+
+    public StudyGuidePage highlightWords() {
+        getMultipleWords().hover();
+        BoundingBox box = getMultipleWords().boundingBox();
+
+        getPage().mouse().move(box.x, box.y + 10);
+        getPage().mouse().down();
+        getPage().mouse().move(box.x + box.width, box.y + 10);
+        getPage().mouse().up();
 
         return this;
     }
