@@ -4,6 +4,9 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import org.testng.annotations.Test;
+import pages.HomePage;
+import pages.StudyGuidePage;
+import utils.TestData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +19,12 @@ public class SearchTest extends BaseTest {
 
     @Test
     public void testSearchByNotExistingKeyWord() {
-        getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Study guide")).click();
+        StudyGuidePage studyGuidePage = new HomePage(getPage(), getPlaywright())
+                .clickStudyGuide()
+                .inputRandomStringInSearchField();
 
-        getPage().getByPlaceholder("Search").fill("abc");
-
-        assertThat(getPage().getByText("Nothing found. Try to use other key words")).isVisible();
-
-        assertThat(getPage()
-                .locator("div:has(input[placeholder='Search']) + div>div"))
-                .hasText("Nothing found. Try to use other key words");
+        assertThat(studyGuidePage.getNothingFoundMessage()).isVisible();
+        assertThat(studyGuidePage.getSearchResultField()).hasText(TestData.NOTHING_FOUND_MESSAGE);
     }
 
     @Test
