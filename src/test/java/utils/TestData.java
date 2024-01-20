@@ -29,4 +29,6 @@ public class TestData {
     public static final String NOTHING_FOUND_MESSAGE = "Nothing found. Try to use other key words";
     public static final String CORRECT_ANSWER_POINTS = "38";
     public static final String LONG_BONES = "Long bones";
+    public static final String STUDY_THIS_MODAL_HEADER = "Weakest Exam Areas";
+    public static final String STUDY_THIS_MODAL_MESSAGE = "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03";
 }
