@@ -3,6 +3,7 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import io.qameta.allure.Step;
 
 public class PerformancePage extends BaseSideMenu {
     private final Locator overallButton = button("Overall");
@@ -28,6 +29,7 @@ public class PerformancePage extends BaseSideMenu {
         super(page, playwright);
     }
 
+    @Step("Click on “Overall”.")
     public PerformancePage clickOverallDropdown() {
         overallButton.click();
 

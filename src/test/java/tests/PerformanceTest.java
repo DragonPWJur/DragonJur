@@ -1,5 +1,8 @@
 package tests;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
@@ -54,7 +57,11 @@ public class PerformanceTest extends BaseTest {
         Assert.assertEquals(performancePage.getIncorrectNumbers(), 0);
     }
 
-    @Test
+    @Test(description = "TC1356-01 - The dropdown menu displaying statistics is opened.")
+    @Description("Objective: To confirm the display of statistics for Tests in the Performance section.")
+    @Story("Performance")
+    @TmsLink("h.nyqyh86yrv3b")
+
     public void testShowDropdownMenuInPerformanceSection() {
         PerformancePage performancePage = new PerformancePage(getPage(), getPlaywright()).clickPerformanceMenu();
 
