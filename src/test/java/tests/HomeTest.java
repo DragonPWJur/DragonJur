@@ -145,4 +145,14 @@ public class HomeTest extends BaseTest {
             }
         }
     }
+
+    @Test
+    public void testModalWindowStudyIsOpened() {
+        HomePage homePage = new HomePage(getPage(), getPlaywright())
+                .clickStudyThisButton();
+
+        assertThat(homePage.getWeakestExamAreasModal()).isVisible();
+        assertThat(homePage.getWeakestExamAreasHeader()).hasText(TestData.STUDY_THIS_MODAL_HEADER);
+        assertThat(homePage.getWeakestExamAreasMessage()).isVisible();
+    }
 }

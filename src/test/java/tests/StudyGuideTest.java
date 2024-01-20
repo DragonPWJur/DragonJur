@@ -34,4 +34,18 @@ public class StudyGuideTest extends BaseTest {
         assertThat(studyGuidePage.getWordFromList()).not().hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_0_0_0_0);
         assertThat(studyGuidePage.getWordFromList()).hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_62_48_179_0_2);
     }
+
+    @Test
+    public void testHighlightingMultipleWords() {
+        StudyGuidePage studyGuidePage = new HomePage(getPage(), getPlaywright())
+                .clickStudyGuide()
+                .highlightWords();
+
+
+        assertThat(studyGuidePage.getNoteTextAria()).isVisible();
+        assertThat(studyGuidePage.getMultipleWords())
+                .not().hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_0_0_0_0);
+        assertThat(studyGuidePage.getMultipleWords())
+                .hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_62_48_179_0_2);
+    }
 }
