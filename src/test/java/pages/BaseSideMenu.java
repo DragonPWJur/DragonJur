@@ -21,6 +21,7 @@ abstract class BaseSideMenu extends BaseModal {
     @Step("Click side menu 'Home'")
     public HomePage clickHomeMenu() {
         homeButton.click();
+
         return new HomePage(getPage());
     }
 
@@ -34,12 +35,14 @@ abstract class BaseSideMenu extends BaseModal {
     @Step("Click side menu 'Tests'")
     public TestListPage clickTestsMenu() {
         testsButton.click();
+
         return new TestListPage(getPage());
     }
 
     @Step("Click side menu 'Flashcards'")
     public FlashcardPacksPage clickFlashcardsMenu() {
         flashcardsButton.click();
+
         return new FlashcardPacksPage(getPage());
     }
 
@@ -52,8 +55,8 @@ abstract class BaseSideMenu extends BaseModal {
 
     @Step("Click side menu 'Performance'")
     public PerformancePage clickPerformanceMenu() {
-
         performanceButton.click();
+
         return new PerformancePage(getPage());
     }
 
@@ -63,6 +66,4 @@ abstract class BaseSideMenu extends BaseModal {
 
         return new ProfilePage(getPage());
     }
-
-
 }

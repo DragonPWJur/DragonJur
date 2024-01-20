@@ -9,21 +9,23 @@ import java.util.List;
 public final class FlashcardPacksPage extends BaseSideMenu {
 
     private final Locator markedForRecheckingButton = button("Marked for re-checking");
-    private final Locator packToLearnButton = button("Learned");
-    private final List<Locator> allPacksToLearnButtons = allButtons(packToLearnButton);
+    private final Locator learnButton = button("Learned");
+    private final List<Locator> allLearnedButtons = allButtons(learnButton);
 
-    private final int randomPackIndex = TestUtils.getRandomNumber(allPacksToLearnButtons);
+    private final int randomPackIndex = TestUtils.getRandomNumber(allLearnedButtons);
 
     public FlashcardPacksPage(Page page) {
         super(page);
     }
 
     int getRandomPackIndex() {
+
         return randomPackIndex;
     }
 
-    private String[] getFlashcardsPackSplitText() {
-        return allPacksToLearnButtons.get(randomPackIndex).innerText().trim().split("\n");
+    private String[] getPackSplitText() {
+
+        return allLearnedButtons.get(randomPackIndex).innerText().trim().split("\n");
     }
 
     public String getAmountOfCardsMarkedForRechecking() {
@@ -33,18 +35,17 @@ public final class FlashcardPacksPage extends BaseSideMenu {
     }
 
     public String getFlashcardsPackName() {
-        return getFlashcardsPackSplitText()[0];
+
+        return getPackSplitText()[0];
     }
 
     public String getAmountOfCardsInPack() {
-        return getFlashcardsPackSplitText()[1]
-                .trim()
-                .split(" ")[0]
-                .split("/")[1];
+
+        return getPackSplitText()[1].trim().split(" ")[0].split("/")[1];
     }
 
     public FlashcardsPackIDPage clickNthFlashcardPack(int randomIndex) {
-        allPacksToLearnButtons.get(randomIndex).click();
+        allLearnedButtons.get(randomIndex).click();
 
         return new FlashcardsPackIDPage(getPage());
     }

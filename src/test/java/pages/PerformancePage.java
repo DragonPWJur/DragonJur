@@ -2,9 +2,8 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
 
-public class PerformancePage extends SideMenuPage {
+public class PerformancePage extends BaseSideMenu {
     private final Locator overallButton = button("Overall");
     private final Locator testsButtonInBanner = buttonInBanner("Tests");
     private final Locator dropdownLocator = locator(".bIQFHP");
@@ -22,8 +21,9 @@ public class PerformancePage extends SideMenuPage {
             .last()
             .locator("~div>span:last-child");
     private final Locator lastTestLocator = locator(".eaNKjL>div:nth-child(2)");
-    public PerformancePage(Page page, Playwright playwright) {
-        super(page, playwright);
+
+    public PerformancePage(Page page) {
+        super(page);
     }
 
     public PerformancePage clickOverallDropdown() {

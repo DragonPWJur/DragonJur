@@ -14,79 +14,98 @@ abstract class BaseLocator extends BasePage {
     }
 
     protected Locator button(String text) {
+
         return getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(text));
     }
 
     protected Locator exactButton(String text) {
+
         return getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(text).setExact(true));
     }
 
     protected Locator link(String text) {
+
         return getPage().getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(text));
     }
 
     protected Locator exactLink(String text) {
+
         return getPage().getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(text).setExact(true));
     }
 
     protected Locator heading(String text) {
+
         return getPage().getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(text));
     }
 
     protected Locator exactHeading(String text) {
+
         return getPage().getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(text).setExact(true));
     }
 
     protected Locator label(String text) {
+
         return getPage().getByLabel(text);
     }
 
     protected Locator text(String text) {
+
         return getPage().getByText(text);
     }
 
     protected Locator exactText(String text) {
+
         return getPage().getByText(text, new Page.GetByTextOptions().setExact(true));
     }
 
     protected Locator radio(String text) {
+
         return getPage().getByRole(AriaRole.RADIO, new Page.GetByRoleOptions().setName(text));
     }
 
     protected Locator radio() {
+
         return getPage().getByRole(AriaRole.RADIO);
     }
 
     protected Locator alert() {
+
         return getPage().getByRole(AriaRole.ALERT);
     }
 
     protected Locator image(String text) {
+
         return getPage().getByRole(AriaRole.IMG, new Page.GetByRoleOptions().setName(text));
     }
 
     protected Locator dialog() {
+
         return getPage().getByRole(AriaRole.DIALOG);
     }
 
     protected Locator buttonInBanner(String text) {
+
         return getPage().getByRole(AriaRole.BANNER)
                 .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(text));
     }
 
     protected Locator placeholder(String text) {
+
         return getPage().getByPlaceholder(text);
     }
 
     protected Locator locator(String css) {
+
         return getPage().locator(css);
     }
 
     protected Locator textbox() {
+
         return getPage().getByRole(AriaRole.TEXTBOX);
     }
 
     protected Locator checkBoxImage(int number) {
+
         return locator("label:has(input):nth-child(" + (number) + ") svg");
     }
 
@@ -112,15 +131,18 @@ abstract class BaseLocator extends BasePage {
     }
 
     private List<Locator> getList(Locator locator) {
-        locator.first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-        locator.last().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED));
+        while(!locator.first().isVisible()) {
+            locator.first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        }
+        if(!locator.last().isVisible()) {
+            locator.last().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED));
+            locator.last().scrollIntoViewIfNeeded();
+            locator.last().focus();
+        }
+
+        System.out.println(locator.all());
+        System.out.println(locator.all().size());
 
         return locator.all();
     }
-
-    public void waitForPointsAnimationToStop() {
-        getPage().waitForTimeout(2000);
-    }
-
-
 }

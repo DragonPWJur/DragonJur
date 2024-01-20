@@ -12,10 +12,12 @@ abstract class BaseTopMenu extends BaseModal {
     }
 
     public Locator packNameOnTopMenu(String name) {
+
         return text(name);
     }
 
     public Locator cardsTotalAmount(String total) {
+
         return text(total + " Total");
     }
 

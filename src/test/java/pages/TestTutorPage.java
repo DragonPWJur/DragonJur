@@ -4,13 +4,11 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 import utils.TestUtils;
-
-public class TestTutorPage extends BaseSideMenu {
 import java.util.regex.Pattern;
 
 import static java.lang.Integer.parseInt;
 
-public class TestTutorPage extends SideMenuPage {
+public class TestTutorPage extends BaseSideMenu { {
 
     private final Locator markForReviewButton = button("Mark for review");
     private final Locator removeFromMarkedButton = button("Remove from marked");
