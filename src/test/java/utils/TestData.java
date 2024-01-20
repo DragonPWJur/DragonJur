@@ -1,7 +1,5 @@
 package utils;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-
 public class TestData {
 
     public static final String HOME_END_POINT = "/home";

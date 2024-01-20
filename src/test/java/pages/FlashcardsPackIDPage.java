@@ -7,7 +7,7 @@ import utils.TestUtils;
 
 import java.util.regex.Pattern;
 
-public class FlashcardsPackIDPage extends SideMenuPage {
+public class FlashcardsPackIDPage extends BaseSideMenu {
     private final Locator questionHeading = text("Question");
     private final Locator gotItButton = button("Got it");
     private final Locator flashcardsBackButton = button( "Flashcards /");

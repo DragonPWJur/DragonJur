@@ -4,7 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 
-public class PerformancePage extends SideMenuPage {
+public class PerformancePage extends BaseSideMenu {
     private final Locator overallButton = button("Overall");
     private final Locator testsButtonInBanner = buttonInBanner("Tests");
     private final Locator dropdownLocator = locator(".bIQFHP");
