@@ -60,7 +60,7 @@ public class PerformanceTest extends BaseTest {
     @Test(description = "TC1356-01 - The dropdown menu displaying statistics is opened.")
     @Description("Objective: To confirm the display of statistics for Tests in the Performance section.")
     @Story("Performance")
-    @TmsLink("h.nyqyh86yrv3b")
+    @TmsLink("nyqyh86yrv3b")
 
     public void testShowDropdownMenuInPerformanceSection() {
         PerformancePage performancePage = new PerformancePage(getPage(), getPlaywright()).clickPerformanceMenu();
