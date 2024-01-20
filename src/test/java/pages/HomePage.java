@@ -11,7 +11,8 @@ import io.qameta.allure.Step;
 
 import static java.lang.Integer.parseInt;
 
-public class HomePage extends SideMenuPage {
+public class HomePage extends BaseSideMenu {
+
     private final Locator studyThisButton = button("Study This");
     private final Locator testsButton = exactButton("Tests");
     private final Locator homeButton = exactButton("Home");
@@ -21,14 +22,18 @@ public class HomePage extends SideMenuPage {
     private final Locator progressbarPoints = locator("div>svg.CircularProgressbar+div>span").first();
     private final Locator progressbarSideMenuPoints = locator("div:has(.CircularProgressbar)+span").first();
     private final Locator streaksButton = locator("button>svg+p").last();
-    private final Locator streaksModalWindow = locator("div[role='dialog']");
     private final List<Locator> listCheckboxes = checkBoxesAll("label:has(input)");
+    private final Locator streaksModalWindow = locator("div[role='dialog']");
     private final Locator checkboxImage = locator("label:has(input) svg");
 
     private final int checkBoxNumber = TestUtils.getRandomInt(0, listCheckboxes.size());
 
     public HomePage(Page page, Playwright playwright) {
         super(page, playwright);
+    }
+
+    public List<Locator> getListCheckboxes() {
+        return listCheckboxes;
     }
 
     public Locator getStudyThisButton() {
@@ -120,6 +125,30 @@ public class HomePage extends SideMenuPage {
         return this;
     }
 
+    public  HomePage clickCheckBox(int index){
+        getNthCheckbox(index).click();
+        getPage().waitForTimeout(1000);
+
+        return this;
+    }
+
+    public int getCheckBoxNumber() {
+
+        return checkBoxNumber;
+    }
+
+    public HomePage checkAllCheckBoxes() {
+
+        for (int i = 0; i < listCheckboxes.size(); i++) {
+            while (!listCheckboxes.get(i).isChecked()) {
+                listCheckboxes.get(i).check();
+                getPage().waitForTimeout(1000);
+            }
+            System.out.println(listCheckboxes.get(i).isChecked());
+        }
+        return this;
+    }
+
     protected boolean isListCheckBoxesNotEmpty() {
 
         return !listCheckboxes.isEmpty();
@@ -128,6 +157,11 @@ public class HomePage extends SideMenuPage {
     public boolean areAllCheckBoxesUnchecked() {
 
        return listCheckboxes.stream().noneMatch(Locator::isChecked);
+    }
+
+    protected boolean areAllCheckBoxesChecked() {
+
+        return listCheckboxes.stream().allMatch(Locator::isChecked);
     }
 
     public boolean isCheckBoxChecked() {
@@ -140,7 +174,7 @@ public class HomePage extends SideMenuPage {
         return checkboxImage;
     }
 
-    public List<Locator> getListCheckedCheckBoxes() {
+    protected List<Locator> getListCheckedCheckBoxes() {
 
         return listCheckboxes.stream().filter(Locator::isChecked).toList();
     }
