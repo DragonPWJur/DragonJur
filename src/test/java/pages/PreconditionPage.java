@@ -52,7 +52,7 @@ public class PreconditionPage extends BasePage {
                 .clickHomeMenu()
                 .clickFlashcardsMenu()
                 .clickNthFlashcardPack(index)
-                .clickGotButtonIfVisible()
+                .clickGotItButtonIfVisible()
                 .clickFlashcardsBackButton()
                 .clickYesButton()
                 .clickHomeMenu();
