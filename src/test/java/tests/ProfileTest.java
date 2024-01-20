@@ -6,7 +6,7 @@ import utils.ProjectProperties;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-public class ProfileTest extends BaseTest{
+public class ProfileTest extends BaseTest {
 
     @Test
     public void testNavigationToTheProfilePage() {
@@ -26,5 +26,16 @@ public class ProfileTest extends BaseTest{
 
         assertThat(getPage()).hasURL(ProjectProperties.BASE_URL + "/add-new-course");
         assertThat(getPage().getByTitle("Add a new course"));
+    }
+
+
+    @Test
+    public void testOpenChooseAProductByClickAGetButton() {
+        new HomePage(getPage(), getPlaywright())
+                .clickProfileMenu()
+                .clickAddANewCourseButton()
+                .clickGetButton();
+
+        assertThat(getPage().getByText("Choose a product")).isVisible();
     }
 }
