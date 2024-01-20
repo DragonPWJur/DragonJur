@@ -8,9 +8,6 @@ import utils.TestData;
 import utils.TestUtils;
 
 public class StudyGuidePage extends BaseSideMenu {
-
-    private final Locator wordList = waitForListLoadedGetByText("Projections");
-    private final Locator noteButton = button(getWordText());
     private final Locator noteTextAria = locator("//textarea");
     private final Locator saveButton = button("Save");
     private final Locator highlightsAndNotesButton = button("Highlights and notes");
@@ -22,16 +19,18 @@ public class StudyGuidePage extends BaseSideMenu {
         super(page, playwright);
     }
 
-    public Locator getNoteButton() {
-        return noteButton;
+    public Locator getNoteButtonForWord() {
+        return button(getWordText());
     }
 
     public Locator getNoteTextAria() {
         return noteTextAria;
     }
 
-    public Locator getWordFromList() {
-        return wordList.nth(1);
+    public Locator getWord() {
+        Locator list = getPage().getByText(TestData.PROJECTIONS);
+        list.first().waitFor();
+        return list.nth(1);
     }
 
     public Locator getNothingFoundMessage() {
@@ -54,9 +53,8 @@ public class StudyGuidePage extends BaseSideMenu {
         return this;
     }
 
-
-    public StudyGuidePage doubleClickWord() {
-        wordList.nth(1).dblclick();
+    public StudyGuidePage doubleClickOnWord() {
+        getWord().dblclick();
 
         return this;
     }
@@ -68,7 +66,7 @@ public class StudyGuidePage extends BaseSideMenu {
     }
 
     public String getWordText() {
-        return wordList.nth(1).textContent();
+        return getWord().textContent();
     }
 
     public StudyGuidePage inputRandomStringInSearchField() {
