@@ -39,6 +39,7 @@ public class FlashcardsPackIDPage extends SideMenuPage {
     }
 
     public Locator getNumberOfYesMarks() {
+        getPage().waitForTimeout(2000);
 
         return numberOfYesMarks;
     }
