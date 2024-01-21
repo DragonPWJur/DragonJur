@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 //package tests;
 //
 //import io.qameta.allure.*;
@@ -105,5 +105,3 @@
 //        assertThat(numberMarked).isVisible();
 //    }
 //}
-=======
->>>>>>> 8952b8e84f53dbc1d24376ded00a911bdb48372e

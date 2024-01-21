@@ -5,11 +5,8 @@ import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 import utils.TestUtils;
 
-<<<<<<< HEAD
 import java.util.List;
 
-=======
->>>>>>> 8952b8e84f53dbc1d24376ded00a911bdb48372e
 public class TestListPage extends BaseSideMenu {
 
     private final Locator domainsButton = text("Domains");
@@ -50,15 +47,15 @@ public class TestListPage extends BaseSideMenu {
         return this;
     }
 
-    @Step("Click 'Generate and Start' button")
-    public TestTutorPage clickGenerateAndStartButton() {
-        generateAndStartButton.click();
-<<<<<<< HEAD
-        return new TestsPage(getPage());
-=======
-        return new TestTutorPage(getPage(), getPlaywright());
->>>>>>> 8952b8e84f53dbc1d24376ded00a911bdb48372e
-    }
+//    @Step("Click 'Generate and Start' button")
+//    public TestTutorPage clickGenerateAndStartButton() {
+//        generateAndStartButton.click();
+//<<<<<<< HEAD
+//        return new TestsPage(getPage());
+//=======
+//        return new TestTutorPage(getPage(), getPlaywright());
+//>>>>>>> 8952b8e84f53dbc1d24376ded00a911bdb48372e
+//    }
 
     @Step("Click random checkbox")
     public TestListPage clickRandomCheckbox() {
@@ -93,51 +90,51 @@ public class TestListPage extends BaseSideMenu {
         return this;
     }
 
-    public TestTutorPage clickGenerateAndStartButton2() {
-        generateAndStartButton.click();
-        return new TestTutorPage(getPage(), getPlaywright());
-    }
-
-    public TestListPage clickTimedButton() {
-        timedButton.click();
-
-        return this;
-    }
-
-    public TestListPage clickStartTestButton() {
-        startTestButton.click();
-
-        return this;
-    }
-
-    public TestTimedPage clickStartButton() {
-        startButton.click();
-
-        return new TestTimedPage(getPage(), getPlaywright());
-    }
-
-    public TestListPage clickGenerateAndStartButton1() {
-        generateAndStartButton.click();
-        return this;
-    }
-
-    public Locator getNumberMarked() {
-        return numberMarked;
-    }
-
-    public Locator checkIcon(String text) {
-        return listCheckboxes.getByText(text).locator("svg");
-    }
-
-    public TestListPage clickAutomationTestingForStatsCheckBox() {
-        automationTestingForStatsText.click();
-
-        return this;
-    }
-
-    public TestListPage clickHistoryAndCivilizationForStatsCheckBox() {
-        historyAndCivilizationForStatsText.click();
-
-        return this;
-    }
+//    public TestTutorPage clickGenerateAndStartButton2() {
+//        generateAndStartButton.click();
+//        return new TestTutorPage(getPage(), getPlaywright());
+//    }
+//
+//    public TestListPage clickTimedButton() {
+//        timedButton.click();
+//
+//        return this;
+//    }
+//
+//    public TestListPage clickStartTestButton() {
+//        startTestButton.click();
+//
+//        return this;
+//    }
+//
+//    public TestTimedPage clickStartButton() {
+//        startButton.click();
+//
+//        return new TestTimedPage(getPage(), getPlaywright());
+//    }
+//
+//    public TestListPage clickGenerateAndStartButton1() {
+//        generateAndStartButton.click();
+//        return this;
+//    }
+//
+//    public Locator getNumberMarked() {
+//        return numberMarked;
+//    }
+//
+//    public Locator checkIcon(String text) {
+//        return listCheckboxes.getByText(text).locator("svg");
+//    }
+//
+//    public TestListPage clickAutomationTestingForStatsCheckBox() {
+//        automationTestingForStatsText.click();
+//
+//        return this;
+//    }
+//
+//    public TestListPage clickHistoryAndCivilizationForStatsCheckBox() {
+//        historyAndCivilizationForStatsText.click();
+//
+//        return this;
+//    }
 }

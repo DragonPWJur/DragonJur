@@ -86,7 +86,7 @@ public class ReportUtils {
         }
     }
 
-    public static void addScreenshotToAllureReportForFailedTestsOnCI(Page page, ITestResult testResult) {
+    public static void addScreenshotToAllureReportForCIFailure(Page page, ITestResult testResult) {
         if (!testResult.isSuccess() && isServerRun()) {
             Allure.getLifecycle().addAttachment(
                     "screenshot", "image/png", "png",
@@ -96,7 +96,7 @@ public class ReportUtils {
         }
     }
 
-    public static void addVideoAndTracingToAllureReportForFailedTestsOnCI(Method testMethod, ITestResult testResult) throws IOException {
+    public static void addVideoAndTracingToAllureReportForCIFailure(Method testMethod, ITestResult testResult) throws IOException {
         if (!testResult.isSuccess() && isServerRun()) {
             Allure.getLifecycle().addAttachment("video", "videos/webm", "webm",
                     Files.readAllBytes(Paths.get("videos/" + testMethod.getName() + ".webm")));

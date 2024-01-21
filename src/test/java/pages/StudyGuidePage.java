@@ -8,11 +8,11 @@ import utils.TestData;
 import utils.TestUtils;
 
 public class StudyGuidePage extends BaseSideMenu {
-<<<<<<< HEAD
-//    private final Locator wordList = waitForListLoadedGetByText("Projections");
-//    private final Locator noteButton = button(getWordText());
-=======
->>>>>>> 8952b8e84f53dbc1d24376ded00a911bdb48372e
+//<<<<<<< HEAD
+////    private final Locator wordList = waitForListLoadedGetByText("Projections");
+////    private final Locator noteButton = button(getWordText());
+//=======
+//>>>>>>> 8952b8e84f53dbc1d24376ded00a911bdb48372e
     private final Locator noteTextAria = locator("//textarea");
     private final Locator saveButton = button("Save");
     private final Locator highlightsAndNotesButton = button("Highlights and notes");

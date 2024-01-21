@@ -24,7 +24,17 @@ public abstract class BaseTest {
 
     @BeforeSuite
     protected void launchBrowser(ITestContext testContext) {
+
+        LoginUtils.loginAndCollectCookies(playwright, browser);
+
+        LoginUtils.parseUserToken();
+        log("User token extracted from cookies");
+
+        log(ReportUtils.END_LINE);
         log(ReportUtils.getReportHeader());
+
+        playwright = Playwright.create();
+        browser = BrowserManager.createBrowser(playwright, getClass());
 
         if(playwright != null) {
             log("Playwright " + getPlaywrightId() + " created.");
@@ -39,20 +49,6 @@ public abstract class BaseTest {
             logFatal("FATAL: Browser " + browser.browserType().name().toUpperCase() + " is NOT connected\n");
             System.exit(1);
         }
-
-        LoginUtils.loginAndCollectCookies(playwright, browser);
-
-        log(ReportUtils.END_LINE);
-
-        LoginUtils.loginAndCollectCookies(playwright, browser);
-
-        LoginUtils.parseUserToken();
-        log("User token extracted from cookies");
-
-        playwright = Playwright.create();
-        log("Playwright initialized");
-
-        browser = BrowserManager.createBrowser(playwright, getClass());
     }
 
     @BeforeMethod
@@ -78,9 +74,9 @@ public abstract class BaseTest {
 
     @AfterMethod
     protected void closeContext(Method method, ITestResult testResult) throws IOException {
-        ReportUtils.logTestStatistic(method, testResult);
 
-        ReportUtils.addScreenshotToAllureReportForFailedTestsOnCI(page,testResult);
+        ReportUtils.logTestStatistic(method, testResult);
+        ReportUtils.addScreenshotToAllureReportForCIFailure(page,testResult);
 
         page.close();
         log("Page closed");
@@ -88,7 +84,7 @@ public abstract class BaseTest {
         TracingUtils.stopTracing(page, context, method, testResult);
         log("Tracing stopped");
 
-        ReportUtils.addVideoAndTracingToAllureReportForFailedTestsOnCI(method, testResult);
+        ReportUtils.addVideoAndTracingToAllureReportForCIFailure(method, testResult);
 
         context.close();
         log("Context closed" + ReportUtils.END_LINE);
@@ -96,11 +92,13 @@ public abstract class BaseTest {
 
     @AfterSuite
     protected void closeBrowser() {
-        browser.close();
-        log("Browser closed");
+        if(browser != null & playwright != null) {
+            browser.close();
+            log("Browser closed");
 
-        playwright.close();
-        log("Playwright closed");
+            playwright.close();
+            log("Playwright closed");
+        }
     }
 
     private String getPlaywrightId() {
