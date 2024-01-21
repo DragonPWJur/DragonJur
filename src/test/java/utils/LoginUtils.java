@@ -10,46 +10,47 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static utils.LoggerUtils.log;
-import static utils.LoggerUtils.logFatal;
+import static utils.LoggerUtils.*;
 
 public class LoginUtils {
     public static final String COOKIES_FILE_PATH = "src/test/resources/state.json";
-    private static boolean isLoginSuccessful;
+    private static final String HOME_PAGE_URL = ProjectProperties.BASE_URL + TestData.HOME_END_POINT;
+    private static final String SIGN_IN_URL = ProjectProperties.BASE_URL + TestData.SIGN_IN_END_POINT;
     private static String userToken;
 
     static String getUserToken() {
-        return userToken;
-    }
 
-    static boolean getIsLoginSuccessful() {
-        return isLoginSuccessful;
+        return userToken;
     }
 
     public static void loginAndCollectCookies(Playwright playwright, Browser browser) {
         BrowserContext context = BrowserManager.createContext(browser);
-        log("Context for cookies created");
+        log("Login context created.");
 
         TracingUtils.startTracing(context);
-        log("Tracing for cookies started");
+        log("Tracing started.");
 
         Page page = context.newPage();
-        log("Page for cookies created");
+        log("Page created.");
 
         page.navigate(ProjectProperties.BASE_URL);
-        log("Base URL for cookies opened");
+        log("Base URL opened.");
 
+        boolean isLogged = false;
         try {
             login(page);
-            if (page.url().equals(ProjectProperties.BASE_URL + TestData.HOME_END_POINT)) {
-                isLoginSuccessful = true;
-                log("Login successful");
+            page.waitForURL(HOME_PAGE_URL);
+
+            if (page.url().equals(HOME_PAGE_URL)) {
+                isLogged = true;
+                log("Login successful.");
+
                 context.storageState(getStorageStateOptions());
-                log("Cookies collected");
+                log("Cookies collected.");
             }
         } catch (Exception e) {
-            isLoginSuccessful = false;
-            logFatal("FATAL: Unsuccessful login");
+            logError("ERROR: Unsuccessful login");
+            e.printStackTrace();
         } finally {
             page.close();
             log("Page for cookies closed");
@@ -65,7 +66,7 @@ public class LoginUtils {
             playwright.close();
             log("Playwright closed");
 
-            if (!isLoginSuccessful) {
+            if (!isLogged) {
                 logFatal("FATAL: Unsuccessful termination.\n");
                 System.exit(1);
             }
@@ -79,26 +80,34 @@ public class LoginUtils {
     }
 
     private static void login(Page page) {
-        if (!page.url().equals(ProjectProperties.BASE_URL + TestData.SIGN_IN_END_POINT)) {
-            page.waitForURL(ProjectProperties.BASE_URL + TestData.SIGN_IN_END_POINT);
-
-        } else {
-            log("Landed on " + TestData.SIGN_IN_END_POINT);
+        int count = 3;
+        while (count > 0) {
+            if (!page.url().equals(SIGN_IN_URL)) {
+                page.waitForURL(SIGN_IN_URL);
+                count--;
+            } else {
+                log("Landed on " + TestData.SIGN_IN_END_POINT);
+            }
         }
 
         page.fill("form input:only-child", ProjectProperties.USERNAME);
         page.fill("input[type='password']", ProjectProperties.PASSWORD);
         page.click("button[type='submit']");
-
-        page.waitForURL(ProjectProperties.BASE_URL + TestData.HOME_END_POINT);
     }
 
     public static void parseUserToken() {
         try {
             String jsonString = new String(Files.readAllBytes(Paths.get(COOKIES_FILE_PATH)));
             JSONObject apiLoginResponseJSON = new JSONObject(jsonString);
-            String jsonValue = apiLoginResponseJSON.getJSONArray("origins").getJSONObject(0).getJSONArray("localStorage").getJSONObject(2).getString("value");
-            userToken = new JSONObject((new JSONObject(jsonValue)).getString("auth")).getString("accessToken");
+            String jsonValue = apiLoginResponseJSON
+                    .getJSONArray("origins")
+                    .getJSONObject(0)
+                    .getJSONArray("localStorage")
+                    .getJSONObject(2)
+                    .getString("value");
+            userToken = new JSONObject((new JSONObject(jsonValue))
+                    .getString("auth"))
+                    .getString("accessToken");
         } catch (IOException e) {
             e.printStackTrace();
         }
