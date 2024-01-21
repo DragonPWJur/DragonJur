@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.nio.file.Paths;
 
 import static utils.LoggerUtils.log;
+import static utils.LoginUtils.getIsLoginSuccessful;
 
 public final class TracingUtils {
 
@@ -35,6 +36,23 @@ public final class TracingUtils {
                 log("Video saved");
                 page.video().delete();
             }
+        } else {
+            page.video().delete();
+        }
+
+        context.tracing().stop(tracingStopOptions);
+    }
+
+    public static void stopTracingForUILogin(Page page, BrowserContext context) {
+        Tracing.StopOptions tracingStopOptions = null;
+
+        if (!getIsLoginSuccessful()) {
+            tracingStopOptions = new Tracing.StopOptions()
+                    .setPath(Paths.get("testTracing/uiLogin.zip"));
+            log("Tracing for UI login saved");
+            page.video().saveAs(Paths.get("videos/uiLogin.webm"));
+            log("Video for UI login saved");
+            page.video().delete();
         } else {
             page.video().delete();
         }

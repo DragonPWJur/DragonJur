@@ -38,4 +38,21 @@ public class ProfileTest extends BaseTest {
 
         assertThat(getPage().getByText("Choose a product")).isVisible();
     }
+
+    @Test
+    public void testClickOnTheLifeTimeButton(){
+
+        new HomePage(getPage(), getPlaywright())
+                .clickProfileMenu()
+                .clickAddANewCourseButton()
+                .clickGetButton()
+                .clickLifeTimeButton()
+                .visibleHeadingChooseAProduct();
+
+        assertThat(getPage().getByText("Life time"));
+        assertThat(getPage().getByText("Gold")).isVisible();
+        assertThat(getPage().getByText("Silver")).not().isVisible();
+        assertThat(getPage().getByText("Bronze")).not().isVisible();
+
+    }
 }

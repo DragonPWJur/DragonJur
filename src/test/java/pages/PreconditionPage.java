@@ -2,6 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import io.qameta.allure.Step;
 
 public class PreconditionPage extends BasePage {
 
@@ -67,6 +68,7 @@ public class PreconditionPage extends BasePage {
         return false;
     }
 
+    @Step("Start test for the stats")
     public void startTestDomainForStats(String nameTest, String numberOfQuestions) {
         TestListPage testListPage = new HomePage(getPage(), getPlaywright())
                 .clickTestsMenu()
@@ -85,6 +87,7 @@ public class PreconditionPage extends BasePage {
         }
     }
 
+    @Step("Pass the test with the correct answers of {numberOfQuestions} questions")
     public void passTestAllAnswersCorrect(int numberOfQuestions) {
         TestTutorPage testTutorPage = new TestTutorPage(getPage(), getPlaywright());
         for (int numOfQuestion = 1; numOfQuestion < numberOfQuestions; numOfQuestion++) {
@@ -103,6 +106,7 @@ public class PreconditionPage extends BasePage {
                 .clickHomeMenu();
     }
 
+    @Step("Pass the test with one wrong answer of {numberOfQuestions} questions\"")
     public void passTestOneAnswersIncorrect(int numberOfQuestions) {
         TestTutorPage testTutorPage = new TestTutorPage(getPage(), getPlaywright());
         for (int numOfQuestion = 1; numOfQuestion < numberOfQuestions; numOfQuestion++) {
@@ -121,6 +125,7 @@ public class PreconditionPage extends BasePage {
                 .clickHomeMenu();
     }
 
+    @Step("Checking the number of questions on PerformancePage")
     public int checkNumberOfQuestions() {
         int numberOfQuestions = new HomePage(getPage(), getPlaywright())
                 .clickPerformanceMenu()

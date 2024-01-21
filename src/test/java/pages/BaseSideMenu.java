@@ -3,6 +3,7 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import io.qameta.allure.Step;
 
 abstract class BaseSideMenu extends BaseLocator{
 
@@ -51,6 +52,7 @@ abstract class BaseSideMenu extends BaseLocator{
         return new StudyGuidePage(getPage(), getPlaywright());
     }
 
+    @Step("Click the “Performance” side menu")
     public PerformancePage clickPerformanceMenu() {
 
         performanceButton.click();
