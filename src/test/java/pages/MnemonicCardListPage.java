@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 public class MnemonicCardListPage extends BaseSideMenu {
+
     private final Locator listOfStacks = locator("button:has(span)");
 
 //    private final String[] randomStack = getRandomStackText();

@@ -13,7 +13,7 @@ abstract class BasePage {
         return page;
     }
 
-    public void waitWithTimeout(int timeout) {
+    protected void waitWithTimeout(int timeout) {
         getPage().waitForTimeout(timeout);
     }
 }

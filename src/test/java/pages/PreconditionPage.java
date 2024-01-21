@@ -2,6 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+
 import io.qameta.allure.Step;
 
 import java.util.List;
@@ -39,6 +40,10 @@ public final class PreconditionPage extends BasePage {
 
         return amountMarkedForRechecking;
     }
+//        new FlashcardPacksPage(getPage(), getPlaywright()).clickHomeMenu();
+//        return numberMarkedForRechecking;
+//
+//    }
 
 //    public void endTest() {
 //        new TestTutorPage(getPage())
@@ -72,53 +77,67 @@ public final class PreconditionPage extends BasePage {
         flashcardPacksPage.clickHomeMenu();
     }
 
-    public List<Locator> getAllCheckBoxes() {
+//    public List<Locator> getAllCheckBoxes() {
+//
+//        return new HomePage(getPage()).getAllCheckboxes();
+//    }
 
-        return new HomePage(getPage()).getAllCheckboxes();
-    }
+//    public void startFlashcardPackAndGoBack(int index) {
+//        new HomePage(getPage())
+//                .clickHomeMenu()
+//                .clickFlashcardsMenu()
+//                .clickNthFlashcardPack(index)
+//                .clickGotItButtonIfVisible()
+//                .clickFlashcardsBackButton()
+//                .clickYesButton()
+//                .clickHomeMenu();
+//    }
 
     public boolean areAllCheckBoxesUnchecked() {
         return new HomePage(getPage()).areAllCheckBoxesUnchecked();
     }
 
-    public void startTestDomainForStats(String nameTest, String numberOfQuestions) {
-        TestListPage testListPage = new HomePage(getPage(), getPlaywright())
-                .clickTestsMenu()
-                .cancelDialogIfVisible()
-                .clickDomainsButton();
-        if(nameTest.equals("Automation testing for stats")) {
-            testListPage
-                    .clickAutomationTestingForStatsCheckBox()
-                    .inputNumberOfQuestions(numberOfQuestions)
-                    .clickGenerateAndStartButton2();
-        } else if(nameTest.equals("History and Civilization for Stats")) {
-            testListPage
-                    .clickHistoryAndCivilizationForStatsCheckBox()
-                    .inputNumberOfQuestions(numberOfQuestions)
-                    .clickGenerateAndStartButton2();
-        }
-    }
+//    @Step("Start test for the stats")
+//    public void startTestDomainForStats(String nameTest, String numberOfQuestions) {
+//        TestListPage testListPage = new HomePage(getPage())
+//                .clickTestsMenu()
+//                .cancelDialogIfVisible()
+//                .clickDomainsButton();
+//        if(nameTest.equals("Automation testing for stats")) {
+//            testListPage
+//                    .clickAutomationTestingForStatsCheckBox()
+//                    .inputNumberOfQuestions(numberOfQuestions)
+//                    .clickGenerateAndStartButton2();
+//        } else if(nameTest.equals("History and Civilization for Stats")) {
+//            testListPage
+//                    .clickHistoryAndCivilizationForStatsCheckBox()
+//                    .inputNumberOfQuestions(numberOfQuestions)
+//                    .clickGenerateAndStartButton2();
+//        }
+//    }
 
-    public void passTestAllAnswersCorrect(int numberOfQuestions) {
-        TestTutorPage testTutorPage = new TestTutorPage(getPage(), getPlaywright());
-        for (int numOfQuestion = 1; numOfQuestion < numberOfQuestions; numOfQuestion++) {
-            testTutorPage
-                    .clickCorrectAnswerRadioButton()
-                    .clickConfirmButton()
-                    .clickNextQuestionButton();
-        }
+//    @Step("Pass the test with the correct answers of {numberOfQuestions} questions")
+//    public void passTestAllAnswersCorrect(int numberOfQuestions) {
+//        TestTutorPage testTutorPage = new TestTutorPage(getPage());
+//        for (int numOfQuestion = 1; numOfQuestion < numberOfQuestions; numOfQuestion++) {
+//            testTutorPage
+//                    .clickCorrectAnswerRadioButton()
+//                    .clickConfirmButton()
+//                    .clickNextQuestionButton();
+//        }
+//
+//        testTutorPage
+//                .clickCorrectAnswerRadioButton()
+//                .clickConfirmButton()
+//                .clickFinishTestButton()
+//                .clickSkipButton()
+//                .clickCloseTheTestButton()
+//                .clickHomeMenu();
+//    }
 
-        testTutorPage
-                .clickCorrectAnswerRadioButton()
-                .clickConfirmButton()
-                .clickFinishTestButton()
-                .clickSkipButton()
-                .clickCloseTheTestButton()
-                .clickHomeMenu();
-    }
-
+    @Step("Pass the test with one wrong answer of {numberOfQuestions} questions\"")
     public void passTestOneAnswersIncorrect(int numberOfQuestions) {
-        TestTutorPage testTutorPage = new TestTutorPage(getPage(), getPlaywright());
+        TestTutorPage testTutorPage = new TestTutorPage(getPage());
         for (int numOfQuestion = 1; numOfQuestion < numberOfQuestions; numOfQuestion++) {
             testTutorPage
                     .clickCorrectAnswerRadioButton()
@@ -135,11 +154,12 @@ public final class PreconditionPage extends BasePage {
                 .clickHomeMenu();
     }
 
+    @Step("Checking the number of questions on PerformancePage")
     public int checkNumberOfQuestions() {
-        int numberOfQuestions = new HomePage(getPage(), getPlaywright())
+        int numberOfQuestions = new HomePage(getPage())
                 .clickPerformanceMenu()
                 .getNumberOfQuestions();
-        new PerformancePage(getPage(), getPlaywright()).clickHomeMenu();
+        new PerformancePage(getPage()).clickHomeMenu();
 
         return numberOfQuestions;
     }
@@ -156,22 +176,22 @@ public final class PreconditionPage extends BasePage {
 //        }
 //        return false;
 //    }
-        HomePage homePage = new HomePage(getPage(), getPlaywright());
-        if (homePage.isListCheckBoxesNotEmpty()) {
-            homePage.clickRandomCheckBox();
-
-            return homePage.getListCheckedCheckBoxes().size() == 1;
-        }
+        HomePage homePage = new HomePage(getPage());
+//        if (homePage.isListCheckBoxesNotEmpty()) {
+//            homePage.clickRandomCheckBox();
+//
+//            return homePage.getListCheckedCheckBoxes().size() == 1;
+//        }
         return false;
     }
 
-    public boolean checkIfListCheckBoxesIsNotEmptyAndAllCheckBoxesAreChecked() {
-        HomePage homePage = new HomePage(getPage(), getPlaywright());
-
-        if (homePage.isListCheckBoxesNotEmpty()) {
-            homePage.checkAllCheckBoxes();
-            return homePage.areAllCheckBoxesChecked();
-        }
-        return false;
-    }
+//    public boolean checkIfListCheckBoxesIsNotEmptyAndAllCheckBoxesAreChecked() {
+//        HomePage homePage = new HomePage(getPage());
+//
+//        if (homePage.isListCheckBoxesNotEmpty()) {
+//            homePage.checkAllCheckBoxes();
+//            return homePage.areAllCheckBoxesChecked();
+//        }
+//        return false;
+//    }
 }

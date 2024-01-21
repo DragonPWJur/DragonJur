@@ -50,8 +50,6 @@ public class TestUtils {
         return getString(getInt(text) + number); 
     }
 
-
-
     public static String getRandomTextValue(Locator listValues) {
 
         return listValues.all().get(getRandomNumber(listValues)).innerText();

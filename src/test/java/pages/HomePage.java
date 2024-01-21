@@ -2,11 +2,12 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import utils.TestData;
+import utils.TestUtils;
 
 import java.util.List;
 
 public final class HomePage extends BaseSideMenu {
-
     private final Locator studyThisButton = button("Study This");
     private final Locator twoWeeksButton = exactButton("2 Weeks");
     private final Locator week1Header = exactText("Week 1");
@@ -18,6 +19,13 @@ public final class HomePage extends BaseSideMenu {
     private final List<Locator> allCheckboxes = allCheckboxes();
 
 //    private final int checkBoxNumber = TestUtils.getRandomInt(0, listCheckboxes.size());
+    private final List<Locator> listCheckboxes = allCheckboxes("label:has(input)");
+    private final Locator streaksModalWindow = locator("div[role='dialog']");
+    private final Locator weakestExamAreasHeader = dialog().locator("span");
+    private final Locator weakestExamAreasModal = dialog();
+    private final Locator weakestExamAreasMessage = dialog().getByText(TestData.STUDY_THIS_MODAL_MESSAGE);
+
+    private final int checkBoxNumber = TestUtils.getRandomInt(0, listCheckboxes.size());
 
     public HomePage(Page page) {
         super(page);
@@ -87,6 +95,7 @@ public final class HomePage extends BaseSideMenu {
     }
 
     public Locator getStreaksModalWindow() {
+
         return getDialog();
     }
 
@@ -101,8 +110,8 @@ public final class HomePage extends BaseSideMenu {
 //        return this;
 //    }
 
-    List<Locator> getAllCheckboxes() {
-    public  HomePage clickCheckBox(int index){
+
+    public  HomePage clickCheckBox(int index) {
         getNthCheckbox(index).click();
         getPage().waitForTimeout(1000);
 
@@ -126,10 +135,10 @@ public final class HomePage extends BaseSideMenu {
         return this;
     }
 
-    protected boolean isListCheckBoxesNotEmpty() {
-
-        return allCheckboxes;
-    }
+//    protected boolean isListCheckBoxesNotEmpty() {
+//
+//        return allCheckboxes;
+//    }
 
     protected boolean areAllCheckBoxesUnchecked() {
 
@@ -140,6 +149,7 @@ public final class HomePage extends BaseSideMenu {
 //
 //        return listCheckboxes.get(checkBoxNumber).isChecked();
 //    }
+
     protected boolean areAllCheckBoxesChecked() {
 
         return listCheckboxes.stream().allMatch(Locator::isChecked);
@@ -169,5 +179,22 @@ public final class HomePage extends BaseSideMenu {
             }
         }
         return this;
+    }
+
+    public Locator getWeakestExamAreasModal() {
+        return weakestExamAreasModal;
+    }
+
+    public HomePage clickStudyThisButton() {
+        studyThisButton.click();
+        return this;
+    }
+
+    public  Locator getWeakestExamAreasHeader() {
+        return weakestExamAreasHeader;
+    }
+
+    public  Locator getWeakestExamAreasMessage() {
+        return weakestExamAreasMessage;
     }
 }

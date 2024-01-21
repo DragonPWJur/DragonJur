@@ -5,8 +5,11 @@ import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 import utils.TestUtils;
 
+<<<<<<< HEAD
 import java.util.List;
 
+=======
+>>>>>>> 8952b8e84f53dbc1d24376ded00a911bdb48372e
 public class TestListPage extends BaseSideMenu {
 
     private final Locator domainsButton = text("Domains");
@@ -48,9 +51,13 @@ public class TestListPage extends BaseSideMenu {
     }
 
     @Step("Click 'Generate and Start' button")
-    public TestsPage clickGenerateAndStartButton() {
+    public TestTutorPage clickGenerateAndStartButton() {
         generateAndStartButton.click();
+<<<<<<< HEAD
         return new TestsPage(getPage());
+=======
+        return new TestTutorPage(getPage(), getPlaywright());
+>>>>>>> 8952b8e84f53dbc1d24376ded00a911bdb48372e
     }
 
     @Step("Click random checkbox")

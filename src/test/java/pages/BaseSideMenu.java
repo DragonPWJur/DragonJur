@@ -5,7 +5,6 @@ import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 
 abstract class BaseSideMenu extends BaseModal {
-
     private final Locator homeButton = exactButton("Home");
     private final Locator studyGuideButton = button("Study guide");
     private final Locator testsButton = exactButton("Tests");
@@ -18,49 +17,49 @@ abstract class BaseSideMenu extends BaseModal {
         super(page);
     }
 
-    @Step("Click side menu 'Home'")
+    @Step("Click side menu 'Home'.")
     public HomePage clickHomeMenu() {
         homeButton.click();
 
         return new HomePage(getPage());
     }
 
-    @Step("Click side menu 'Study Guide'")
+    @Step("Click side menu 'Study Guide'.")
     public StudyGuidePage clickStudyGuide() {
         studyGuideButton.click();
 
         return new StudyGuidePage(getPage());
     }
 
-    @Step("Click side menu 'Tests'")
+    @Step("Click side menu 'Tests'.")
     public TestListPage clickTestsMenu() {
         testsButton.click();
 
         return new TestListPage(getPage());
     }
 
-    @Step("Click side menu 'Flashcards'")
+    @Step("Click side menu 'Flashcards'.")
     public FlashcardPacksPage clickFlashcardsMenu() {
         flashcardsButton.click();
 
         return new FlashcardPacksPage(getPage());
     }
 
-    @Step("Click side menu 'Mnemonic Cards'")
+    @Step("Click side menu 'Mnemonic Cards'.")
     public MnemonicCardListPage clickMnemonicCardsMenu() {
         mnemonicCardsButton.click();
 
         return new MnemonicCardListPage(getPage());
     }
 
-    @Step("Click side menu 'Performance'")
+    @Step("Click side menu 'Performance'.")
     public PerformancePage clickPerformanceMenu() {
         performanceButton.click();
 
         return new PerformancePage(getPage());
     }
 
-    @Step("Click side menu 'Profile'")
+    @Step("Click side menu 'Profile'.")
     public ProfilePage clickProfileMenu() {
         profileButton.click();
 
