@@ -1,17 +1,14 @@
 package pages;
 
 import com.microsoft.playwright.Page;
-import io.qameta.allure.Step;
-import utils.TestUtils;
-import java.util.regex.Pattern;
 
-import static java.lang.Integer.parseInt;
-
-public class TestTutorPage extends BaseTestsPage<TestTutorPage> {
+public class TestTutorPage extends BaseFooter {
 
     public TestTutorPage(Page page) {
         super(page);
     }
+
+
 
 //    public Locator getRemoveFromMarkedButton() {
 //        return removeFromMarkedButton;

@@ -1,12 +1,10 @@
-package utils;
+package tests.helpers;
 
 import org.testng.annotations.DataProvider;
+import utils.runner.ProjectProperties;
 
-public class TestData {
-    public static final String SIGN_IN_END_POINT = "/sign-in";
-    public static final String AUTH_CUSTOMER_SIGN_IN_END_POINT = "/auth/customer/signIn";
-    public static final String RESET_COURSE_RESULTS_END_POINT = "/courses/results";
-
+public final class TestData {
+    //Side Menu
     public static final String HOME_END_POINT = "/home";
     public static final String STUDY_GUIDE_END_POINT = "/study-guide";
     public static final String TEST_LIST_END_POINT = "/test-list";
@@ -15,12 +13,14 @@ public class TestData {
     public static final String PERFORMANCE_END_POINT = "/performance";
     public static final String PROFILE_END_POINT = "/profile";
 
+    //Pages
     public static final String TEST_TUTOR_END_POINT = "/test-tutor";
     public static final String TEST_TIMED_END_POINT = "/test-timed";
     public static final String MNEMONIC_CARDS_END_POINT = "/mnemonic-cards/";
     public static final String MNEMONIC_CARD_PRACTICE_END_POINT = "/mnemonic-card-practice/";
     public static final String FLASHCARDS_PACK_ID_END_POINT = "/flashcards?packId";
 
+    //Data
     public static final String ONE_QUESTION = "1";
     public static final String FLASHCARDS = "Flashcards";
     public static final String GOT_IT = "Got it";

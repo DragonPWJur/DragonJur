@@ -3,7 +3,7 @@
 //
 //import org.testng.annotations.Test;
 //import pages.HomePage;
-//import utils.ProjectProperties;
+//import utils.runner.ProjectProperties;
 //
 //import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 //
@@ -31,10 +31,6 @@
 //}
 
 package tests;
-
-import org.testng.annotations.Test;
-import pages.HomePage;
-import utils.ProjectProperties;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 

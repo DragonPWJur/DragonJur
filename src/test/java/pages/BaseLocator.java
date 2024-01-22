@@ -7,7 +7,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 import java.util.List;
 
-abstract class BaseLocator extends BasePage {
+abstract class BaseLocator extends BaseWait {
 
     protected BaseLocator(Page page) {
         super(page);

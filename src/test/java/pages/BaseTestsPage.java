@@ -2,11 +2,10 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import utils.TestUtils;
 
 import java.util.List;
 
-abstract class BaseTestsPage<Self extends BaseTestsPage<Self>> extends BaseTestsFooter {
+abstract class BaseTestsPage extends BaseFooter {
     private final Locator testQuestion = locator("form span");
     private final Locator questionMark = exactText("?");
     private final Locator answerRadioButton = radio();
@@ -65,17 +64,17 @@ abstract class BaseTestsPage<Self extends BaseTestsPage<Self>> extends BaseTests
         return questionMark;
     }
 
-    public Self clickCorrectAnswerRadioButton() {
-        correctAnswer.click();
-
-        return (Self) this;
-    }
-
-    public Self clickConfirmButton() {
-        confirmButton.click();
-
-        return (Self) this;
-    }
+//    public Self clickCorrectAnswerRadioButton() {
+//        correctAnswer.click();
+//
+//        return (Self) this;
+//    }
+//
+//    public Self clickConfirmButton() {
+//        confirmButton.click();
+//
+//        return (Self) this;
+//    }
 
     public Locator getIncorrectAnswer() {
 
@@ -86,16 +85,16 @@ abstract class BaseTestsPage<Self extends BaseTestsPage<Self>> extends BaseTests
 
         nextQuestionButton.click();
     }
+//
+//    public Self clickFinishTestButton() {
+//        finishTestButton.click();
+//
+//        return (Self) this;
+//    }
 
-    public Self clickFinishTestButton() {
-        finishTestButton.click();
-
-        return (Self) this;
-    }
-
-    public Self clickRandomIncorrectAnswer() {
-        TestUtils.clickRandomElement(getIncorrectAnswer());
-
-        return (Self) this;
-    }
+//    public Self clickRandomIncorrectAnswer() {
+//        TestUtils.clickRandomElement(getIncorrectAnswer());
+//
+//        return (Self) this;
+//    }
 }

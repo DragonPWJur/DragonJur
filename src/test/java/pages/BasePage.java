@@ -12,8 +12,4 @@ abstract class BasePage {
     Page getPage() {
         return page;
     }
-
-    protected void waitWithTimeout(int timeout) {
-        getPage().waitForTimeout(timeout);
-    }
 }

@@ -2,10 +2,9 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.BoundingBox;
-import utils.TestData;
-import utils.TestUtils;
+import tests.helpers.TestData;
+import tests.helpers.TestUtils;
 
 public class StudyGuidePage extends BaseSideMenu {
 //<<<<<<< HEAD
@@ -74,11 +73,11 @@ public class StudyGuidePage extends BaseSideMenu {
         return getWord().textContent();
     }
 
-    public StudyGuidePage inputRandomStringInSearchField() {
-        searchField.fill(TestUtils.geteRandomString(10));
-
-        return this;
-    }
+//    public StudyGuidePage inputRandomStringInSearchField() {
+//        searchField.fill(TestUtils.geteRandomString(10));
+//
+//        return this;
+//    }
 
     public Locator getMultipleWords() {
         Locator list = getPage().getByText(TestData.LONG_BONES);

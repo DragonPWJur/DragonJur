@@ -1,10 +1,7 @@
-package utils;
+package utils.reports;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import tests.BaseTest;
-
-import java.lang.invoke.TypeDescriptor;
 
 public final class LoggerUtils {
     private static final String ERROR = "❌\n";
@@ -12,11 +9,9 @@ public final class LoggerUtils {
     private static final String WARNING = "⚠️";
     private static final String EXCEPTION = "❗";
 
-    private static final Logger logger = LogManager.getLogger(BaseTest.class.getSimpleName());
+    private static final Logger logger = LogManager.getLogger("BaseTest");
 
-    public static void log(String message) {
-        logger.info(message);
-    }
+    public static void logInfo(String message) { logger.info(message); }
 
     public static void logError(String message) {
         logger.error(ERROR + message);

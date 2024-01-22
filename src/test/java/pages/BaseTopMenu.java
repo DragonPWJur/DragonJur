@@ -3,18 +3,14 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-abstract class BaseTopMenu<Self extends BaseTopMenu<Self>>  extends BaseModal {
-
+abstract class BaseTopMenu extends BaseModal {
     private final Locator yesCardsAmountText = locator("span").getByText("Yes");
     private final Locator endButton = exactButton("End");
+    private final Locator flashcardsButton = button( "Flashcards /");
+    private final Locator packName = locator("div:has(svg) + span");
 
     protected BaseTopMenu(Page page) {
         super(page);
-    }
-
-    public Locator packNameOnTopMenu(String name) {
-
-        return text(name);
     }
 
     public Locator cardsTotalAmount(String total) {
@@ -23,14 +19,25 @@ abstract class BaseTopMenu<Self extends BaseTopMenu<Self>>  extends BaseModal {
     }
 
     public String getYesCardsAmount() {
-        String[] text = yesCardsAmountText.innerText().split("\n");
+        String[] textToArray = yesCardsAmountText.innerText().split(" ");
 
-        return text[0];
+        return textToArray[0];
     }
 
-    public Self clickEndButton() {
+    public TestTutorPage clickEndButton() {
         endButton.click();
 
-        return (Self) this;
+        return new TestTutorPage(getPage());
+    }
+
+    public Locator getPackName() {
+
+        return packName;
+    }
+
+    public FlashcardPacksPage clickFlashcardsTopMenu() {
+        flashcardsButton.click();
+
+        return new FlashcardPacksPage(getPage());
     }
 }

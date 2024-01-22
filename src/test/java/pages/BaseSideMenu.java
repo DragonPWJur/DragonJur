@@ -18,51 +18,51 @@ abstract class BaseSideMenu extends BaseModal {
     }
 
     @Step("Click side menu 'Home'.")
-    public HomePage clickHomeMenu() {
+    public void clickHomeMenu() {
         homeButton.click();
 
-        return new HomePage(getPage());
+        isOnHomePage();
     }
 
     @Step("Click side menu 'Study Guide'.")
     public StudyGuidePage clickStudyGuide() {
         studyGuideButton.click();
 
-        return new StudyGuidePage(getPage());
+        return isOnStudyGuidePage();
     }
 
     @Step("Click side menu 'Tests'.")
     public TestListPage clickTestsMenu() {
         testsButton.click();
 
-        return new TestListPage(getPage());
+        return isOnTestListPage();
     }
 
     @Step("Click side menu 'Flashcards'.")
     public FlashcardPacksPage clickFlashcardsMenu() {
         flashcardsButton.click();
 
-        return new FlashcardPacksPage(getPage());
+        return isOnFlashcardsPackPage();
     }
 
     @Step("Click side menu 'Mnemonic Cards'.")
     public MnemonicCardListPage clickMnemonicCardsMenu() {
         mnemonicCardsButton.click();
 
-        return new MnemonicCardListPage(getPage());
+        return isOnMnemonicCardListPage();
     }
 
     @Step("Click side menu 'Performance'.")
     public PerformancePage clickPerformanceMenu() {
         performanceButton.click();
 
-        return new PerformancePage(getPage());
+        return isOnPerformancePage();
     }
 
     @Step("Click side menu 'Profile'.")
     public ProfilePage clickProfileMenu() {
         profileButton.click();
 
-        return new ProfilePage(getPage());
+        return isOnProfilePage();
     }
 }

@@ -4,8 +4,8 @@
 //import org.testng.annotations.Test;
 //import pages.HomePage;
 //import pages.MnemonicCardPracticePage;
-//import utils.ProjectProperties;
-//import utils.TestData;
+//import utils.runner.ProjectProperties;
+//import tests.helpers.TestData;
 //
 //import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 //

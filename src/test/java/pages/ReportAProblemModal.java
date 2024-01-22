@@ -2,7 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import utils.TestUtils;
+import tests.helpers.TestUtils;
 
 public class ReportAProblemModal extends BaseModal {
     private final Locator describeTheProblemTextarea = textbox();
@@ -13,12 +13,12 @@ public class ReportAProblemModal extends BaseModal {
         super(page);
     }
 
-    public ReportAProblemModal inputText() {
-        if (describeTheProblemTextarea.isVisible()) {
-            describeTheProblemTextarea.fill(TestUtils.geteRandomString(10));
-        }
-        return this;
-    }
+//    public ReportAProblemModal inputText() {
+//        if (describeTheProblemTextarea.isVisible()) {
+//            describeTheProblemTextarea.fill(TestUtils.geteRandomString(10));
+//        }
+//        return this;
+//    }
 
     public ReportAProblemModal clickSendButton() {
         sendButton.click();
@@ -26,14 +26,14 @@ public class ReportAProblemModal extends BaseModal {
         return this;
     }
 
-    public Locator getReportSentSuccessfullyMessage() {
-        getCloseButton().waitFor();
-        if (getCloseButton().isVisible()) {
-            return reportSentSuccessfullyMessage;
-        }
-
-        return null;
-    }
+//    public Locator getReportSentSuccessfullyMessage() {
+//        getCloseButton().waitFor();
+//        if (getCloseButton().isVisible()) {
+//            return reportSentSuccessfullyMessage;
+//        }
+//
+//        return null;
+//    }
 
     public Locator getReportAProblemModal() {
         return dialog();

@@ -4,9 +4,10 @@ import org.testng.Assert;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import utils.GmailUtils;
+import utils.runner.GmailUtils;
+import utils.reports.ExceptionListener;
 
-@Listeners(utils.ExceptionListener.class)
+@Listeners(ExceptionListener.class)
 public final class GmailTest {
 
     @Ignore

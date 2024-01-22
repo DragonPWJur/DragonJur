@@ -5,7 +5,7 @@ import com.microsoft.playwright.Page;
 
 import java.util.List;
 
-public final class TestTimedPage extends BaseTestsPage<TestTimedPage> {
+public final class TestTimedPage extends BaseFooter {
 
     private final List<Locator> radioButtons = allRadioButtons();
 

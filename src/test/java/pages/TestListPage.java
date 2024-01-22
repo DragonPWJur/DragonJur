@@ -3,11 +3,11 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
-import utils.TestUtils;
+import tests.helpers.TestUtils;
 
 import java.util.List;
 
-public class TestListPage extends BaseSideMenu {
+public class TestListPage extends BaseSideMenu implements IRandom {
 
     private final Locator domainsButton = text("Domains");
     private final Locator tutorButton = button("Tutor");
@@ -32,8 +32,32 @@ public class TestListPage extends BaseSideMenu {
         if (!domainsButton.isChecked()) {
             domainsButton.click();
         }
+
         return this;
     }
+
+    @Step("Click random checkbox")
+    public TestListPage clickRandomCheckbox() {
+        getRandomValue(allCheckboxes).click();
+
+        return this;
+    }
+
+    @Step("Set '{number}' as number of questions")
+    public TestListPage inputNumberOfQuestions(String number) {
+        numberOfQuestionsInputField.fill(number);
+
+        return this;
+    }
+
+    @Step("Click 'Generate and Start' button")
+    public TestTutorPage clickGenerateAndStartButton() {
+        generateAndStartButton.click();
+
+        return new TestTutorPage(getPage());
+    }
+
+
 //
 //    @Step("Click 'Tutor' button")
 //    public TestListPage clickTutorButton() {
@@ -41,27 +65,11 @@ public class TestListPage extends BaseSideMenu {
 //        return this;
 //    }
 //
-    @Step("Set '{number}' as number of questions")
-    public TestListPage inputNumberOfQuestions(String number) {
-        numberOfQuestionsInputField.fill(number);
-        return this;
-    }
 
-//    @Step("Click 'Generate and Start' button")
-//    public TestTutorPage clickGenerateAndStartButton() {
-//        generateAndStartButton.click();
-//<<<<<<< HEAD
-//        return new TestsPage(getPage());
-//=======
-//        return new TestTutorPage(getPage(), getPlaywright());
-//>>>>>>> 8952b8e84f53dbc1d24376ded00a911bdb48372e
-//    }
 
-    @Step("Click random checkbox")
-    public TestListPage clickRandomCheckbox() {
-        TestUtils.getRandomValue(allCheckboxes).click();
-        return this;
-    }
+
+
+//
 //
 //    @Step("Select a checkbox randomly and retrieve its name")
 //    public String clickRandomCheckboxAndReturnItsName() {
@@ -73,6 +81,7 @@ public class TestListPage extends BaseSideMenu {
 //
     public TestListPage cancelDialogIfVisible() {
         cancelDialog();
+
         return this;
     }
 

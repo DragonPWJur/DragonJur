@@ -5,8 +5,8 @@
 //import pages.HomePage;
 //import pages.MnemonicCardListPage;
 //import pages.MnemonicCardsPage;
-//import utils.ProjectProperties;
-//import utils.TestData;
+//import utils.runner.ProjectProperties;
+//import tests.helpers.TestData;
 //
 //import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 //

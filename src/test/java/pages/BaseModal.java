@@ -12,14 +12,13 @@ abstract class BaseModal extends BaseLocator{
     private final Locator yesButton = exactButton("Yes");
     private final Locator skipButton = exactButton("Skip");
     private final Locator backButton = exactButton("Back");
-
-    public Locator getCloseButton() {
-        return closeButton;
-    }
-
     private final Locator closeButton = button("Close");
     private final Locator okButton = exactButton("Ok");
     private final Locator nextButton = exactButton("Next");
+    private final Locator weakestExamAreasHeader = dialog.locator("span");
+    private final Locator weakestExamAreasMessage = dialog.getByText(
+            "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03"
+    );
 
     protected BaseModal(Page page) {
         super(page);
@@ -40,9 +39,7 @@ abstract class BaseModal extends BaseLocator{
 
     @Step("Click 'Got It' button on dialog window if visible.")
     public FlashcardsPackIDPage clickGotItButton() {
-        if(dialog.isVisible() && gotItButton.isVisible())  {
-            gotItButton.click();
-        }
+        gotItButton.click();
 
         return new FlashcardsPackIDPage(getPage());
     }

@@ -11,10 +11,10 @@
 //import pages.TestListPage;
 //import pages.TestTimedPage;
 //import pages.TestsPage;
-//import utils.TestData;
+//import tests.helpers.TestData;
 //
 //import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-//import static utils.ProjectProperties.BASE_URL;
+//import static utils.runner.ProjectProperties.BASE_URL;
 //
 //public class TestListTest extends BaseTest {
 //
