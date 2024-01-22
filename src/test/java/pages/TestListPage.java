@@ -6,7 +6,7 @@ import com.microsoft.playwright.Playwright;
 import io.qameta.allure.Step;
 import utils.TestUtils;
 
-public class TestListPage extends SideMenuPage {
+public class TestListPage extends BaseSideMenu {
 
     private final Locator domainsButton = text("Domains");
     private final Locator tutorButton = button("Tutor");
@@ -19,6 +19,8 @@ public class TestListPage extends SideMenuPage {
     private final Locator timedButton = exactButton("Timed");
     private final Locator startTestButton = exactButton("Start test");
     private final Locator startButton = exactButton("Start");
+    private final Locator automationTestingForStatsText = text("Automation testing for stats");
+    private final Locator historyAndCivilizationForStatsText = text("History and Civilization for Stats");
 
     public TestListPage(Page page, Playwright playwright) {
         super(page, playwright);
@@ -49,9 +51,9 @@ public class TestListPage extends SideMenuPage {
     }
 
     @Step("Click 'Generate and Start' button")
-    public TestsPage clickGenerateAndStartButton() {
+    public TestTutorPage clickGenerateAndStartButton() {
         generateAndStartButton.click();
-        return new TestsPage(getPage(), getPlaywright());
+        return new TestTutorPage(getPage(), getPlaywright());
     }
 
     @Step("Click random checkbox")
@@ -122,5 +124,16 @@ public class TestListPage extends SideMenuPage {
     public Locator checkIcon(String text) {
         return listCheckboxes.getByText(text).locator("svg");
     }
-}
 
+    public TestListPage clickAutomationTestingForStatsCheckBox() {
+        automationTestingForStatsText.click();
+
+        return this;
+    }
+
+    public TestListPage clickHistoryAndCivilizationForStatsCheckBox() {
+        historyAndCivilizationForStatsText.click();
+
+        return this;
+    }
+}

@@ -5,7 +5,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import utils.TestUtils;
 
-public class FlashcardPacksPage extends SideMenuPage {
+public class FlashcardPacksPage extends BaseSideMenu {
 
     private final Locator markedForRecheckingButton = button("Marked for re-checking").locator("div:nth-of-type(2)");
     private final Locator listOfFlashcardsPacksToLearn = locator("//div[contains(text(),'Learned')]");

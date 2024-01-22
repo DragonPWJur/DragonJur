@@ -3,8 +3,9 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import io.qameta.allure.Step;
 
-abstract class SideMenuPage extends BaseLocator{
+abstract class BaseSideMenu extends BaseLocator{
 
     private final Locator homeButton = exactButton("Home");
     private final Locator flashcardsButton = exactButton("Flashcards");
@@ -12,8 +13,9 @@ abstract class SideMenuPage extends BaseLocator{
     private final Locator profileButton = exactButton("Profile");
     private final Locator mnemonicCardsButton = exactButton("Mnemonic cards");
     private final Locator studyGuideButton = button("Study guide");
+    private final Locator performanceButton = exactButton ("Performance");
 
-    protected SideMenuPage(Page page, Playwright playwright) {
+    protected BaseSideMenu(Page page, Playwright playwright) {
         super(page, playwright);
     }
 
@@ -48,5 +50,12 @@ abstract class SideMenuPage extends BaseLocator{
         studyGuideButton.click();
 
         return new StudyGuidePage(getPage(), getPlaywright());
+    }
+
+    @Step("Click the “Performance” side menu")
+    public PerformancePage clickPerformanceMenu() {
+
+        performanceButton.click();
+        return new PerformancePage(getPage(), getPlaywright());
     }
 }

@@ -1,7 +1,5 @@
 package utils;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-
 public class TestData {
 
     public static final String HOME_END_POINT = "/home";
@@ -13,6 +11,7 @@ public class TestData {
     public static final String FLASHCARDS_PACK_ID_END_POINT = "/flashcards?packId";
     public static final String AUTH_CUSTOMER_SIGN_IN_END_POINT = "/auth/customer/signIn";
     public static final String RESET_COURSE_RESULTS_END_POINT = "/courses/results";
+    public static final String PERFORMANCE_END_POINT = "/performance";
 
     public static final String ONE = "1";
     public static final String FLASHCARDS = "Flashcards";
@@ -29,5 +28,8 @@ public class TestData {
     public static final String PRACTICE = "Practice";
     public static final String NOTHING_FOUND_MESSAGE = "Nothing found. Try to use other key words";
     public static final String CORRECT_ANSWER_POINTS = "38";
-
+    public static final String PROJECTIONS = "Projections";
+    public static final String LONG_BONES = "Long bones";
+    public static final String STUDY_THIS_MODAL_HEADER = "Weakest Exam Areas";
+    public static final String STUDY_THIS_MODAL_MESSAGE = "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03";
 }

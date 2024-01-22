@@ -3,11 +3,11 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import com.microsoft.playwright.options.BoundingBox;
+import utils.TestData;
 import utils.TestUtils;
 
-public class StudyGuidePage extends SideMenuPage {
-    private final Locator wordList = waitForListLoadedGetByText("Projections");
-    private final Locator noteButton = button(getWordText());
+public class StudyGuidePage extends BaseSideMenu {
     private final Locator noteTextAria = locator("//textarea");
     private final Locator saveButton = button("Save");
     private final Locator highlightsAndNotesButton = button("Highlights and notes");
@@ -19,16 +19,18 @@ public class StudyGuidePage extends SideMenuPage {
         super(page, playwright);
     }
 
-    public Locator getNoteButton() {
-        return noteButton;
+    public Locator getNoteButtonForWord() {
+        return button(getWordText());
     }
 
     public Locator getNoteTextAria() {
         return noteTextAria;
     }
 
-    public Locator getWordFromList() {
-        return wordList.nth(1);
+    public Locator getWord() {
+        Locator list = getPage().getByText(TestData.PROJECTIONS);
+        list.first().waitFor();
+        return list.nth(1);
     }
 
     public Locator getNothingFoundMessage() {
@@ -51,9 +53,8 @@ public class StudyGuidePage extends SideMenuPage {
         return this;
     }
 
-
-    public StudyGuidePage doubleClickWord() {
-        wordList.nth(1).dblclick();
+    public StudyGuidePage doubleClickOnWord() {
+        getWord().dblclick();
 
         return this;
     }
@@ -65,11 +66,29 @@ public class StudyGuidePage extends SideMenuPage {
     }
 
     public String getWordText() {
-        return wordList.nth(1).textContent();
+        return getWord().textContent();
     }
 
     public StudyGuidePage inputRandomStringInSearchField() {
         searchField.fill(TestUtils.geteRandomString(10));
+
+        return this;
+    }
+
+    public Locator getMultipleWords() {
+        Locator list = getPage().getByText(TestData.LONG_BONES);
+        list.first().waitFor();
+        return list.nth(1);
+    }
+
+    public StudyGuidePage highlightWords() {
+        getMultipleWords().hover();
+        BoundingBox box = getMultipleWords().boundingBox();
+
+        getPage().mouse().move(box.x, box.y + 10);
+        getPage().mouse().down();
+        getPage().mouse().move(box.x + box.width, box.y + 10);
+        getPage().mouse().up();
 
         return this;
     }

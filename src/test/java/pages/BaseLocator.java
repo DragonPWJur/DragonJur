@@ -77,6 +77,11 @@ abstract class BaseLocator extends BasePage {
         return getPage().getByRole(AriaRole.DIALOG);
     }
 
+    protected Locator buttonInBanner(String text) {
+        return getPage().getByRole(AriaRole.BANNER)
+                .getByRole(AriaRole.BUTTON, new Locator.GetByRoleOptions().setName(text));
+    }
+
     protected Locator locator(String css) {
 
         return getPage().locator(css);
@@ -107,13 +112,6 @@ abstract class BaseLocator extends BasePage {
             getPage().onDialog(Dialog::dismiss);
             button("Cancel").click();
         }
-    }
-
-    protected Locator waitForListLoadedGetByText(String string) {
-        Locator list = getPage().getByText(string);
-        list.last().waitFor();
-
-        return list;
     }
 
     protected Locator waitForListOfElementsLoaded(Locator locator) {

@@ -2,6 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import io.qameta.allure.Step;
 
 public class PreconditionPage extends BasePage {
 
@@ -14,7 +15,7 @@ public class PreconditionPage extends BasePage {
                 .clickFlashcardsMenu()
                 .getNumberMarkedForRechecking();
 
-        new TestsPage(getPage(), getPlaywright()).clickHomeMenu();
+        new FlashcardPacksPage(getPage(), getPlaywright()).clickHomeMenu();
         return numberMarkedForRechecking;
     }
 
@@ -52,7 +53,7 @@ public class PreconditionPage extends BasePage {
                 .clickHomeMenu()
                 .clickFlashcardsMenu()
                 .clickNthFlashcardPack(index)
-                .clickGotButtonIfVisible()
+                .clickGotItButtonIfVisible()
                 .clickFlashcardsBackButton()
                 .clickYesButton()
                 .clickHomeMenu();
@@ -65,6 +66,73 @@ public class PreconditionPage extends BasePage {
             return homePage.areAllCheckBoxesUnchecked();
         }
         return false;
+    }
+
+    @Step("Start test for the stats")
+    public void startTestDomainForStats(String nameTest, String numberOfQuestions) {
+        TestListPage testListPage = new HomePage(getPage(), getPlaywright())
+                .clickTestsMenu()
+                .cancelDialogIfVisible()
+                .clickDomainsButton();
+        if(nameTest.equals("Automation testing for stats")) {
+            testListPage
+                    .clickAutomationTestingForStatsCheckBox()
+                    .inputNumberOfQuestions(numberOfQuestions)
+                    .clickGenerateAndStartButton2();
+        } else if(nameTest.equals("History and Civilization for Stats")) {
+            testListPage
+                    .clickHistoryAndCivilizationForStatsCheckBox()
+                    .inputNumberOfQuestions(numberOfQuestions)
+                    .clickGenerateAndStartButton2();
+        }
+    }
+
+    @Step("Pass the test with the correct answers of {numberOfQuestions} questions")
+    public void passTestAllAnswersCorrect(int numberOfQuestions) {
+        TestTutorPage testTutorPage = new TestTutorPage(getPage(), getPlaywright());
+        for (int numOfQuestion = 1; numOfQuestion < numberOfQuestions; numOfQuestion++) {
+            testTutorPage
+                    .clickCorrectAnswerRadioButton()
+                    .clickConfirmButton()
+                    .clickNextQuestionButton();
+        }
+
+        testTutorPage
+                .clickCorrectAnswerRadioButton()
+                .clickConfirmButton()
+                .clickFinishTestButton()
+                .clickSkipButton()
+                .clickCloseTheTestButton()
+                .clickHomeMenu();
+    }
+
+    @Step("Pass the test with one wrong answer of {numberOfQuestions} questions\"")
+    public void passTestOneAnswersIncorrect(int numberOfQuestions) {
+        TestTutorPage testTutorPage = new TestTutorPage(getPage(), getPlaywright());
+        for (int numOfQuestion = 1; numOfQuestion < numberOfQuestions; numOfQuestion++) {
+            testTutorPage
+                    .clickCorrectAnswerRadioButton()
+                    .clickConfirmButton()
+                    .clickNextQuestionButton();
+        }
+
+        testTutorPage
+                .clickRandomIncorrectAnswer()
+                .clickConfirmButton()
+                .clickFinishTestButton()
+                .clickSkipButton()
+                .clickCloseTheTestButton()
+                .clickHomeMenu();
+    }
+
+    @Step("Checking the number of questions on PerformancePage")
+    public int checkNumberOfQuestions() {
+        int numberOfQuestions = new HomePage(getPage(), getPlaywright())
+                .clickPerformanceMenu()
+                .getNumberOfQuestions();
+        new PerformancePage(getPage(), getPlaywright()).clickHomeMenu();
+
+        return numberOfQuestions;
     }
 
     public boolean checkIfListCheckBoxesIsNotEmptyAndOneIsChecked() {
