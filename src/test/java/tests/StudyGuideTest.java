@@ -1,5 +1,6 @@
 package tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.StudyGuidePage;
@@ -51,5 +52,23 @@ public class StudyGuideTest extends BaseTest {
                 .not().hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_0_0_0_0);
         assertThat(studyGuidePage.getMultipleWords())
                 .hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_62_48_179_0_2);
+    }
+
+    @Test
+    public void testTextContentChanges() {
+        StudyGuidePage studyGuidePage = new HomePage(getPage(), getPlaywright())
+                .clickStudyGuide();
+
+        Assert.assertFalse(studyGuidePage.getUnit1Text().contains(TestData.UNIT_1_CONTENT_TEST), "Text expected doesnt contain a word 'test' but it is");
+
+        studyGuidePage.changeChapter1Unit1NameViaAPI(TestData.UNIT_1_CONTENT_TEST);
+
+        studyGuidePage
+                .clickHomeMenu()
+                .clickStudyGuide();
+
+        Assert.assertTrue(studyGuidePage.getUnit1Text().contains(TestData.UNIT_1_CONTENT_TEST), "Text expected contain a word 'test' but its not");
+
+        studyGuidePage.changeChapter1Unit1NameViaAPI(TestData.UNIT_1_CONTENT);
     }
 }
