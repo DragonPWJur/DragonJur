@@ -1,16 +1,13 @@
 package pages;
 
-import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.BoundingBox;
-import utils.APIServises;
+import utils.APIUtils;
 import utils.TestData;
 import utils.TestUtils;
-import utils.api.obj.Chapter;
-import utils.api.obj.GuideTable;
-import utils.api.obj.Unit;
+import utils.api.entity.GuideTable;
 
 public class StudyGuidePage extends BaseSideMenu {
     private final Locator noteTextAria = locator("//textarea");
@@ -101,45 +98,31 @@ public class StudyGuidePage extends BaseSideMenu {
         return this;
     }
 
-    public void restoreChapter1Unit1Text() {
-        changeChapter1Unit1TextViaAPI(TestData.WORD_TEST, false);
+    public void restoreChapter1Unit1Text(String word) {
+        APIUtils.changeChapter1Unit1TextViaAPI(word, false, getPlaywright());
     }
 
-    public void changeChapter1Unit1TextViaAPI(String testText, boolean isAdd) {
-        GuideTable guideTable = APIServises.getStudyGuideTable(getPlaywright());
-        Chapter chapter1 = guideTable.getChapters().get(0);
-        chapter1 = APIServises.getUnitByGuideIdAndChapterId(getPlaywright(), guideTable.getId(), chapter1.getId());
-        Unit unit1 = chapter1.getUnits().get(0);
-
-        String text = unit1.getContent().getBlocks().get(0).getData().getText();
-        if (isAdd) {
-            text = testText + text;
-        } else {
-            text = text.substring(text.indexOf(testText) + testText.length());
-        }
-
-        unit1.getContent().getBlocks().get(0).getData().setText(text);
-
-        APIServises.editUnitByGuideIdAndChapterId(getPlaywright(), unit1);
+    public void changeChapter1Unit1TextViaAPI(String word) {
+        APIUtils.changeChapter1Unit1TextViaAPI(word, true, getPlaywright());
     }
 
-    public StudyGuidePage interceptAPIStudyGuideTable() {
-        getPage().route("**/table-of-content", route -> {
-            APIResponse response = route.fetch();
-            setGuideTable(APIServises.getStudyGuideTable(response));
-            route.resume();
-        });
-        return this;
-    }
-
-    public void setGuideTable(GuideTable guideTablePage) {
-        this.guideTablePage = guideTablePage;
-    }
-
-    public GuideTable getGuideTable() {
-
-        return guideTablePage;
-    }
+//    public StudyGuidePage interceptAPIStudyGuideTable() {
+//        getPage().route("**/table-of-content", route -> {
+//            APIResponse response = route.fetch();
+//            setGuideTable(APIServises.getStudyGuideTable(response));
+//            route.resume();
+//        });
+//        return this;
+//    }
+//
+//    public void setGuideTable(GuideTable guideTablePage) {
+//        this.guideTablePage = guideTablePage;
+//    }
+//
+//    public GuideTable getGuideTable() {
+//
+//        return guideTablePage;
+//    }
 
     public String getUnit1Text() {
 

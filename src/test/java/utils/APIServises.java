@@ -6,15 +6,13 @@ import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.RequestOptions;
-import utils.api.obj.*;
+import utils.api.entity.*;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static org.testng.AssertJUnit.assertEquals;
 import static utils.LoginUtils.getUserToken;
 
 public class APIServises {
@@ -36,6 +34,7 @@ public class APIServises {
 
         APIResponse apiResponse = requestContext.post(ProjectProperties.API_BASE_URL + "/auth/admin/signIn",
                 RequestOptions.create().setData(data));
+        checkStatus(apiResponse);
 
         Admin admin = (Admin) getObjectFromResponseBody(apiResponse, Admin.class);
         return admin.getToken();
@@ -48,14 +47,7 @@ public class APIServises {
         APIResponse apiResponse = requestContext.get(ProjectProperties.API_BASE_URL + endPoint,
                 RequestOptions.create()
                         .setHeader("Authorization", "Bearer " + getUserToken()));
-
-        if (apiResponse.status() < 200 || apiResponse.status() >= 300) {
-            try {
-                throw new RuntimeException("API request failed with response status " + apiResponse.status() + " with body: " + apiResponse.text());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        checkStatus(apiResponse);
 
         return apiResponse;
     }
@@ -97,11 +89,11 @@ public class APIServises {
         return guideTablee;
     }
 
-    public static GuideTable getStudyGuideTable(APIResponse response) {
-
-        GuideTable guideTablee = (GuideTable) getObjectFromResponseBody(response, GuideTable.class);
-        return guideTablee;
-    }
+//    public static GuideTable getStudyGuideTable(APIResponse response) {
+//
+//        GuideTable guideTablee = (GuideTable) getObjectFromResponseBody(response, GuideTable.class);
+//        return guideTablee;
+//    }
 
 
     public static Chapter getUnitByGuideIdAndChapterId(Playwright playwright, String guideId, String chapterid) {
@@ -129,10 +121,21 @@ public class APIServises {
         content.setBlocks(List.of(block));
         sendUnit.setContent(unit.getContent());
 
-        requestContext.patch(ProjectProperties.API_BASE_URL + "/admin/guides/units/" + unit.getId(),
+        APIResponse apiResponse = requestContext.patch(ProjectProperties.API_BASE_URL + "/admin/guides/units/" + unit.getId(),
                 RequestOptions.create()
                         .setHeader("Authorization", "Bearer " + getAdminToken(playwright))
                         .setData(sendUnit));
+        checkStatus(apiResponse);
+    }
+
+    private static void checkStatus(APIResponse apiResponse){
+        if (apiResponse.status() < 200 || apiResponse.status() >= 300) {
+            try {
+                throw new RuntimeException("API request failed with response status " + apiResponse.status() + " with body: " + apiResponse.text());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

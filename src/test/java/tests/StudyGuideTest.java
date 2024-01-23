@@ -58,13 +58,13 @@ public class StudyGuideTest extends BaseTest {
     @Test
     public void testTextContentChanges() {
         StudyGuidePage studyGuidePage = new HomePage(getPage(), getPlaywright())
-                .clickStudyGuide()
-                .interceptAPIStudyGuideTable();
+                .clickStudyGuide();
+                //.interceptAPIStudyGuideTable();
 
         Assert.assertFalse(studyGuidePage.getUnit1Text().contains(TestData.WORD_TEST),
                 "Expected text to contain '" + TestData.WORD_TEST + "' but it is: " + studyGuidePage.getUnit1Text());
 
-        studyGuidePage.changeChapter1Unit1TextViaAPI(TestData.WORD_TEST, true);
+        studyGuidePage.changeChapter1Unit1TextViaAPI(TestData.WORD_TEST);
 
         studyGuidePage
                 .reload()
@@ -73,6 +73,6 @@ public class StudyGuideTest extends BaseTest {
         Assert.assertTrue(studyGuidePage.getUnit1Text().contains(TestData.WORD_TEST),
                 "Expected text doesn't contain '" + TestData.WORD_TEST + "' but it is: " + studyGuidePage.getUnit1Text());
 
-        studyGuidePage.restoreChapter1Unit1Text();
+        studyGuidePage.restoreChapter1Unit1Text(TestData.WORD_TEST);
     }
 }
