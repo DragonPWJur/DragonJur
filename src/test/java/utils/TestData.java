@@ -32,6 +32,5 @@ public class TestData {
     public static final String LONG_BONES = "Long bones";
     public static final String STUDY_THIS_MODAL_HEADER = "Weakest Exam Areas";
     public static final String STUDY_THIS_MODAL_MESSAGE = "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03";
-    public static final String UNIT_1_CONTENT_TEST = "Unit 1. Introduction to the Skeletal System test";
-    public static final String UNIT_1_CONTENT = "Unit 1. Introduction to the Skeletal System";
+    public static final String WORD_TEST = "TEST";
 }

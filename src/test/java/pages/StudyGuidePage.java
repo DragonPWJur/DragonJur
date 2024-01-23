@@ -1,5 +1,6 @@
 package pages;
 
+import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
@@ -18,10 +19,12 @@ public class StudyGuidePage extends BaseSideMenu {
     private final Locator searchField = placeholder("Search");
     private final Locator nothingFoundMessage = text("Nothing found. Try to use other key words");
     private final Locator searchResultField = locator("div:has(input[placeholder='Search']) + div>div");
-    private final Locator unit1 = locator("div.ce-block__content font").first();
+    private final Locator unit1Text = locator("#body .ce-block__content").first();
+    private GuideTable guideTablePage;
 
     public StudyGuidePage(Page page, Playwright playwright) {
         super(page, playwright);
+
     }
 
     public Locator getNoteButtonForWord() {
@@ -98,17 +101,54 @@ public class StudyGuidePage extends BaseSideMenu {
         return this;
     }
 
-    public String getUnit1Text() {
-        return unit1.innerText();
+    public void restoreChapter1Unit1Text() {
+        changeChapter1Unit1TextViaAPI(TestData.WORD_TEST, false);
     }
 
-    public void changeChapter1Unit1NameViaAPI (String testText ) {
+    public void changeChapter1Unit1TextViaAPI(String testText, boolean isAdd) {
         GuideTable guideTable = APIServises.getStudyGuideTable(getPlaywright());
-
         Chapter chapter1 = guideTable.getChapters().get(0);
-        Unit unit1 = chapter1.getUnits().get(1);
-        unit1.setName(testText);
+        chapter1 = APIServises.getUnitByGuideIdAndChapterId(getPlaywright(), guideTable.getId(), chapter1.getId());
+        Unit unit1 = chapter1.getUnits().get(0);
 
-        APIServises.editUnitByGuideIdAndChapterId(getPlaywright(),unit1);
+        String text = unit1.getContent().getBlocks().get(0).getData().getText();
+        if (isAdd) {
+            text = testText + text;
+        } else {
+            text = text.substring(text.indexOf(testText) + testText.length());
+        }
+
+        unit1.getContent().getBlocks().get(0).getData().setText(text);
+
+        APIServises.editUnitByGuideIdAndChapterId(getPlaywright(), unit1);
+    }
+
+    public StudyGuidePage interceptAPIStudyGuideTable() {
+        getPage().route("**/table-of-content", route -> {
+            APIResponse response = route.fetch();
+            setGuideTable(APIServises.getStudyGuideTable(response));
+            route.resume();
+        });
+        return this;
+    }
+
+    public void setGuideTable(GuideTable guideTablePage) {
+        this.guideTablePage = guideTablePage;
+    }
+
+    public GuideTable getGuideTable() {
+
+        return guideTablePage;
+    }
+
+    public String getUnit1Text() {
+
+        return unit1Text.innerText();
+    }
+
+    public StudyGuidePage  reload() {
+        getPage().reload();
+
+        return this;
     }
 }

@@ -1,5 +1,6 @@
 package tests;
 
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
@@ -57,18 +58,21 @@ public class StudyGuideTest extends BaseTest {
     @Test
     public void testTextContentChanges() {
         StudyGuidePage studyGuidePage = new HomePage(getPage(), getPlaywright())
-                .clickStudyGuide();
+                .clickStudyGuide()
+                .interceptAPIStudyGuideTable();
 
-        Assert.assertFalse(studyGuidePage.getUnit1Text().contains(TestData.UNIT_1_CONTENT_TEST), "Text expected doesnt contain a word 'test' but it is");
+        Assert.assertFalse(studyGuidePage.getUnit1Text().contains(TestData.WORD_TEST),
+                "Expected text to contain '" + TestData.WORD_TEST + "' but it is: " + studyGuidePage.getUnit1Text());
 
-        studyGuidePage.changeChapter1Unit1NameViaAPI(TestData.UNIT_1_CONTENT_TEST);
+        studyGuidePage.changeChapter1Unit1TextViaAPI(TestData.WORD_TEST, true);
 
         studyGuidePage
-                .clickHomeMenu()
+                .reload()
                 .clickStudyGuide();
 
-        Assert.assertTrue(studyGuidePage.getUnit1Text().contains(TestData.UNIT_1_CONTENT_TEST), "Text expected contain a word 'test' but its not");
+        Assert.assertTrue(studyGuidePage.getUnit1Text().contains(TestData.WORD_TEST),
+                "Expected text doesn't contain '" + TestData.WORD_TEST + "' but it is: " + studyGuidePage.getUnit1Text());
 
-        studyGuidePage.changeChapter1Unit1NameViaAPI(TestData.UNIT_1_CONTENT);
+        studyGuidePage.restoreChapter1Unit1Text();
     }
 }

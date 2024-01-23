@@ -10,8 +10,11 @@ import utils.api.obj.*;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static org.testng.AssertJUnit.assertEquals;
 import static utils.LoginUtils.getUserToken;
 
 public class APIServises {
@@ -26,7 +29,10 @@ public class APIServises {
     private static String getAdminToken(Playwright playwright) {
         APIRequest request = playwright.request();
         APIRequestContext requestContext = request.newContext();
+
         Map<String, String> data = new HashMap<>();
+        data.put("email", ProjectProperties.ADMINUSERNAME);
+        data.put("password", ProjectProperties.ADMINPASSWORD);
 
         APIResponse apiResponse = requestContext.post(ProjectProperties.API_BASE_URL + "/auth/admin/signIn",
                 RequestOptions.create().setData(data));
@@ -35,9 +41,10 @@ public class APIServises {
         return admin.getToken();
     }
 
-    private static APIResponse getResponseBody(Playwright playwright, String endPoint) {
+    private static APIResponse getAPIResponse(Playwright playwright, String endPoint) {
         APIRequest request = playwright.request();
         APIRequestContext requestContext = request.newContext();
+
         APIResponse apiResponse = requestContext.get(ProjectProperties.API_BASE_URL + endPoint,
                 RequestOptions.create()
                         .setHeader("Authorization", "Bearer " + getUserToken()));
@@ -67,7 +74,7 @@ public class APIServises {
 
 
     public static Course getActiveCourse(Playwright playwright) {
-        APIResponse responseBody = getResponseBody(playwright, "/courses/active");
+        APIResponse responseBody = getAPIResponse(playwright, "/courses/active");
         Course course = (Course) getObjectFromResponseBody(responseBody, Course.class);
 
         return course;
@@ -75,7 +82,7 @@ public class APIServises {
 
     public static Guide getStudyGuideByActiveCourse(Playwright playwright) {
         Course course = getActiveCourse(playwright);
-        APIResponse responseBody = getResponseBody(playwright, "/guides/courses/" + course.getId());
+        APIResponse responseBody = getAPIResponse(playwright, "/guides/courses/" + course.getId());
 
         Guide guide = (Guide) getObjectFromResponseBody(responseBody, Guide.class);
 
@@ -84,14 +91,21 @@ public class APIServises {
 
     public static GuideTable getStudyGuideTable(Playwright playwright) {
         Guide guide = getStudyGuideByActiveCourse(playwright);
-        APIResponse responseBody = getResponseBody(playwright, "/guides/" + guide.getId() + "/table-of-content");
+        APIResponse responseBody = getAPIResponse(playwright, "/guides/" + guide.getId() + "/table-of-content");
 
         GuideTable guideTablee = (GuideTable) getObjectFromResponseBody(responseBody, GuideTable.class);
         return guideTablee;
     }
 
+    public static GuideTable getStudyGuideTable(APIResponse response) {
+
+        GuideTable guideTablee = (GuideTable) getObjectFromResponseBody(response, GuideTable.class);
+        return guideTablee;
+    }
+
+
     public static Chapter getUnitByGuideIdAndChapterId(Playwright playwright, String guideId, String chapterid) {
-        APIResponse responseBody = getResponseBody(playwright, "/guides/" + guideId + "/chapters/" + chapterid);
+        APIResponse responseBody = getAPIResponse(playwright, "/guides/" + guideId + "/chapters/" + chapterid);
         Chapter chapter = null;
         try {
             chapter = (Chapter) getObjectFromResponseBody(responseBody, Chapter.class);
@@ -102,20 +116,23 @@ public class APIServises {
         return chapter;
     }
 
-    public static Unit editUnitByGuideIdAndChapterId(Playwright playwright, Unit unit) {
+    public static void editUnitByGuideIdAndChapterId(Playwright playwright, Unit unit) {
         APIRequest request = playwright.request();
         APIRequestContext requestContext = request.newContext();
-        Map<String, String> data = new HashMap<>();
-        data.put("name", unit.getName());
-        APIResponse apiResponse = requestContext.patch(ProjectProperties.API_BASE_URL + "/admin/guides/units/" + unit.getId(),
+
+        Unit sendUnit = new Unit();
+        Data data = new Data();
+        data.setText(unit.getContent().getBlocks().get(0).getData().getText());
+        Block block = new Block();
+        block.setData(data);
+        Content content = new Content();
+        content.setBlocks(List.of(block));
+        sendUnit.setContent(unit.getContent());
+
+        requestContext.patch(ProjectProperties.API_BASE_URL + "/admin/guides/units/" + unit.getId(),
                 RequestOptions.create()
                         .setHeader("Authorization", "Bearer " + getAdminToken(playwright))
-                        .setData(data));
-
-
-        Unit newunit = (Unit) getObjectFromResponseBody(apiResponse, Unit.class);
-
-        return newunit;
+                        .setData(sendUnit));
     }
 
 }
