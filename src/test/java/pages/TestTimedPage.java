@@ -2,29 +2,26 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
+import pages.constants.Constants;
 
 import java.util.List;
 
-
-public class TestTimedPage extends SideMenuPage {
-    private final List<Locator> radioButtons = radioButtonsAll();
+public final class TestTimedPage extends BaseFooter<TestTimedPage> {
     private final Locator timer = locator("header div div:has(button)>div");
-    private final Locator questionMarkText = text("?");
+    private final List<Locator> radioButtons = allRadioButtons();
 
-    public TestTimedPage(Page page, Playwright playwright) {
-        super(page, playwright);
+    TestTimedPage(Page page) {
+        super(page);
     }
 
-    public int getAnswersCount() {
-       return radioButtons.size();
+    @Override
+    public TestTimedPage init() {
+
+        return createPage(new TestTimedPage(getPage()), Constants.TEST_TIMED_END_POINT);
     }
 
     public Locator getTimer() {
-        return timer;
-    }
 
-    public Locator getQuestionMark() {
-        return questionMarkText;
+        return timer;
     }
 }

@@ -1,5 +1,5 @@
-package tests;
-
-public class TestResultTest extends BaseTest {
-
-}
+//package tests;
+//
+//public class TestResultTest extends BaseTest {
+//
+//}

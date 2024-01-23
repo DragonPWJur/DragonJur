@@ -2,16 +2,24 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
+import pages.constants.Constants;
 
-public class FlashcardsPackIDPage extends SideMenuPage {
-    private final Locator questionHeading = getPage().locator( "span.sc-iBkjds.gpMBxJ.sc-dGBNLl.igYIXR");
-    private final Locator gotButton = button("Got it");
-    private final Locator flashcardsBackButton = button( "Flashcards /");
-    private final Locator yesButton = button("Yes");
+public final class FlashcardsPackIDPage extends BaseFooter<FlashcardsPackIDPage> {
+    private final Locator questionHeading = exactText("Question");
+    private final Locator answerHeading = exactText("Answer");
+    private final Locator showAnswerButton = exactButton("Show answer");
+    private final Locator yesButton = exactButton("Yes");
+    private final Locator noButton = exactButton("No");
+    private final Locator kindaButton = exactButton("Kinda");
 
-    public FlashcardsPackIDPage(Page page, Playwright playwright) {
-        super(page, playwright);
+    FlashcardsPackIDPage(Page page) {
+        super(page);
+    }
+
+    @Override
+    public FlashcardsPackIDPage init() {
+
+        return createPage(new FlashcardsPackIDPage(getPage()), Constants.FLASHCARDS_PACK_ID_END_POINT);
     }
 
     public Locator getQuestionHeading() {
@@ -19,20 +27,40 @@ public class FlashcardsPackIDPage extends SideMenuPage {
         return questionHeading;
     }
 
-    public FlashcardsPackIDPage clickGotButtonIfVisible() {
-        gotButton.click();
+    public Locator getAnswerHeading() {
+
+        return answerHeading;
+    }
+
+    public Locator getShowAnswerButton() {
+
+        return showAnswerButton;
+    }
+
+    public Locator getYesButton() {
+
+        return yesButton;
+    }
+
+    public Locator getNoButton() {
+
+        return noButton;
+    }
+
+    public Locator getKindaButton() {
+
+        return kindaButton;
+    }
+
+    public FlashcardsPackIDPage clickShowAnswerButton() {
+        showAnswerButton.click();
+
         return this;
     }
 
-    public FlashcardsPackIDPage clickFlashcardsBackButton() {
-        flashcardsBackButton.click();
-
-        return this;
-    }
-
-    public FlashcardPacksPage clickYesButton() {
+    public void clickYesMarkButton() {
         yesButton.click();
-
-        return new FlashcardPacksPage(getPage(), getPlaywright());
+        waitWithTimeout(1500);
     }
+
 }
