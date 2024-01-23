@@ -3,6 +3,9 @@ package tests;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Description;
+import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
@@ -86,8 +89,10 @@ public class HomeTest extends BaseTest {
         assertThat(homePage.getStreaksModalWindow()).isVisible();
     }
 
-    @Ignore
-    @Test
+    @Test(description = "TC1341-01 - The single non-active Checkbox can be checked.")
+    @Description("Objective: To verify that a non-active checkbox can be successfully checked.")
+    @Story("Tests")
+    @TmsLink("oz4bwi8yjqj")
     public void testTheSingleNonActiveCheckboxCanBeChecked() {
         Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
                 .checkIfListCheckBoxesIsNotEmptyAndAllUnchecked(), "Precondition is not reached.");
