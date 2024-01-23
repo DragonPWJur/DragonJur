@@ -1,4 +1,22 @@
 package pages;
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-public class BaseTestsListPage {
+
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import io.qameta.allure.Step;
+
+abstract class BaseTestsListPage<TPage> extends BaseSideMenu<TPage> {
+    private final Locator generateAndStartButton = button("Generate & Start");
+
+    protected BaseTestsListPage(Page page) {
+        super(page);
+    }
+
+    @Step("Click 'Generate and Start' button")
+    public TPage clickGenerateAndStartButton() {
+        generateAndStartButton.click();
+
+        return createPage();
+    }
+
+
 }

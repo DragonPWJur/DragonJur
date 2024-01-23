@@ -2,8 +2,9 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import pages.constants.Constants;
 
-public final class FlashcardsPackIDPage extends BaseFooter {
+public final class FlashcardsPackIDPage extends BaseFooter<FlashcardsPackIDPage> {
     private final Locator questionHeading = exactText("Question");
     private final Locator answerHeading = exactText("Answer");
     private final Locator showAnswerButton = exactButton("Show answer");
@@ -13,6 +14,12 @@ public final class FlashcardsPackIDPage extends BaseFooter {
 
     public FlashcardsPackIDPage(Page page) {
         super(page);
+    }
+
+    @Override
+    public FlashcardsPackIDPage createPage() {
+
+        return init(new FlashcardsPackIDPage(getPage()), Constants.FLASHCARDS_PACK_ID_END_POINT);
     }
 
     public Locator getQuestionHeading() {

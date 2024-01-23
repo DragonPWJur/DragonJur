@@ -2,23 +2,28 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import tests.helpers.TestUtils;
 
-public class ReportAProblemModal extends BaseModal {
+public final class ReportAProblemModal extends BaseModal<ReportAProblemModal> implements IRandom {
     private final Locator describeTheProblemTextarea = textbox();
     private final Locator sendButton = button("Send");
     private final Locator reportSentSuccessfullyMessage = exactText("The report has been sent successfully");
 
-    protected ReportAProblemModal(Page page) {
+    public ReportAProblemModal(Page page) {
         super(page);
     }
 
-//    public ReportAProblemModal inputText() {
-//        if (describeTheProblemTextarea.isVisible()) {
-//            describeTheProblemTextarea.fill(TestUtils.geteRandomString(10));
-//        }
-//        return this;
-//    }
+    @Override
+    public ReportAProblemModal createPage() {
+
+        return new ReportAProblemModal(getPage());
+    }
+
+    public ReportAProblemModal inputText() {
+        if (describeTheProblemTextarea.isVisible()) {
+            describeTheProblemTextarea.fill(getRandomString(10));
+        }
+        return this;
+    }
 
     public ReportAProblemModal clickSendButton() {
         sendButton.click();
@@ -26,17 +31,13 @@ public class ReportAProblemModal extends BaseModal {
         return this;
     }
 
-//    public Locator getReportSentSuccessfullyMessage() {
-//        getCloseButton().waitFor();
-//        if (getCloseButton().isVisible()) {
-//            return reportSentSuccessfullyMessage;
-//        }
-//
-//        return null;
-//    }
+    public Locator getReportSentSuccessfullyMessage() {
+        getCloseButton().waitFor();
+        if (getCloseButton().isVisible()) {
+            return reportSentSuccessfullyMessage;
+        }
 
-    public Locator getReportAProblemModal() {
-        return dialog();
+        return null;
     }
 
 }

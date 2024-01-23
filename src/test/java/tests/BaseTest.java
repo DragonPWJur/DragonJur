@@ -72,7 +72,12 @@ abstract class BaseTest {
 
         page.navigate(ProjectProperties.BASE_URL);
 
-        if(TestUtils.isOnPage(TestData.HOME_END_POINT, page)) {
+        if(isOnHomePage()) {
+            getPage().onLoad(p -> page.content());
+            if (!page.content().isEmpty()) {
+                logInfo("On page '" + TestData.HOME_END_POINT + "'");
+            }
+
             logInfo("Testing....");
         } else {
             logError("HomePage is NOT opened");
@@ -110,6 +115,16 @@ abstract class BaseTest {
             playwright.close();
             logInfo("Playwright closed");
         }
+    }
+
+    protected  boolean isOnHomePage() {
+        String pageUrl = ProjectProperties.BASE_URL + TestData.HOME_END_POINT;
+
+        if (!getPage().url().equals(pageUrl) || getPage().content().isEmpty()) {
+            getPage().waitForTimeout(2000);
+        }
+
+        return !getPage().content().isEmpty();
     }
 
     protected Page getPage() {

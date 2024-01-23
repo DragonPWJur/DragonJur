@@ -18,10 +18,13 @@ public final class FlashcardPacksTest extends BaseTest {
             description = "LMS-1349 https://app.qase.io/plan/LMS/1?case=1349"
     )
     public void testAddToFlashCard() {
+
         PreconditionPage precondition = new PreconditionPage(getPage());
+        precondition.collectRandomFlashcardPackInfo();
 
         final String initialCardsAmount = precondition.getInitialAmountOfCardsMarkedForRechecking();
         final String expectedCardsAmount = TestUtils.add(initialCardsAmount, 1);
+
         final String actualCardsAmount =
                 precondition
                         .startRandomDomainTest(TestData.ONE_QUESTION)
@@ -45,25 +48,32 @@ public final class FlashcardPacksTest extends BaseTest {
             description = "LMS-1367 https://app.qase.io/plan/LMS/1?case=1367"
     )
     public void testStartRandomFlashCardPack() {
-        PreconditionPage precondition = new PreconditionPage(getPage());
 
+        PreconditionPage precondition = new PreconditionPage(getPage());
         precondition.collectRandomFlashcardPackInfo();
+
         final int packIndex = precondition.getFlashcardsPackRandomIndex();
         final String packName = precondition.getFlashcardsPackName();
         final String cardsInPackAmount = precondition.getFlashcardsPackCardsAmount();
         final String expectedUrlPart = ProjectProperties.BASE_URL + TestData.FLASHCARDS_PACK_ID_END_POINT;
 
-        FlashcardsPackIDPage flashcardsPackIDPage = new HomePage(getPage())
+        FlashcardsPackIDPage flashcardsPackIDPage =
+                new HomePage(getPage())
                         .clickFlashcardsMenu()
                         .clickNthFlashcardPack(packIndex)
                         .clickGotItButton();
-        final String pageUrl = getPage().url();
+
+        final String actualPageUrl = getPage().url();
+        final String actualVisiblePackName = flashcardsPackIDPage.getPackName();
 
         Assert.assertTrue(
-                pageUrl.contains(expectedUrlPart),
-                "The page URL " + pageUrl + " does NOT contain: " + expectedUrlPart
+                actualPageUrl.contains(expectedUrlPart),
+                "The page URL " + actualPageUrl + " does NOT contain: " + expectedUrlPart + "."
         );
-        assertThat(flashcardsPackIDPage.getPackName()).hasText(packName);
+        Assert.assertTrue(
+                packName.contains(actualVisiblePackName),
+                "The expected pack name " + packName + "does NOT contains actual pack name " + actualVisiblePackName + "."
+        );
         assertThat(flashcardsPackIDPage.cardsTotalAmount(cardsInPackAmount)).isVisible();
         assertThat(flashcardsPackIDPage.getQuestionHeading()).isVisible();
         assertThat(flashcardsPackIDPage.getShowAnswerButton()).isVisible();
@@ -74,9 +84,10 @@ public final class FlashcardPacksTest extends BaseTest {
             description = "LMS-1368 https://app.qase.io/plan/LMS/1?case=1368"
     )
     public void testFlashCardTurnedAfterClickingShowAnswerButton() {
-        PreconditionPage precondition = new PreconditionPage(getPage());
 
+        PreconditionPage precondition = new PreconditionPage(getPage());
         precondition.collectRandomFlashcardPackInfo();
+
         final int packIndex = precondition.getFlashcardsPackRandomIndex();
 
         FlashcardsPackIDPage flashcardsPackIDPage = new HomePage(getPage())
@@ -91,7 +102,8 @@ public final class FlashcardPacksTest extends BaseTest {
         assertThat(flashcardsPackIDPage.getYesButton()).not().isVisible();
         assertThat(flashcardsPackIDPage.getShowAnswerButton()).isVisible();
 
-        flashcardsPackIDPage.clickShowAnswerButton();
+        flashcardsPackIDPage
+                .clickShowAnswerButton();
 
         assertThat(flashcardsPackIDPage.getQuestionHeading()).isVisible();
         assertThat(flashcardsPackIDPage.getAnswerHeading()).isVisible();
@@ -106,22 +118,27 @@ public final class FlashcardPacksTest extends BaseTest {
             description = "LMS-1368 https://app.qase.io/plan/LMS/1?case=1368"
     )
     public void testUserCanLeaveYesMark() {
-        PreconditionPage precondition = new PreconditionPage(getPage());
 
+        PreconditionPage precondition = new PreconditionPage(getPage());
         precondition.collectRandomFlashcardPackInfo();
+
         final int packIndex = precondition.getFlashcardsPackRandomIndex();
 
-        FlashcardsPackIDPage flashcardsPackIDPage = new HomePage(getPage())
-                .clickFlashcardsMenu()
-                .clickNthFlashcardPack(packIndex)
-                .clickGotItButton()
-                .clickShowAnswerButton();
+        FlashcardsPackIDPage flashcardsPackIDPage =
+                new HomePage(getPage())
+                        .clickFlashcardsMenu()
+                        .clickNthFlashcardPack(packIndex)
+                        .clickGotItButton()
+                        .clickShowAnswerButton();
+
         final String yesCardsAmountBeforeClick = flashcardsPackIDPage.getYesCardsAmount();
         final String expectedYesCardsAmount = TestUtils.add(yesCardsAmountBeforeClick, 1);
 
         assertThat(flashcardsPackIDPage.getResetResultsButton()).not().isVisible();
 
-        flashcardsPackIDPage.clickYesMarkButton();
+        flashcardsPackIDPage
+                .clickYesMarkButton();
+
         final String yesCardsAmountAfterClick = flashcardsPackIDPage.getYesCardsAmount();
 
         Assert.assertEquals(

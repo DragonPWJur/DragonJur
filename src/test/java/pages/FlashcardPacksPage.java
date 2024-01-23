@@ -2,10 +2,11 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import pages.constants.Constants;
 
 import java.util.List;
 
-public final class FlashcardPacksPage extends BaseSideMenu implements IRandom {
+public final class FlashcardPacksPage extends BaseSideMenu<FlashcardPacksPage> implements IRandom {
     private final Locator markedForRecheckingButton = button("Marked for re-checking");
     private final Locator learnedButton = button("Learned");
     private final List<Locator> allLearnedButtons = allButtons(learnedButton);
@@ -14,6 +15,12 @@ public final class FlashcardPacksPage extends BaseSideMenu implements IRandom {
 
     public FlashcardPacksPage(Page page) {
         super(page);
+    }
+
+    @Override
+    public FlashcardPacksPage createPage() {
+
+        return init(new FlashcardPacksPage(getPage()), Constants.FLASHCARD_PACKS_END_POINT);
     }
 
     int getRandomPackIndex() {
@@ -45,6 +52,6 @@ public final class FlashcardPacksPage extends BaseSideMenu implements IRandom {
     public FlashcardsPackIDPage clickNthFlashcardPack(int randomIndex) {
         allLearnedButtons.get(randomIndex).click();
 
-        return new FlashcardsPackIDPage(getPage());
+        return new FlashcardsPackIDPage(getPage()).createPage();
     }
 }

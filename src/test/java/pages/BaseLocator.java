@@ -7,7 +7,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 
 import java.util.List;
 
-abstract class BaseLocator extends BaseWait {
+abstract class BaseLocator<TPage> extends BaseWait<TPage> {
 
     protected BaseLocator(Page page) {
         super(page);
@@ -131,17 +131,14 @@ abstract class BaseLocator extends BaseWait {
     }
 
     private List<Locator> getList(Locator locator) {
-        while(!locator.first().isVisible()) {
+        while(!locator.first().isVisible() && !locator.last().isVisible()) {
             locator.first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-        }
-        if(!locator.last().isVisible()) {
             locator.last().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED));
             locator.last().scrollIntoViewIfNeeded();
             locator.last().focus();
-        }
 
-        System.out.println(locator.all());
-        System.out.println(locator.all().size());
+            System.out.println("locator.count() = " + locator + " " + locator.count());
+        }
 
         return locator.all();
     }

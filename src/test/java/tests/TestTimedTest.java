@@ -1,8 +1,6 @@
 package tests;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-
-public class TestTimedTest extends BaseTest {
+public final class TestTimedTest extends BaseTest {
 
 //    @Test
 //    public void testRunTimedMode() {

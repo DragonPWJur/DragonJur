@@ -4,7 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 
-abstract class BaseSideMenu extends BaseModal {
+abstract class BaseSideMenu<TPage> extends BaseModal<TPage> {
     private final Locator homeButton = exactButton("Home");
     private final Locator studyGuideButton = button("Study guide");
     private final Locator testsButton = exactButton("Tests");
@@ -18,51 +18,51 @@ abstract class BaseSideMenu extends BaseModal {
     }
 
     @Step("Click side menu 'Home'.")
-    public void clickHomeMenu() {
+    public HomePage clickHomeMenu() {
         homeButton.click();
 
-        isOnHomePage();
+        return new HomePage(getPage()).createPage();
     }
 
     @Step("Click side menu 'Study Guide'.")
     public StudyGuidePage clickStudyGuide() {
         studyGuideButton.click();
 
-        return isOnStudyGuidePage();
+        return new StudyGuidePage(getPage()).createPage();
     }
 
     @Step("Click side menu 'Tests'.")
     public TestListPage clickTestsMenu() {
         testsButton.click();
 
-        return isOnTestListPage();
+        return new TestListPage(getPage()).createPage();
     }
 
     @Step("Click side menu 'Flashcards'.")
     public FlashcardPacksPage clickFlashcardsMenu() {
         flashcardsButton.click();
 
-        return isOnFlashcardsPackPage();
+        return new FlashcardPacksPage(getPage()).createPage();
     }
 
     @Step("Click side menu 'Mnemonic Cards'.")
     public MnemonicCardListPage clickMnemonicCardsMenu() {
         mnemonicCardsButton.click();
 
-        return isOnMnemonicCardListPage();
+        return new MnemonicCardListPage(getPage()).createPage();
     }
 
     @Step("Click side menu 'Performance'.")
     public PerformancePage clickPerformanceMenu() {
         performanceButton.click();
 
-        return isOnPerformancePage();
+        return new PerformancePage(getPage()).createPage();
     }
 
     @Step("Click side menu 'Profile'.")
     public ProfilePage clickProfileMenu() {
         profileButton.click();
 
-        return isOnProfilePage();
+        return new ProfilePage(getPage()).createPage();
     }
 }

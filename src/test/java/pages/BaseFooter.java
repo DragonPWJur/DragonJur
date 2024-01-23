@@ -3,13 +3,13 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-abstract class BaseFooter extends BaseTopMenu {
+abstract class BaseFooter<TPage> extends BaseHeader<TPage> {
     private final Locator reportAProblem = exactButton("Report a problem");
-    private final Locator markForReviewButton = button("Mark for review");
-    private final Locator removeFromMarkedButton = button("Remove from marked");
-    private final Locator addToFlashcardButton = button("Add to flashcard");
-    private final Locator removeFromFlashcards = button("Remove from flashcards");
-    private final Locator resetResultsButton = button("Reset results");
+    private final Locator markForReviewButton = exactButton("Mark for review");
+    private final Locator removeFromMarkedButton = exactButton("Remove from marked");
+    private final Locator addToFlashcardButton = exactButton("Add to flashcard");
+    private final Locator removeFromFlashcards = exactButton("Remove from flashcards");
+    private final Locator resetResultsButton = exactButton("Reset results");
 
     protected BaseFooter(Page page) {
         super(page);
@@ -26,18 +26,22 @@ abstract class BaseFooter extends BaseTopMenu {
     }
 
     public Locator getReportAProblem() {
+
         return reportAProblem;
     }
 
     public Locator getMarkForReviewButton() {
+
         return markForReviewButton;
     }
 
     public Locator getAddToFlashcardButton() {
+
         return addToFlashcardButton;
     }
 
     public Locator getRemoveFromFlashcards() {
+
         return removeFromFlashcards;
     }
 
@@ -53,7 +57,7 @@ abstract class BaseFooter extends BaseTopMenu {
         return new TestTutorPage(getPage());
     }
 
-    public TestTutorPage clickReportButton() {
+    public TestTutorPage clickReportAProblemButton() {
         reportAProblem.click();
 
         return new TestTutorPage(getPage());

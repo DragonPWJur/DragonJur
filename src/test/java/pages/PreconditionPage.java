@@ -1,14 +1,22 @@
 package pages;
 
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import io.qameta.allure.Step;
 
-public final class PreconditionPage extends BasePage {
+public final class PreconditionPage extends BasePage<PreconditionPage> {
     private int flashcardsPackRandomIndex;
     private String flashcardsPackName;
     private String flashcardsPackCardsAmount;
+
+    public PreconditionPage(Page page) {
+        super(page);
+    }
+
+    @Override
+    public PreconditionPage createPage() {
+        return new PreconditionPage(getPage());
+    }
 
     public int getFlashcardsPackRandomIndex() {
 
@@ -25,17 +33,14 @@ public final class PreconditionPage extends BasePage {
         return flashcardsPackCardsAmount;
     }
 
-    public PreconditionPage(Page page) {
-        super(page);
-    }
-
     @Step("Precondition: Save the initial amount of 'Marked for re-checking' cards.")
     public String getInitialAmountOfCardsMarkedForRechecking() {
         final String amountMarkedForRechecking = new HomePage(getPage())
                 .clickFlashcardsMenu()
                 .getAmountOfCardsMarkedForRechecking();
 
-        new TestsPage(getPage()).clickHomeMenu();
+        new FlashcardPacksPage(getPage())
+                .clickHomeMenu();
 
         return amountMarkedForRechecking;
     }
@@ -50,7 +55,7 @@ public final class PreconditionPage extends BasePage {
                 .inputNumberOfQuestions(number)
                 .clickGenerateAndStartButton();
 
-        return new TestTutorPage(getPage());
+        return new TestTutorPage(getPage()).createPage();
     }
 
     public void collectRandomFlashcardPackInfo() {

@@ -3,13 +3,13 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-abstract class BaseTopMenu extends BaseModal {
-    private final Locator yesCardsAmountText = locator("span").getByText("Yes");
+abstract class BaseHeader<TPage> extends BaseModal<TPage> {
     private final Locator endButton = exactButton("End");
-    private final Locator flashcardsButton = button( "Flashcards /");
+    private final Locator yesCardsAmount = locator("span").getByText("Yes");
+    private final Locator flashcardsButton = button("Flashcards /");
     private final Locator packName = locator("div:has(svg) + span");
 
-    protected BaseTopMenu(Page page) {
+    protected BaseHeader(Page page) {
         super(page);
     }
 
@@ -19,7 +19,7 @@ abstract class BaseTopMenu extends BaseModal {
     }
 
     public String getYesCardsAmount() {
-        String[] textToArray = yesCardsAmountText.innerText().split(" ");
+        String[] textToArray = yesCardsAmount.innerText().split(" ");
 
         return textToArray[0];
     }
@@ -27,17 +27,22 @@ abstract class BaseTopMenu extends BaseModal {
     public TestTutorPage clickEndButton() {
         endButton.click();
 
-        return new TestTutorPage(getPage());
+        return new TestTutorPage(getPage()).createPage();
     }
 
-    public Locator getPackName() {
+    public String getPackName() {
+        String flashcardHeader = packName.innerText();
+        int flashcardHeaderLength = flashcardHeader.length();
+        if (flashcardHeader.contains("...")) {
+            flashcardHeader = flashcardHeader.substring(0, flashcardHeaderLength - 3);
+        }
 
-        return packName;
+        return flashcardHeader;
     }
 
-    public FlashcardPacksPage clickFlashcardsTopMenu() {
+    public FlashcardsPackIDPage clickFlashcardsTopMenu() {
         flashcardsButton.click();
 
-        return new FlashcardPacksPage(getPage());
+        return new FlashcardsPackIDPage(getPage()).createPage();
     }
 }

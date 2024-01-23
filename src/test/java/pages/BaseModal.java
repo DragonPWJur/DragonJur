@@ -5,14 +5,14 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 
-abstract class BaseModal extends BaseLocator{
+abstract class BaseModal<TPage> extends BaseLocator<TPage> {
     private final Locator dialog = dialog();
     private final Locator cancelButton = exactButton("Cancel");
     private final Locator gotItButton = exactButton("Got it");
     private final Locator yesButton = exactButton("Yes");
     private final Locator skipButton = exactButton("Skip");
     private final Locator backButton = exactButton("Back");
-    private final Locator closeButton = button("Close");
+    private final Locator closeButton = exactButton("Close");
     private final Locator okButton = exactButton("Ok");
     private final Locator nextButton = exactButton("Next");
     private final Locator weakestExamAreasHeader = dialog.locator("span");
@@ -28,6 +28,12 @@ abstract class BaseModal extends BaseLocator{
 
         return dialog;
     }
+
+
+    public Locator getCloseButton() {
+        return closeButton;
+    }
+
 
     @Step("Click 'Cansel' button to cancel dialog if visible.")
     protected void cancelDialog() {
@@ -62,27 +68,27 @@ abstract class BaseModal extends BaseLocator{
             skipButton.click();
         }
 
-        return new TestResultPage(getPage());
+        return new TestResultPage(getPage()).createPage();
     }
 
     @Step("Click 'Back' button on dialog window if visible.")
-    protected TestResultPage clickBackButton() {
+    protected TPage clickBackButton() {
         if(dialog.isVisible() && backButton.isVisible()) {
             backButton.click();
         }
 
-        return new TestResultPage(getPage());
+        return createPage();
     }
 
-    public TestResultPage clickNextButton() {
+    public TPage clickNextButton() {
         nextButton.click();
 
-        return new TestResultPage(getPage());
+        return createPage();
     }
 
-    public TestResultPage clickTestOkButton() {
+    public TPage clickOkButton() {
         okButton.click();
 
-        return new TestResultPage(getPage());
+        return createPage();
     }
 }

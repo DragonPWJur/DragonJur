@@ -2,8 +2,9 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import pages.constants.Constants;
 
-public class TestResultPage extends BaseSideMenu {
+public final class TestResultPage extends BaseLocator<TestResultPage> {
 
     private final Locator closeTheTestButton = exactButton("Close the test");
 
@@ -11,9 +12,15 @@ public class TestResultPage extends BaseSideMenu {
         super(page);
     }
 
+    @Override
+    public TestResultPage createPage() {
+
+        return init(new TestResultPage(getPage()), Constants.TEST_RESULT_END_POINT);
+    }
+
     public TestListPage clickCloseTheTestButton() {
         closeTheTestButton.click();
 
-        return new TestListPage(getPage());
+        return new TestListPage(getPage()).createPage();
     }
 }

@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import static java.lang.Integer.parseInt;
 
-public final class CongratulationsModal extends BaseModal {
+public final class CongratulationsModal extends BaseModal<CongratulationsModal> {
     private final Locator congratulationPoints = locator("div[role='dialog']")
             .locator("span")
             .filter(new Locator.FilterOptions().setHasText(Pattern.compile("\\d+")));
@@ -15,6 +15,12 @@ public final class CongratulationsModal extends BaseModal {
 
     public CongratulationsModal(Page page) {
         super(page);
+    }
+
+    @Override
+    public CongratulationsModal createPage() {
+
+        return new CongratulationsModal(getPage());
     }
 
     public String getCongratulationPointsText() {
@@ -38,6 +44,4 @@ public final class CongratulationsModal extends BaseModal {
 
         return parseInt(pointsText);
     }
-
-
 }

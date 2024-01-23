@@ -1,13 +1,19 @@
 package pages;
 
 import com.microsoft.playwright.Page;
+import pages.constants.Constants;
 
-public class TestTutorPage extends BaseFooter {
+public final class TestTutorPage extends BaseFooter<TestTutorPage> {
 
     public TestTutorPage(Page page) {
         super(page);
     }
 
+    @Override
+    public TestTutorPage createPage() {
+
+        return init(new TestTutorPage(getPage()), Constants.TEST_TUTOR_END_POINT);
+    }
 
 
 //    public Locator getRemoveFromMarkedButton() {

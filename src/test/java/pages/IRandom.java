@@ -5,7 +5,7 @@ import com.microsoft.playwright.Locator;
 import java.util.List;
 import java.util.Random;
 
- interface IRandom {
+interface IRandom {
 
      default <T> T getRandomValue(List<T> listValues) {
         Random random = new Random();
@@ -26,11 +26,24 @@ import java.util.Random;
         return new Random().nextInt(0, list.size() - 1);
     }
 
-
     default int getRandomInt(int min, int max) {
         Random random = new Random();
 
         return random.nextInt(max - min) + min;
     }
 
+    default String getRandomTextValue(Locator listValues) {
+
+        return listValues.all().get(getRandomNumber(listValues)).innerText();
+    }
+
+    default String getRandomString(int length) {
+        String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder randomString = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            randomString.append(chars.charAt(new Random().nextInt(chars.length())));
+        }
+
+        return randomString.toString();
+    }
 }

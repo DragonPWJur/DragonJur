@@ -2,17 +2,24 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import pages.constants.Constants;
 
-public final class AddNewCoursePage extends BaseTopMenu {
+public final class AddNewCoursePage extends BaseHeader<AddNewCoursePage> {
     private final Locator getButton = locator("div:nth-child(3) > .sc-jKDlA-D > .sc-dkzDqf");
 
-    AddNewCoursePage(Page page) {
+    public AddNewCoursePage(Page page) {
         super(page);
     }
 
-    public AddNewCoursePage clickGetButton() {
+    @Override
+    public AddNewCoursePage createPage() {
+
+        return init(new AddNewCoursePage(getPage()), Constants.ADD_NEW_COURSE_END_POINT);
+    }
+
+    public AddNewCourseModal clickGetButton() {
         getButton.click();
 
-        return new AddNewCoursePage(getPage());
+        return new AddNewCourseModal(getPage());
     }
 }

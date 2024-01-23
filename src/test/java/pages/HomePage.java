@@ -2,12 +2,11 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import tests.helpers.TestData;
-import tests.helpers.TestUtils;
+import pages.constants.Constants;
 
 import java.util.List;
 
-public final class HomePage extends BaseSideMenu implements IRandom{
+public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     private final Locator studyThisButton = button("Study This");
     private final Locator twoWeeksButton = exactButton("2 Weeks");
     private final Locator week1Header = exactText("Week 1");
@@ -17,15 +16,19 @@ public final class HomePage extends BaseSideMenu implements IRandom{
     private final Locator streaksButton = locator("button>svg+p").last();
     private final Locator checkboxImage = locator("label:has(input) svg");
     private final List<Locator> allCheckboxes = allCheckboxes();
-//    private final List<Locator> listCheckboxes = allCheckboxes("label:has(input)");
 
+    private final int checkboxRandomNumber = getRandomInt(0, allCheckboxes.size());
 
-    private final int checkboxRandomNumber = getRandomInt(0, listCheckboxes.size());
-//
     public HomePage(Page page) {
         super(page);
     }
-//
+
+    @Override
+    public HomePage createPage() {
+
+        return init(new HomePage(getPage()), Constants.HOME_END_POINT);
+    }
+
 //    public List<Locator> getListCheckboxes() {
 //        return allCheckboxes;
 //    }

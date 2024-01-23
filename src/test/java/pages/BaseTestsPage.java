@@ -2,10 +2,11 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Step;
 
 import java.util.List;
 
-abstract class BaseTestsPage extends BaseFooter {
+abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
     private final Locator testQuestion = locator("form span");
     private final Locator questionMark = exactText("?");
     private final Locator answerRadioButton = radio();
@@ -85,6 +86,7 @@ abstract class BaseTestsPage extends BaseFooter {
 
         nextQuestionButton.click();
     }
+
 //
 //    public Self clickFinishTestButton() {
 //        finishTestButton.click();
