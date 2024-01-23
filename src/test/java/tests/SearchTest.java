@@ -3,7 +3,7 @@ package tests;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.StudyGuidePage;
-import pages.constants.Constants;
+import tests.helpers.TestData;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
@@ -14,12 +14,13 @@ public class SearchTest extends BaseTest {
             description = "LMS-1361 https://app.qase.io/project/LMS?suite=184&case=1361"
     )
     public void testSearchByNotExistingKeyWord() {
-        StudyGuidePage studyGuidePage = new HomePage(getPage()).init()
-                .clickStudyGuide()
-                .inputRandomStringInSearchField();
+        StudyGuidePage studyGuidePage =
+                new HomePage(getPage()).init()
+                        .clickStudyGuide()
+                        .inputRandomStringInSearchField();
 
         assertThat(studyGuidePage.getNothingFoundMessage()).isVisible();
-        assertThat(studyGuidePage.getSearchResultField()).hasText(Constants.NOTHING_FOUND_MESSAGE);
+        assertThat(studyGuidePage.getSearchResultField()).hasText(TestData.NOTHING_FOUND_MESSAGE);
     }
 
 //    @Test
