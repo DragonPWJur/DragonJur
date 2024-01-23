@@ -4,6 +4,8 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import io.qameta.allure.Step;
 
+import static utils.APIServises.*;
+
 public class PreconditionPage extends BasePage {
 
     public PreconditionPage(Page page, Playwright playwright) {
@@ -154,5 +156,11 @@ public class PreconditionPage extends BasePage {
             return homePage.areAllCheckBoxesChecked();
         }
         return false;
+    }
+
+    public void checkIfListCheckBoxesIsNotEmptyAndAllCheckBoxesAreChecked1() {
+
+        clickAllCheckBoxes(getPlaywright(), getCoursePlans(getPlaywright()));
+
     }
 }
