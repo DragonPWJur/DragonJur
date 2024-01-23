@@ -3,6 +3,9 @@ package tests;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Description;
+import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Ignore;
@@ -124,11 +127,14 @@ public class HomeTest extends BaseTest {
         Assert.assertFalse(checkboxImage.isVisible(), "All images of checkboxes are expected to be not visible, but visible");
     }
 
-    @Test
-    public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive() {
+    @Test(description = "TC1341-03 - Deactivation of a single Already Active Checkbox when all checkboxes are active.")
+    @Description("To verify the functionality when all checkboxes are checked, and a single active checkbox becomes inactive upon clicking again.")
+    @Story("Tests")
+    @TmsLink("nf0bbnl8cpe4")
+    public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive(){
 
         new PreconditionPage(getPage(), getPlaywright())
-               .checkIfListCheckBoxesIsNotEmptyAndAllCheckBoxesAreChecked1();
+               .checkAllCheckBoxes();
 
         HomePage homePage = new HomePage(getPage(), getPlaywright());
 
@@ -141,7 +147,7 @@ public class HomeTest extends BaseTest {
         for (int i = 0; i < homePage.getListCheckboxes().size(); i++) {
             if (i != randomIndexCheckBox) {
                 System.out.println(homePage.getListCheckboxes().get(i).isChecked());
-//                assertThat(homePage.getListCheckboxes().get(i)).isChecked();
+                assertThat(homePage.getListCheckboxes().get(i)).isChecked();
             }
         }
     }

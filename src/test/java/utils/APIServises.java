@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static utils.LoggerUtils.log;
 import static utils.LoginUtils.getUserToken;
 
 public class APIServises {
@@ -82,6 +83,10 @@ public class APIServises {
             }
         }
 
+        if (checkBoxIds.isEmpty()) {
+            log("API: List of getPlanPhasesId is empty");
+        }
+
         return checkBoxIds;
     }
 
@@ -95,7 +100,7 @@ public class APIServises {
 
         for(String markId : checkBoxIds) {
 
-            url = "/tasks/"+ markId + "/mark";
+            url = "/tasks/" + markId + "/mark";
 
             request = playwright.request();
             requestContext = request.newContext();
@@ -109,5 +114,4 @@ public class APIServises {
                     );
         }
     }
-
 }

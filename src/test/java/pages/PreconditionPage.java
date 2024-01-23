@@ -158,9 +158,10 @@ public class PreconditionPage extends BasePage {
         return false;
     }
 
-    public void checkIfListCheckBoxesIsNotEmptyAndAllCheckBoxesAreChecked1() {
+    public void checkAllCheckBoxes() {
 
         clickAllCheckBoxes(getPlaywright(), getCoursePlans(getPlaywright()));
+        getPage().reload();
 
     }
 }
