@@ -2,25 +2,31 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
-import utils.TestUtils;
+import pages.constants.Constants;
 
-public class MnemonicCardListPage extends BaseSideMenu {
-
+public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPage> implements IRandom {
     private final Locator listOfStacks = locator("button:has(span)");
 
     private final String[] randomStack = getRandomStackText();
 
-    protected MnemonicCardListPage(Page page, Playwright playwright) {
-        super(page, playwright);
+    MnemonicCardListPage(Page page) {
+        super(page);
     }
 
-    public Locator getListOfStacks() {
-        return waitForListOfElementsLoaded(listOfStacks);
+    @Override
+    public MnemonicCardListPage init() {
+
+        return createPage(new MnemonicCardListPage(getPage()), Constants.MNEMONIC_CARDS_LIST_END_POINT);
+    }
+
+   public Locator getListOfStacks() {
+
+        return listOfStacks;
     }
 
     public String[] getRandomStackText() {
-        String text = TestUtils.getRandomTextValue(getListOfStacks());
+        String text = getRandomTextValue(getListOfStacks());
+        System.out.println("random value = " + text);
         String[] arrayOfNamesAndQuantity = text.split("\n");
         String expectedQuantity = arrayOfNamesAndQuantity[1].split(" ")[0];
         arrayOfNamesAndQuantity[1] = expectedQuantity;
@@ -39,12 +45,13 @@ public class MnemonicCardListPage extends BaseSideMenu {
     }
 
     public void clickRandomMnemonicCardsStack() {
+
         exactText(getExpectedStackName()).click();
     }
 
     public MnemonicCardsPage clickRandomMnemonicCardsStackAndGo() {
         exactText(getExpectedStackName()).click();
 
-        return new MnemonicCardsPage(getPage(), getPlaywright());
+        return new MnemonicCardsPage(getPage()).init();
     }
 }

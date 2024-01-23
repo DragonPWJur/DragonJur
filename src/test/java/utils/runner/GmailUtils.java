@@ -1,4 +1,4 @@
-package utils;
+package utils.runner;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -22,30 +22,35 @@ import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class GmailUtils {
+public final class GmailUtils {
 
     public static final String CREDENTIALS_FILE_PATH = "/credentials.json";
-    private static final List<String> SCOPES = List.of(GmailScopes.MAIL_GOOGLE_COM);
-    public static final String APPLICATION_NAME = "Gmail project";
     public static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     public static final String TOKENS_DIRECTORY_PATH = "tokens";
+    public static final String APPLICATION_NAME = "Gmail project";
+
+    private static final List<String> SCOPES = List.of(GmailScopes.MAIL_GOOGLE_COM);
     private static final String USER_ID = "me";
     private static final String EMAIL_END_PART = "@gmail.com";
     private static final String QUERY = "subject:You have been invited";
 
     public static Gmail getGmailService() throws Exception {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+
         Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
+
         return service;
     }
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
         InputStream in = GmailUtils.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
         }
+
         GoogleClientSecrets clientSecret =
                 GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
@@ -56,6 +61,7 @@ public class GmailUtils {
                 .build();
 
         LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
+
         Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
 
         return credential;
@@ -79,8 +85,10 @@ public class GmailUtils {
                     passwordValue = lines[i + 1].trim().replace("&amp;", "&");
                 }
             }
+
             return passwordValue;
         } else {
+
             return null;
         }
     }

@@ -7,102 +7,127 @@ import com.microsoft.playwright.Playwright;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
-import utils.*;
+import tests.helpers.TestData;
+import utils.api.APIServices;
+import utils.reports.LoggerInfo;
+import utils.runner.BrowserManager;
+import utils.runner.LoginUtils;
+import utils.runner.ProjectProperties;
+import utils.reports.ExceptionListener;
+import utils.reports.ReportUtils;
+import utils.reports.TracingUtils;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
 
-import static utils.LoggerUtils.log;
-import static utils.LoggerUtils.logFatal;
+import static utils.reports.LoggerUtils.*;
 
-@Listeners(utils.ExceptionListener.class)
-public abstract class BaseTest {
-    private Playwright playwright = Playwright.create();
-    private Browser browser = BrowserManager.createBrowser(playwright, getClass());
+@Listeners(ExceptionListener.class)
+abstract class BaseTest {
+    private final Playwright playwright = Playwright.create();;
+    private final Browser browser = BrowserManager.createBrowser(playwright);;
     private BrowserContext context;
     private Page page;
 
     @BeforeSuite
-    protected void launchBrowser(ITestContext testContext) {
-        log("Playwright and Browser initialized");
+    void launchBrowser(ITestContext testContext) {
+        LoginUtils.loginAndCollectCookies();
 
-        log(ReportUtils.getReportHeader());
+        logInfo(ReportUtils.getReportHeader());
 
-        if (browser.isConnected()) {
-            log("Browser " + browser.browserType().name().toUpperCase() + " launched\n");
+        if(playwright != null) {
+            logInfo("Playwright " + LoggerInfo.getPlaywrightId(playwright) + " created.");
         } else {
-            logFatal("FATAL: BROWSER " + browser.browserType().name().toUpperCase() + " IS NOT CONNECTED\n");
+            logFatal("FATAL: Playwright is NOT created\n");
             System.exit(1);
         }
 
-        LoginUtils.loginAndCollectCookies(playwright, browser);
+        if (browser.isConnected()) {
+            logInfo("Browser " + browser.browserType().name().toUpperCase() + " "
+                    + LoggerInfo.getBrowserId(browser) + " launched.\n");
+        } else {
+            logFatal("FATAL: Browser " + browser.browserType().name().toUpperCase() + " is NOT connected\n");
+            System.exit(1);
+        }
 
-        LoginUtils.parseUserToken();
-        log("User token extracted from cookies");
-
-        playwright = Playwright.create();
-        log("Playwright initialized");
-
-        browser = BrowserManager.createBrowser(playwright, getClass());
+        logInfo(ReportUtils.getEndLine());
     }
 
     @BeforeMethod
-    protected void createContextAndPage(Method method) {
-        log("Run " + ReportUtils.getTestMethodName(method));
+    void createContextAndPage(Method method) {
+        logInfo("Run " + ReportUtils.getTestMethodName(method));
 
-        APIServises.cleanData(playwright);
-        log("API: Course data cleared");
+        APIServices.cleanData(playwright);
+        logInfo("API: Course data cleared");
 
         context = BrowserManager.createContextWithCookies(browser);
-        log("Context created");
+        logInfo("Context created");
 
         TracingUtils.startTracing(context);
-        log("Tracing started");
+        logInfo("Tracing started");
 
         page = context.newPage();
-        log("Page created");
+        logInfo("Page created");
 
         page.navigate(ProjectProperties.BASE_URL);
-        log("Base URL opened");
 
+        if(isOnHomePage()) {
+            getPage().onLoad(p -> page.content());
+            if (!page.content().isEmpty()) {
+                logInfo("Open Home page");
+            }
+            logInfo("Testing....");
+        } else {
+            logError("HomePage is NOT opened");
+        }
     }
 
     @AfterMethod
-    protected void closeContext(Method method, ITestResult testResult) throws IOException {
+    void closeContext(Method method, ITestResult testResult) throws IOException {
         ReportUtils.logTestStatistic(method, testResult);
+        ReportUtils.addScreenshotToAllureReportForCIFailure(page,testResult);
 
-        ReportUtils.addScreenshotToAllureReportForFailedTestsOnCI(page,testResult);
-
-        page.close();
-        log("Page closed");
+        if (page != null) {
+            page.close();
+            logInfo("Page closed");
+        }
 
         TracingUtils.stopTracing(page, context, method, testResult);
-        log("Tracing stopped");
+        logInfo("Tracing stopped");
 
-        ReportUtils.addVideoAndTracingToAllureReportForFailedTestsOnCI(method, testResult);
+        ReportUtils.addVideoAndTracingToAllureReportForCIFailure(method, testResult);
 
-        context.close();
-        log("Context closed" + ReportUtils.END_LINE);
+        if (context != null) {
+            context.close();
+            logInfo("Context closed" + ReportUtils.getEndLine());
+        }
     }
 
     @AfterSuite
-    protected void closeBrowser() {
-        browser.close();
-        log("Browser closed");
+    void closeBrowser() {
+        if(browser != null) {
+            browser.close();
+            logInfo("Browser closed");
+        }
+        if(playwright != null) {
+            playwright.close();
+            logInfo("Playwright closed");
+            logInfo(ReportUtils.getEndLine() + "\n");
+        }
+    }
 
-        playwright.close();
-        log("Playwright closed");
+    protected  boolean isOnHomePage() {
+        String pageUrl = ProjectProperties.BASE_URL + TestData.HOME_END_POINT;
+
+        if (!getPage().url().equals(pageUrl) || getPage().content().isEmpty()) {
+            getPage().waitForTimeout(2000);
+        }
+
+        return !getPage().content().isEmpty();
     }
 
     protected Page getPage() {
+
         return page;
-    }
-
-    protected Playwright getPlaywright() {
-        return playwright;
-    }
-
-    protected void waitForPageLoad(String endPoint) {
-        getPage().waitForURL(ProjectProperties.BASE_URL + endPoint);
     }
 }

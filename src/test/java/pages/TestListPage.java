@@ -2,96 +2,85 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
 import io.qameta.allure.Step;
-import utils.TestUtils;
+import pages.constants.Constants;
 
-public class TestListPage extends BaseSideMenu {
+import java.util.List;
 
+public final class TestListPage extends BaseTestsListPage<TestListPage> implements IRandom {
     private final Locator domainsButton = text("Domains");
     private final Locator tutorButton = button("Tutor");
     private final Locator numberOfQuestionsInputField = locator("input[name = 'numberOfQuestions']");
-    private final Locator generateAndStartButton = button("Generate & Start");
-    Locator listCheckboxes = locator("button label span");
-    private final Locator numberMarked = numberMarked();
-    private final Locator testDomain2Text = text("Test domain 2");
     private final Locator chaptersButton = text("Chapters");
     private final Locator timedButton = exactButton("Timed");
     private final Locator startTestButton = exactButton("Start test");
     private final Locator startButton = exactButton("Start");
     private final Locator automationTestingForStatsText = text("Automation testing for stats");
     private final Locator historyAndCivilizationForStatsText = text("History and Civilization for Stats");
+    private final List<Locator> allCheckboxes = allCheckboxes("button label span");
 
-    public TestListPage(Page page, Playwright playwright) {
-        super(page, playwright);
+    TestListPage(Page page) {
+        super(page);
     }
 
-    public Locator getListCheckboxes() {
-        return waitForListOfElementsLoaded(listCheckboxes);
+    @Override
+    public TestListPage init() {
+
+        return createPage(new TestListPage(getPage()), Constants.TEST_LIST_END_POINT);
     }
 
-    @Step("Click 'Domains' button")
-    public TestListPage clickDomainsButton() {
+    @Step("Click 'Domains' button if not active")
+    public TestListPage clickDomainsButtonIfNotActive() {
         if (!domainsButton.isChecked()) {
             domainsButton.click();
         }
+
         return this;
     }
 
-    @Step("Click 'Tutor' button")
-    public TestListPage clickTutorButton() {
-        tutorButton.click();
+    @Step("Click random checkbox")
+    public TestListPage clickRandomCheckbox() {
+        getRandomValue(allCheckboxes).click();
+
         return this;
     }
 
     @Step("Set '{number}' as number of questions")
     public TestListPage inputNumberOfQuestions(String number) {
         numberOfQuestionsInputField.fill(number);
+
         return this;
     }
 
-    @Step("Click 'Generate and Start' button")
-    public TestTutorPage clickGenerateAndStartButton() {
-        generateAndStartButton.click();
-        return new TestTutorPage(getPage(), getPlaywright());
-    }
+    @Step("Click 'Tutor' button")
+    public TestListPage clickTutorButton() {
+        tutorButton.click();
 
-    @Step("Click random checkbox")
-    public TestListPage clickRandomCheckbox() {
-        TestUtils.clickRandomElement(getListCheckboxes());
         return this;
     }
 
     @Step("Select a checkbox randomly and retrieve its name")
     public String clickRandomCheckboxAndReturnItsName() {
-        int randomValue = TestUtils.getRandomNumber(listCheckboxes);
-        listCheckboxes.nth(randomValue).click();
+        int randomValue = getRandomNumber(allCheckboxes);
+        allCheckboxes.get(randomValue).click();
 
-        return listCheckboxes.nth(randomValue).textContent();
+        return allCheckboxes.get(randomValue).textContent();
     }
 
     public TestListPage cancelDialogIfVisible() {
         cancelDialog();
-        return this;
-    }
 
-    public TestListPage clickTestDomain2CheckBox() {
-        testDomain2Text.click();
         return this;
     }
 
     public TestListPage clickChaptersButton() {
         if (!chaptersButton.isChecked()) {
             chaptersButton.click();
-            getPage().waitForTimeout(2000);
+            waitWithTimeout(2000);
             getPage().reload();
         }
-        return this;
-    }
 
-    public TestTutorPage clickGenerateAndStartButton2() {
-        generateAndStartButton.click();
-        return new TestTutorPage(getPage(), getPlaywright());
+        return this;
     }
 
     public TestListPage clickTimedButton() {
@@ -109,21 +98,18 @@ public class TestListPage extends BaseSideMenu {
     public TestTimedPage clickStartButton() {
         startButton.click();
 
-        return new TestTimedPage(getPage(), getPlaywright());
+        return new TestTimedPage(getPage()).init();
     }
 
-    public TestListPage clickGenerateAndStartButton1() {
-        generateAndStartButton.click();
-        return this;
-    }
+//    public Locator getNumberMarked() {
+//
+//        return numberMarked;
+//    }
 
-    public Locator getNumberMarked() {
-        return numberMarked;
-    }
-
-    public Locator checkIcon(String text) {
-        return listCheckboxes.getByText(text).locator("svg");
-    }
+//    public Locator checkIcon(String text) {
+//
+//        return allCheckboxes.getByText(text).locator("svg");
+//    }
 
     public TestListPage clickAutomationTestingForStatsCheckBox() {
         automationTestingForStatsText.click();

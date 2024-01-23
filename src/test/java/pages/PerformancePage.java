@@ -2,31 +2,31 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
-import io.qameta.allure.Step;
 
-public class PerformancePage extends BaseSideMenu {
+import io.qameta.allure.Step;
+import pages.constants.Constants;
+
+public final class PerformancePage extends BaseSideMenu<PerformancePage> {
     private final Locator overallButton = button("Overall");
     private final Locator testsButtonInBanner = buttonInBanner("Tests");
     private final Locator overallButtonInBanner = buttonInBanner("Overall").nth(1);
     private final Locator allFlashcardsButtonInBanner = buttonInBanner("All flashcards");
     private final Locator dropdownLocator = locator(".bIQFHP");
     private final Locator totalTests = text("Tests").locator("~span");
-    private final Locator correctPercentageText = exactText("Total:")
-            .first()
-            .locator("~div>span:first-child");
-    private final Locator correctNumberText = exactText("Total:")
-            .first()
-            .locator("~div>span:last-child");
-    private final Locator incorrectPercentageText = exactText("Total:")
-            .last()
-            .locator("~div>span:first-child");
-    private final Locator incorrectNumberText = exactText("Total:")
-            .last()
-            .locator("~div>span:last-child");
+    private final Locator correctPercentageText = exactText("Total:").first().locator("~div>span:first-child");
+    private final Locator correctNumberText = exactText("Total:").first().locator("~div>span:last-child");
+    private final Locator incorrectPercentageText = exactText("Total:").last().locator("~div>span:first-child");
+    private final Locator incorrectNumberText = exactText("Total:").last().locator("~div>span:last-child");
     private final Locator lastTestLocator = locator(".eaNKjL>div:nth-child(2)");
-    public PerformancePage(Page page, Playwright playwright) {
-        super(page, playwright);
+
+    PerformancePage(Page page) {
+        super(page);
+    }
+
+    @Override
+    public PerformancePage init() {
+
+        return createPage(new PerformancePage(getPage()), Constants.PERFORMANCE_END_POINT);
     }
 
     @Step("Click on “Overall”.")
@@ -75,6 +75,7 @@ public class PerformancePage extends BaseSideMenu {
     }
 
     public int getIncorrectNumbers() {
+
         return Integer.parseInt(incorrectNumberText.innerText());
     }
 

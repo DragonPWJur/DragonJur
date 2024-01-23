@@ -2,39 +2,56 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
-import utils.TestUtils;
+import pages.constants.Constants;
 
-public class FlashcardPacksPage extends BaseSideMenu {
+import java.util.List;
 
-    private final Locator markedForRecheckingButton = button("Marked for re-checking").locator("div:nth-of-type(2)");
-    private final Locator listOfFlashcardsPacksToLearn = locator("//div[contains(text(),'Learned')]");
+public final class FlashcardPacksPage extends BaseSideMenu<FlashcardPacksPage> implements IRandom {
+    private final Locator markedForRecheckingButton = button("Marked for re-checking");
+    private final Locator learnedButton = button("Learned");
+    private final List<Locator> allLearnedButtons = allButtons(learnedButton);
 
-    private final int flashcardsPackNumber = getRandomFlashcardsPacksToLearnNumber();
+    private final int randomPackIndex = getRandomNumber(allLearnedButtons);
 
-    public FlashcardPacksPage(Page page, Playwright playwright) {
-        super(page, playwright);
+    FlashcardPacksPage(Page page) {
+        super(page);
     }
 
-    public String getNumberMarkedForRechecking() {
-        return markedForRecheckingButton.innerText();
+    @Override
+    public FlashcardPacksPage init() {
+
+        return createPage(new FlashcardPacksPage(getPage()), Constants.FLASHCARD_PACKS_END_POINT);
     }
 
-    public Locator getFlashcardsPacksToLearn() {
-        return waitForListOfElementsLoaded(listOfFlashcardsPacksToLearn);
+    int getRandomPackIndex() {
+
+        return randomPackIndex;
+    }
+
+    private String[] getPackSplitText() {
+
+        return allLearnedButtons.get(randomPackIndex).innerText().trim().split("\n");
+    }
+
+    public String getFlashcardsPackName() {
+
+        return getPackSplitText()[0];
+    }
+
+    public String getAmountOfCardsInPack() {
+
+        return getPackSplitText()[1].trim().split(" ")[0].split("/")[1];
+    }
+
+    public String getAmountOfCardsMarkedForRechecking() {
+        String[] textToArray = markedForRecheckingButton.innerText().trim().split("\n");
+
+        return textToArray[textToArray.length - 1];
     }
 
     public FlashcardsPackIDPage clickNthFlashcardPack(int randomIndex) {
-        getFlashcardsPacksToLearn().nth(randomIndex).click();
+        allLearnedButtons.get(randomIndex).click();
 
-        return new FlashcardsPackIDPage(getPage(), getPlaywright());
-    }
-
-    public int getRandomFlashcardsPacksToLearnNumber() {
-        return TestUtils.getRandomNumber(getFlashcardsPacksToLearn());
-    }
-
-    public int getNumberOfFlashcardsPack() {
-        return flashcardsPackNumber;
+        return new FlashcardsPackIDPage(getPage()).init();
     }
 }
