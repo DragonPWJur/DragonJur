@@ -7,12 +7,12 @@ public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
     private final Locator lifeTimeButton = button("Life time");
     private final Locator chooseAProductHeading = heading("Choose a product");
 
-    public AddNewCourseModal(Page page) {
+    AddNewCourseModal(Page page) {
         super(page);
     }
 
     @Override
-    public AddNewCourseModal createPage() {
+    public AddNewCourseModal init() {
 
         return new AddNewCourseModal(getPage());
     }
@@ -20,7 +20,7 @@ public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
     public AddNewCourseModal clickLifeTimeButton() {
         lifeTimeButton.click();
 
-        return createPage();
+        return init();
     }
 
     public Locator getChooseAProductHeading() {

@@ -10,14 +10,14 @@ public final class TestTimedPage extends BaseFooter<TestTimedPage> {
     private final Locator timer = locator("header div div:has(button)>div");
     private final List<Locator> radioButtons = allRadioButtons();
 
-    public TestTimedPage(Page page) {
+    TestTimedPage(Page page) {
         super(page);
     }
 
     @Override
-    public TestTimedPage createPage() {
+    public TestTimedPage init() {
 
-        return init(new TestTimedPage(getPage()), Constants.TEST_TIMED_END_POINT);
+        return createPage(new TestTimedPage(getPage()), Constants.TEST_TIMED_END_POINT);
     }
 
     public Locator getTimer() {

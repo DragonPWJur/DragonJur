@@ -9,7 +9,7 @@ import java.util.List;
 
 abstract class BaseLocator<TPage> extends BaseWait<TPage> {
 
-    protected BaseLocator(Page page) {
+    BaseLocator(Page page) {
         super(page);
     }
 
@@ -104,9 +104,9 @@ abstract class BaseLocator<TPage> extends BaseWait<TPage> {
         return getPage().getByRole(AriaRole.TEXTBOX);
     }
 
-    protected Locator checkBoxImage(int number) {
+    protected Locator checkbox(int number) {
 
-        return locator("label:has(input):nth-child(" + (number) + ") svg");
+        return getPage().getByRole(AriaRole.CHECKBOX).nth(number);
     }
 
     protected List<Locator> allCheckboxes() {
@@ -136,8 +136,6 @@ abstract class BaseLocator<TPage> extends BaseWait<TPage> {
             locator.last().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED));
             locator.last().scrollIntoViewIfNeeded();
             locator.last().focus();
-
-            System.out.println("locator.count() = " + locator + " " + locator.count());
         }
 
         return locator.all();

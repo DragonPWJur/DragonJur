@@ -2,7 +2,6 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import io.qameta.allure.Step;
 
 import java.util.List;
 
@@ -21,49 +20,49 @@ abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
     private final Locator finishTestButton = button("Finish test");
     private final Locator incorrectAnswer = locator("//label[not(contains(text(), 'Correct Answer'))]");
 
-    protected BaseTestsPage(Page page) {
+    BaseTestsPage(Page page) {
         super(page);
     }
 
-    public Locator getH3Header() {
-
-        return h3Header;
-    }
-
-    public Locator getCorrectAnswerBackgroundColor() {
-
-        return correctAnswerBackgroundColor;
-    }
-
-    public Locator getExplanationHeader() {
-
-        return explanationHeader;
-    }
-
-    public String getExplanationText() {
-
-        return explanationTextLocator.innerText();
-    }
-
-    public int countAnswersRadioButtons() {
-
-        return answerRadioButton.count();
-    }
-
-    public Locator getTestQuestion() {
-
-        return testQuestion;
-    }
-
-    public int getAnswersCount() {
-
-        return radioButtons.size();
-    }
-
-    public Locator getQuestionMark() {
-
-        return questionMark;
-    }
+//    public Locator getH3Header() {
+//
+//        return h3Header;
+//    }
+//
+//    public Locator getCorrectAnswerBackgroundColor() {
+//
+//        return correctAnswerBackgroundColor;
+//    }
+//
+//    public Locator getExplanationHeader() {
+//
+//        return explanationHeader;
+//    }
+//
+//    public String getExplanationText() {
+//
+//        return explanationTextLocator.innerText();
+//    }
+//
+//    public int countAnswersRadioButtons() {
+//
+//        return answerRadioButton.count();
+//    }
+//
+//    public Locator getTestQuestion() {
+//
+//        return testQuestion;
+//    }
+//
+//    public int getAnswersCount() {
+//
+//        return radioButtons.size();
+//    }
+//
+//    public Locator getQuestionMark() {
+//
+//        return questionMark;
+//    }
 
 //    public Self clickCorrectAnswerRadioButton() {
 //        correctAnswer.click();
@@ -77,15 +76,15 @@ abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
 //        return (Self) this;
 //    }
 
-    public Locator getIncorrectAnswer() {
-
-        return incorrectAnswer;
-    }
-
-    public void clickNextQuestionButton() {
-
-        nextQuestionButton.click();
-    }
+//    public Locator getIncorrectAnswer() {
+//
+//        return incorrectAnswer;
+//    }
+//
+//    public void clickNextQuestionButton() {
+//
+//        nextQuestionButton.click();
+//    }
 
 //
 //    public Self clickFinishTestButton() {

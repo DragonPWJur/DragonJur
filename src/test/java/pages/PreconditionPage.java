@@ -1,8 +1,11 @@
 package pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import io.qameta.allure.Step;
+
+import java.util.List;
 
 public final class PreconditionPage extends BasePage<PreconditionPage> {
     private int flashcardsPackRandomIndex;
@@ -14,7 +17,8 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
     }
 
     @Override
-    public PreconditionPage createPage() {
+    public PreconditionPage init() {
+
         return new PreconditionPage(getPage());
     }
 
@@ -35,9 +39,11 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
 
     @Step("Precondition: Save the initial amount of 'Marked for re-checking' cards.")
     public String getInitialAmountOfCardsMarkedForRechecking() {
-        final String amountMarkedForRechecking = new HomePage(getPage())
-                .clickFlashcardsMenu()
-                .getAmountOfCardsMarkedForRechecking();
+        final String amountMarkedForRechecking =
+                new HomePage(getPage())
+                        .init()
+                        .clickFlashcardsMenu()
+                        .getAmountOfCardsMarkedForRechecking();
 
         new FlashcardPacksPage(getPage())
                 .clickHomeMenu();
@@ -48,6 +54,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
     @Step("Precondition: Start random domain test with {number} question(s).")
     public TestTutorPage startRandomDomainTest(String number) {
         new HomePage(getPage())
+                .init()
                 .clickTestsMenu()
                 .cancelDialogIfVisible()
                 .clickDomainsButtonIfNotActive()
@@ -55,23 +62,36 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 .inputNumberOfQuestions(number)
                 .clickGenerateAndStartButton();
 
-        return new TestTutorPage(getPage()).createPage();
+        return new TestTutorPage(getPage()).init();
     }
 
     public void collectRandomFlashcardPackInfo() {
-        FlashcardPacksPage flashcardPacksPage = new HomePage(getPage())
-                .clickFlashcardsMenu();
-        this.flashcardsPackRandomIndex =  flashcardPacksPage.getRandomPackIndex();
+        FlashcardPacksPage flashcardPacksPage =
+                new HomePage(getPage())
+                        .init()
+                        .clickFlashcardsMenu();
+
+        this.flashcardsPackRandomIndex = flashcardPacksPage.getRandomPackIndex();
         this.flashcardsPackCardsAmount = flashcardPacksPage.getAmountOfCardsInPack();
         this.flashcardsPackName = flashcardPacksPage.getFlashcardsPackName();
 
         flashcardPacksPage.clickHomeMenu();
     }
-//
-//        new FlashcardPacksPage(getPage(), getPlaywright()).clickHomeMenu();
-//        return numberMarkedForRechecking;
-//
-//    }
+
+    public List<Locator> getAllCheckboxesInA2WeeksPlan() {
+
+        return new HomePage(getPage())
+                .init()
+                .getAllCheckboxesInA2WeeksPlan();
+    }
+
+    public boolean areAllCheckboxesUnchecked() {
+
+        return new HomePage(getPage())
+                .init()
+                .areAllCheckboxesUnchecked();
+    }
+
 
 //    public void endTest() {
 //        new TestTutorPage(getPage())
@@ -84,10 +104,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
 //
 
 //
-////    public List<Locator> getAllCheckBoxes() {
-////
-////        return new HomePage(getPage()).getAllCheckboxes();
-////    }
+
 //
 ////    public void startFlashcardPackAndGoBack(int index) {
 ////        new HomePage(getPage())
@@ -100,9 +117,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
 ////                .clickHomeMenu();
 ////    }
 //
-//    public boolean areAllCheckBoxesUnchecked() {
-//        return new HomePage(getPage()).areAllCheckBoxesUnchecked();
-//    }
+
 //
 ////    @Step("Start test for the stats")
 ////    public void startTestDomainForStats(String nameTest, String numberOfQuestions) {

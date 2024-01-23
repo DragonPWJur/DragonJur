@@ -7,7 +7,7 @@ import io.qameta.allure.Step;
 abstract class BaseTestsListPage<TPage> extends BaseSideMenu<TPage> {
     private final Locator generateAndStartButton = button("Generate & Start");
 
-    protected BaseTestsListPage(Page page) {
+    BaseTestsListPage(Page page) {
         super(page);
     }
 
@@ -15,8 +15,6 @@ abstract class BaseTestsListPage<TPage> extends BaseSideMenu<TPage> {
     public TPage clickGenerateAndStartButton() {
         generateAndStartButton.click();
 
-        return createPage();
+        return init();
     }
-
-
 }

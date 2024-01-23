@@ -19,14 +19,14 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     private final Locator historyAndCivilizationForStatsText = text("History and Civilization for Stats");
     private final List<Locator> allCheckboxes = allCheckboxes("button label span");
 
-    public TestListPage(Page page) {
+    TestListPage(Page page) {
         super(page);
     }
 
     @Override
-    public TestListPage createPage() {
+    public TestListPage init() {
 
-        return init(new TestListPage(getPage()), Constants.TEST_LIST_END_POINT);
+        return createPage(new TestListPage(getPage()), Constants.TEST_LIST_END_POINT);
     }
 
     @Step("Click 'Domains' button if not active")
@@ -98,7 +98,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     public TestTimedPage clickStartButton() {
         startButton.click();
 
-        return new TestTimedPage(getPage());
+        return new TestTimedPage(getPage()).init();
     }
 
 //    public Locator getNumberMarked() {

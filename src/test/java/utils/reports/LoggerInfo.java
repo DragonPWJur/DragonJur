@@ -3,7 +3,7 @@ package utils.reports;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Playwright;
 
-public final class ReportInfo {
+public final class LoggerInfo {
 
     public static String getPlaywrightId(Playwright playwright) {
         String[] text = playwright.toString().split("impl.");

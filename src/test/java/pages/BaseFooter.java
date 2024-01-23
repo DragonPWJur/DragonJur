@@ -11,7 +11,7 @@ abstract class BaseFooter<TPage> extends BaseHeader<TPage> {
     private final Locator removeFromFlashcards = exactButton("Remove from flashcards");
     private final Locator resetResultsButton = exactButton("Reset results");
 
-    protected BaseFooter(Page page) {
+    BaseFooter(Page page) {
         super(page);
     }
 

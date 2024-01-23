@@ -11,115 +11,129 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     private final Locator twoWeeksButton = exactButton("2 Weeks");
     private final Locator week1Header = exactText("Week 1");
     private final Locator week1FirstCheckbox = exactText("Week 1").locator("~label").first();
-    private final Locator progressbarPoints = locator("div>svg.CircularProgressbar+div>span").first();
-    private final Locator progressbarSideMenuPoints = locator("div:has(.CircularProgressbar)+span").first();
+    private final Locator mainSectionPoints = locator("div>svg.CircularProgressbar+div>span").first();
+    private final Locator sideMenuPoints = locator("div:has(.CircularProgressbar)+span").first();
     private final Locator streaksButton = locator("button>svg+p").last();
     private final Locator checkboxImage = locator("label:has(input) svg");
-    private final List<Locator> allCheckboxes = allCheckboxes();
+    private final List<Locator> allCheckboxes = allCheckboxes("label");
 
     private final int checkboxRandomNumber = getRandomInt(0, allCheckboxes.size());
+
 
     public HomePage(Page page) {
         super(page);
     }
 
     @Override
-    public HomePage createPage() {
+    public HomePage init() {
 
-        return init(new HomePage(getPage()), Constants.HOME_END_POINT);
+        return createPage(new HomePage(getPage()), Constants.HOME_END_POINT);
     }
 
-//    public List<Locator> getListCheckboxes() {
-//        return allCheckboxes;
-//    }
-//
-//    public Locator getStudyThisButton() {
-//
-//        return studyThisButton;
-//    }
-//
-//    public Locator getMainSectionPointsLocator() {
-//
-//        return progressbarPoints;
-//    }
-//
-//    public Locator getWeek1FirstCheckbox() {
-//
-//        return week1FirstCheckbox;
-//    }
-//
-//    public HomePage focusWeek1Header() {
-//        week1Header.focus();
-//
-//        return this;
-//    }
-//
-//    public HomePage click2WeeksButton() {
-//        twoWeeksButton.click();
-//
-//        return this;
-//    }
-//
-//    public HomePage clickWeek1FirstCheckbox() {
-//        week1FirstCheckbox.click();
-//
-//        return this;
-//    }
-//
-//    public String getMainSectionPointsText() {
-//
-//        return progressbarPoints.innerText();
-//    }
-//
-//    public String getSideMenuPointsText() {
-//
-//        return progressbarSideMenuPoints.innerText();
-//    }
-//
-//    public int getMainSectionPoints() {
-//        ;
-//        return Integer.parseInt(getMainSectionPointsText());
-//    }
-//
-//    public int getSideMenuPoints() {
-//
-//        return Integer.parseInt(getSideMenuPointsText());
-//    }
-//
-//    public HomePage clickStreaksButton() {
-//        streaksButton.click();
-//
-//        return this;
-//    }
-//
-//    public Locator getStreaksModalWindow() {
-//
-//        return getDialog();
-//    }
-//
-//    public Locator getNthCheckbox(int number) {
-//
-//        return allCheckboxes.get(number);
-//    }
-//
-////    public  HomePage clickRandomCheckBox(){
-////        getNthCheckbox(checkBoxNumber).click();
-////
-////        return this;
-////    }
-//
-//
-//    public  HomePage clickCheckBox(int index) {
-//        getNthCheckbox(index).click();
-//        getPage().waitForTimeout(1000);
-//
-//        return this;
-//    }
-//
-//    public int getCheckBoxNumber() {
-//
-//        return checkBoxNumber;
-//    }
+    public Locator getMainSectionPointsLocator() {
+
+        return mainSectionPoints;
+    }
+
+    public String getMainSectionPointsText() {
+
+        return mainSectionPoints.innerText();
+    }
+
+    public int getMainSectionPoints() {
+        ;
+        return Integer.parseInt(getMainSectionPointsText());
+    }
+
+    public String getSideMenuPointsText() {
+
+        return sideMenuPoints.innerText();
+    }
+
+    public int getSideMenuPoints() {
+
+        return Integer.parseInt(getSideMenuPointsText());
+    }
+
+    public HomePage focusWeek1Header() {
+        week1Header.focus();
+
+        return this;
+    }
+
+    public Locator getWeek1FirstCheckbox() {
+
+        return week1FirstCheckbox;
+    }
+
+    public Locator getStudyThisButton() {
+
+        return studyThisButton;
+    }
+
+    public List<Locator> getAllCheckboxesInA2WeeksPlan() {
+
+        return allCheckboxes;
+    }
+
+    public HomePage clickWeek1FirstCheckbox() {
+        week1FirstCheckbox.click();
+
+        return this;
+    }
+
+    public HomePage click2WeeksButton() {
+        twoWeeksButton.click();
+
+        return this;
+    }
+
+    public void waitForPointsAnimationToStop() {
+
+        waitWithTimeout(2000);
+    }
+
+    public HomePage clickStreaksButton() {
+        streaksButton.click();
+
+        return this;
+    }
+
+    public Locator getStreaksModalWindow() {
+
+        return getDialog();
+    }
+
+    boolean areAllCheckboxesUnchecked() {
+
+        return allCheckboxes.stream().noneMatch(Locator::isChecked);
+    }
+
+    public  HomePage clickRandomCheckbox(){
+        getNthCheckbox(checkboxRandomNumber).click();
+
+        return this;
+    }
+
+    public int getCheckboxRandomNumber() {
+
+        return checkboxRandomNumber;
+    }
+
+    public Locator getNthCheckbox(int number) {
+
+        return allCheckboxes.get(number);
+    }
+
+    public void clickNthCheckbox(int randomNumber) {
+
+        getNthCheckbox(randomNumber).click();
+    }
+
+    public Locator getCheckboxImage() {
+
+        return checkboxImage;
+    }
 //
 //    public HomePage checkAllCheckBoxes() {
 //
@@ -138,10 +152,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
 ////        return allCheckboxes;
 ////    }
 //
-//    protected boolean areAllCheckBoxesUnchecked() {
-//
-//       return allCheckboxes.stream().noneMatch(Locator::isChecked);
-//    }
+
 //
 ////    public boolean isCheckBoxChecked() {
 ////
@@ -158,10 +169,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
 //        return listCheckboxes.get(checkBoxNumber).isChecked();
 //    }
 //
-//    public Locator getCheckboxImage() {
-//
-//        return checkboxImage;
-//    }
+
 //
 //    protected List<Locator> getListCheckedCheckBoxes() {
 //

@@ -1,97 +1,113 @@
 package tests;
 
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.AriaRole;
+import com.microsoft.playwright.Locator;
+import org.testng.Assert;
 import org.testng.annotations.Test;
-import utils.runner.ProjectProperties;
+import pages.HomePage;
+import pages.PreconditionPage;
 import tests.helpers.TestData;
+
+import java.util.List;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public final class HomeTest extends BaseTest {
 
-    @Test
-    public void testLoginNavigation() {
+    @Test(
+            testName = "TC1365-01 - Upon clicking the empty checkbox, the point count increases.",
+            description = "LMS-1365 https://app.qase.io/plan/LMS/1?case=1365"
+    )
+    public void testUponClickingCheckboxPointsCountIncreases() {
+        HomePage homePage =
+                new HomePage(getPage()).init()
+                        .click2WeeksButton()
+                        .focusWeek1Header();
 
-        assertThat(getPage()).hasURL(ProjectProperties.BASE_URL + "/home");
+        final int mainSectionPointsBefore = homePage.getMainSectionPoints();
+        final int sideMenuPointsBefore = homePage.getSideMenuPoints();
+
+        Assert.assertEquals(
+                sideMenuPointsBefore, mainSectionPointsBefore,
+                "If FAIL: Side Menu Points before test (" + sideMenuPointsBefore
+                        + ") are NOT equal to Main Section Points before test (" + mainSectionPointsBefore + ").\n"
+        );
+
+        homePage
+                .clickWeek1FirstCheckbox()
+                .waitForPointsAnimationToStop();
+
+        final int mainSectionPointsAfter = homePage.getMainSectionPoints();
+        final int sideMenuPointsAfter = homePage.getSideMenuPoints();
+
+        assertThat(homePage.getWeek1FirstCheckbox()).isChecked();
+        Assert.assertTrue(
+                mainSectionPointsBefore < mainSectionPointsAfter,
+                "If FAIL: Points in Main Section before test (" + mainSectionPointsBefore
+                        + ") did NOT increase compare to Points in Main Section after test  (" + mainSectionPointsAfter + ").\n"
+        );
+        Assert.assertTrue(
+                sideMenuPointsBefore < sideMenuPointsAfter,
+                "If FAIL: Side Menu Points before test (" + sideMenuPointsBefore
+                        + ") did NOT increase compare to Side Menu Points after test (" + sideMenuPointsAfter + ").\n"
+        );
+        assertThat(homePage.getMainSectionPointsLocator()).hasText(TestData.CHECKBOX_POINTS);
+        Assert.assertEquals(
+                mainSectionPointsAfter, sideMenuPointsAfter,
+                "If FAIL: Points on the main section after test (" + mainSectionPointsAfter
+                        + ") are NOT the same as those shown on the side menu after test (" + sideMenuPointsAfter + ").\n"
+        );
     }
 
-    @Test(dataProvider = "sideMenuItems", dataProviderClass = TestData.class)
-    public void testNavigateToSubMenuItems(String menuName, String expectedUrl) {
-        getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(menuName)).click();
+    @Test(
+            testName = "TC1343-01 - Verification “Streaks” modal window appears.",
+            description = "LMS-1343 https://app.qase.io/plan/LMS/1?case=1343"
+    )
+    public void testStreaksModalWindowIsAppeared() {
+        HomePage homePage =
+                new HomePage(getPage()).init()
+                        .clickStreaksButton();
 
-        assertThat(getPage()).hasURL(expectedUrl);
+        assertThat(homePage.getStreaksModalWindow()).isVisible();
     }
 
-//    @Test(testName = "TC1365-01 LMS-1365 https://app.qase.io/plan/LMS/1?case=1365")
-//    public void testUponClickingCheckboxPointsCountIncreases() {
-//        HomePage homePage = new HomePage(getPage())
-//                .clickHomeMenu()
-//                .click2WeeksButton()
-//                .focusWeek1Header();
-//
-//        int mainSectionPointsBefore = homePage.getMainSectionPoints();
-//        int sideMenuPointsBefore = homePage.getSideMenuPoints();
-//
-//        Assert.assertEquals(
-//                sideMenuPointsBefore, mainSectionPointsBefore,
-//                "Side Menu Points " + sideMenuPointsBefore + " are NOT equal to Main Section Points " + mainSectionPointsBefore
-//        );
-//
-//        homePage
-//                .clickWeek1FirstCheckbox()
-//                .waitForPointsAnimationToStop();
-//
-//        int mainSectionPointsAfter = homePage.getMainSectionPoints();
-//        int sideMenuPointsAfter = homePage.getSideMenuPoints();
-//
-//        assertThat(homePage.getWeek1FirstCheckbox()).isChecked();
-//        Assert.assertTrue(
-//                mainSectionPointsBefore < mainSectionPointsAfter,
-//                "Points in Main Section " + mainSectionPointsBefore + "did NOT increase (" + mainSectionPointsAfter + ")."
-//        );
-//        Assert.assertTrue(
-//                sideMenuPointsBefore < sideMenuPointsAfter,
-//                "Points on Side Menu " + sideMenuPointsBefore + "did NOT increase (" + sideMenuPointsAfter + ")."
-//        );
-//        assertThat(homePage.getMainSectionPointsLocator()).hasText(TestData.CHECKBOX_POINTS);
-//        Assert.assertEquals(homePage.getMainSectionPointsText(), homePage.getSideMenuPointsText());
-//    }
-//
-//    @Test(testName = "TC1343-01 LMS-1343 https://app.qase.io/plan/LMS/1?case=1343")
-//    public void testStreaksModalWindowIsAppeared() {
-//        HomePage homePage = new HomePage(getPage())
-//                .clickHomeMenu()
-//                .clickStreaksButton();
-//
-//        assertThat(homePage.getStreaksModalWindow()).isVisible();
-//    }
-//
-//    @Test(testName = "TC1341-01 LMS-1341 https://app.qase.io/plan/LMS/1?case=1341")
-//    public void testTheSingleNonActiveCheckboxCanBeChecked() {
-//        PreconditionPage precondition = new PreconditionPage(getPage());
-//
-//        Assert.assertFalse(
-//                precondition.getAllCheckBoxes().isEmpty(),
-//                "Precondition is not reached. The List of Checkboxes is empty."
-//        );
-//        Assert.assertTrue(
-//                precondition.areAllCheckBoxesUnchecked(),
-//                "Precondition is not reached. NOT All Checkboxes are unchecked"
-//        );
-//
-//        HomePage homePage = new HomePage(getPage());
-//
-//        boolean isCheckBoxChecked = homePage
-//                .clickRandomCheckBox()
-//                .isCheckBoxChecked();
-//
-//        Locator checkboxImage = homePage.getCheckboxImage();
-//
-//        Assert.assertTrue(isCheckBoxChecked, "Randomly checked checkbox is expected to be checked, but unchecked.");
-//        assertThat(checkboxImage).hasCount(1);
-//        assertThat(checkboxImage).isVisible();
-//    }
+    @Test(
+            testName = "TC1341-01 - The single non-active Checkbox can be checked." ,
+            description = "LMS-1341 https://app.qase.io/plan/LMS/1?case=1341"
+    )
+    public void testTheSingleNonActiveCheckboxCanBeChecked() {
+
+        PreconditionPage precondition = new PreconditionPage(getPage()).init();
+        HomePage homePage = new HomePage(getPage());
+
+        final List<Locator> allCheckboxesInAWeek2Plan =
+                precondition
+                        .getAllCheckboxesInA2WeeksPlan();
+
+        Assert.assertFalse(
+                allCheckboxesInAWeek2Plan.isEmpty(),
+                "If FAIL: Precondition is not reached. The List of Checkboxes IS EMPTY.\n"
+        );
+        Assert.assertTrue(
+                precondition.areAllCheckboxesUnchecked(),
+                "If FAIL: Precondition is not reached. NOT All Checkboxes are unchecked.\n"
+        );
+
+        homePage.init();
+
+        final int randomCheckboxNumber = homePage.getCheckboxRandomNumber();
+
+        assertThat(homePage.getNthCheckbox(randomCheckboxNumber)).not().isChecked();
+
+        homePage
+                .clickNthCheckbox(randomCheckboxNumber);
+
+        assertThat(homePage.getNthCheckbox(randomCheckboxNumber)).isChecked();
+
+        final Locator checkboxImage = homePage.getCheckboxImage();
+
+        assertThat(checkboxImage).hasCount(1);
+        assertThat(checkboxImage).isVisible();
+    }
 //<<<<<<< HEAD
 ////
 ////    @Test

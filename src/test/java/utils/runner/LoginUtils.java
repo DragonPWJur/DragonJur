@@ -5,8 +5,7 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import org.json.JSONObject;
-import tests.helpers.TestUtils;
-import utils.reports.ReportInfo;
+import utils.reports.LoggerInfo;
 import utils.reports.ReportUtils;
 import utils.reports.TracingUtils;
 
@@ -78,11 +77,11 @@ public final class LoginUtils {
 
     private static void setUpPlaywright() {
         playwright = Playwright.create();
-        logInfo("Login context: Playwright " + ReportInfo.getPlaywrightId(playwright) + " created.");
+        logInfo("Login context: Playwright " + LoggerInfo.getPlaywrightId(playwright) + " created.");
 
         browser = BrowserManager.createBrowser(playwright);
         logInfo("Login context: Browser " + browser.browserType().name() + " "
-                + ReportInfo.getBrowserId(browser) + " is launched");
+                + LoggerInfo.getBrowserId(browser) + " is launched");
 
         context = BrowserManager.createContext(browser);
         logInfo("Login context: Login Context created.");

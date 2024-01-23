@@ -1,8 +1,6 @@
 package pages;
 
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.LoadState;
-import pages.constants.Constants;
 import utils.runner.ProjectProperties;
 
 import static utils.reports.LoggerUtils.logInfo;
@@ -10,18 +8,18 @@ import static utils.reports.LoggerUtils.logInfo;
 abstract class BasePage<TPage> {
     private final Page page;
 
-    protected BasePage(Page page) {
+    BasePage(Page page) {
         this.page = page;
     }
-
-    abstract TPage createPage();
 
     Page getPage() {
 
         return page;
     }
 
-    protected TPage init(TPage page, String endPoint) {
+    abstract TPage init();
+
+    TPage createPage(TPage page, String endPoint) {
         if (isOnPage(endPoint)) {
 
             return page;
@@ -29,7 +27,6 @@ abstract class BasePage<TPage> {
 
         return null;
     }
-
 
     private boolean isOnPage(String endPoint) {
         String pageUrl = ProjectProperties.BASE_URL + endPoint;

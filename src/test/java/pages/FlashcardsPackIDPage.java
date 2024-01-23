@@ -12,14 +12,14 @@ public final class FlashcardsPackIDPage extends BaseFooter<FlashcardsPackIDPage>
     private final Locator noButton = exactButton("No");
     private final Locator kindaButton = exactButton("Kinda");
 
-    public FlashcardsPackIDPage(Page page) {
+    FlashcardsPackIDPage(Page page) {
         super(page);
     }
 
     @Override
-    public FlashcardsPackIDPage createPage() {
+    public FlashcardsPackIDPage init() {
 
-        return init(new FlashcardsPackIDPage(getPage()), Constants.FLASHCARDS_PACK_ID_END_POINT);
+        return createPage(new FlashcardsPackIDPage(getPage()), Constants.FLASHCARDS_PACK_ID_END_POINT);
     }
 
     public Locator getQuestionHeading() {

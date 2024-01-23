@@ -53,15 +53,4 @@ public final class BrowserManager {
         );
     }
 
-    private String getPlaywrightId(Playwright playwright) {
-        String[] text = playwright.toString().split("impl.");
-
-        return text[text.length - 1];
-    }
-
-    private String getBrowserId(Browser browser) {
-        String[] text = browser.toString().split("impl.");
-
-        return text[text.length - 1];
-    }
 }

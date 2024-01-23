@@ -8,9 +8,8 @@ import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import tests.helpers.TestData;
-import tests.helpers.TestUtils;
 import utils.api.APIServices;
-import utils.reports.ReportInfo;
+import utils.reports.LoggerInfo;
 import utils.runner.BrowserManager;
 import utils.runner.LoginUtils;
 import utils.runner.ProjectProperties;
@@ -37,7 +36,7 @@ abstract class BaseTest {
         logInfo(ReportUtils.getReportHeader());
 
         if(playwright != null) {
-            logInfo("Playwright " + ReportInfo.getPlaywrightId(playwright) + " created.");
+            logInfo("Playwright " + LoggerInfo.getPlaywrightId(playwright) + " created.");
         } else {
             logFatal("FATAL: Playwright is NOT created\n");
             System.exit(1);
@@ -45,7 +44,7 @@ abstract class BaseTest {
 
         if (browser.isConnected()) {
             logInfo("Browser " + browser.browserType().name().toUpperCase() + " "
-                    + ReportInfo.getBrowserId(browser) + " launched.\n");
+                    + LoggerInfo.getBrowserId(browser) + " launched.\n");
         } else {
             logFatal("FATAL: Browser " + browser.browserType().name().toUpperCase() + " is NOT connected\n");
             System.exit(1);
@@ -75,9 +74,8 @@ abstract class BaseTest {
         if(isOnHomePage()) {
             getPage().onLoad(p -> page.content());
             if (!page.content().isEmpty()) {
-                logInfo("On page '" + TestData.HOME_END_POINT + "'");
+                logInfo("Open Home page");
             }
-
             logInfo("Testing....");
         } else {
             logError("HomePage is NOT opened");
@@ -114,6 +112,7 @@ abstract class BaseTest {
         if(playwright != null) {
             playwright.close();
             logInfo("Playwright closed");
+            logInfo(ReportUtils.getEndLine() + "\n");
         }
     }
 

@@ -19,14 +19,14 @@ public final class PerformancePage extends BaseSideMenu<PerformancePage> {
     private final Locator incorrectNumberText = exactText("Total:").last().locator("~div>span:last-child");
     private final Locator lastTestLocator = locator(".eaNKjL>div:nth-child(2)");
 
-    public PerformancePage(Page page) {
+    PerformancePage(Page page) {
         super(page);
     }
 
     @Override
-    public PerformancePage createPage() {
+    public PerformancePage init() {
 
-        return init(new PerformancePage(getPage()), Constants.PERFORMANCE_END_POINT);
+        return createPage(new PerformancePage(getPage()), Constants.PERFORMANCE_END_POINT);
     }
 
     @Step("Click on “Overall”.")

@@ -13,12 +13,12 @@ public final class CongratulationsModal extends BaseModal<CongratulationsModal> 
             .filter(new Locator.FilterOptions().setHasText(Pattern.compile("\\d+")));
     private final Locator testProgressbarPoints = locator("div>svg.CircularProgressbar+div>span").first();
 
-    public CongratulationsModal(Page page) {
+    CongratulationsModal(Page page) {
         super(page);
     }
 
     @Override
-    public CongratulationsModal createPage() {
+    public CongratulationsModal init() {
 
         return new CongratulationsModal(getPage());
     }

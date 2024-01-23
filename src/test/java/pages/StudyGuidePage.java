@@ -16,14 +16,14 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     private final Locator searchResultField = locator("div:has(input[placeholder='Search']) + div>div");
     private final Locator longBonesFirstText = text("Long bones").first();
 
-    public StudyGuidePage(Page page) {
+    StudyGuidePage(Page page) {
         super(page);
     }
 
     @Override
-    public StudyGuidePage createPage() {
+    public StudyGuidePage init() {
 
-        return init(new StudyGuidePage(getPage()), Constants.STUDY_GUIDE_END_POINT);
+        return createPage(new StudyGuidePage(getPage()), Constants.STUDY_GUIDE_END_POINT);
     }
 
     public Locator getNoteTextAria() {

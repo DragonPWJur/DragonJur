@@ -7,19 +7,19 @@ import pages.constants.Constants;
 public final class AddNewCoursePage extends BaseHeader<AddNewCoursePage> {
     private final Locator getButton = locator("div:nth-child(3) > .sc-jKDlA-D > .sc-dkzDqf");
 
-    public AddNewCoursePage(Page page) {
+    AddNewCoursePage(Page page) {
         super(page);
     }
 
     @Override
-    public AddNewCoursePage createPage() {
+    public AddNewCoursePage init() {
 
-        return init(new AddNewCoursePage(getPage()), Constants.ADD_NEW_COURSE_END_POINT);
+        return createPage(new AddNewCoursePage(getPage()), Constants.ADD_NEW_COURSE_END_POINT);
     }
 
     public AddNewCourseModal clickGetButton() {
         getButton.click();
 
-        return new AddNewCourseModal(getPage());
+        return new AddNewCourseModal(getPage()).init();
     }
 }

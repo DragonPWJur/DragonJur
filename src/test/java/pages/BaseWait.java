@@ -1,10 +1,12 @@
 package pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.WaitForSelectorState;
 
 abstract class BaseWait<TPage> extends BasePage<TPage> {
 
-    protected BaseWait(Page page) {
+    BaseWait(Page page) {
         super(page);
     }
 
@@ -14,5 +16,10 @@ abstract class BaseWait<TPage> extends BasePage<TPage> {
 
     protected void waitForPageLoad() {
         getPage().waitForLoadState();
+    }
+
+    protected void waitForLocator(String css, int timeout) {
+        getPage().locator(css)
+                .waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(timeout));
     }
 }

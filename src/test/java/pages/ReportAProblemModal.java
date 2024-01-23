@@ -8,12 +8,12 @@ public final class ReportAProblemModal extends BaseModal<ReportAProblemModal> im
     private final Locator sendButton = button("Send");
     private final Locator reportSentSuccessfullyMessage = exactText("The report has been sent successfully");
 
-    public ReportAProblemModal(Page page) {
+    ReportAProblemModal(Page page) {
         super(page);
     }
 
     @Override
-    public ReportAProblemModal createPage() {
+    public ReportAProblemModal init() {
 
         return new ReportAProblemModal(getPage());
     }
@@ -22,6 +22,7 @@ public final class ReportAProblemModal extends BaseModal<ReportAProblemModal> im
         if (describeTheProblemTextarea.isVisible()) {
             describeTheProblemTextarea.fill(getRandomString(10));
         }
+
         return this;
     }
 
@@ -34,6 +35,7 @@ public final class ReportAProblemModal extends BaseModal<ReportAProblemModal> im
     public Locator getReportSentSuccessfullyMessage() {
         getCloseButton().waitFor();
         if (getCloseButton().isVisible()) {
+
             return reportSentSuccessfullyMessage;
         }
 

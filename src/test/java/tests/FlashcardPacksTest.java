@@ -1,5 +1,6 @@
 package tests;
 
+import com.microsoft.playwright.Locator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.FlashcardsPackIDPage;
@@ -19,8 +20,9 @@ public final class FlashcardPacksTest extends BaseTest {
     )
     public void testAddToFlashCard() {
 
-        PreconditionPage precondition = new PreconditionPage(getPage());
-        precondition.collectRandomFlashcardPackInfo();
+        PreconditionPage precondition = new PreconditionPage(getPage()).init();
+        precondition
+                .collectRandomFlashcardPackInfo();
 
         final String initialCardsAmount = precondition.getInitialAmountOfCardsMarkedForRechecking();
         final String expectedCardsAmount = TestUtils.add(initialCardsAmount, 1);
@@ -38,8 +40,8 @@ public final class FlashcardPacksTest extends BaseTest {
 
         Assert.assertEquals(
                 actualCardsAmount, expectedCardsAmount,
-                "The expected amount marked for re-checking cards (" + expectedCardsAmount
-                        + ") is NOT equal to the actual amount (" + actualCardsAmount + ")."
+                "If FAIL: The expected amount marked for re-checking cards (" + expectedCardsAmount
+                        + ") is NOT equal to the actual amount (" + actualCardsAmount + ").\n"
         );
     }
 
@@ -49,8 +51,9 @@ public final class FlashcardPacksTest extends BaseTest {
     )
     public void testStartRandomFlashCardPack() {
 
-        PreconditionPage precondition = new PreconditionPage(getPage());
-        precondition.collectRandomFlashcardPackInfo();
+        PreconditionPage precondition = new PreconditionPage(getPage()).init();
+        precondition
+                .collectRandomFlashcardPackInfo();
 
         final int packIndex = precondition.getFlashcardsPackRandomIndex();
         final String packName = precondition.getFlashcardsPackName();
@@ -58,25 +61,28 @@ public final class FlashcardPacksTest extends BaseTest {
         final String expectedUrlPart = ProjectProperties.BASE_URL + TestData.FLASHCARDS_PACK_ID_END_POINT;
 
         FlashcardsPackIDPage flashcardsPackIDPage =
-                new HomePage(getPage())
+                new HomePage(getPage()).init()
                         .clickFlashcardsMenu()
                         .clickNthFlashcardPack(packIndex)
                         .clickGotItButton();
 
         final String actualPageUrl = getPage().url();
         final String actualVisiblePackName = flashcardsPackIDPage.getPackName();
+        final Locator cardsTotalText = flashcardsPackIDPage.cardsTotalText(cardsInPackAmount);
+        final Locator questionHeading = flashcardsPackIDPage.getQuestionHeading();
+        final Locator showAnswerButton = flashcardsPackIDPage.getShowAnswerButton();
 
         Assert.assertTrue(
                 actualPageUrl.contains(expectedUrlPart),
-                "The page URL " + actualPageUrl + " does NOT contain: " + expectedUrlPart + "."
+                "If FAIL: The page URL " + actualPageUrl + " does NOT contains the url part: " + expectedUrlPart + ".\n"
         );
         Assert.assertTrue(
                 packName.contains(actualVisiblePackName),
-                "The expected pack name " + packName + "does NOT contains actual pack name " + actualVisiblePackName + "."
+                "If FAIL: The expected pack name " + packName + "does NOT contains actual pack name " + actualVisiblePackName + ".\n"
         );
-        assertThat(flashcardsPackIDPage.cardsTotalAmount(cardsInPackAmount)).isVisible();
-        assertThat(flashcardsPackIDPage.getQuestionHeading()).isVisible();
-        assertThat(flashcardsPackIDPage.getShowAnswerButton()).isVisible();
+        assertThat(cardsTotalText).isVisible();
+        assertThat(questionHeading).isVisible();
+        assertThat(showAnswerButton).isVisible();
     }
 
     @Test(
@@ -85,32 +91,41 @@ public final class FlashcardPacksTest extends BaseTest {
     )
     public void testFlashCardTurnedAfterClickingShowAnswerButton() {
 
-        PreconditionPage precondition = new PreconditionPage(getPage());
-        precondition.collectRandomFlashcardPackInfo();
+        PreconditionPage precondition = new PreconditionPage(getPage()).init();
+        precondition
+                .collectRandomFlashcardPackInfo();
 
         final int packIndex = precondition.getFlashcardsPackRandomIndex();
 
-        FlashcardsPackIDPage flashcardsPackIDPage = new HomePage(getPage())
-                .clickFlashcardsMenu()
-                .clickNthFlashcardPack(packIndex)
-                .clickGotItButton();
+        FlashcardsPackIDPage flashcardsPackIDPage =
+                new HomePage(getPage()).init()
+                        .clickFlashcardsMenu()
+                        .clickNthFlashcardPack(packIndex)
+                        .clickGotItButton();
 
-        assertThat(flashcardsPackIDPage.getQuestionHeading()).isVisible();
-        assertThat(flashcardsPackIDPage.getAnswerHeading()).not().isVisible();
-        assertThat(flashcardsPackIDPage.getNoButton()).not().isVisible();
-        assertThat(flashcardsPackIDPage.getKindaButton()).not().isVisible();
-        assertThat(flashcardsPackIDPage.getYesButton()).not().isVisible();
-        assertThat(flashcardsPackIDPage.getShowAnswerButton()).isVisible();
+        final Locator questionHeading = flashcardsPackIDPage.getQuestionHeading();
+        final Locator answerHeading = flashcardsPackIDPage.getAnswerHeading();
+        final Locator noButton = flashcardsPackIDPage.getNoButton();
+        final Locator kindaButton = flashcardsPackIDPage.getKindaButton();
+        final Locator yesButton = flashcardsPackIDPage.getYesButton();
+        final Locator showAnswerButton = flashcardsPackIDPage.getShowAnswerButton();
+
+        assertThat(questionHeading).isVisible();
+        assertThat(answerHeading).not().isVisible();
+        assertThat(noButton).not().isVisible();
+        assertThat(kindaButton).not().isVisible();
+        assertThat(yesButton).not().isVisible();
+        assertThat(showAnswerButton).isVisible();
 
         flashcardsPackIDPage
                 .clickShowAnswerButton();
 
-        assertThat(flashcardsPackIDPage.getQuestionHeading()).isVisible();
-        assertThat(flashcardsPackIDPage.getAnswerHeading()).isVisible();
-        assertThat(flashcardsPackIDPage.getNoButton()).isVisible();
-        assertThat(flashcardsPackIDPage.getKindaButton()).isVisible();
-        assertThat(flashcardsPackIDPage.getYesButton()).isVisible();
-        assertThat(flashcardsPackIDPage.getShowAnswerButton()).not().isVisible();
+        assertThat(questionHeading).isVisible();
+        assertThat(answerHeading).isVisible();
+        assertThat(noButton).isVisible();
+        assertThat(kindaButton).isVisible();
+        assertThat(yesButton).isVisible();
+        assertThat(showAnswerButton).not().isVisible();
     }
 
     @Test(
@@ -119,13 +134,14 @@ public final class FlashcardPacksTest extends BaseTest {
     )
     public void testUserCanLeaveYesMark() {
 
-        PreconditionPage precondition = new PreconditionPage(getPage());
-        precondition.collectRandomFlashcardPackInfo();
+        PreconditionPage precondition = new PreconditionPage(getPage()).init();
+        precondition
+                .collectRandomFlashcardPackInfo();
 
         final int packIndex = precondition.getFlashcardsPackRandomIndex();
 
         FlashcardsPackIDPage flashcardsPackIDPage =
-                new HomePage(getPage())
+                new HomePage(getPage()).init()
                         .clickFlashcardsMenu()
                         .clickNthFlashcardPack(packIndex)
                         .clickGotItButton()
@@ -133,18 +149,19 @@ public final class FlashcardPacksTest extends BaseTest {
 
         final String yesCardsAmountBeforeClick = flashcardsPackIDPage.getYesCardsAmount();
         final String expectedYesCardsAmount = TestUtils.add(yesCardsAmountBeforeClick, 1);
+        final Locator resetResultsButton = flashcardsPackIDPage.getResetResultsButton();
 
-        assertThat(flashcardsPackIDPage.getResetResultsButton()).not().isVisible();
+        assertThat(resetResultsButton).not().isVisible();
 
         flashcardsPackIDPage
                 .clickYesMarkButton();
 
         final String yesCardsAmountAfterClick = flashcardsPackIDPage.getYesCardsAmount();
 
+        assertThat(resetResultsButton).isVisible();
         Assert.assertEquals(
                 yesCardsAmountAfterClick, expectedYesCardsAmount,
-                "Expected 'Yes Mark' number to increase by 1 after clicking the 'Yes Mark' button."
+                "If FAIL: Expected 'Yes Mark' number does NOT increased by 1 after clicking the 'Yes Mark' button.\n"
         );
-        assertThat(flashcardsPackIDPage.getResetResultsButton()).isVisible();
     }
 }

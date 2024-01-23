@@ -5,14 +5,14 @@ import pages.constants.Constants;
 
 public final class TestTutorPage extends BaseFooter<TestTutorPage> {
 
-    public TestTutorPage(Page page) {
+    TestTutorPage(Page page) {
         super(page);
     }
 
     @Override
-    public TestTutorPage createPage() {
+    public TestTutorPage init() {
 
-        return init(new TestTutorPage(getPage()), Constants.TEST_TUTOR_END_POINT);
+        return createPage(new TestTutorPage(getPage()), Constants.TEST_TUTOR_END_POINT);
     }
 
 

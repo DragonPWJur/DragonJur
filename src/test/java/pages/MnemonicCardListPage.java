@@ -9,18 +9,17 @@ public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPag
 
     private final String[] randomStack = getRandomStackText();
 
-    public MnemonicCardListPage(Page page) {
+    MnemonicCardListPage(Page page) {
         super(page);
     }
 
     @Override
-    public MnemonicCardListPage createPage() {
+    public MnemonicCardListPage init() {
 
-        return init(new MnemonicCardListPage(getPage()), Constants.MNEMONIC_CARDS_LIST_END_POINT);
+        return createPage(new MnemonicCardListPage(getPage()), Constants.MNEMONIC_CARDS_LIST_END_POINT);
     }
 
    public Locator getListOfStacks() {
-       System.out.println("listOfStacks = " + listOfStacks);
 
         return listOfStacks;
     }
@@ -46,12 +45,13 @@ public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPag
     }
 
     public void clickRandomMnemonicCardsStack() {
+
         exactText(getExpectedStackName()).click();
     }
 
     public MnemonicCardsPage clickRandomMnemonicCardsStackAndGo() {
         exactText(getExpectedStackName()).click();
 
-        return new MnemonicCardsPage(getPage());
+        return new MnemonicCardsPage(getPage()).init();
     }
 }

@@ -13,14 +13,14 @@ public final class FlashcardPacksPage extends BaseSideMenu<FlashcardPacksPage> i
 
     private final int randomPackIndex = getRandomNumber(allLearnedButtons);
 
-    public FlashcardPacksPage(Page page) {
+    FlashcardPacksPage(Page page) {
         super(page);
     }
 
     @Override
-    public FlashcardPacksPage createPage() {
+    public FlashcardPacksPage init() {
 
-        return init(new FlashcardPacksPage(getPage()), Constants.FLASHCARD_PACKS_END_POINT);
+        return createPage(new FlashcardPacksPage(getPage()), Constants.FLASHCARD_PACKS_END_POINT);
     }
 
     int getRandomPackIndex() {
@@ -52,6 +52,6 @@ public final class FlashcardPacksPage extends BaseSideMenu<FlashcardPacksPage> i
     public FlashcardsPackIDPage clickNthFlashcardPack(int randomIndex) {
         allLearnedButtons.get(randomIndex).click();
 
-        return new FlashcardsPackIDPage(getPage()).createPage();
+        return new FlashcardsPackIDPage(getPage()).init();
     }
 }

@@ -9,11 +9,11 @@ abstract class BaseHeader<TPage> extends BaseModal<TPage> {
     private final Locator flashcardsButton = button("Flashcards /");
     private final Locator packName = locator("div:has(svg) + span");
 
-    protected BaseHeader(Page page) {
+    BaseHeader(Page page) {
         super(page);
     }
 
-    public Locator cardsTotalAmount(String total) {
+    public Locator cardsTotalText(String total) {
 
         return text(total + " Total");
     }
@@ -27,7 +27,7 @@ abstract class BaseHeader<TPage> extends BaseModal<TPage> {
     public TestTutorPage clickEndButton() {
         endButton.click();
 
-        return new TestTutorPage(getPage()).createPage();
+        return new TestTutorPage(getPage()).init();
     }
 
     public String getPackName() {
@@ -43,6 +43,6 @@ abstract class BaseHeader<TPage> extends BaseModal<TPage> {
     public FlashcardsPackIDPage clickFlashcardsTopMenu() {
         flashcardsButton.click();
 
-        return new FlashcardsPackIDPage(getPage()).createPage();
+        return new FlashcardsPackIDPage(getPage()).init();
     }
 }

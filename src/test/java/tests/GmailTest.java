@@ -16,6 +16,7 @@ public final class GmailTest {
         String expectedPassword = "MjXQ350#@&";
 
         String actualPassword = GmailUtils.extractPasswordFromEmail(GmailUtils.getGmailService(), 1021);
+
         Assert.assertEquals(actualPassword, expectedPassword);
     }
 }

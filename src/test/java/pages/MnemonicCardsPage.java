@@ -9,14 +9,14 @@ public final class MnemonicCardsPage extends BaseSideMenu<MnemonicCardsPage> {
     private final Locator mnemonicCardTotalQuantity = locator("div~span").last();
     private final Locator startPracticeButton = button("Start practice");
 
-    public MnemonicCardsPage(Page page) {
+    MnemonicCardsPage(Page page) {
         super(page);
     }
 
     @Override
-    public MnemonicCardsPage createPage() {
+    public MnemonicCardsPage init() {
 
-        return init(new MnemonicCardsPage(getPage()), Constants.MNEMONIC_CARDS_END_POINT);
+        return createPage(new MnemonicCardsPage(getPage()), Constants.MNEMONIC_CARDS_END_POINT);
     }
 
     public String getMnemonicCardHeaderText() {
@@ -42,6 +42,6 @@ public final class MnemonicCardsPage extends BaseSideMenu<MnemonicCardsPage> {
     public MnemonicCardPracticePage clickStartPracticeButton() {
         startPracticeButton.click();
 
-        return new MnemonicCardPracticePage(getPage()).createPage();
+        return new MnemonicCardPracticePage(getPage()).init();
     }
 }

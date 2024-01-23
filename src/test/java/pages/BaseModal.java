@@ -20,7 +20,7 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
             "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03"
     );
 
-    protected BaseModal(Page page) {
+    BaseModal(Page page) {
         super(page);
     }
 
@@ -29,11 +29,9 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
         return dialog;
     }
 
-
     public Locator getCloseButton() {
         return closeButton;
     }
-
 
     @Step("Click 'Cansel' button to cancel dialog if visible.")
     protected void cancelDialog() {
@@ -68,7 +66,7 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
             skipButton.click();
         }
 
-        return new TestResultPage(getPage()).createPage();
+        return new TestResultPage(getPage()).init();
     }
 
     @Step("Click 'Back' button on dialog window if visible.")
@@ -77,18 +75,18 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
             backButton.click();
         }
 
-        return createPage();
+        return init();
     }
 
     public TPage clickNextButton() {
         nextButton.click();
 
-        return createPage();
+        return init();
     }
 
     public TPage clickOkButton() {
         okButton.click();
 
-        return createPage();
+        return init();
     }
 }

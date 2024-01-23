@@ -9,14 +9,14 @@ public final class MnemonicCardPracticePage extends BaseHeader<MnemonicCardPract
     private final Locator answersToQuestion = text("Answers to question");
     private final Locator mnemonicWords = text("Mnemonic words");
 
-    public MnemonicCardPracticePage(Page page) {
+    MnemonicCardPracticePage(Page page) {
         super(page);
     }
 
     @Override
-    public MnemonicCardPracticePage createPage() {
+    public MnemonicCardPracticePage init() {
 
-        return init(new MnemonicCardPracticePage(getPage()), Constants.MNEMONIC_CARD_PRACTICE_END_POINT);
+        return createPage(new MnemonicCardPracticePage(getPage()), Constants.MNEMONIC_CARD_PRACTICE_END_POINT);
     }
 
     public Locator getMnemonicCardPracticeHeader() {
