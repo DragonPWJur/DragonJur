@@ -2,59 +2,65 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.BoundingBox;
-import utils.TestData;
-import utils.TestUtils;
+import pages.constants.Constants;
 
-public class StudyGuidePage extends BaseSideMenu {
+public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements IRandom{
+    private final Locator projectionsFirstWord = text("Projections").first();
+    private final Locator projectionsFirstButton = button("Projections").first();
     private final Locator noteTextAria = locator("//textarea");
     private final Locator saveButton = button("Save");
     private final Locator highlightsAndNotesButton = button("Highlights and notes");
     private final Locator searchField = placeholder("Search");
     private final Locator nothingFoundMessage = text("Nothing found. Try to use other key words");
     private final Locator searchResultField = locator("div:has(input[placeholder='Search']) + div>div");
+    private final Locator longBonesFirstText = text("Long bones").first();
 
-    public StudyGuidePage(Page page, Playwright playwright) {
-        super(page, playwright);
+    StudyGuidePage(Page page) {
+        super(page);
     }
 
-    public Locator getNoteButtonForWord() {
-        return button(getWordText());
+    @Override
+    public StudyGuidePage init() {
+
+        return createPage(new StudyGuidePage(getPage()), Constants.STUDY_GUIDE_END_POINT);
     }
 
     public Locator getNoteTextAria() {
+
         return noteTextAria;
     }
 
-    public Locator getWord() {
-        Locator list = getPage().getByText(TestData.PROJECTIONS);
-        list.first().waitFor();
-        return list.nth(1);
+    public Locator getProjectionsFirstWord() {
+        projectionsFirstWord.waitFor();
+
+        return projectionsFirstWord;
     }
 
     public Locator getNothingFoundMessage() {
+
         return nothingFoundMessage;
     }
 
     public Locator getSearchResultField() {
+
         return searchResultField;
     }
 
-    public StudyGuidePage clickNoteSaveButton() {
+    public StudyGuidePage clickSaveButton() {
         saveButton.click();
 
         return this;
     }
 
-    public StudyGuidePage inputNoteText() {
-        noteTextAria.fill("s");
+    public StudyGuidePage inputNoteText(String text) {
+        noteTextAria.fill(text);
 
         return this;
     }
 
     public StudyGuidePage doubleClickOnWord() {
-        getWord().dblclick();
+        getProjectionsFirstWord().dblclick();
 
         return this;
     }
@@ -66,24 +72,18 @@ public class StudyGuidePage extends BaseSideMenu {
     }
 
     public String getWordText() {
-        return getWord().textContent();
+        return getProjectionsFirstWord().textContent();
     }
 
     public StudyGuidePage inputRandomStringInSearchField() {
-        searchField.fill(TestUtils.geteRandomString(10));
+        searchField.fill(getRandomString(10));
 
         return this;
     }
 
-    public Locator getMultipleWords() {
-        Locator list = getPage().getByText(TestData.LONG_BONES);
-        list.first().waitFor();
-        return list.nth(1);
-    }
-
     public StudyGuidePage highlightWords() {
-        getMultipleWords().hover();
-        BoundingBox box = getMultipleWords().boundingBox();
+        longBonesFirstText.hover();
+        BoundingBox box = longBonesFirstText.boundingBox();
 
         getPage().mouse().move(box.x, box.y + 10);
         getPage().mouse().down();

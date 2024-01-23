@@ -2,60 +2,67 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
 import io.qameta.allure.Step;
 
-abstract class BaseSideMenu extends BaseLocator{
-
+abstract class BaseSideMenu<TPage> extends BaseModal<TPage> {
     private final Locator homeButton = exactButton("Home");
-    private final Locator flashcardsButton = exactButton("Flashcards");
-    private final Locator testsButton = exactButton("Tests");
-    private final Locator profileButton = exactButton("Profile");
-    private final Locator mnemonicCardsButton = exactButton("Mnemonic cards");
     private final Locator studyGuideButton = button("Study guide");
-    private final Locator performanceButton = exactButton ("Performance");
+    private final Locator testsButton = exactButton("Tests");
+    private final Locator flashcardsButton = exactButton("Flashcards");
+    private final Locator mnemonicCardsButton = exactButton("Mnemonic cards");
+    private final Locator performanceButton = exactButton("Performance");
+    private final Locator profileButton = exactButton("Profile");
 
-    protected BaseSideMenu(Page page, Playwright playwright) {
-        super(page, playwright);
+    BaseSideMenu(Page page) {
+        super(page);
     }
 
+    @Step("Click side menu 'Home'.")
     public HomePage clickHomeMenu() {
         homeButton.click();
-        return new HomePage(getPage(), getPlaywright());
+
+        return new HomePage(getPage()).init();
     }
 
-    public FlashcardPacksPage clickFlashcardsMenu() {
-        flashcardsButton.click();
-        return new FlashcardPacksPage(getPage(), getPlaywright());
-    }
-
-    public TestListPage clickTestsMenu() {
-        testsButton.click();
-        return new TestListPage(getPage(), getPlaywright());
-    }
-
-    public ProfilePage clickProfileMenu() {
-        profileButton.click();
-
-        return new ProfilePage(getPage(), getPlaywright());
-    }
-
-    public MnemonicCardListPage clickMnemonicCardsMenu() {
-        mnemonicCardsButton.click();
-
-        return new MnemonicCardListPage(getPage(), getPlaywright());
-    }
-
+    @Step("Click side menu 'Study Guide'.")
     public StudyGuidePage clickStudyGuide() {
         studyGuideButton.click();
 
-        return new StudyGuidePage(getPage(), getPlaywright());
+        return new StudyGuidePage(getPage()).init();
     }
 
-    @Step("Click the “Performance” side menu")
-    public PerformancePage clickPerformanceMenu() {
+    @Step("Click side menu 'Tests'.")
+    public TestListPage clickTestsMenu() {
+        testsButton.click();
 
+        return new TestListPage(getPage()).init();
+    }
+
+    @Step("Click side menu 'Flashcards'.")
+    public FlashcardPacksPage clickFlashcardsMenu() {
+        flashcardsButton.click();
+
+        return new FlashcardPacksPage(getPage()).init();
+    }
+
+    @Step("Click side menu 'Mnemonic Cards'.")
+    public MnemonicCardListPage clickMnemonicCardsMenu() {
+        mnemonicCardsButton.click();
+
+        return new MnemonicCardListPage(getPage()).init();
+    }
+
+    @Step("Click side menu 'Performance'.")
+    public PerformancePage clickPerformanceMenu() {
         performanceButton.click();
-        return new PerformancePage(getPage(), getPlaywright());
+
+        return new PerformancePage(getPage()).init();
+    }
+
+    @Step("Click side menu 'Profile'.")
+    public ProfilePage clickProfileMenu() {
+        profileButton.click();
+
+        return new ProfilePage(getPage()).init();
     }
 }

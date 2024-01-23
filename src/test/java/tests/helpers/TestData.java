@@ -1,19 +1,27 @@
-package utils;
+package tests.helpers;
 
-public class TestData {
+import org.testng.annotations.DataProvider;
+import utils.runner.ProjectProperties;
 
+public final class TestData {
+    //Side Menu
     public static final String HOME_END_POINT = "/home";
-    public static final String SIGN_IN_END_POINT = "/sign-in";
+    public static final String STUDY_GUIDE_END_POINT = "/study-guide";
+    public static final String TEST_LIST_END_POINT = "/test-list";
+    public static final String FLASHCARD_PACKS_END_POINT = "/flashcard-packs";
+    public static final String MNEMONIC_CARDS_LIST_END_POINT = "/mnemoniccard-list";
+    public static final String PERFORMANCE_END_POINT = "/performance";
+    public static final String PROFILE_END_POINT = "/profile";
+
+    //Pages
     public static final String TEST_TUTOR_END_POINT = "/test-tutor";
     public static final String TEST_TIMED_END_POINT = "/test-timed";
     public static final String MNEMONIC_CARDS_END_POINT = "/mnemonic-cards/";
     public static final String MNEMONIC_CARD_PRACTICE_END_POINT = "/mnemonic-card-practice/";
     public static final String FLASHCARDS_PACK_ID_END_POINT = "/flashcards?packId";
-    public static final String AUTH_CUSTOMER_SIGN_IN_END_POINT = "/auth/customer/signIn";
-    public static final String RESET_COURSE_RESULTS_END_POINT = "/courses/results";
-    public static final String PERFORMANCE_END_POINT = "/performance";
 
-    public static final String ONE = "1";
+    //Data
+    public static final String ONE_QUESTION = "1";
     public static final String FLASHCARDS = "Flashcards";
     public static final String GOT_IT = "Got it";
     public static final String YES = "Yes";
@@ -31,5 +39,19 @@ public class TestData {
     public static final String PROJECTIONS = "Projections";
     public static final String LONG_BONES = "Long bones";
     public static final String STUDY_THIS_MODAL_HEADER = "Weakest Exam Areas";
-    public static final String STUDY_THIS_MODAL_MESSAGE = "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03";
+    public static final String STUDY_THIS_MODAL_MESSAGE =
+            "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03";
+
+    @DataProvider
+    public static Object[][] sideMenuItems() {
+        return new Object[][]{
+                {"Home", ProjectProperties.BASE_URL + HOME_END_POINT},
+                {"Study guide", ProjectProperties.BASE_URL + STUDY_GUIDE_END_POINT},
+                {"Tests", ProjectProperties.BASE_URL + TEST_LIST_END_POINT},
+                {"Flashcards", ProjectProperties.BASE_URL + FLASHCARD_PACKS_END_POINT},
+                {"Mnemonic cards", ProjectProperties.BASE_URL + MNEMONIC_CARDS_LIST_END_POINT},
+                {"Performance", ProjectProperties.BASE_URL + PERFORMANCE_END_POINT},
+                {"Profile", ProjectProperties.BASE_URL + PROFILE_END_POINT}
+        };
+    }
 }

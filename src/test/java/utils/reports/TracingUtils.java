@@ -1,15 +1,15 @@
-package utils;
+package utils.reports;
 
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Tracing;
 import org.testng.ITestResult;
+import utils.runner.ProjectProperties;
 
 import java.lang.reflect.Method;
 import java.nio.file.Paths;
 
-import static utils.LoggerUtils.log;
-import static utils.LoginUtils.getIsLoginSuccessful;
+import static utils.reports.LoggerUtils.logInfo;
 
 public final class TracingUtils {
 
@@ -29,11 +29,12 @@ public final class TracingUtils {
             if (ProjectProperties.TRACING_MODE) {
                 tracingStopOptions = new Tracing.StopOptions()
                         .setPath(Paths.get("testTracing/" + testMethod.getName() + ".zip"));
-                log("Tracing saved");
+                logInfo("Tracing saved");
             }
             if (ProjectProperties.VIDEO_MODE) {
                 page.video().saveAs(Paths.get("videos/" + testMethod.getName() + ".webm"));
-                log("Video saved");
+                logInfo("Video saved");
+
                 page.video().delete();
             }
         } else {
@@ -43,15 +44,17 @@ public final class TracingUtils {
         context.tracing().stop(tracingStopOptions);
     }
 
-    public static void stopTracingForUILogin(Page page, BrowserContext context) {
+    public static void stopTracingForUILogin(Page page, BrowserContext context, boolean isLogged) {
         Tracing.StopOptions tracingStopOptions = null;
 
-        if (!getIsLoginSuccessful()) {
+        if (!isLogged) {
             tracingStopOptions = new Tracing.StopOptions()
                     .setPath(Paths.get("testTracing/uiLogin.zip"));
-            log("Tracing for UI login saved");
+            logInfo("Tracing for UI login saved");
+
             page.video().saveAs(Paths.get("videos/uiLogin.webm"));
-            log("Video for UI login saved");
+            logInfo("Video for UI login saved");
+
             page.video().delete();
         } else {
             page.video().delete();

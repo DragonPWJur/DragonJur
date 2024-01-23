@@ -1,9 +1,10 @@
-package utils;
+package utils.reports;
 
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Allure;
 import org.testng.ITestResult;
 import org.testng.annotations.Test;
+import utils.runner.ProjectProperties;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -13,13 +14,16 @@ import java.time.format.DateTimeFormatter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static utils.LoggerUtils.*;
-import static utils.ProjectProperties.isServerRun;
+import static utils.reports.LoggerUtils.*;
 
-public class ReportUtils {
-
-    public final static String END_LINE = String.format("%n%s", "—".repeat(90));
+public final class ReportUtils {
+    private final static String END_LINE = String.format("%n%s", "—".repeat(90));
     private final static String H_LINE = String.format("%s%n", "=".repeat(90));
+
+    public static String getEndLine() {
+
+        return END_LINE;
+    }
 
     public static String getCurrentDateTime() {
         LocalDateTime now = LocalDateTime.now();
@@ -60,11 +64,13 @@ public class ReportUtils {
     }
 
     public static String getTestStatistics(Method method, ITestResult testResult) {
+
         return "\n" + getTestMethodNameWithInvocationCount(method, testResult)
                 + "   ----   " + getTestStatus(testResult) + "\t Run Time: " + getTestRunTime(testResult) + "\n";
     }
 
     public static String getTestMethodName(Method method) {
+
         return method.getDeclaringClass().getName() + "." + method.getName();
     }
 
@@ -73,6 +79,7 @@ public class ReportUtils {
         if (!method.getAnnotation(Test.class).dataProvider().isEmpty()) {
             testMethodName += "(" + testResult.getMethod().getCurrentInvocationCount() + ")";
         }
+
         return testMethodName;
     }
 
@@ -86,25 +93,25 @@ public class ReportUtils {
         }
     }
 
-    public static void addScreenshotToAllureReportForFailedTestsOnCI(Page page, ITestResult testResult) {
-        if (!testResult.isSuccess() && isServerRun()) {
+    public static void addScreenshotToAllureReportForCIFailure(Page page, ITestResult testResult) {
+        if (!testResult.isSuccess() && ProjectProperties.isServerRun()) {
             Allure.getLifecycle().addAttachment(
                     "screenshot", "image/png", "png",
                     page.screenshot(new Page.ScreenshotOptions()
                             .setFullPage(true)));
-            log("Screenshot added to Allure report");
+            logInfo("Screenshot added to Allure report");
         }
     }
 
-    public static void addVideoAndTracingToAllureReportForFailedTestsOnCI(Method testMethod, ITestResult testResult) throws IOException {
-        if (!testResult.isSuccess() && isServerRun()) {
+    public static void addVideoAndTracingToAllureReportForCIFailure(Method testMethod, ITestResult testResult) throws IOException {
+        if (!testResult.isSuccess() && ProjectProperties.isServerRun()) {
             Allure.getLifecycle().addAttachment("video", "videos/webm", "webm",
                     Files.readAllBytes(Paths.get("videos/" + testMethod.getName() + ".webm")));
-            log("Video added to Allure report");
+            logInfo("Video added to Allure report");
 
             Allure.getLifecycle().addAttachment("tracing", "archive/zip", "zip",
                     Files.readAllBytes(Paths.get("testTracing/" + testMethod.getName() + ".zip")));
-            log("Tracing added to Allure report");
+            logInfo("Tracing added to Allure report");
         }
     }
 }

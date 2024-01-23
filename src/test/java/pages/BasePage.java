@@ -1,22 +1,47 @@
 package pages;
 
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
+import utils.runner.ProjectProperties;
 
-abstract class BasePage {
-    private final Playwright playwright;
+import static utils.reports.LoggerUtils.logInfo;
+
+abstract class BasePage<TPage> {
     private final Page page;
 
-    protected BasePage(Page page, Playwright playwright) {
-        this.playwright = playwright;
+    BasePage(Page page) {
         this.page = page;
     }
 
-    protected Playwright getPlaywright() {
-        return playwright;
+    Page getPage() {
+
+        return page;
     }
 
-    protected Page getPage() {
-        return page;
+    abstract TPage init();
+
+    TPage createPage(TPage page, String endPoint) {
+        if (isOnPage(endPoint)) {
+
+            return page;
+        }
+
+        return null;
+    }
+
+    private boolean isOnPage(String endPoint) {
+        String pageUrl = ProjectProperties.BASE_URL + endPoint;
+
+        if (!getPage().url().contains(pageUrl) || getPage().content().isEmpty()) {
+            getPage().waitForTimeout(2000);
+        } else {
+            getPage().onLoad(p -> getPage().content());
+            if(!getPage().content().isEmpty()) {
+                logInfo("On page '" + endPoint + "'");
+            }
+
+            return true;
+        }
+
+        return !getPage().content().isEmpty();
     }
 }
