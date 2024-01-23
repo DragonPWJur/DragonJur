@@ -140,8 +140,4 @@ abstract class BaseLocator<TPage> extends BaseWait<TPage> {
 
         return locator.all();
     }
-
-    protected Locator placeholder(String text) {
-        return getPage().getByPlaceholder(text);
-    }
 }

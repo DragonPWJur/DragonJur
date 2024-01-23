@@ -4,8 +4,6 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
 import pages.constants.Constants;
-import com.microsoft.playwright.Playwright;
-import utils.TestUtils;
 
 public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements IRandom{
     private final Locator projectionsFirstWord = text("Projections").first();
@@ -17,9 +15,6 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     private final Locator nothingFoundMessage = text("Nothing found. Try to use other key words");
     private final Locator searchResultField = locator("div:has(input[placeholder='Search']) + div>div");
     private final Locator longBonesFirstText = text("Long bones").first();
-    private final Locator searchField = placeholder("Search");
-    private final Locator nothingFoundMessage = text("Nothing found. Try to use other key words");
-    private final Locator searchResultField = locator("div:has(input[placeholder='Search']) + div>div");
 
     StudyGuidePage(Page page) {
         super(page);
@@ -53,12 +48,9 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     }
 
     public StudyGuidePage clickSaveButton() {
-    public Locator getNothingFoundMessage() {
-        return nothingFoundMessage;
-    }
+        saveButton.click();
 
-    public Locator getSearchResultField() {
-        return searchResultField;
+        return this;
     }
 
     public StudyGuidePage clickNoteSaveButton() {
@@ -103,12 +95,6 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         getPage().mouse().down();
         getPage().mouse().move(box.x + box.width, box.y + 10);
         getPage().mouse().up();
-
-        return this;
-    }
-
-    public StudyGuidePage inputRandomStringInSearchField() {
-        searchField.fill(TestUtils.geteRandomString(10));
 
         return this;
     }
