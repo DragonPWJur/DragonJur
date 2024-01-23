@@ -26,7 +26,6 @@ public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPag
 
     public String[] getRandomStackText() {
         String text = getRandomTextValue(getListOfStacks());
-        System.out.println("random value = " + text);
         String[] arrayOfNamesAndQuantity = text.split("\n");
         String expectedQuantity = arrayOfNamesAndQuantity[1].split(" ")[0];
         arrayOfNamesAndQuantity[1] = expectedQuantity;
@@ -44,12 +43,7 @@ public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPag
         return randomStack[1];
     }
 
-    public void clickRandomMnemonicCardsStack() {
-
-        exactText(getExpectedStackName()).click();
-    }
-
-    public MnemonicCardsPage clickRandomMnemonicCardsStackAndGo() {
+    public MnemonicCardsPage clickRandomMnemonicCardsStack() {
         exactText(getExpectedStackName()).click();
 
         return new MnemonicCardsPage(getPage()).init();

@@ -1,6 +1,6 @@
 package pages.constants;
 
-public final class Constants {
+public final class  Constants {
 
     public static final String HOME_END_POINT = "/home";
     public static final String STUDY_GUIDE_END_POINT = "/study-guide";

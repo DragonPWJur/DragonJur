@@ -19,7 +19,7 @@ public final class MnemonicCardsPage extends BaseSideMenu<MnemonicCardsPage> {
         return createPage(new MnemonicCardsPage(getPage()), Constants.MNEMONIC_CARDS_END_POINT);
     }
 
-    public String getMnemonicCardHeaderText() {
+    public String getMnemonicCardHeaderName() {
         String mnemonicHeader = mnemonicCardHeader.innerText();
         int mnemonicHeaderLength = mnemonicHeader.length();
         if (mnemonicHeader.contains("...")) {
