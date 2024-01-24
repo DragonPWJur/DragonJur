@@ -24,9 +24,7 @@ public class APIServises {
                         .setHeader("Authorization", "Bearer " + getUserToken()));
     }
 
-    private static String getAdminToken(Playwright playwright) {
-        APIRequest request = playwright.request();
-        APIRequestContext requestContext = request.newContext();
+    private static String getAdminToken(APIRequestContext requestContext) {
 
         Map<String, String> data = new HashMap<>();
         data.put("email", ProjectProperties.ADMINUSERNAME);
@@ -40,9 +38,7 @@ public class APIServises {
         return admin.getToken();
     }
 
-    private static APIResponse getAPIResponse(Playwright playwright, String endPoint) {
-        APIRequest request = playwright.request();
-        APIRequestContext requestContext = request.newContext();
+    private static APIResponse getAPIResponse(APIRequestContext requestContext, String endPoint) {
 
         APIResponse apiResponse = requestContext.get(ProjectProperties.API_BASE_URL + endPoint,
                 RequestOptions.create()
@@ -65,25 +61,25 @@ public class APIServises {
     }
 
 
-    public static Course getActiveCourse(Playwright playwright) {
-        APIResponse responseBody = getAPIResponse(playwright, "/courses/active");
+    public static Course getActiveCourse(APIRequestContext requestContext) {
+        APIResponse responseBody = getAPIResponse(requestContext, "/courses/active");
         Course course = (Course) getObjectFromResponseBody(responseBody, Course.class);
 
         return course;
     }
 
-    public static Guide getStudyGuideByActiveCourse(Playwright playwright) {
-        Course course = getActiveCourse(playwright);
-        APIResponse responseBody = getAPIResponse(playwright, "/guides/courses/" + course.getId());
+    public static Guide getStudyGuideByActiveCourse(APIRequestContext requestContext) {
+        Course course = getActiveCourse(requestContext);
+        APIResponse responseBody = getAPIResponse(requestContext, "/guides/courses/" + course.getId());
 
         Guide guide = (Guide) getObjectFromResponseBody(responseBody, Guide.class);
 
         return guide;
     }
 
-    public static GuideTable getStudyGuideTable(Playwright playwright) {
-        Guide guide = getStudyGuideByActiveCourse(playwright);
-        APIResponse responseBody = getAPIResponse(playwright, "/guides/" + guide.getId() + "/table-of-content");
+    public static GuideTable getStudyGuideTable(APIRequestContext requestContext) {
+        Guide guide = getStudyGuideByActiveCourse(requestContext);
+        APIResponse responseBody = getAPIResponse(requestContext, "/guides/" + guide.getId() + "/table-of-content");
 
         GuideTable guideTablee = (GuideTable) getObjectFromResponseBody(responseBody, GuideTable.class);
         return guideTablee;
@@ -96,8 +92,8 @@ public class APIServises {
 //    }
 
 
-    public static Chapter getUnitByGuideIdAndChapterId(Playwright playwright, String guideId, String chapterid) {
-        APIResponse responseBody = getAPIResponse(playwright, "/guides/" + guideId + "/chapters/" + chapterid);
+    public static Chapter getUnitByGuideIdAndChapterId(APIRequestContext requestContext, String guideId, String chapterid) {
+        APIResponse responseBody = getAPIResponse(requestContext, "/guides/" + guideId + "/chapters/" + chapterid);
         Chapter chapter = null;
         try {
             chapter = (Chapter) getObjectFromResponseBody(responseBody, Chapter.class);
@@ -108,9 +104,7 @@ public class APIServises {
         return chapter;
     }
 
-    public static void editUnitByGuideIdAndChapterId(Playwright playwright, Unit unit) {
-        APIRequest request = playwright.request();
-        APIRequestContext requestContext = request.newContext();
+    public static void editUnitByGuideIdAndChapterId(APIRequestContext requestContext, Unit unit) {
 
         Unit sendUnit = new Unit();
         Data data = new Data();
@@ -123,7 +117,7 @@ public class APIServises {
 
         APIResponse apiResponse = requestContext.patch(ProjectProperties.API_BASE_URL + "/admin/guides/units/" + unit.getId(),
                 RequestOptions.create()
-                        .setHeader("Authorization", "Bearer " + getAdminToken(playwright))
+                        .setHeader("Authorization", "Bearer " + getAdminToken(requestContext))
                         .setData(sendUnit));
         checkStatus(apiResponse);
     }

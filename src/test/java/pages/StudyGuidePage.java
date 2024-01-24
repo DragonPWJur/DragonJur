@@ -99,11 +99,11 @@ public class StudyGuidePage extends BaseSideMenu {
     }
 
     public void restoreChapter1Unit1Text(String word) {
-        APIUtils.changeChapter1Unit1TextViaAPI(word, false, getPlaywright());
+        APIUtils.changeChapter1Unit1TextViaAPI(word, false, getPage().request());
     }
 
     public void changeChapter1Unit1TextViaAPI(String word) {
-        APIUtils.changeChapter1Unit1TextViaAPI(word, true, getPlaywright());
+        APIUtils.changeChapter1Unit1TextViaAPI(word, true, getPage().request());
     }
 
 //    public StudyGuidePage interceptAPIStudyGuideTable() {
