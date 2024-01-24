@@ -1,5 +1,6 @@
 package utils.api;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.microsoft.playwright.APIRequestContext;
 
@@ -7,9 +8,11 @@ public final class APIUtils {
 
     public static void changeChapter1Unit1TextViaAPI(String testText, boolean isAdd, APIRequestContext requestContext) {
 
-        JsonObject guideTable =
-                APIServices
-                        .getStudyGuideTable(requestContext);
+        String courseId = getActiveCourseId(requestContext);
+        String studyGuideId = getStudyGuideIdByCourseId(requestContext, courseId);
+
+        JsonObject guideTable = APIServices
+                        .getStudyGuideTable(requestContext, studyGuideId);
 
         JsonObject chapter1 =
                 guideTable
@@ -48,4 +51,17 @@ public final class APIUtils {
 
         APIServices.changeChapter1Unit1TextViaAPIGSON(requestContext, unit1);
     }
+
+    public static String getActiveCourseId(APIRequestContext requestContext) {
+        JsonObject course = APIServices.getActiveCourse(requestContext);
+
+        return course.get("id").getAsString();
+    }
+
+    public static String getStudyGuideIdByCourseId(APIRequestContext requestContext, String courseId) {
+        JsonObject studyGuide = APIServices.getStudyGuideByCourseId(requestContext, courseId);
+
+        return studyGuide.get("id").getAsString();
+    }
+
 }

@@ -67,20 +67,14 @@ public final class APIServices {
         return new Gson().fromJson(apiResponseJSON, JsonObject.class);
     }
 
-    public static JsonObject getStudyGuideByActiveCourse(APIRequestContext requestContext) {
-        String courseId = getActiveCourse(requestContext)
-                .get("id")
-                .getAsString();
+    public static JsonObject getStudyGuideByCourseId(APIRequestContext requestContext, String courseId) {
         String apiResponseJSON = getAPIResponse(requestContext, "/guides/courses/" + courseId)
                 .text();
 
         return new Gson().fromJson(apiResponseJSON, JsonObject.class);
     }
 
-    public static JsonObject getStudyGuideTable(APIRequestContext requestContext) {
-        String guideId = getStudyGuideByActiveCourse(requestContext)
-                .get("id")
-                .getAsString();
+    public static JsonObject getStudyGuideTable(APIRequestContext requestContext, String guideId) {
         String apiResponseJSON = getAPIResponse(requestContext,
                 "/guides/" + guideId + "/table-of-content")
                 .text();
