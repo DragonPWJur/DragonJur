@@ -6,6 +6,7 @@ import com.microsoft.playwright.Tracing;
 import org.testng.ITestResult;
 import utils.runner.ProjectProperties;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.nio.file.Paths;
 
@@ -28,36 +29,30 @@ public final class TracingUtils {
         if (!testResult.isSuccess()) {
             if (ProjectProperties.TRACING_MODE) {
                 tracingStopOptions = new Tracing.StopOptions()
-                        .setPath(Paths.get("testTracing/" + testMethod.getName() + ".zip"));
+                        .setPath(Paths.get("target/testTracing/" + testMethod.getName() + ".zip"));
                 logInfo("Tracing saved");
             }
             if (ProjectProperties.VIDEO_MODE) {
-                page.video().saveAs(Paths.get("videos/" + testMethod.getName() + ".webm"));
+                page.video().saveAs(Paths.get("target/videos/" + testMethod.getName() + ".webm"));
                 logInfo("Video saved");
 
                 page.video().delete();
             }
         } else {
             page.video().delete();
+            new File("target/videos/").delete();
         }
 
         context.tracing().stop(tracingStopOptions);
     }
 
-    public static void stopTracingForUILogin(Page page, BrowserContext context, boolean isLogged) {
+    public static void stopTracingForUILogin(BrowserContext context, boolean isLogged) {
         Tracing.StopOptions tracingStopOptions = null;
 
         if (!isLogged) {
             tracingStopOptions = new Tracing.StopOptions()
-                    .setPath(Paths.get("testTracing/uiLogin.zip"));
+                    .setPath(Paths.get("target/testTracing/uiLogin.zip"));
             logInfo("Tracing for UI login saved");
-
-            page.video().saveAs(Paths.get("videos/uiLogin.webm"));
-            logInfo("Video for UI login saved");
-
-            page.video().delete();
-        } else {
-            page.video().delete();
         }
 
         context.tracing().stop(tracingStopOptions);
