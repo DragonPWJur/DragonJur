@@ -102,17 +102,34 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return this;
     }
 
+    @Step("Restore the text 'Unit 1 Chapter 1' in the admin part of the 'Study Guide'.")
+    public void restoreChapter1Unit1TextViaAPI(String word) {
+        APIUtils.changeChapter1Unit1TextViaAPI(word, false, getPage().request());
+    }
+
+    @Step("Change the text 'Unit 1 Chapter 1' in the admin part of the 'Study Guide'.")
+    public void changeChapter1Unit1TextViaAPI(String word) {
+        APIUtils.changeChapter1Unit1TextViaAPI(word, true, getPage().request());
+    }
+
     public String getUnit1Text() {
 
         return unit1Text.innerText();
     }
 
     @Step("Reload current page.")
-    public StudyGuidePage reload() {
+    public void reload() {
         getPage().reload();
         this.waitForPageLoad();
-
-        return new StudyGuidePage(getPage()).init();
     }
+
+//    public StudyGuidePage interceptAPIStudyGuideTable() {
+//        getPage().route("**/table-of-content", route -> {
+//            APIResponse response = route.fetch();
+//            setGuideTable(APIServises.getStudyGuideTable(response));
+//            route.resume();
+//        });
+//        return this;
+//    }
 
 }
