@@ -5,7 +5,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 
-abstract class BaseModal<TPage> extends BaseLocator<TPage> {
+abstract class BaseModal<TPage> extends BaseLocator<TPage> implements IRandom {
     private final Locator dialog = dialog();
     private final Locator cancelButton = exactButton("Cancel");
     private final Locator gotItButton = exactButton("Got it");
@@ -50,7 +50,7 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
 
     @Step("Click 'Yes' button on dialog window if visible.")
     public TestTutorPage clickYesButton() {
-        if(dialog.isVisible() && yesButton.isVisible()) {
+        if (dialog.isVisible() && yesButton.isVisible()) {
             yesButton.click();
         }
 
@@ -59,7 +59,7 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
 
     @Step("Click 'Skip' button on dialog window if visible.")
     public TestResultPage clickSkipButton() {
-        if(skipButton.isVisible()) {
+        if (skipButton.isVisible()) {
             skipButton.click();
         } else {
             skipButton.waitFor();
@@ -71,7 +71,7 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
 
     @Step("Click 'Back' button on dialog window if visible.")
     protected TPage clickBackButton() {
-        if(dialog.isVisible() && backButton.isVisible()) {
+        if (dialog.isVisible() && backButton.isVisible()) {
             backButton.click();
         }
 

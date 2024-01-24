@@ -7,6 +7,7 @@ public final class ReportAProblemModal extends BaseModal<ReportAProblemModal> im
     private final Locator describeTheProblemTextarea = textbox();
     private final Locator sendButton = button("Send");
     private final Locator reportSentSuccessfullyMessage = exactText("The report has been sent successfully");
+    private final Locator reportAProblemModal = dialog();
 
     ReportAProblemModal(Page page) {
         super(page);
@@ -41,5 +42,12 @@ public final class ReportAProblemModal extends BaseModal<ReportAProblemModal> im
 
         return null;
     }
+
+    public Locator getReportAProblemModal() {
+
+        return reportAProblemModal;
+    }
+
+
 
 }

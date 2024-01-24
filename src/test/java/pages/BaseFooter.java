@@ -57,10 +57,10 @@ abstract class BaseFooter<TPage> extends BaseHeader<TPage> {
         return new TestTutorPage(getPage());
     }
 
-    public TestTutorPage clickReportAProblemButton() {
+    public ReportAProblemModal clickReportAProblemButton() {
         reportAProblem.click();
 
-        return new TestTutorPage(getPage());
+        return new ReportAProblemModal(getPage());
     }
 
 }

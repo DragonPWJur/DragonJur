@@ -3,7 +3,7 @@ package pages;
 import com.microsoft.playwright.Page;
 import pages.constants.Constants;
 
-public final class TestTutorPage extends BaseFooter<TestTutorPage> {
+public final class TestTutorPage extends BaseTestsPage<TestTutorPage, TestTutorPage> {
 
     TestTutorPage(Page page) {
         super(page);

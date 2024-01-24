@@ -1,6 +1,15 @@
 package tests;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import pages.*;
+import tests.helpers.TestData;
+
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static utils.runner.ProjectProperties.BASE_URL;
 
 public class TestTutorTest extends BaseTest {
 
@@ -15,93 +24,94 @@ public class TestTutorTest extends BaseTest {
 //
 //        assertThat(removeFromMarkedButton).isVisible();
 //    }
-//
-//    @Test
-//    public void testUserCanSeeTheRightAnswerAndTheExplanation() {
-//
-//        TestTutorPage testTutorPage = new HomePage(getPage(), getPlaywright())
-//                .clickTestsMenu()
-//                .cancelDialogIfVisible()
-//                .clickDomainsButton()
-//                .clickRandomCheckbox()
-//                .clickTutorButton()
-//                .inputNumberOfQuestions(TestData.ONE)
-//                .clickGenerateAndStartButton2()
-//                .clickCorrectAnswerRadioButton()
-//                .clickConfirmButton();
-//
-//        assertThat(testTutorPage.getCorrectAnswerBackgroundColor()).isVisible();
-//        assertThat(testTutorPage.getH3Header()).hasText(TestData.EXPLANATION);
-//        assertThat(testTutorPage.getH3HeaderExplanationText()).isVisible();
-//        Assert.assertFalse(testTutorPage.getExplanationText().isEmpty(), "Explanation text is empty");
-//    }
-//
-//    @Test
-//    public void testSuccessfulReportSubmission() {
-//        new PreconditionPage(getPage(), getPlaywright()).startTest(TestData.ONE);
-//
-//        TestTutorPage testTutorPage = new TestTutorPage(getPage(), getPlaywright())
-//                .clickReportButton()
-//                .inputSymbolsIntoReportAProblemTextarea()
-//                .clickSendButton();
-//
-//        assertThat(testTutorPage.getReportAProblemModal()).isVisible();
-//        assertThat(testTutorPage.getReportSentSuccessfullyMessage()).hasText(TestData.REPORT_MESSAGE);
-//    }
-//
-//    @Test(description = "TC1344-01 The single non-active Checkbox can be checked.")
-//    @Description("Objective: To verify that a non-active checkbox ca be successfully checked.")
-//    @Story("Tests")
-//    @TmsLink("9lf328qwx4bv")
-//    public void testTheSingleCheckboxCanBeChecked() {
-//        String checkboxText = new HomePage(getPage(), getPlaywright())
-//                .clickTestsMenu()
-//                .cancelDialogIfVisible()
-//                .clickDomainsButton()
-//                .clickRandomCheckboxAndReturnItsName();
-//
-//        assertThat(new TestListPage(getPage(), getPlaywright()).checkIcon(checkboxText)).isVisible();
-//    }
-//
-//    @Test(description = "TC1344-02 Execute Tutor Mode with a randomly selected checkbox in the Domain section.")
-//    @Description("Objective: To verify that User can successfully activate Tutor mode by checking a random checkbox " +
-//            "in the Domain section and entering valid data in the ‘Number of Questions’ field.")
-//    @Story("Tests")
-//    @TmsLink("9a0yelvj0jdh")
-//    public void testTutorModeWithRandomCheckboxInDomain() {
-//        TestTutorPage testTutorPage = new HomePage(getPage(), getPlaywright())
-//                .clickTestsMenu()
-//                .cancelDialogIfVisible()
-//                .clickDomainsButton()
-//                .clickRandomCheckbox()
-//                .clickTutorButton()
-//                .inputNumberOfQuestions(TestData.ONE)
-//                .clickGenerateAndStartButton();
-//
-//        waitForPageLoad(TestData.TEST_TUTOR_END_POINT);
-//
-//        assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
-//        assertThat(testTutorPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
-//        Assert.assertTrue(testTutorPage.countTestRadioButtons() >= 1);
-//    }
-//
-//    @Test
-//    public void testTutorModeWithRandomCheckboxInChapter() {
-//        TestTutorPage testTutorPage = new HomePage(getPage(), getPlaywright())
-//                .clickTestsMenu()
-//                .cancelDialogIfVisible()
-//                .clickChaptersButton()
-//                .clickRandomCheckbox()
-//                .clickTutorButton()
-//                .inputNumberOfQuestions(TestData.ONE)
-//                .clickGenerateAndStartButton();
-//
+
+    @Test
+    public void testUserCanSeeTheRightAnswerAndTheExplanation() {
+
+        TestTutorPage testTutorPage = new HomePage(getPage()).init()
+                .clickTestsMenu()
+                .cancelDialogIfVisible()
+                .clickDomainsButtonIfNotActive()
+                .clickRandomCheckbox()
+                .clickTutorButton()
+                .inputNumberOfQuestions(TestData.ONE_QUESTION)
+                .clickGenerateAndStartButton()
+                .clickCorrectAnswerRadioButton()
+                .clickConfirmButton();
+
+        assertThat(testTutorPage.getCorrectAnswerBackgroundColor()).isVisible();
+        assertThat(testTutorPage.getH3Header()).hasText(TestData.EXPLANATION);
+        assertThat(testTutorPage.getExplanationHeader()).isVisible();
+        Assert.assertFalse(testTutorPage.getExplanationText().isEmpty(), "Explanation text is empty");
+    }
+
+    @Test
+    public void testSuccessfulReportSubmission() {
+        TestTutorPage testTutorPage =
+                new PreconditionPage(getPage()).init()
+                        .startRandomDomainTest(TestData.ONE_QUESTION);
+
+        ReportAProblemModal reportAProblemModal =
+                testTutorPage
+                        .clickReportAProblemButton()
+                        .inputText()
+                        .clickSendButton();
+
+        assertThat(reportAProblemModal.getReportAProblemModal()).isVisible();
+        assertThat(reportAProblemModal.getReportSentSuccessfullyMessage()).hasText(TestData.REPORT_MESSAGE);
+    }
+
+    @Test(description = "TC1344-01 The single non-active Checkbox can be checked.")
+    @Description("Objective: To verify that a non-active checkbox ca be successfully checked.")
+    @Story("Tests")
+    @TmsLink("9lf328qwx4bv")
+    public void testTheSingleCheckboxCanBeChecked() {
+        String checkboxText = new HomePage(getPage()).init()
+                .clickTestsMenu()
+                .cancelDialogIfVisible()
+                .clickDomainsButtonIfNotActive()
+                .clickRandomCheckboxAndReturnItsName();
+
+        assertThat(new TestListPage(getPage()).checkIcon(checkboxText)).isVisible();
+    }
+
+    @Test(description = "TC1344-02 Execute Tutor Mode with a randomly selected checkbox in the Domain section.")
+    @Description("Objective: To verify that User can successfully activate Tutor mode by checking a random checkbox " +
+            "in the Domain section and entering valid data in the ‘Number of Questions’ field.")
+    @Story("Tests")
+    @TmsLink("9a0yelvj0jdh")
+    public void testTutorModeWithRandomCheckboxInDomain() {
+        TestTutorPage testTutorPage = new HomePage(getPage()).init()
+                .clickTestsMenu()
+                .cancelDialogIfVisible()
+                .clickDomainsButtonIfNotActive()
+                .clickRandomCheckbox()
+                .clickTutorButton()
+                .inputNumberOfQuestions(TestData.ONE_QUESTION)
+                .clickGenerateAndStartButton();
+
+        assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
+        assertThat(testTutorPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
+        Assert.assertTrue(testTutorPage.countAnswersRadioButtons() >= 1);
+    }
+
+    @Test
+    public void testTutorModeWithRandomCheckboxInChapter() {
+        TestTutorPage testTutorPage = new HomePage(getPage()).init()
+                .clickTestsMenu()
+                .cancelDialogIfVisible()
+                .clickChaptersButton()
+                .clickRandomCheckbox()
+                .clickTutorButton()
+                .inputNumberOfQuestions(TestData.ONE_QUESTION)
+                .clickGenerateAndStartButton();
+
 //        waitForPageLoad( TestData.TEST_TUTOR_END_POINT);
-//
-//        assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
-//        assertThat(testTutorPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
-//        Assert.assertTrue(testTutorPage.countTestRadioButtons() >= 1);
-//    }
+
+        assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
+        assertThat(testTutorPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
+        Assert.assertTrue(testTutorPage.countAnswersRadioButtons() >= 1);
+    }
 //
 //    @Test
 //    public void testAfterMarkingTheCardTheNumberOfMarkedCardsIncreasedBy1() {

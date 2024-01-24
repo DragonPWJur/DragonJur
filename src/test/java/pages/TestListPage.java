@@ -7,7 +7,7 @@ import pages.constants.Constants;
 
 import java.util.List;
 
-public final class TestListPage extends BaseTestsListPage<TestListPage> implements IRandom {
+public final class TestListPage extends BaseSideMenu<TestListPage> implements IRandom {
     private final Locator domainsButton = text("Domains");
     private final Locator tutorButton = button("Tutor");
     private final Locator numberOfQuestionsInputField = locator("input[name = 'numberOfQuestions']");
@@ -18,8 +18,10 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     private final Locator automationTestingForStatsText = text("Automation testing for stats");
     private final Locator historyAndCivilizationForStatsText = text("History and Civilization for Stats");
     private final List<Locator> allCheckboxes = allCheckboxes("button label span");
+    private final Locator listCheckboxes = locator("button label span");
+    private final Locator generateAndStartButton = button("Generate & Start");
 
-    TestListPage(Page page) {
+    public TestListPage(Page page) {
         super(page);
     }
 
@@ -76,8 +78,8 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     public TestListPage clickChaptersButton() {
         if (!chaptersButton.isChecked()) {
             chaptersButton.click();
-            waitWithTimeout(2000);
-            getPage().reload();
+//            waitWithTimeout(2000);
+//            getPage().reload();
         }
 
         return this;
@@ -106,10 +108,10 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
 //        return numberMarked;
 //    }
 
-//    public Locator checkIcon(String text) {
-//
-//        return allCheckboxes.getByText(text).locator("svg");
-//    }
+    public Locator checkIcon(String text) {
+
+        return listCheckboxes.getByText(text).locator("svg");
+    }
 
     public TestListPage clickAutomationTestingForStatsCheckBox() {
         automationTestingForStatsText.click();
@@ -121,5 +123,24 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         historyAndCivilizationForStatsText.click();
 
         return this;
+    }
+
+//    @Step("Click 'Generate and Start' button")
+//    public <T> T clickGenerateAndStartButton(T page) {
+//        generateAndStartButton.click();
+//
+//        return page;
+//    }
+
+    @Step("Click 'Generate and Start' button")
+    public TestTutorPage clickGenerateAndStartButton() {
+        generateAndStartButton.click();
+
+        return new TestTutorPage(getPage());
+    }
+
+    public Locator getListCheckboxes() {
+        listCheckboxes.last().waitFor();
+        return listCheckboxes;
     }
 }
