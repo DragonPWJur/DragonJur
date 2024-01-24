@@ -1,6 +1,5 @@
 package tests;
 
-import com.microsoft.playwright.Locator;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
 import jdk.jfr.Description;
@@ -11,8 +10,6 @@ import pages.MnemonicCardListPage;
 import pages.MnemonicCardsPage;
 import utils.runner.ProjectProperties;
 import tests.helpers.TestData;
-
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class MnemonicCardsTest extends BaseTest {
 
@@ -29,17 +26,17 @@ public class MnemonicCardsTest extends BaseTest {
                 new HomePage(getPage()).init()
                         .clickMnemonicCardsMenu();
 
-        final String expectedStackName = mnemonicCardListPage.getExpectedStackName();
-        final String expectedStackQuantity = mnemonicCardListPage.getExpectedStackQuantity();
+        final String expectedStackName = mnemonicCardListPage.getRandomStackName();
+        final String expectedStackQuantity = mnemonicCardListPage.getRandomStackCardsAmount();
 
         MnemonicCardsPage mnemonicCardsPage =
                 mnemonicCardListPage
                         .clickRandomMnemonicCardsStack();
 
-        final String actualStackName = mnemonicCardsPage.getMnemonicCardHeaderName();
         final String expectedUrlPart = ProjectProperties.BASE_URL + TestData.MNEMONIC_CARDS_END_POINT;
         final String actualUrl = getPage().url();
-        final Locator actualStackQuantity = mnemonicCardsPage.getMnemonicCardTotalQuantity();
+        final String actualStackName = mnemonicCardsPage.getMnemonicCardName();
+        final String actualStackQuantity = mnemonicCardsPage.getMnemonicCardTotalQuantity();
 
         Assert.assertTrue(
                 actualUrl.contains(expectedUrlPart),
@@ -48,8 +45,12 @@ public class MnemonicCardsTest extends BaseTest {
         Assert.assertTrue(
                 expectedStackName.contains(actualStackName),
                 "If FAIL: The expectedStackName " + expectedStackName
-                        + " does NOT contains the actualStackName " + actualStackName+ ".\n"
+                        + " does NOT contains the actualStackName " + actualStackName + ".\n"
         );
-        assertThat(actualStackQuantity).hasText(expectedStackQuantity);
+        Assert.assertEquals(
+                actualStackQuantity, expectedStackQuantity,
+                "If FAIL: The actual stack quantity (" + actualStackQuantity +
+                        ") does NOT equals expected stack quantity: (" + expectedStackQuantity + ").\n"
+        );
     }
 }

@@ -4,10 +4,13 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import pages.constants.Constants;
 
-public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPage> implements IRandom {
-    private final Locator listOfStacks = locator("button:has(span)");
+import java.util.List;
 
-    private final String[] randomStack = getRandomStackText();
+public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPage> implements IRandom {
+
+    private final List<Locator> allStacks = locator("button:has(span)").all();
+
+    private final int randomIndex = getRandomNumber(allStacks);
 
     MnemonicCardListPage(Page page) {
         super(page);
@@ -19,33 +22,32 @@ public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPag
         return createPage(new MnemonicCardListPage(getPage()), Constants.MNEMONIC_CARDS_LIST_END_POINT);
     }
 
-   public Locator getListOfStacks() {
+    private String getRandomStackText(int randomIndex) {
 
-        return listOfStacks;
+        return allStacks.get(randomIndex).innerText();
     }
 
-    public String[] getRandomStackText() {
-        String text = getRandomTextValue(getListOfStacks());
-        String[] arrayOfNamesAndQuantity = text.split("\n");
-        String expectedQuantity = arrayOfNamesAndQuantity[1].split(" ")[0];
-        arrayOfNamesAndQuantity[1] = expectedQuantity;
+    public String getRandomStackName() {
+        String[] textArray = getRandomStackText(randomIndex).split("\n");
 
-        return arrayOfNamesAndQuantity;
+        return textArray[0];
     }
 
-    public String getExpectedStackName() {
+    public String getRandomStackCardsAmount() {
+        String[] textArray = getRandomStackText(randomIndex).split("\n")[1].split(" ");
 
-        return randomStack[0];
-    }
-
-    public String getExpectedStackQuantity() {
-
-        return randomStack[1];
+        return textArray[0];
     }
 
     public MnemonicCardsPage clickRandomMnemonicCardsStack() {
-        exactText(getExpectedStackName()).click();
+        allStacks.get(randomIndex).click();
 
         return new MnemonicCardsPage(getPage()).init();
     }
+
+//    default int getRandomNumber(List<Locator> list) {
+//
+//        return new Random().nextInt(0, list.size() - 1);
+//    }
+
 }
