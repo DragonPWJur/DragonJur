@@ -37,7 +37,6 @@ public final class APIServices {
             object = new Gson().fromJson(apiResponseBody, JsonObject.class);
         } catch (Exception e) {
             e.printStackTrace();
-            throw e;
         }
         return object;
     }
@@ -72,30 +71,30 @@ public final class APIServices {
     }
 
     public static JsonObject getActiveCourse(APIRequestContext requestContext) {
-        String apiResponseJSON = getAPIResponseBody(requestContext, "/courses/active");
+        String course = getAPIResponseBody(requestContext, "/courses/active");
 
-        return initJsonObject(apiResponseJSON);
+        return initJsonObject(course);
     }
 
     public static JsonObject getStudyGuideByCourseId(APIRequestContext requestContext, String courseId) {
-        String apiResponseJSON = getAPIResponseBody(requestContext, "/guides/courses/" + courseId);
+        String studyGuide = getAPIResponseBody(requestContext, "/guides/courses/" + courseId);
 
-        return initJsonObject(apiResponseJSON);
+        return initJsonObject(studyGuide);
     }
 
     public static JsonObject getStudyGuideTable(APIRequestContext requestContext, String guideId) {
-        String apiResponseJSON = getAPIResponseBody(requestContext,
+        String studyGuideTable = getAPIResponseBody(requestContext,
                 "/guides/" + guideId + "/table-of-content");
 
-        return initJsonObject(apiResponseJSON);
+        return initJsonObject(studyGuideTable);
     }
 
-    public static JsonObject getUnitByGuideIdAndChapterId(APIRequestContext requestContext, String guideId, String chapterid) {
-        String apiResponseJSON = getAPIResponseBody(
+    public static JsonObject getCharterByGuideIdAndChapterId(APIRequestContext requestContext, String guideId, String chapterid) {
+        String chapter = getAPIResponseBody(
                 requestContext,
                 "/guides/" + guideId + "/chapters/" + chapterid);
 
-        return initJsonObject(apiResponseJSON);
+        return initJsonObject(chapter);
     }
 
     public static void changeChapter1Unit1TextViaAPIGSON(APIRequestContext requestContext, JsonObject unit) {
