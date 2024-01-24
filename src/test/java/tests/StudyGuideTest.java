@@ -56,7 +56,7 @@ public class StudyGuideTest extends BaseTest {
 //    }
     @Test(
             testName = "LMS-TC1360-01 User is able to see the Study Guide text. https://app.qase.io/plan/LMS/1?case=1360",
-            description = "TC1361-01 - The user sees that the changes made in the admin site Study Guide appear on the user website."
+            description = "TC1360-01 - The user sees that the changes made in the admin site Study Guide appear on the user website."
     )
     @Description("Objective:  To verify that user is able to see the study guide text.")
     @Story("StudyGuide")
