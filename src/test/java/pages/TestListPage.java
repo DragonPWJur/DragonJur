@@ -4,11 +4,10 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 import pages.constants.Constants;
-import tests.helpers.TestData;
 
 import java.util.List;
 
-public final class TestListPage extends BaseSideMenu<TestListPage> implements IRandom {
+public final class TestListPage extends BaseTestsListPage<TestListPage> implements IRandom {
     private final Locator domainsButton = text("Domains");
     private final Locator tutorButton = button("Tutor");
     private final Locator numberOfQuestionsInputField = locator("input[name = 'numberOfQuestions']");
@@ -22,7 +21,7 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
     private final Locator listCheckboxes = locator("button label span");
     private final Locator generateAndStartButton = button("Generate & Start");
 
-    public TestListPage(Page page) {
+    TestListPage(Page page) {
         super(page);
     }
 
@@ -79,8 +78,8 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
     public TestListPage clickChaptersButton() {
         if (!chaptersButton.isChecked()) {
             chaptersButton.click();
-//            waitWithTimeout(2000);
-//            getPage().reload();
+            waitWithTimeout(2000);
+            getPage().reload();
         }
 
         return this;
@@ -124,31 +123,5 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
         historyAndCivilizationForStatsText.click();
 
         return this;
-    }
-
-    @Step("Click 'Generate and Start' button")
-    public TestTimedPage clickGenerateAndStartButtonTimed() {
-        generateAndStartButton.click();
-        waitForPageLoad( TestData.TEST_TIMED_END_POINT);
-
-        return new TestTimedPage(getPage());
-    }
-
-    @Step("Click 'Generate and Start' button")
-    public TestTutorPage clickGenerateAndStartButtonTutor() {
-        generateAndStartButton.click();
-        waitForPageLoad( TestData.TEST_TUTOR_END_POINT);
-
-        return new TestTutorPage(getPage());
-    }
-
-    @Step("Click 'Generate and Start' button")
-    public void clickGenerateAndStartButton() {
-        generateAndStartButton.click();
-    }
-
-    public Locator getListCheckboxes() {
-        listCheckboxes.last().waitFor();
-        return listCheckboxes;
     }
 }

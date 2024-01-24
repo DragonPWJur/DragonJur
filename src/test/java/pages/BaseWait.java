@@ -19,10 +19,6 @@ abstract class BaseWait<TPage> extends BasePage<TPage> {
         getPage().waitForLoadState();
     }
 
-    protected void waitForPageLoad(String endPoint) {
-        getPage().waitForURL(ProjectProperties.BASE_URL + endPoint);
-    }
-
     protected void waitForLocator(String css, int timeout) {
         getPage().locator(css)
                 .waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(timeout));
