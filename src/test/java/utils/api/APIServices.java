@@ -7,6 +7,7 @@ import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.RequestOptions;
+import utils.reports.LoggerUtils;
 import utils.runner.LoginUtils;
 import utils.runner.ProjectProperties;
 
@@ -24,20 +25,22 @@ public final class APIServices {
         APIRequest request = playwright.request();
         APIRequestContext requestContext = request.newContext();
 
-        requestContext
+        APIResponse apiResponse = requestContext
                 .delete(
                         ProjectProperties.API_BASE_URL + RESET_COURSE_RESULTS_END_POINT,
                         RequestOptions.create().setHeader("Authorization", "Bearer " + userToken)
                 );
+        checkStatus(apiResponse);
     }
 
     private static JsonObject initJsonObject(String apiResponseBody) {
-        JsonObject object = null;
+        JsonObject object = new JsonObject();
         try {
-            object = new Gson().fromJson(apiResponseBody, JsonObject.class);
+            return object = new Gson().fromJson(apiResponseBody, JsonObject.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return object;
     }
 
@@ -56,6 +59,7 @@ public final class APIServices {
 
             adminToken = admin.get("token").getAsString();
         }
+
         return adminToken;
     }
 
@@ -109,12 +113,11 @@ public final class APIServices {
 
     private static void checkStatus(APIResponse apiResponse) {
         if (apiResponse.status() < 200 || apiResponse.status() >= 300) {
-            try {
-                throw new RuntimeException(
-                        "API request failed with response status " + apiResponse.status() + " with body: " + apiResponse.text());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            LoggerUtils.logException("EXCEPTION: API request FAILED with response status "
+                    + apiResponse.status() + ", url: " + apiResponse.url() + " and body: " + apiResponse.text());
+        } else {
+            LoggerUtils.logInfo("INFO: API request with response status "
+                    + apiResponse.status() + " , url: " + apiResponse.url() + ".");
         }
     }
 }
