@@ -63,7 +63,7 @@ public class StudyGuideTest extends BaseTest {
     @TmsLink("rxlgx1r82okx")
     public void testTextContentChanges() {
         StudyGuidePage studyGuidePage = new HomePage(getPage()).init()
-                .clickStudyGuide();
+                .clickStudyGuideMenu();
 
         Assert.assertFalse(studyGuidePage.getUnit1Text().contains(TestData.WORD_TEST),
                 "Expected text to contain '" + TestData.WORD_TEST + "' but it is: " + studyGuidePage.getUnit1Text());
