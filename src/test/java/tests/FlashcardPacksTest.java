@@ -1,6 +1,9 @@
 package tests;
 
 import com.microsoft.playwright.Locator;
+import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
+import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.FlashcardsPackIDPage;
@@ -15,9 +18,13 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 public final class FlashcardPacksTest extends BaseTest {
 
     @Test(
-            testName = "TC1349-01 User can mark cards for re-checking (“Add to flashcards”).",
-            description = "LMS-1349 https://app.qase.io/plan/LMS/1?case=1349"
+            testName = "LMS-1349 Возможность для юзера добавлять во флешкарточки. https://app.qase.io/plan/LMS/1?case=1349",
+            description = "TC1349-01 - User can mark cards for re-checking (“Add to flashcards”)."
     )
+    @Description("Objective: To confirm the user's ability to mark cards for re-checking"
+            + " and verify the increase in the count within the 'Marked for re-checking' flashcard section.")
+    @Story("Flashcards")
+    @TmsLink("rr1rrsnttopz")
     public void testAddToFlashCard() {
 
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
@@ -46,9 +53,12 @@ public final class FlashcardPacksTest extends BaseTest {
     }
 
     @Test(
-            testName = "TC1367-01 Verify the user can start a flashcard pack.",
-            description = "LMS-1367 https://app.qase.io/plan/LMS/1?case=1367"
+            testName = "LMS-1367 Запуск стопки. https://app.qase.io/plan/LMS/1?case=1367",
+            description = "TC1367-01 - Verify the user can start a flashcard pack."
     )
+    @Description("Objective: To confirm that users can successfully initiate a flashcard pack for studying.")
+    @Story("Flashcards")
+    @TmsLink("5w1lt3377dz3")
     public void testStartRandomFlashCardPack() {
 
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
@@ -86,9 +96,12 @@ public final class FlashcardPacksTest extends BaseTest {
     }
 
     @Test(
-            testName = "TC1368-01 Flashcard turned when clicking the “Show Answer” button.",
-            description = "LMS-1368 https://app.qase.io/plan/LMS/1?case=1368"
+            testName = "LMS-1368 Возможность оставлять пометки yes. https://app.qase.io/plan/LMS/1?case=1368",
+            description = "TC1368-01 - Flashcard turned when clicking the “Show Answer” button."
     )
+    @Description("Objective: Verify that the user can see the Answer when the flashcard is turned.")
+    @Story("Flashcards")
+    @TmsLink("8kke54otuh6c")
     public void testFlashCardTurnedAfterClickingShowAnswerButton() {
 
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
@@ -129,9 +142,13 @@ public final class FlashcardPacksTest extends BaseTest {
     }
 
     @Test(
-            testName = "TC1368-02 Possibility to leave a “Yes” mark.",
-            description = "LMS-1368 https://app.qase.io/plan/LMS/1?case=1368"
+            testName = "LMS-1368 Возможность оставлять пометки yes. https://app.qase.io/plan/LMS/1?case=1368",
+            description = "TC1368-02 - Possibility to leave a “Yes” mark."
     )
+    @Description("Objective: Verify that the user can successfully leave a 'Yes' mark on a flashcard"
+            + " when the card is turned.")
+    @Story("Flashcards")
+    @TmsLink("xgp7wuhi782")
     public void testUserCanLeaveYesMark() {
 
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
