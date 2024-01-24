@@ -11,7 +11,7 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     private final Locator noteTextAria = locator("//textarea");
     private final Locator saveButton = button("Save");
     private final Locator highlightsAndNotesButton = button("Highlights and notes");
-    private final Locator searchField = placeholder("Search");
+    private final Locator searchField = placeholder(Constants.SEARCH);
     private final Locator nothingFoundMessage = text(Constants.NOTHING_FOUND);
     private final Locator searchResultTextbox = locator("div:has(input[placeholder='Search']) + div>div");
     private final Locator longBonesFirstText = text("Long bones").first();
