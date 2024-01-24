@@ -160,7 +160,7 @@ public class PreconditionPage extends BasePage {
 
     public void checkAllCheckBoxes() {
 
-        clickAllCheckBoxes(getPlaywright(), getCoursePlans(getPlaywright()));
+        clickAllCheckBoxes(getPlaywright());
         getPage().reload();
 
     }

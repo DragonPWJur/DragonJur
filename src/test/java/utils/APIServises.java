@@ -24,9 +24,9 @@ public class APIServises {
                         .setHeader("Authorization", "Bearer " + getUserToken()));
     }
 
-    public static String getCoursePlans(Playwright playwright) {
+    protected static String getCurrentPlanId(Playwright playwright) {
 
-        String url = "/plans";
+        final String plansEndPoint = "/plans";
 
         APIRequest request = playwright.request();
         APIRequestContext requestContext = request.newContext();
@@ -34,7 +34,7 @@ public class APIServises {
         return new JSONObject(
                 requestContext
                         .get(
-                                ProjectProperties.API_BASE_URL + url,
+                                ProjectProperties.API_BASE_URL + plansEndPoint,
                                 RequestOptions
                                         .create()
                                         .setHeader("accept", "application/json")
@@ -46,9 +46,9 @@ public class APIServises {
                 .toString();
     }
 
-    public static String getPlanPhases(Playwright playwright, String currentPlan) {
+    protected static String getPlanPhases(Playwright playwright, String currentPlanId) {
 
-        String url = "/plans/" + currentPlan + "/phases";
+        String url = "/plans/" + currentPlanId + "/phases";
 
         APIRequest request = playwright.request();
         APIRequestContext requestContext = request.newContext();
@@ -65,10 +65,9 @@ public class APIServises {
         return response.text();
     }
 
-    public static List<String> getPlanPhasesId(Playwright playwright, String currentPlan) {
+    protected static List<String> getPlanPhasesId(String planPhases) {
 
-        JSONObject jsonObj = new JSONObject(getPlanPhases(playwright, currentPlan));
-        JSONArray jArray = jsonObj.getJSONArray("items");
+        JSONArray jArray = new JSONObject(planPhases).getJSONArray("items");
 
         List<String> checkBoxIds = new ArrayList<>();
 
@@ -86,15 +85,13 @@ public class APIServises {
         if (checkBoxIds.isEmpty()) {
             log("API: List of getPlanPhasesId is empty");
         }
-
         return checkBoxIds;
     }
 
-    public static void clickAllCheckBoxes(Playwright playwright, String currentPlan) {
+    protected static void clickCheckBoxesById(Playwright playwright, List<String> checkBoxIds) {
 
         APIRequest request;
         APIRequestContext requestContext;
-        List<String> checkBoxIds = getPlanPhasesId(playwright, currentPlan);
 
         String url;
 
@@ -114,4 +111,17 @@ public class APIServises {
                     );
         }
     }
+
+    public static void clickAllCheckBoxes(Playwright playwright) {
+
+        String currentPlanId = getCurrentPlanId(playwright);
+        System.out.println("********* coursePlans ************" + currentPlanId);
+
+        String planPhases = getPlanPhases(playwright, currentPlanId);
+        System.out.println("********* planPhases ************" + planPhases);
+
+        List<String> checkBoxIds = getPlanPhasesId(planPhases);
+        clickCheckBoxesById(playwright, checkBoxIds);
+    }
 }
+

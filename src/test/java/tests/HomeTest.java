@@ -127,9 +127,11 @@ public class HomeTest extends BaseTest {
         Assert.assertFalse(checkboxImage.isVisible(), "All images of checkboxes are expected to be not visible, but visible");
     }
 
-    @Test(description = "TC1341-03 - Deactivation of a single Already Active Checkbox when all checkboxes are active.")
+    @Test(
+            testName = "LMS-1365 Нажатие чекбоксов, https://app.qase.io/plan/LMS/1?case=1341",
+            description = "TC1341-03 - Deactivation of a single Already Active Checkbox when all checkboxes are active.")
     @Description("To verify the functionality when all checkboxes are checked, and a single active checkbox becomes inactive upon clicking again.")
-    @Story("Tests")
+    @Story("Home page")
     @TmsLink("nf0bbnl8cpe4")
     public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive(){
 
