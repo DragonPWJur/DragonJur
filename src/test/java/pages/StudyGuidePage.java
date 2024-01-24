@@ -11,9 +11,9 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     private final Locator noteTextAria = locator("//textarea");
     private final Locator saveButton = button("Save");
     private final Locator highlightsAndNotesButton = button("Highlights and notes");
-    private final Locator searchField = placeholder("Search");
-    private final Locator nothingFoundMessage = text("Nothing found. Try to use other key words");
-    private final Locator searchResultField = locator("div:has(input[placeholder='Search']) + div>div");
+    private final Locator searchField = placeholder(Constants.SEARCH);
+    private final Locator nothingFoundMessage = text(Constants.NOTHING_FOUND);
+    private final Locator searchResultTextbox = locator("div:has(input[placeholder='Search']) + div>div");
     private final Locator longBonesFirstText = text("Long bones").first();
 
     StudyGuidePage(Page page) {
@@ -42,12 +42,18 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return nothingFoundMessage;
     }
 
-    public Locator getSearchResultField() {
+    public Locator getSearchResultMessage() {
 
-        return searchResultField;
+        return searchResultTextbox;
     }
 
     public StudyGuidePage clickSaveButton() {
+        saveButton.click();
+
+        return this;
+    }
+
+    public StudyGuidePage clickNoteSaveButton() {
         saveButton.click();
 
         return this;
@@ -75,8 +81,8 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return getProjectionsFirstWord().textContent();
     }
 
-    public StudyGuidePage inputRandomStringInSearchField() {
-        searchField.fill(getRandomString(10));
+    public StudyGuidePage inputRandomStringInSearchField(String text) {
+        searchField.fill(text);
 
         return this;
     }

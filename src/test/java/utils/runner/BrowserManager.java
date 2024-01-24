@@ -39,15 +39,13 @@ public final class BrowserManager {
     public static BrowserContext createContext(Browser browser) {
         return browser.newContext(new Browser.NewContextOptions()
                 .setViewportSize(ProjectProperties.SCREEN_SIZE_WIDTH, ProjectProperties.SCREEN_SIZE_HEIGHT)
-                .setRecordVideoDir(Paths.get("videos/"))
-                .setRecordVideoSize(1280, 720)
         );
     }
 
     public static BrowserContext createContextWithCookies(Browser browser) {
         return browser.newContext(new Browser.NewContextOptions()
                 .setViewportSize(ProjectProperties.SCREEN_SIZE_WIDTH, ProjectProperties.SCREEN_SIZE_HEIGHT)
-                .setRecordVideoDir(Paths.get("videos/"))
+                .setRecordVideoDir(Paths.get("target/videos/"))
                 .setRecordVideoSize(1280, 720)
                 .setStorageStatePath(Paths.get(LoginUtils.COOKIES_FILE_PATH))
         );

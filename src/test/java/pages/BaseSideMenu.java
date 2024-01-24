@@ -25,7 +25,7 @@ abstract class BaseSideMenu<TPage> extends BaseModal<TPage> {
     }
 
     @Step("Click side menu 'Study Guide'.")
-    public StudyGuidePage clickStudyGuide() {
+    public StudyGuidePage clickStudyGuideMenu() {
         studyGuideButton.click();
 
         return new StudyGuidePage(getPage()).init();
