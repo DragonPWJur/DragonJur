@@ -46,7 +46,7 @@ public final class TracingUtils {
         context.tracing().stop(tracingStopOptions);
     }
 
-    public static void stopTracingForUILogin(Page page, BrowserContext context, boolean isLogged) {
+    public static void stopTracingForUILogin(BrowserContext context, boolean isLogged) {
         Tracing.StopOptions tracingStopOptions = null;
 
         if (!isLogged) {
