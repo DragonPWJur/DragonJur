@@ -1,6 +1,8 @@
 package tests;
 
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
@@ -12,6 +14,25 @@ import java.util.List;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public final class HomeTest extends BaseTest {
+
+
+    @Test
+    public void testcheckboxes() {
+        HomePage homePage =
+                new HomePage(getPage()).init();
+
+        getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("12 month").setExact(true)).click();
+
+        List<Locator> checkboxes = getPage().locator("input[type='checkbox']").all();
+        System.out.println("checkboxes=" + checkboxes.size());
+
+        Locator locator1 = getPage().locator("input[type='checkbox']");
+        System.out.println("locator1=" + locator1.count());
+
+        for (int i = 0; i < locator1.count(); i++) {
+            System.out.println(locator1.nth(i).boundingBox().y+ "   " + checkboxes.get(i).boundingBox().y);
+        }
+    }
 
     @Test(
             testName = "TC1365-01 - Upon clicking the empty checkbox, the point count increases.",
