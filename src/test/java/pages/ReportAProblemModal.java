@@ -47,7 +47,4 @@ public final class ReportAProblemModal extends BaseModal<ReportAProblemModal> im
 
         return reportAProblemModal;
     }
-
-
-
 }

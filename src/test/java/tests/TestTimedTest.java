@@ -1,5 +1,14 @@
 package tests;
 
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import pages.HomePage;
+import pages.TestTimedPage;
+import tests.helpers.TestData;
+
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static utils.runner.ProjectProperties.BASE_URL;
+
 public final class TestTimedTest extends BaseTest {
 
 //    @Test

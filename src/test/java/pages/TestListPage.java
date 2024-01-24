@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 import pages.constants.Constants;
+import tests.helpers.TestData;
 
 import java.util.List;
 
@@ -125,18 +126,25 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
         return this;
     }
 
-//    @Step("Click 'Generate and Start' button")
-//    public <T> T clickGenerateAndStartButton(T page) {
-//        generateAndStartButton.click();
-//
-//        return page;
-//    }
+    @Step("Click 'Generate and Start' button")
+    public TestTimedPage clickGenerateAndStartButtonTimed() {
+        generateAndStartButton.click();
+        waitForPageLoad( TestData.TEST_TIMED_END_POINT);
+
+        return new TestTimedPage(getPage());
+    }
 
     @Step("Click 'Generate and Start' button")
-    public TestTutorPage clickGenerateAndStartButton() {
+    public TestTutorPage clickGenerateAndStartButtonTutor() {
         generateAndStartButton.click();
+        waitForPageLoad( TestData.TEST_TUTOR_END_POINT);
 
         return new TestTutorPage(getPage());
+    }
+
+    @Step("Click 'Generate and Start' button")
+    public void clickGenerateAndStartButton() {
+        generateAndStartButton.click();
     }
 
     public Locator getListCheckboxes() {

@@ -3,6 +3,7 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.WaitForSelectorState;
+import utils.runner.ProjectProperties;
 
 abstract class BaseWait<TPage> extends BasePage<TPage> {
 
@@ -16,6 +17,10 @@ abstract class BaseWait<TPage> extends BasePage<TPage> {
 
     protected void waitForPageLoad() {
         getPage().waitForLoadState();
+    }
+
+    protected void waitForPageLoad(String endPoint) {
+        getPage().waitForURL(ProjectProperties.BASE_URL + endPoint);
     }
 
     protected void waitForLocator(String css, int timeout) {

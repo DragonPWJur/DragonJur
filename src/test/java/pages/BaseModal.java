@@ -5,7 +5,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 
-abstract class BaseModal<TPage> extends BaseLocator<TPage> implements IRandom {
+abstract class BaseModal<TPage> extends BaseLocator<TPage> {
     private final Locator dialog = dialog();
     private final Locator cancelButton = exactButton("Cancel");
     private final Locator gotItButton = exactButton("Got it");
