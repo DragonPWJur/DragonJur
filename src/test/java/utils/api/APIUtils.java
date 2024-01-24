@@ -3,7 +3,7 @@ package utils.api;
 import com.google.gson.JsonObject;
 import com.microsoft.playwright.APIRequestContext;
 
-public class APIUtils {
+public final class APIUtils {
 
     public static void changeChapter1Unit1TextViaAPI(String testText, boolean isAdd, APIRequestContext requestContext) {
 
