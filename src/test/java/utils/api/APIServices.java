@@ -31,6 +31,17 @@ public final class APIServices {
                 );
     }
 
+    private static JsonObject initJsonObject(String apiResponseBody) {
+        JsonObject object = null;
+        try {
+            object = new Gson().fromJson(apiResponseBody, JsonObject.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return object;
+    }
+
     private static String getAdminToken(APIRequestContext requestContext) {
         if (adminToken == null || adminToken.isEmpty()) {
             Map<String, String> data = new HashMap<>();
@@ -42,14 +53,14 @@ public final class APIServices {
                             RequestOptions.create().setData(data));
             checkStatus(apiResponse);
 
-            JsonObject admin = new Gson().fromJson(apiResponse.text(), JsonObject.class);
+            JsonObject admin = initJsonObject(apiResponse.text());
 
             adminToken = admin.get("token").getAsString();
         }
         return adminToken;
     }
 
-    private static APIResponse getAPIResponse(APIRequestContext requestContext, String endPoint) {
+    private static String getAPIResponseBody(APIRequestContext requestContext, String endPoint) {
         APIResponse apiResponse = requestContext
                 .get(ProjectProperties.API_BASE_URL + endPoint,
                         RequestOptions
@@ -57,38 +68,34 @@ public final class APIServices {
                                 .setHeader("Authorization", "Bearer " + userToken));
         checkStatus(apiResponse);
 
-        return apiResponse;
+        return apiResponse.text();
     }
 
     public static JsonObject getActiveCourse(APIRequestContext requestContext) {
-        String apiResponseJSON = getAPIResponse(requestContext, "/courses/active")
-                .text();
+        String apiResponseJSON = getAPIResponseBody(requestContext, "/courses/active");
 
-        return new Gson().fromJson(apiResponseJSON, JsonObject.class);
+        return initJsonObject(apiResponseJSON);
     }
 
     public static JsonObject getStudyGuideByCourseId(APIRequestContext requestContext, String courseId) {
-        String apiResponseJSON = getAPIResponse(requestContext, "/guides/courses/" + courseId)
-                .text();
+        String apiResponseJSON = getAPIResponseBody(requestContext, "/guides/courses/" + courseId);
 
-        return new Gson().fromJson(apiResponseJSON, JsonObject.class);
+        return initJsonObject(apiResponseJSON);
     }
 
     public static JsonObject getStudyGuideTable(APIRequestContext requestContext, String guideId) {
-        String apiResponseJSON = getAPIResponse(requestContext,
-                "/guides/" + guideId + "/table-of-content")
-                .text();
+        String apiResponseJSON = getAPIResponseBody(requestContext,
+                "/guides/" + guideId + "/table-of-content");
 
-        return new Gson().fromJson(apiResponseJSON, JsonObject.class);
+        return initJsonObject(apiResponseJSON);
     }
 
     public static JsonObject getUnitByGuideIdAndChapterId(APIRequestContext requestContext, String guideId, String chapterid) {
-        String apiResponseJSON = getAPIResponse(
+        String apiResponseJSON = getAPIResponseBody(
                 requestContext,
-                "/guides/" + guideId + "/chapters/" + chapterid)
-                .text();
+                "/guides/" + guideId + "/chapters/" + chapterid);
 
-        return new Gson().fromJson(apiResponseJSON, JsonObject.class);
+        return initJsonObject(apiResponseJSON);
     }
 
     public static void changeChapter1Unit1TextViaAPIGSON(APIRequestContext requestContext, JsonObject unit) {
