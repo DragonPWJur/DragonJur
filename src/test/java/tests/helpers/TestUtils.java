@@ -1,5 +1,7 @@
 package tests.helpers;
 
+import java.util.Random;
+
 public final class TestUtils {
 
     public static int getInt(String text) {
@@ -16,5 +18,15 @@ public final class TestUtils {
 
     public static double getPercentageOfNumber(int forNumber, int fromNumber) {
         return Math.round(((double) forNumber / fromNumber * 100) * 10) / 10.0;
+    }
+
+    public static String getRandomString(int length) {
+        String chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        StringBuilder randomString = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            randomString.append(chars.charAt(new Random().nextInt(chars.length())));
+        }
+
+        return randomString.toString();
     }
 }
