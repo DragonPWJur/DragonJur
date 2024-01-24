@@ -6,7 +6,6 @@ import com.microsoft.playwright.options.BoundingBox;
 import io.qameta.allure.Step;
 import pages.constants.Constants;
 import utils.api.APIUtils;
-import utils.api.entity.GuideTable;
 
 public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements IRandom {
     private final Locator projectionsFirstWord = text("Projections").first();
@@ -19,7 +18,6 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     private final Locator searchResultField = locator("div:has(input[placeholder='Search']) + div>div");
     private final Locator longBonesFirstText = text("Long bones").first();
     private final Locator unit1Text = locator("#body .ce-block__content").first();
-    private GuideTable guideTablePage;
 
     StudyGuidePage(Page page) {
         super(page);
@@ -99,7 +97,7 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     }
 
     @Step("Restore the text 'Unit 1 Chapter 1' in the admin part of the 'Study Guide'.")
-    public void restoreChapter1Unit1Text(String word) {
+    public void restoreChapter1Unit1TextViaAPI(String word) {
         APIUtils.changeChapter1Unit1TextViaAPI(word, false, getPage().request());
     }
 
@@ -117,14 +115,6 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
 //        return this;
 //    }
 //
-//    public void setGuideTable(GuideTable guideTablePage) {
-//        this.guideTablePage = guideTablePage;
-//    }
-//
-//    public GuideTable getGuideTable() {
-//
-//        return guideTablePage;
-//    }
 
     public String getUnit1Text() {
 

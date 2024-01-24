@@ -1,15 +1,14 @@
 package tests;
 
 
+import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
+import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.StudyGuidePage;
 import tests.helpers.TestData;
-import io.qameta.allure.Story;
-import io.qameta.allure.TmsLink;
-import jdk.jfr.Description;
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class StudyGuideTest extends BaseTest {
 
@@ -60,7 +59,7 @@ public class StudyGuideTest extends BaseTest {
 
     @Test(
             testName = "LMS-TC1360-01 User is able to see the Study Guide text. https://app.qase.io/plan/LMS/1?case=1360",
-            description = "TC1361-01 - The user sees that the changes made in the admin site Study Guide appear on the user website.'."
+            description = "TC1361-01 - The user sees that the changes made in the admin site Study Guide appear on the user website."
     )
     @Description("Objective:  To verify that user is able to see the study guide text.")
     @Story("StudyGuide")
@@ -68,7 +67,6 @@ public class StudyGuideTest extends BaseTest {
     public void testTextContentChanges() {
         StudyGuidePage studyGuidePage = new HomePage(getPage()).init()
                 .clickStudyGuide();
-                //.interceptAPIStudyGuideTable();
 
         Assert.assertFalse(studyGuidePage.getUnit1Text().contains(TestData.WORD_TEST),
                 "Expected text to contain '" + TestData.WORD_TEST + "' but it is: " + studyGuidePage.getUnit1Text());
@@ -81,6 +79,6 @@ public class StudyGuideTest extends BaseTest {
         Assert.assertTrue(studyGuidePage.getUnit1Text().contains(TestData.WORD_TEST),
                 "Expected text doesn't contain '" + TestData.WORD_TEST + "' but it is: " + studyGuidePage.getUnit1Text());
 
-        studyGuidePage.restoreChapter1Unit1Text(TestData.WORD_TEST);
+        studyGuidePage.restoreChapter1Unit1TextViaAPI(TestData.WORD_TEST);
     }
 }

@@ -1,27 +1,51 @@
 package utils.api;
 
+import com.google.gson.JsonObject;
 import com.microsoft.playwright.APIRequestContext;
-import utils.api.entity.Chapter;
-import utils.api.entity.GuideTable;
-import utils.api.entity.Unit;
 
 public class APIUtils {
 
-    public static  void changeChapter1Unit1TextViaAPI(String testText, boolean isAdd, APIRequestContext requestContext) {
-        GuideTable guideTable = APIServices.getStudyGuideTable(requestContext);
-        Chapter chapter1 = guideTable.getChapters().get(0);
-        chapter1 = APIServices.getUnitByGuideIdAndChapterId(requestContext, guideTable.getId(), chapter1.getId());
-        Unit unit1 = chapter1.getUnits().get(0);
+    public static void changeChapter1Unit1TextViaAPI(String testText, boolean isAdd, APIRequestContext requestContext) {
 
-        String text = unit1.getContent().getBlocks().get(0).getData().getText();
+        JsonObject guideTable =
+                APIServices
+                        .getStudyGuideTable(requestContext);
+
+        JsonObject chapter1 =
+                guideTable
+                        .getAsJsonArray("chapters")
+                        .get(0).getAsJsonObject();
+
+        chapter1 = APIServices
+                .getUnitByGuideIdAndChapterId(
+                        requestContext,
+                        guideTable.get("id").getAsString(),
+                        chapter1.get("id").getAsString());
+
+        JsonObject unit1 = chapter1
+                .getAsJsonArray("units")
+                .get(0).getAsJsonObject();
+
+        String text = unit1
+                .getAsJsonObject("content")
+                .getAsJsonArray("blocks")
+                .get(0).getAsJsonObject()
+                .getAsJsonObject("data")
+                .get("text").getAsString();
+
         if (isAdd) {
             text = testText + text;
         } else {
             text = text.substring(text.indexOf(testText) + testText.length());
         }
 
-        unit1.getContent().getBlocks().get(0).getData().setText(text);
+        unit1
+                .getAsJsonObject("content")
+                .getAsJsonArray("blocks")
+                .get(0).getAsJsonObject()
+                .getAsJsonObject("data")
+                .addProperty("text", text);
 
-        APIServices.editUnitByGuideIdAndChapterId(requestContext, unit1);
+        APIServices.changeChapter1Unit1TextViaAPIGSON(requestContext, unit1);
     }
 }
