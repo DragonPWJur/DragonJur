@@ -105,7 +105,7 @@ public final class HomeTest extends BaseTest {
 
         final Locator checkboxImage = homePage.getCheckboxImage();
 
-        assertThat(checkboxImage).hasCount(1);
+        assertThat(checkboxImage).hasCount(0);
         assertThat(checkboxImage).isVisible();
     }
 //<<<<<<< HEAD
