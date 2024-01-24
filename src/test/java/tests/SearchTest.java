@@ -1,5 +1,9 @@
 package tests;
 
+import com.microsoft.playwright.Locator;
+import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
+import jdk.jfr.Description;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.StudyGuidePage;
@@ -10,17 +14,25 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 public class SearchTest extends BaseTest {
 
     @Test(
-            testName = "TC1361-01 - Typing of not found text gives 'Nothing found. Try to use other keywords” message'.",
-            description = "LMS-1361 https://app.qase.io/project/LMS?suite=184&case=1361"
+            testName = "LMS-1361 Поиск по конкретному слову. https://app.qase.io/plan/LMS/1?case=1361",
+            description = "TC1361-01 - Typing of not found text gives 'Nothing found. Try to use other keywords” message'."
     )
+    @Description("Objective: To confirm the display of the 'Nothing found. Try to use other keywords' message when" +
+            " a non-existent keyword is typed.")
+    @Story("Search")
+    @TmsLink("m9rydpfuvuw6")
     public void testSearchByNotExistingKeyWord() {
+
         StudyGuidePage studyGuidePage =
                 new HomePage(getPage()).init()
-                        .clickStudyGuide()
-                        .inputRandomStringInSearchField();
+                        .clickStudyGuideMenu()
+                        .inputRandomStringInSearchField(TestData.SEARCH_WORD);
 
-        assertThat(studyGuidePage.getNothingFoundMessage()).isVisible();
-        assertThat(studyGuidePage.getSearchResultField()).hasText(TestData.NOTHING_FOUND_MESSAGE);
+        final Locator nothingFoundMessage = studyGuidePage.getNothingFoundMessage();
+        final Locator searchResultMessage = studyGuidePage.getSearchResultMessage();
+
+        assertThat(nothingFoundMessage).isVisible();
+        assertThat(searchResultMessage).hasText(TestData.NOTHING_FOUND);
     }
 
 //    @Test
