@@ -63,7 +63,7 @@ public final class LoginUtils {
             page.close();
             logInfo("Login context: Page closed");
 
-            TracingUtils.stopTracingForUILogin(page, context, isLogged);
+            TracingUtils.stopTracingForUILogin(context, isLogged);
             logInfo("Login context: Tracing stopped.");
 
             tearDownPlaywright();

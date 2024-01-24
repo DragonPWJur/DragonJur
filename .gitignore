@@ -43,6 +43,7 @@ build/
 ### Mac OS ###
 .DS_Store
 
+state.json
 keys.json
 state.json
 # Allure Report
