@@ -12,7 +12,7 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     private final Locator saveButton = button("Save");
     private final Locator highlightsAndNotesButton = button("Highlights and notes");
     private final Locator searchField = placeholder("Search");
-    private final Locator nothingFoundMessage = text("Nothing found. Try to use other key words");
+    private final Locator nothingFoundMessage = text(Constants.NOTHING_FOUND);
     private final Locator searchResultTextbox = locator("div:has(input[placeholder='Search']) + div>div");
     private final Locator longBonesFirstText = text("Long bones").first();
 
@@ -82,7 +82,6 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     }
 
     public StudyGuidePage inputRandomStringInSearchField(String text) {
-//        searchField.fill(getRandomString(10));
         searchField.fill(text);
 
         return this;
