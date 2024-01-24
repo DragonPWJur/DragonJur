@@ -34,7 +34,7 @@ public final class TestData {
     public static final String CHECKBOX_POINTS = "833";
     public static final String REPORT_MESSAGE = "The report has been sent successfully";
     public static final String PRACTICE = "Practice";
-    public static final String NOTHING_FOUND_MESSAGE = "Nothing found. Try to use other key words";
+    public static final String NOTHING_FOUND = "Nothing found. Try to use other key words";
     public static final String CORRECT_ANSWER_POINTS = "38";
     public static final String PROJECTIONS = "Projections";
     public static final String LONG_BONES = "Long bones";
@@ -42,6 +42,7 @@ public final class TestData {
     public static final String STUDY_THIS_MODAL_MESSAGE =
             "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03";
     public static final String WORD_TEST = "TEST";
+    public static final String SEARCH_WORD = TestUtils.getRandomString(10);
 
     @DataProvider
     public static Object[][] sideMenuItems() {

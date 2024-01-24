@@ -46,8 +46,8 @@ jobs:
         with:
           name: Artifacts
           path: |
-            testTracing/
-            videos/
+            target/testTracing/
+            target/videos/
 
       - name: Get Allure history
         uses: actions/checkout@v2
