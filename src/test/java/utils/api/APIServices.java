@@ -33,8 +33,8 @@ public final class APIServices {
     private static String getAdminToken(APIRequestContext requestContext) {
         if (adminToken == null || adminToken.isEmpty()) {
             Map<String, String> data = new HashMap<>();
-            data.put("email", ProjectProperties.ADMINUSERNAME);
-            data.put("password", ProjectProperties.ADMINPASSWORD);
+            data.put("email", ProjectProperties.ADMIN_EMAIL);
+            data.put("password", ProjectProperties.ADMIN_PASSWORD);
 
             APIResponse apiResponse = requestContext
                     .post(ProjectProperties.API_BASE_URL + "/auth/admin/signIn",
