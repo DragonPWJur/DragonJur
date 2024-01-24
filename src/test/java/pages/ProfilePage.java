@@ -2,19 +2,24 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
+import pages.constants.Constants;
 
-public class ProfilePage extends BaseSideMenu {
-
+public final class ProfilePage extends BaseSideMenu<ProfilePage> {
     private final Locator addANewCourseButton = button("Add a new course");
 
-    public ProfilePage(Page page, Playwright playwright) {
-        super(page, playwright);
+    ProfilePage(Page page) {
+        super(page);
+    }
+
+    @Override
+    public ProfilePage init() {
+
+        return createPage(new ProfilePage(getPage()), Constants.PROFILE_END_POINT);
     }
 
     public AddNewCoursePage clickAddANewCourseButton() {
         addANewCourseButton.click();
 
-        return new AddNewCoursePage(getPage(), getPlaywright());
+        return new AddNewCoursePage(getPage()).init();
     }
 }

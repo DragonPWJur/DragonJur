@@ -1,7 +1,6 @@
-package utils;
+package utils.api;
 
 import com.microsoft.playwright.APIRequestContext;
-import com.microsoft.playwright.Playwright;
 import utils.api.entity.Chapter;
 import utils.api.entity.GuideTable;
 import utils.api.entity.Unit;
@@ -9,9 +8,9 @@ import utils.api.entity.Unit;
 public class APIUtils {
 
     public static  void changeChapter1Unit1TextViaAPI(String testText, boolean isAdd, APIRequestContext requestContext) {
-        GuideTable guideTable = APIServises.getStudyGuideTable(requestContext);
+        GuideTable guideTable = APIServices.getStudyGuideTable(requestContext);
         Chapter chapter1 = guideTable.getChapters().get(0);
-        chapter1 = APIServises.getUnitByGuideIdAndChapterId(requestContext, guideTable.getId(), chapter1.getId());
+        chapter1 = APIServices.getUnitByGuideIdAndChapterId(requestContext, guideTable.getId(), chapter1.getId());
         Unit unit1 = chapter1.getUnits().get(0);
 
         String text = unit1.getContent().getBlocks().get(0).getData().getText();
@@ -23,6 +22,6 @@ public class APIUtils {
 
         unit1.getContent().getBlocks().get(0).getData().setText(text);
 
-        APIServises.editUnitByGuideIdAndChapterId(requestContext, unit1);
+        APIServices.editUnitByGuideIdAndChapterId(requestContext, unit1);
     }
 }
