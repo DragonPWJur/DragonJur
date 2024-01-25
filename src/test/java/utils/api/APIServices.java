@@ -142,8 +142,6 @@ public final class APIServices {
         checkStatus(apiResponse, "getPlans");
 
         return initJsonObject(apiResponse.text());
-
-        //return apiResponse;
     }
 
     public static void changeCurrentPlan(APIRequestContext requestContext, String _2WeeksPlanId) {
