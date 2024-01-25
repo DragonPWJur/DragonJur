@@ -147,7 +147,6 @@ public final class HomeTest extends BaseTest {
         }
     }
 
-
 //<<<<<<< HEAD
 ////
 ////    @Test
