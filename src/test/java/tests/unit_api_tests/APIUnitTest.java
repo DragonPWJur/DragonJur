@@ -20,7 +20,6 @@ import java.util.Map;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static utils.api.APIServices.getNumericPart;
-import static utils.reports.LoggerUtils.logError;
 import static utils.reports.LoggerUtils.logInfo;
 import static utils.runner.ProjectProperties.API_BASE_URL;
 
@@ -72,13 +71,12 @@ public class APIUnitTest {
                 .signInAdmin(apiRequestContext);
 
         JSONObject object = new JSONObject(response.text());
-
-        if (response.status() == 201) {
-            adminToken = object.getString("token");
-        }
+        adminToken = object.getString("token");
 
         Assert.assertEquals(201, response.status());
         Assert.assertNotNull(adminToken);
+
+        logInfo("API: Admin was Sign In");
     }
 
     @Test(dependsOnMethods = {"testSignInAdminAPI"})
@@ -89,17 +87,13 @@ public class APIUnitTest {
                 .inviteCustomer(apiRequestContext, adminToken);
 
         JSONObject object = new JSONObject(response.text());
-
-        if (response.status() != 201) {
-            logError("API: " + object.getInt("statusCode") + " - " + object.getString("message"));
-        } else {
-            inviteCode = object.getString("code");
-            logInfo("API: Invite was sent to customer");
-            logInfo("API: Invite code was saved");
-        }
+        inviteCode = object.getString("code");
 
         Assert.assertEquals(201, response.status());
         Assert.assertNotNull(inviteCode);
+
+        logInfo("API: Invite was sent to customer");
+        logInfo("API: Invite code was saved");
     }
 
     @Test(dependsOnMethods = {"testInviteCustomerAPI"})
@@ -112,17 +106,13 @@ public class APIUnitTest {
                 .signUpPromo(apiRequestContext, password, inviteCode);
 
         JSONObject object = new JSONObject(response.text());
-
-        if (response.status() != 201) {
-            logError("API: " + object.getInt("statusCode") + " - " + object.getString("message"));
-        } else {
-            customerId = object.getJSONObject("customer").getString("id");
-            logInfo("API: Customer was successfully Signed Up");
-            logInfo("API: Customer ID saved");
-        }
+        customerId = object.getJSONObject("customer").getString("id");
 
         Assert.assertEquals(201, response.status());
         Assert.assertNotNull(customerId);
+
+        logInfo("API: Customer was successfully Signed Up");
+        logInfo("API: Customer ID saved");
     }
 
     @Test(dependsOnMethods = {"testSignInAdminAPI", "testSignUpPromoAPI"})
@@ -130,14 +120,8 @@ public class APIUnitTest {
         APIResponse response = APIServices
                 .deleteCustomer(apiRequestContext, customerId, adminToken);
 
-        if (response.status() != 204) {
-            JSONObject object = new JSONObject(response.text());
-            String message = object.getString("message");
-            logError("API: " + object.getInt("statusCode") + " - " + message + " - Customer was not deleted");
-        } else {
-            logInfo("API: Customer was successfully Deleted");
-        }
-
         Assert.assertEquals(204, response.status());
+
+        logInfo("API: Customer was successfully Deleted");
     }
 }
