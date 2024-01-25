@@ -131,6 +131,7 @@ public final class HomeTest extends BaseTest {
                 APIServices.clickAllCheckBoxes(getPage().request()) == 0,
                 "If FAIL: Precondition is not reached. Checkboxes are not checked.\n"
                 );
+        getPage().reload();
 
         HomePage homePage = new HomePage(getPage()).init();
 
