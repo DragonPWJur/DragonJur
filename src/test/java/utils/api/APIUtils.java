@@ -102,8 +102,7 @@ public final class APIUtils {
         return "";
     }
 
-
-        private static List<String> getPlanPhasesId(JsonObject planPhases) {
+    private static List<String> getPlanPhasesId(JsonObject planPhases) {
 
         List<String> checkBoxIds = new ArrayList<>();
 
@@ -134,12 +133,12 @@ public final class APIUtils {
 
         boolean allCheckboxesChecked = true;
 
-        for(String markId : checkBoxIds) {
+        for (String markId : checkBoxIds) {
             if (!APIServices.clickCheckboxesById(requestContext, markId)) {
                 allCheckboxesChecked = false;
             }
         }
-            return allCheckboxesChecked;
+        return allCheckboxesChecked;
     }
 
     public static int clickAllCheckBoxes(APIRequestContext request) {

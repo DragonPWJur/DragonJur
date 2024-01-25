@@ -25,7 +25,7 @@ public final class APIServices {
     private static final String TABLE_OF_CONTENT = "/table-of-content";
     private static final String ADMIN_GUIDES_UNITS = "/admin/guides/units/";
     private static final String PLANS = "/plans";
-    private static final String PLANS_CURRENT= "/plans/current";
+    private static final String PLANS_CURRENT = "/plans/current";
     private static final String userToken = LoginUtils.getUserToken();
     private static String adminToken;
 
