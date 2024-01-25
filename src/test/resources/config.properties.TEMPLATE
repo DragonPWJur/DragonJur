@@ -10,3 +10,5 @@ height=1080
 tracing=true
 video=true
 apiBaseUrl=
+adminUsername=
+adminPassword=

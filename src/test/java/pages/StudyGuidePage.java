@@ -3,6 +3,7 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
+import io.qameta.allure.Step;
 import pages.constants.Constants;
 
 public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements IRandom{
@@ -15,7 +16,7 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     private final Locator nothingFoundMessage = text(Constants.NOTHING_FOUND);
     private final Locator searchResultTextbox = locator("div:has(input[placeholder='Search']) + div>div");
     private final Locator longBonesFirstText = text("Long bones").first();
-
+    private final Locator unit1Text = locator("#body .ce-block__content").first();
     StudyGuidePage(Page page) {
         super(page);
     }
@@ -98,4 +99,19 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
 
         return this;
     }
+
+
+    public String getUnit1Text() {
+
+        return unit1Text.innerText();
+    }
+
+    @Step("Reload current page.")
+    public void reload() {
+        getPage().reload();
+        this.waitForPageLoad();
+
+        new StudyGuidePage(getPage()).init();
+    }
+
 }
