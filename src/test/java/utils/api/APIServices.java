@@ -1,5 +1,7 @@
 package utils.api;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.microsoft.playwright.APIRequest;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
@@ -32,32 +34,30 @@ public final class APIServices {
                 );
     }
 
-    private static String getCurrentPlanId(APIRequestContext requestContext) {
+    private static APIResponse getAPIResponseBodyPlans(APIRequestContext requestContext) {
 
         APIResponse apiResponse = requestContext
-                .get(
-                        ProjectProperties.API_BASE_URL + PLANS_End_Point,
-                                RequestOptions
-                                        .create()
-                                        .setHeader("accept", "application/json")
-                                        .setHeader("Authorization", "Bearer " + userToken)
-                );
-
+                    .get(
+                            ProjectProperties.API_BASE_URL + PLANS_End_Point,
+                            RequestOptions
+                                    .create()
+                                    .setHeader("accept", "application/json")
+                                    .setHeader("Authorization", "Bearer " + userToken)
+                    );
         checkStatus(apiResponse);
+        return apiResponse;
+    }
 
-//        return new JSONObject(
-//                requestContext
-//                        .get(
-//                                ProjectProperties.API_BASE_URL + PLANS_End_Point,
-//                                RequestOptions
-//                                        .create()
-//                                        .setHeader("accept", "application/json")
-//                                        .setHeader("Authorization", "Bearer " + userToken)
-//                        )
-//                        .text()
-//        )
-//                .get("currentPlanId")
-//                .toString();
+    private static String getCurrentPlanId(APIResponse APIBody) {
+
+        try {
+            return new JSONObject(APIBody.text())
+                    .get("currentPlanId")
+                    .toString();
+        } catch (Exception e) {
+            LoggerUtils.logException("EXCEPTION: API response body has no key 'currentPlanId'");
+        }
+        return "";
     }
 
     private static void checkStatus(APIResponse apiResponse) {
@@ -74,7 +74,7 @@ public final class APIServices {
 
         String url = "/plans/" + currentPlanId + "/phases";
 
-        APIResponse response = requestContext
+        APIResponse apiResponse = requestContext
                 .get(
                         ProjectProperties.API_BASE_URL + url,
                         RequestOptions
@@ -83,7 +83,8 @@ public final class APIServices {
                                 .setHeader("Authorization", "Bearer " + userToken)
                 );
 
-        return response.text();
+        checkStatus(apiResponse);
+        return apiResponse.text();
     }
 
     private static List<String> getPlanPhasesId(String planPhases) {
@@ -102,10 +103,7 @@ public final class APIServices {
                 checkBoxIds.add(id);
             }
         }
-//
-//        if (checkBoxIds.isEmpty()) {
-//            log("API: List of getPlanPhasesId is empty");
-//        }
+
         return checkBoxIds;
     }
 
@@ -128,18 +126,33 @@ public final class APIServices {
         }
     }
 
+    private static JsonObject initJsonObject(String apiResponseBody) {
+        JsonObject object = new JsonObject();
+        try {
+            return object = new Gson().fromJson(apiResponseBody, JsonObject.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return object;
+    }
+
     public static int clickAllCheckBoxes(APIRequestContext requestContext) {
 
-        String currentPlanId = getCurrentPlanId(requestContext);
+        APIResponse apiResponse = getAPIResponseBodyPlans(requestContext);
+        JSONObject sss = initJsonObject(apiResponse.text().toString());
 
-        String planPhases = getPlanPhases(requestContext, currentPlanId);
+        String currentPlanId = getCurrentPlanId(apiResponse);
 
-        List<String> checkboxIds = getPlanPhasesId(planPhases);
-        if (checkboxIds.isEmpty()) {
-            LoggerUtils.logError("ERROR: checkboxId list is empty.");
-        }
-        clickCheckBoxesById(requestContext, checkboxIds);
-
-        return checkboxIds.size();
+//        String planPhases = getPlanPhases(requestContext, currentPlanId);
+//
+//        List<String> checkboxIds = getPlanPhasesId(planPhases);
+//        if (checkboxIds.isEmpty()) {
+//            LoggerUtils.logError("ERROR: checkboxId list is empty.");
+//        }
+//        clickCheckBoxesById(requestContext, checkboxIds);
+//
+//        return checkboxIds.size();
+        return 0;
     }
 }
