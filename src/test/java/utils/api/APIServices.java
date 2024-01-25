@@ -1,7 +1,5 @@
 package utils.api;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.microsoft.playwright.APIRequest;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
@@ -13,13 +11,14 @@ import utils.reports.LoggerUtils;
 import utils.runner.LoginUtils;
 import utils.runner.ProjectProperties;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public final class APIServices {
     private static final String AUTH_CUSTOMER_SIGN_IN_END_POINT = "/auth/customer/signIn";
     private static final String RESET_COURSE_RESULTS_END_POINT = "/courses/results";
-    private static final String PLANS_End_Point = "/plans";
+    private static final String PLANS_END_POINT = "/plans";
+    private static final String CURRENT_PLAN_END_POINT = "/plans/current";
+    private static final String _2_WEEK_PLAN = "2 Weeks";
 
     private static final String userToken = LoginUtils.getUserToken();
 
@@ -34,32 +33,6 @@ public final class APIServices {
                 );
     }
 
-    private static APIResponse getAPIResponseBodyPlans(APIRequestContext requestContext) {
-
-        APIResponse apiResponse = requestContext
-                    .get(
-                            ProjectProperties.API_BASE_URL + PLANS_End_Point,
-                            RequestOptions
-                                    .create()
-                                    .setHeader("accept", "application/json")
-                                    .setHeader("Authorization", "Bearer " + userToken)
-                    );
-        checkStatus(apiResponse);
-        return apiResponse;
-    }
-
-    private static String getCurrentPlanId(APIResponse APIBody) {
-
-        try {
-            return new JSONObject(APIBody.text())
-                    .get("currentPlanId")
-                    .toString();
-        } catch (Exception e) {
-            LoggerUtils.logException("EXCEPTION: API response body has no key 'currentPlanId'");
-        }
-        return "";
-    }
-
     private static void checkStatus(APIResponse apiResponse) {
         if (apiResponse.status() < 200 || apiResponse.status() >= 300) {
             LoggerUtils.logException("EXCEPTION: API request FAILED with response status "
@@ -70,13 +43,66 @@ public final class APIServices {
         }
     }
 
-    private static String getPlanPhases(APIRequestContext requestContext, String currentPlanId) {
+    private static APIResponse getAPIResponseBodyPlans(APIRequestContext requestContext) {
 
-        String url = "/plans/" + currentPlanId + "/phases";
+        APIResponse apiResponse = requestContext
+                    .get(
+                            ProjectProperties.API_BASE_URL + PLANS_END_POINT,
+                            RequestOptions
+                                    .create()
+                                    .setHeader("accept", "application/json")
+                                    .setHeader("Authorization", "Bearer " + userToken)
+                    );
+
+        checkStatus(apiResponse);
+
+        return apiResponse;
+    }
+
+    private static String get2WeekId(APIResponse APIBody) {
+
+        try {
+            JSONArray jArrayPlans = new JSONObject(APIBody.text()).getJSONArray("plans");
+
+            for (int i = 0; i < jArrayPlans.length(); i++) {
+                JSONObject object = jArrayPlans.getJSONObject(i);
+                if (Objects.equals(object.get("name").toString(), _2_WEEK_PLAN)) {
+                    return object.get("id").toString();
+                }
+            }
+        } catch (Exception e) {
+            LoggerUtils.logException("EXCEPTION: API response body, can not extract '2 Weeks' plan id.");
+        }
+
+        return "";
+    }
+
+    private static void postAPICurrentPlan(APIRequestContext requestContext, String _2WeeksPlanId) {
+
+        Map<String, Object> data = new HashMap();
+        data.put("newPlanId", _2WeeksPlanId);
+
+        APIResponse apiResponse = requestContext
+                .post(
+                        ProjectProperties.API_BASE_URL + CURRENT_PLAN_END_POINT,
+                        RequestOptions
+                                .create()
+                                .setHeader("accept", "*/*")
+                                .setHeader("Content-Type", "application/json")
+                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setData(data)
+                );
+
+        checkStatus(apiResponse);
+    }
+
+    private static APIResponse getPlanPhases(APIRequestContext requestContext, String currentPlanId) {
+
+        final String URL_CURRENT_PLAN_PHASES = "/plans/" + currentPlanId + "/phases";
 
         APIResponse apiResponse = requestContext
                 .get(
-                        ProjectProperties.API_BASE_URL + url,
+                        ProjectProperties.API_BASE_URL + URL_CURRENT_PLAN_PHASES,
                         RequestOptions
                                 .create()
                                 .setHeader("accept", "application/json")
@@ -84,75 +110,87 @@ public final class APIServices {
                 );
 
         checkStatus(apiResponse);
-        return apiResponse.text();
+
+        return apiResponse;
     }
 
     private static List<String> getPlanPhasesId(String planPhases) {
 
-        JSONArray jArray = new JSONObject(planPhases).getJSONArray("items");
-
         List<String> checkBoxIds = new ArrayList<>();
 
-        for (int i = 0; i < jArray.length(); i++) {
+        try {
 
-            JSONObject jObj = jArray.getJSONObject(i);
-            JSONArray tasks = jObj.getJSONArray("tasks");
+            JSONArray jArray = new JSONObject(planPhases).getJSONArray("items");
 
-            for (int j = 0; j < tasks.length(); j++) {
-                String id = tasks.getJSONObject(j).get("id").toString();
-                checkBoxIds.add(id);
+            for (int i = 0; i < jArray.length(); i++) {
+
+                JSONObject jObj = jArray.getJSONObject(i);
+                JSONArray tasks = jObj.getJSONArray("tasks");
+
+                for (int j = 0; j < tasks.length(); j++) {
+                    String id = tasks.getJSONObject(j).get("id").toString();
+                    checkBoxIds.add(id);
+                }
             }
+
+            return checkBoxIds;
+
+        } catch (Exception e) {
+            LoggerUtils.logException("EXCEPTION: FAILED to extract IDs from tasks of " + _2_WEEK_PLAN + " plan.");
         }
 
         return checkBoxIds;
     }
 
-    private static void clickCheckBoxesById(APIRequestContext requestContext, List<String> checkBoxIds) {
+    private static boolean clickCheckBoxesById(APIRequestContext requestContext, List<String> checkBoxIds) {
 
-        String url;
+        String url_tasks_markId_mark;
+        boolean allPostStatus200 = true;
 
         for(String markId : checkBoxIds) {
 
-            url = "/tasks/" + markId + "/mark";
+            url_tasks_markId_mark = "/tasks/" + markId + "/mark";
 
-            APIResponse response = requestContext
+            APIResponse apiResponse = requestContext
                     .post(
-                            ProjectProperties.API_BASE_URL + url,
+                            ProjectProperties.API_BASE_URL + url_tasks_markId_mark,
                             RequestOptions
                                     .create()
                                     .setHeader("accept", "application/json")
                                     .setHeader("Authorization", "Bearer " + userToken)
                     );
-        }
-    }
 
-    private static JsonObject initJsonObject(String apiResponseBody) {
-        JsonObject object = new JsonObject();
-        try {
-            return object = new Gson().fromJson(apiResponseBody, JsonObject.class);
-        } catch (Exception e) {
-            e.printStackTrace();
+            checkStatus(apiResponse);
+            if (!apiResponse.ok()) {
+                allPostStatus200 = false;
+            }
         }
-
-        return object;
+        return allPostStatus200;
     }
 
     public static int clickAllCheckBoxes(APIRequestContext requestContext) {
 
         APIResponse apiResponse = getAPIResponseBodyPlans(requestContext);
-        JSONObject sss = initJsonObject(apiResponse.text().toString());
 
-        String currentPlanId = getCurrentPlanId(apiResponse);
+        String _2WeekPlanId = get2WeekId(apiResponse);
 
-//        String planPhases = getPlanPhases(requestContext, currentPlanId);
-//
-//        List<String> checkboxIds = getPlanPhasesId(planPhases);
-//        if (checkboxIds.isEmpty()) {
-//            LoggerUtils.logError("ERROR: checkboxId list is empty.");
-//        }
-//        clickCheckBoxesById(requestContext, checkboxIds);
-//
-//        return checkboxIds.size();
-        return 0;
+        postAPICurrentPlan(requestContext, _2WeekPlanId);
+
+        APIResponse planPhases = getPlanPhases(requestContext, _2WeekPlanId);
+
+        List<String> checkboxIds = getPlanPhasesId(planPhases.text());
+
+        if (checkboxIds.isEmpty()) {
+            LoggerUtils.logError("[ERROR] checkboxId list is empty.");
+        }
+
+        if (!clickCheckBoxesById(requestContext, checkboxIds)) {
+            LoggerUtils.logError("[ERROR] checkboxes are not checked.");
+
+            return 0;
+        }
+
+        return checkboxIds.size();
+
     }
 }
