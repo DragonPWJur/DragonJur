@@ -1,90 +1,161 @@
 package utils.api;
 
+import com.google.gson.JsonObject;
 import com.microsoft.playwright.APIRequest;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.RequestOptions;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import utils.reports.LoggerUtils;
 import utils.runner.LoginUtils;
 import utils.runner.ProjectProperties;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import static utils.api.APIUtils.*;
 
 public final class APIServices {
-    private static final String AUTH_CUSTOMER_SIGN_IN_END_POINT = "/auth/customer/signIn";
-    private static final String RESET_COURSE_RESULTS_END_POINT = "/courses/results";
-    private static final String PLANS_END_POINT = "/plans";
-    private static final String CURRENT_PLAN_END_POINT = "/plans/current";
-    private static final String _2_WEEK_PLAN = "2 Weeks";
 
+    private static final String COURSES_RESULTS = "/courses/results";
+    private static final String AUTH_ADMIN_SIGN_IN = "/auth/admin/signIn";
+    private static final String COURSES_ACTIVE = "/courses/active";
+    private static final String GUIDES_COURSES = "/guides/courses/";
+    private static final String GUIDES = "/guides/";
+    private static final String CHAPTERS = "/chapters/";
+    private static final String TABLE_OF_CONTENT = "/table-of-content";
+    private static final String ADMIN_GUIDES_UNITS = "/admin/guides/units/";
+    private static final String PLANS = "/plans";
+    private static final String PLANS_CURRENT= "/plans/current";
+    private static final String _2_WEEK_PLAN = "2 Weeks";
     private static final String userToken = LoginUtils.getUserToken();
+    private static String adminToken;
 
     public static void cleanData(Playwright playwright) {
         APIRequest request = playwright.request();
         APIRequestContext requestContext = request.newContext();
 
-        requestContext
-                .delete(
-                        ProjectProperties.API_BASE_URL + RESET_COURSE_RESULTS_END_POINT,
-                        RequestOptions.create().setHeader("Authorization", "Bearer " + userToken)
-                );
-    }
-
-    private static void checkStatus(APIResponse apiResponse) {
-        if (apiResponse.status() < 200 || apiResponse.status() >= 300) {
-            LoggerUtils.logException("EXCEPTION: API request FAILED with response status "
-                    + apiResponse.status() + ", url: " + apiResponse.url() + " and body: " + apiResponse.text());
-        } else {
-            LoggerUtils.logInfo("INFO: API request with response status "
-                    + apiResponse.status() + " , url: " + apiResponse.url() + ".");
-        }
-    }
-
-    private static APIResponse getAPIResponseBodyPlans(APIRequestContext requestContext) {
-
         APIResponse apiResponse = requestContext
-                    .get(
-                            ProjectProperties.API_BASE_URL + PLANS_END_POINT,
-                            RequestOptions
-                                    .create()
-                                    .setHeader("accept", "application/json")
-                                    .setHeader("Authorization", "Bearer " + userToken)
+                .delete(
+                        ProjectProperties.API_BASE_URL + COURSES_RESULTS,
+                        RequestOptions.create()
+                                .setHeader("Authorization", "Bearer " + userToken)
+                );
+
+        checkStatus(apiResponse, "cleanData");
+    }
+
+    private static String getAdminToken(APIRequestContext requestContext) {
+        if (adminToken == null || adminToken.isEmpty()) {
+            Map<String, String> data = new HashMap<>();
+            data.put("email", ProjectProperties.ADMIN_USERNAME);
+            data.put("password", ProjectProperties.ADMIN_PASSWORD);
+
+            APIResponse apiResponse = requestContext
+                    .post(
+                            ProjectProperties.API_BASE_URL + AUTH_ADMIN_SIGN_IN,
+                            RequestOptions.create()
+                                    .setData(data)
                     );
 
-        checkStatus(apiResponse);
+            checkStatus(apiResponse, "getAdminToken");
 
-        return apiResponse;
-    }
+            JsonObject admin = initJsonObject(apiResponse.text());
 
-    private static String get2WeekId(APIResponse APIBody) {
-
-        try {
-            JSONArray jArrayPlans = new JSONObject(APIBody.text()).getJSONArray("plans");
-
-            for (int i = 0; i < jArrayPlans.length(); i++) {
-                JSONObject object = jArrayPlans.getJSONObject(i);
-                if (Objects.equals(object.get("name").toString(), _2_WEEK_PLAN)) {
-                    return object.get("id").toString();
-                }
-            }
-        } catch (Exception e) {
-            LoggerUtils.logException("EXCEPTION: API response body, can not extract '2 Weeks' plan id.");
+            adminToken = admin.get("token").getAsString();
         }
 
-        return "";
+        return adminToken;
     }
 
-    private static void postAPICurrentPlan(APIRequestContext requestContext, String _2WeeksPlanId) {
+    public static JsonObject getActiveCourse(APIRequestContext requestContext) {
+        APIResponse apiResponse = requestContext
+                .get(
+                        ProjectProperties.API_BASE_URL + COURSES_ACTIVE,
+                        RequestOptions.create()
+                                .setHeader("Authorization", "Bearer " + userToken)
+                );
 
-        Map<String, Object> data = new HashMap();
+        checkStatus(apiResponse, "getActiveCourse");
+
+        return initJsonObject(apiResponse.text());
+    }
+
+    public static JsonObject getStudyGuide(APIRequestContext requestContext, String courseId) {
+        APIResponse apiResponse = requestContext
+                .get(
+                        ProjectProperties.API_BASE_URL + GUIDES_COURSES + courseId,
+                        RequestOptions.create()
+                                .setHeader("Authorization", "Bearer " + userToken)
+                );
+
+        checkStatus(apiResponse, "getStudyGuide");
+
+        return initJsonObject(apiResponse.text());
+    }
+
+    public static JsonObject getStudyGuideTable(APIRequestContext requestContext, String guideId) {
+        APIResponse apiResponse = requestContext
+                .get(
+                        ProjectProperties.API_BASE_URL + GUIDES + guideId + TABLE_OF_CONTENT,
+                        RequestOptions.create()
+                                .setHeader("Authorization", "Bearer " + userToken)
+                );
+
+        checkStatus(apiResponse, "getStudyGuideTable");
+
+        return initJsonObject(apiResponse.text());
+    }
+
+    public static JsonObject getChapter(APIRequestContext requestContext, String guideId, String chapterid) {
+        APIResponse apiResponse = requestContext
+                .get(
+                        ProjectProperties.API_BASE_URL + GUIDES + guideId + CHAPTERS + chapterid,
+                        RequestOptions.create()
+                                .setHeader("Authorization", "Bearer " + userToken)
+                );
+
+        checkStatus(apiResponse, "getChapter");
+
+        return initJsonObject(apiResponse.text());
+    }
+
+    public static void changeChapterText(APIRequestContext requestContext, JsonObject unit) {
+        APIResponse apiResponse = requestContext
+                .patch(ProjectProperties.API_BASE_URL + ADMIN_GUIDES_UNITS + unit.get("id").getAsString(),
+                        RequestOptions.create()
+                                .setHeader("Authorization", "Bearer " + getAdminToken(requestContext))
+                                .setData(unit)
+                );
+
+        checkStatus(apiResponse, "changeChapterText");
+    }
+
+    public static JsonObject getPlans(APIRequestContext requestContext) {
+
+        APIResponse apiResponse = requestContext
+                .get(
+                        ProjectProperties.API_BASE_URL + PLANS,
+                        RequestOptions
+                                .create()
+                                .setHeader("accept", "application/json")
+                                .setHeader("Authorization", "Bearer " + userToken)
+                );
+
+        checkStatus(apiResponse, "getPlans");
+
+        return initJsonObject(apiResponse.text());
+
+        //return apiResponse;
+    }
+
+    public static void changeCurrentPlan(APIRequestContext requestContext, String _2WeeksPlanId) {
+
+        Map<String, Object> data = new HashMap<>();
         data.put("newPlanId", _2WeeksPlanId);
 
         APIResponse apiResponse = requestContext
                 .post(
-                        ProjectProperties.API_BASE_URL + CURRENT_PLAN_END_POINT,
+                        ProjectProperties.API_BASE_URL + PLANS_CURRENT,
                         RequestOptions
                                 .create()
                                 .setHeader("accept", "*/*")
@@ -93,10 +164,10 @@ public final class APIServices {
                                 .setData(data)
                 );
 
-        checkStatus(apiResponse);
+        checkStatus(apiResponse, "changeCurrentPlan");
     }
 
-    private static APIResponse getPlanPhases(APIRequestContext requestContext, String currentPlanId) {
+    public static JsonObject getPlanPhases(APIRequestContext requestContext, String currentPlanId) {
 
         final String URL_CURRENT_PLAN_PHASES = "/plans/" + currentPlanId + "/phases";
 
@@ -109,88 +180,8 @@ public final class APIServices {
                                 .setHeader("Authorization", "Bearer " + userToken)
                 );
 
-        checkStatus(apiResponse);
+        checkStatus(apiResponse, "planPhases");
 
-        return apiResponse;
-    }
-
-    private static List<String> getPlanPhasesId(String planPhases) {
-
-        List<String> checkBoxIds = new ArrayList<>();
-
-        try {
-
-            JSONArray jArray = new JSONObject(planPhases).getJSONArray("items");
-
-            for (int i = 0; i < jArray.length(); i++) {
-
-                JSONObject jObj = jArray.getJSONObject(i);
-                JSONArray tasks = jObj.getJSONArray("tasks");
-
-                for (int j = 0; j < tasks.length(); j++) {
-                    String id = tasks.getJSONObject(j).get("id").toString();
-                    checkBoxIds.add(id);
-                }
-            }
-
-            return checkBoxIds;
-
-        } catch (Exception e) {
-            LoggerUtils.logException("EXCEPTION: FAILED to extract IDs from tasks of " + _2_WEEK_PLAN + " plan.");
-        }
-
-        return checkBoxIds;
-    }
-
-    private static boolean clickCheckBoxesById(APIRequestContext requestContext, List<String> checkBoxIds) {
-
-        String url_tasks_markId_mark;
-        boolean allPostStatus200 = true;
-
-        for(String markId : checkBoxIds) {
-
-            url_tasks_markId_mark = "/tasks/" + markId + "/mark";
-
-            APIResponse apiResponse = requestContext
-                    .post(
-                            ProjectProperties.API_BASE_URL + url_tasks_markId_mark,
-                            RequestOptions
-                                    .create()
-                                    .setHeader("accept", "application/json")
-                                    .setHeader("Authorization", "Bearer " + userToken)
-                    );
-
-            checkStatus(apiResponse);
-            if (!apiResponse.ok()) {
-                allPostStatus200 = false;
-            }
-        }
-        return allPostStatus200;
-    }
-
-    public static int clickAllCheckBoxes(APIRequestContext requestContext) {
-
-        APIResponse apiResponse = getAPIResponseBodyPlans(requestContext);
-
-        String _2WeekPlanId = get2WeekId(apiResponse);
-
-        postAPICurrentPlan(requestContext, _2WeekPlanId);
-
-        APIResponse planPhases = getPlanPhases(requestContext, _2WeekPlanId);
-
-        List<String> checkboxIds = getPlanPhasesId(planPhases.text());
-
-        if (checkboxIds.isEmpty()) {
-            LoggerUtils.logError("[ERROR] checkboxId list is empty.");
-        }
-
-        if (!clickCheckBoxesById(requestContext, checkboxIds)) {
-            LoggerUtils.logError("[ERROR] checkboxes are not checked.");
-
-            return 0;
-        }
-
-        return checkboxIds.size();
-
+        return initJsonObject(apiResponse.text());
     }
 }
