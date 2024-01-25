@@ -1,14 +1,19 @@
 package utils.api;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
 import utils.reports.LoggerUtils;
 
-public final class APIUtils {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
+public final class APIUtils {
+    private static final String _2_WEEK_PLAN = "2 Weeks";
     private static Playwright playwright;
 
     private static APIRequestContext createAdminAPIRequestContext() {
@@ -78,130 +83,84 @@ public final class APIUtils {
         closeAdminAPIRequestContext();
     }
 
+    private static String get2WeekId(JsonObject plans) {
 
+        try {
+            JsonArray jArrayPlans = plans.getAsJsonArray("plans");
 
+            for (int i = 0; i < jArrayPlans.size(); i++) {
+                JsonObject object = jArrayPlans.get(i).getAsJsonObject();
 
-
-
-
-
-
-
-
-
-
-
-
-    //    private static List<String> getPlanPhasesId(String planPhases) {
-//
-//        List<String> checkBoxIds = new ArrayList<>();
-//
-//        try {
-//
-//            JSONArray jArray = new JSONObject(planPhases).getJSONArray("items");
-//
-//            for (int i = 0; i < jArray.length(); i++) {
-//
-//                JSONObject jObj = jArray.getJSONObject(i);
-//                JSONArray tasks = jObj.getJSONArray("tasks");
-//
-//                for (int j = 0; j < tasks.length(); j++) {
-//                    String id = tasks.getJSONObject(j).get("id").toString();
-//                    checkBoxIds.add(id);
-//                }
-//            }
-//
-//            return checkBoxIds;
-//
-//        } catch (Exception e) {
-//            LoggerUtils.logException("EXCEPTION: FAILED to extract IDs from tasks of " + _2_WEEK_PLAN + " plan.");
-//        }
-//
-//        return checkBoxIds;
-//    }
-//
-    private static String get2WeekId(JsonObject APIBody) {
-
-
-//        try {
-//            JSONArray jArrayPlans = new JSONObject(APIBody.text()).getJSONArray("plans");
-//
-//            for (int i = 0; i < jArrayPlans.length(); i++) {
-//                JSONObject object = jArrayPlans.getJSONObject(i);
-//                if (Objects.equals(object.get("name").toString(), _2_WEEK_PLAN)) {
-//                    return object.get("id").toString();
-//                }
-//            }
-//        } catch (Exception e) {
-//            LoggerUtils.logException("EXCEPTION: API response body, can not extract '2 Weeks' plan id.");
-//        }
+                if (Objects.equals(object.get("name").getAsString(), _2_WEEK_PLAN)) {
+                    return object.get("id").getAsString();
+                }
+            }
+        } catch (Exception e) {
+            LoggerUtils.logException("EXCEPTION: API response body, can not extract '2 Weeks' plan id.");
+        }
 
         return "";
-
     }
 
-//
-//    private static boolean clickCheckBoxesById(APIRequestContext requestContext, List<String> checkBoxIds) {
-//
-//        String url_tasks_markId_mark;
-//        boolean allPostStatus200 = true;
-//
-//        for(String markId : checkBoxIds) {
-//
-//            url_tasks_markId_mark = "/tasks/" + markId + "/mark";
-//
-//            APIResponse apiResponse = requestContext
-//                    .post(
-//                            ProjectProperties.API_BASE_URL + url_tasks_markId_mark,
-//                            RequestOptions
-//                                    .create()
-//                                    .setHeader("accept", "application/json")
-//                                    .setHeader("Authorization", "Bearer " + userToken)
-//                    );
-//
-//            checkStatus(apiResponse);
-//            if (!apiResponse.ok()) {
-//                allPostStatus200 = false;
-//            }
-//        }
-//        return allPostStatus200;
-//    }
 
+        private static List<String> getPlanPhasesId(JsonObject planPhases) {
 
+        List<String> checkBoxIds = new ArrayList<>();
 
+        try {
 
+            JsonArray jArrayItems = planPhases.getAsJsonArray("items");
 
+            for (int i = 0; i < jArrayItems.size(); i++) {
+                JsonObject object = jArrayItems.get(i).getAsJsonObject();
+                JsonArray tasks = object.getAsJsonArray("tasks");
 
+                for (int j = 0; j < tasks.size(); j++) {
+                    String id = tasks.get(j).getAsJsonObject().get("id").getAsString();
+                    checkBoxIds.add(id);
+                }
+            }
 
+            return checkBoxIds;
 
+        } catch (Exception e) {
+            LoggerUtils.logException("EXCEPTION: FAILED to extract IDs from tasks of " + _2_WEEK_PLAN + " plan.");
+        }
 
+        return checkBoxIds;
+    }
 
+    private static boolean clickCheckBoxes(APIRequestContext requestContext, List<String> checkBoxIds) {
 
+        boolean allCheckboxesChecked = true;
+
+        for(String markId : checkBoxIds) {
+            if (!APIServices.clickCheckboxesById(requestContext, markId)) {
+                allCheckboxesChecked = false;
+            }
+        }
+            return allCheckboxesChecked;
+    }
 
     public static int clickAllCheckBoxes(APIRequestContext request) {
 
         JsonObject plans = APIServices.getPlans(request);
-
         String _2WeekPlanId = get2WeekId(plans);
-//
-//        postAPICurrentPlan(requestContext, _2WeekPlanId);
-//
-//        APIResponse planPhases = getPlanPhases(requestContext, _2WeekPlanId);
-//
-//        List<String> checkboxIds = getPlanPhasesId(planPhases.text());
-//
-//        if (checkboxIds.isEmpty()) {
-//            LoggerUtils.logError("[ERROR] checkboxId list is empty.");
-//        }
-//
-//        if (!clickCheckBoxesById(requestContext, checkboxIds)) {
-//            LoggerUtils.logError("[ERROR] checkboxes are not checked.");
-//
-//            return 0;
-//        }
 
-//        return checkboxIds.size();
-        return 1;
+        APIServices.changeCurrentPlan(request, _2WeekPlanId);
+        JsonObject planPhases = APIServices.getPlanPhases(request, _2WeekPlanId);
 
+        List<String> checkboxIds = getPlanPhasesId(planPhases);
+
+        if (checkboxIds.isEmpty()) {
+            LoggerUtils.logError("[ERROR] checkboxId list is empty.");
+        }
+
+        if (!clickCheckBoxes(request, checkboxIds)) {
+            LoggerUtils.logError("[ERROR] checkboxes are not checked.");
+
+            return 0;
+        }
+        return checkboxIds.size();
     }
 }

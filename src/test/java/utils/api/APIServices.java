@@ -26,7 +26,6 @@ public final class APIServices {
     private static final String ADMIN_GUIDES_UNITS = "/admin/guides/units/";
     private static final String PLANS = "/plans";
     private static final String PLANS_CURRENT= "/plans/current";
-    private static final String _2_WEEK_PLAN = "2 Weeks";
     private static final String userToken = LoginUtils.getUserToken();
     private static String adminToken;
 
@@ -183,5 +182,23 @@ public final class APIServices {
         checkStatus(apiResponse, "planPhases");
 
         return initJsonObject(apiResponse.text());
+    }
+
+    public static boolean clickCheckboxesById(APIRequestContext requestContext, String markId) {
+
+        String url_tasks_markId_mark = "/tasks/" + markId + "/mark";
+
+        APIResponse apiResponse = requestContext
+                .post(
+                        ProjectProperties.API_BASE_URL + url_tasks_markId_mark,
+                        RequestOptions
+                                .create()
+                                .setHeader("accept", "application/json")
+                                .setHeader("Authorization", "Bearer " + userToken)
+                );
+
+        checkStatus(apiResponse, "markId");
+
+        return apiResponse.ok();
     }
 }

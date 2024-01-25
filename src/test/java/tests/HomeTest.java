@@ -130,21 +130,21 @@ public final class HomeTest extends BaseTest {
 
         Assert.assertNotEquals(APIUtils.clickAllCheckBoxes(getPage().request()), 0,
                 "If FAIL: Precondition is not reached. Checkboxes are not checked.\n");
-//        getPage().reload();
-//
-//        HomePage homePage = new HomePage(getPage()).init();
-//
-//        int randomIndexCheckBox = homePage.getCheckboxRandomNumber();
-//
-//        homePage.clickRandomCheckbox();
-//
-//        assertThat(homePage.getNthCheckbox(randomIndexCheckBox)).not().isChecked();
-//
-//        for (int nth = 0; nth < homePage.getAllCheckboxesInA2WeeksPlan().size(); nth++) {
-//            if (nth != randomIndexCheckBox) {
-//                assertThat(homePage.getNthCheckbox(nth)).isChecked();
-//            }
-//        }
+        getPage().reload();
+
+        HomePage homePage = new HomePage(getPage()).init();
+
+        int randomIndexCheckBox = homePage.getCheckboxRandomNumber();
+
+        homePage.clickRandomCheckbox();
+
+        assertThat(homePage.getNthCheckbox(randomIndexCheckBox)).not().isChecked();
+
+        for (int nth = 0; nth < homePage.getAllCheckboxesInA2WeeksPlan().size(); nth++) {
+            if (nth != randomIndexCheckBox) {
+                assertThat(homePage.getNthCheckbox(nth)).isChecked();
+            }
+        }
     }
 
 //<<<<<<< HEAD
