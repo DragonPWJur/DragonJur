@@ -6,14 +6,10 @@ import io.qameta.allure.TmsLink;
 import jdk.jfr.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import io.qameta.allure.Story;
-import io.qameta.allure.TmsLink;
-import jdk.jfr.Description;
 import pages.HomePage;
 import pages.PreconditionPage;
 import tests.helpers.TestData;
 import utils.api.APIServices;
-import utils.reports.LoggerUtils;
 
 import java.util.List;
 
@@ -123,7 +119,6 @@ public final class HomeTest extends BaseTest {
         assertThat(checkboxImage).isVisible();
     }
 
-
     @Test(
             testName = "LMS-1365 Нажатие чекбоксов, https://app.qase.io/plan/LMS/1?case=1341",
             description = "TC1341-03 - Deactivation of a single Already Active Checkbox when all checkboxes are active.")
@@ -132,14 +127,10 @@ public final class HomeTest extends BaseTest {
     @TmsLink("nf0bbnl8cpe4")
     public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive(){
 
-        try {
-            Assert.assertTrue(
-                    APIServices.clickAllCheckBoxes(getPage().request()) != 0);
-            getPage().reload();
-        }
-        catch(AssertionError e) {
-            LoggerUtils.logException("If FAIL: Precondition is not reached. Checkboxes are not checked.");
-        }
+        Assert.assertFalse(
+                APIServices.clickAllCheckBoxes(getPage().request()) == 0,
+                "If FAIL: Precondition is not reached. Checkboxes are not checked.\n"
+                );
 
         HomePage homePage = new HomePage(getPage()).init();
 
