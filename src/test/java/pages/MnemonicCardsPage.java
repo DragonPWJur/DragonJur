@@ -6,7 +6,7 @@ import pages.constants.Constants;
 
 public final class MnemonicCardsPage extends BaseHeader<MnemonicCardsPage> {
     private final Locator startPracticeButton = button("Start practice");
-    private final Locator mnemonicCardTotalQuantity = locator("div~span").last();
+    private final Locator mnemonicCardTotalQuantity = locator("div>button[disabled] + span");
 
     MnemonicCardsPage(Page page) {
         super(page);
@@ -20,7 +20,7 @@ public final class MnemonicCardsPage extends BaseHeader<MnemonicCardsPage> {
 
     public String getMnemonicCardTotalQuantity() {
 
-        return mnemonicCardTotalQuantity.innerText();
+        return mnemonicCardTotalQuantity.innerText().split("/")[1];
     }
 
     public MnemonicCardPracticePage clickStartPracticeButton() {

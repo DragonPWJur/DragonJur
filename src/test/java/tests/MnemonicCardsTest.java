@@ -8,8 +8,8 @@ import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.MnemonicCardListPage;
 import pages.MnemonicCardsPage;
-import utils.runner.ProjectProperties;
 import tests.helpers.TestData;
+import utils.runner.ProjectProperties;
 
 public class MnemonicCardsTest extends BaseTest {
 
@@ -37,6 +37,7 @@ public class MnemonicCardsTest extends BaseTest {
         final String actualUrl = getPage().url();
         final String actualStackName = mnemonicCardsPage.getMnemonicCardName();
         final String actualStackQuantity = mnemonicCardsPage.getMnemonicCardTotalQuantity();
+        System.out.println(mnemonicCardsPage.getMnemonicCardTotalQuantity());
 
         Assert.assertTrue(
                 actualUrl.contains(expectedUrlPart),

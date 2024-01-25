@@ -8,9 +8,8 @@ import java.util.List;
 
 public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPage> implements IRandom {
 
-    private final List<Locator> allStacks = locator("button:has(span)").all();
-
-    private final int randomIndex = getRandomNumber(allStacks);
+    private final List<Locator> allStacks = allCheckboxes("button:has(span)");
+    private final Locator randomStack = getRandomValue(allStacks);
 
     MnemonicCardListPage(Page page) {
         super(page);
@@ -22,25 +21,25 @@ public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPag
         return createPage(new MnemonicCardListPage(getPage()), Constants.MNEMONIC_CARDS_LIST_END_POINT);
     }
 
-    private String getRandomStackText(int randomIndex) {
+    private String getRandomStackText() {
 
-        return allStacks.get(randomIndex).innerText();
+        return randomStack.innerText();
     }
 
     public String getRandomStackName() {
-        String[] textArray = getRandomStackText(randomIndex).split("\n");
+        String[] textArray =getRandomStackText().split("\n");
 
         return textArray[0];
     }
 
     public String getRandomStackCardsAmount() {
-        String[] textArray = getRandomStackText(randomIndex).split("\n")[1].split(" ");
+        String[] textArray =getRandomStackText().split("\n")[1].split(" ");
 
         return textArray[0];
     }
 
     public MnemonicCardsPage clickRandomMnemonicCardsStack() {
-        allStacks.get(randomIndex).click();
+        randomStack.click();
 
         return new MnemonicCardsPage(getPage()).init();
     }
