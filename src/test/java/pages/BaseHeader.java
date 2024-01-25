@@ -8,6 +8,7 @@ abstract class BaseHeader<TPage> extends BaseModal<TPage> {
     private final Locator yesCardsAmount = locator("span").getByText("Yes");
     private final Locator flashcardsButton = button("Flashcards /");
     private final Locator packName = locator("div:has(svg) + span");
+    private final Locator mnemonicCardHeader = locator("div~span").first();
 
     BaseHeader(Page page) {
         super(page);
@@ -44,5 +45,15 @@ abstract class BaseHeader<TPage> extends BaseModal<TPage> {
         flashcardsButton.click();
 
         return new FlashcardsPackIDPage(getPage()).init();
+    }
+
+    public String getMnemonicCardName() {
+        String mnemonicHeader = mnemonicCardHeader.innerText();
+        int mnemonicHeaderLength = mnemonicHeader.length();
+        if (mnemonicHeader.contains("...")) {
+            mnemonicHeader = mnemonicHeader.substring(0, mnemonicHeaderLength - 3);
+        }
+
+        return mnemonicHeader;
     }
 }

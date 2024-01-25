@@ -4,10 +4,12 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import pages.constants.Constants;
 
-public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPage> implements IRandom {
-    private final Locator listOfStacks = locator("button:has(span)");
+import java.util.List;
 
-    private final String[] randomStack = getRandomStackText();
+public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPage> implements IRandom {
+
+    private final List<Locator> allStacks = allCheckboxes("button:has(span)");
+    private final Locator randomStack = getRandomValue(allStacks);
 
     MnemonicCardListPage(Page page) {
         super(page);
@@ -19,39 +21,32 @@ public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPag
         return createPage(new MnemonicCardListPage(getPage()), Constants.MNEMONIC_CARDS_LIST_END_POINT);
     }
 
-   public Locator getListOfStacks() {
+    private String getRandomStackText() {
 
-        return listOfStacks;
+        return randomStack.innerText();
     }
 
-    public String[] getRandomStackText() {
-        String text = getRandomTextValue(getListOfStacks());
-        System.out.println("random value = " + text);
-        String[] arrayOfNamesAndQuantity = text.split("\n");
-        String expectedQuantity = arrayOfNamesAndQuantity[1].split(" ")[0];
-        arrayOfNamesAndQuantity[1] = expectedQuantity;
+    public String getRandomStackName() {
+        String[] textArray =getRandomStackText().split("\n");
 
-        return arrayOfNamesAndQuantity;
+        return textArray[0];
     }
 
-    public String getExpectedStackName() {
+    public String getRandomStackCardsAmount() {
+        String[] textArray =getRandomStackText().split("\n")[1].split(" ");
 
-        return randomStack[0];
+        return textArray[0];
     }
 
-    public String getExpectedStackQuantity() {
-
-        return randomStack[1];
-    }
-
-    public void clickRandomMnemonicCardsStack() {
-
-        exactText(getExpectedStackName()).click();
-    }
-
-    public MnemonicCardsPage clickRandomMnemonicCardsStackAndGo() {
-        exactText(getExpectedStackName()).click();
+    public MnemonicCardsPage clickRandomMnemonicCardsStack() {
+        randomStack.click();
 
         return new MnemonicCardsPage(getPage()).init();
     }
+
+//    default int getRandomNumber(List<Locator> list) {
+//
+//        return new Random().nextInt(0, list.size() - 1);
+//    }
+
 }
