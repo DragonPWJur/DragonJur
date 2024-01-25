@@ -45,7 +45,6 @@ build/
 
 state.json
 keys.json
-state.json
 # Allure Report
 allure-results/
 .allure/

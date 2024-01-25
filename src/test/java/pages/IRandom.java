@@ -13,12 +13,12 @@ interface IRandom {
         return listValues.get(random.nextInt(listValues.size()));
     }
 
-     default int getRandomNumber(Locator list) {
-        if (list.count() == 0) {
+     default int getRandomNumber(Locator locator) {
+        if (locator.count() == 0) {
             return 0;
         }
 
-        return new Random().nextInt(1, list.count());
+        return new Random().nextInt(1, locator.count());
     }
 
     default int getRandomNumber(List<Locator> list) {
@@ -32,9 +32,9 @@ interface IRandom {
         return random.nextInt(max - min) + min;
     }
 
-    default String getRandomTextValue(Locator listValues) {
+    default String getRandomTextValue(Locator locator) {
 
-        return listValues.all().get(getRandomNumber(listValues)).innerText();
+        return locator.all().get(getRandomNumber(locator)).innerText();
     }
 
     default String getRandomString(int length) {

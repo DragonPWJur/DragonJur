@@ -17,7 +17,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     private final Locator startButton = exactButton("Start");
     private final Locator automationTestingForStatsText = text("Automation testing for stats");
     private final Locator historyAndCivilizationForStatsText = text("History and Civilization for Stats");
-    private final List<Locator> allCheckboxes = allCheckboxes("button label span");
+    private final List<Locator> allCheckboxes = allCheckboxes("label");
 
     TestListPage(Page page) {
         super(page);
