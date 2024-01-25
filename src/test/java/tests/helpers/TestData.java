@@ -42,7 +42,7 @@ public final class TestData {
     public static final String STUDY_THIS_MODAL_MESSAGE =
             "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03";
     public static final String SEARCH_WORD = TestUtils.getRandomString(10);
-
+    public static final String TEST = "Test";
     @DataProvider
     public static Object[][] sideMenuItems() {
         return new Object[][]{
