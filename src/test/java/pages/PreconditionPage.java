@@ -7,6 +7,8 @@ import io.qameta.allure.Step;
 
 import java.util.List;
 
+import static utils.api.APIServices.clickAllCheckBoxes;
+
 public final class PreconditionPage extends BasePage<PreconditionPage> {
     private int flashcardsPackRandomIndex;
     private String flashcardsPackName;
