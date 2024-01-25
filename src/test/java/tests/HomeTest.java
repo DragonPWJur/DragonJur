@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.PreconditionPage;
 import tests.helpers.TestData;
+import utils.api.APIServices;
 
 import java.util.List;
 
@@ -126,10 +127,8 @@ public final class HomeTest extends BaseTest {
     @TmsLink("nf0bbnl8cpe4")
     public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive(){
 
-        Assert.assertFalse(
-                utils.api.APIServices.clickAllCheckBoxes(getPage().request()) == 0,
-                "If FAIL: Precondition is not reached. Checkboxes are not checked.\n"
-                );
+        Assert.assertNotEquals(APIServices.clickAllCheckBoxes(getPage().request()), 0,
+                "If FAIL: Precondition is not reached. Checkboxes are not checked.\n");
         getPage().reload();
 
         HomePage homePage = new HomePage(getPage()).init();
