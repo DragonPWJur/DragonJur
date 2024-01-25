@@ -44,7 +44,7 @@ public final class APIServices {
     private static String getAdminToken(APIRequestContext requestContext) {
         if (adminToken == null || adminToken.isEmpty()) {
             Map<String, String> data = new HashMap<>();
-            data.put("email", ProjectProperties.ADMIN_EMAIL);
+            data.put("email", ProjectProperties.ADMIN_USERNAME);
             data.put("password", ProjectProperties.ADMIN_PASSWORD);
 
             APIResponse apiResponse = requestContext
