@@ -27,23 +27,23 @@ public class StudyGuideAdminTest extends BaseTest {
 
         Assert.assertFalse(
                 studyGuidePage.getUnit1Text().contains(TestData.TEST),
-                "If FAIL: The expected text was found within the content of the unit. '" + TestData.TEST + "'.\n"
+                "If FAIL: The expected text '" + TestData.TEST + "' was found within the content of the unit.\n"
         );
 
         APIUtils
-                .goToAdminAndChangeChapter1Unit1Text(TestData.TEST, true, getPage().request());
+                .goToAdminAndChangeChapter1Unit1Text(TestData.TEST, "add", getPage().request());
 
         studyGuidePage
                 .reload();
 
         Assert.assertTrue(studyGuidePage.getUnit1Text().contains(TestData.TEST),
-                "If FAIL: The expected text was NOT found within the content of the unit. '" + TestData.TEST + "'.\n"
+                "If FAIL: The expected text '" + TestData.TEST + "'was NOT found within the content of the unit.\n"
         );
     }
 
     @AfterMethod
     public void restoreChapter1Unit1TextOnAdmin() {
         APIUtils
-                .goToAdminAndChangeChapter1Unit1Text(TestData.TEST, false, getPage().request());
+                .goToAdminAndChangeChapter1Unit1Text(TestData.TEST, "remove", getPage().request());
     }
 }

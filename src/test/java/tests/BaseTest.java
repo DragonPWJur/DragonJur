@@ -58,7 +58,6 @@ abstract class BaseTest {
         logInfo("Run " + ReportUtils.getTestMethodName(method));
 
         APIServices.cleanData(playwright);
-        logInfo("API: Course data cleared");
 
         context = BrowserManager.createContextWithCookies(browser);
         logInfo("Context created");

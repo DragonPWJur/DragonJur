@@ -5,7 +5,6 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
 import io.qameta.allure.Step;
 import pages.constants.Constants;
-import utils.api.APIUtils;
 
 public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements IRandom{
     private final Locator projectionsFirstWord = text("Projections").first();
@@ -108,11 +107,11 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     }
 
     @Step("Reload current page.")
-    public StudyGuidePage reload() {
+    public void reload() {
         getPage().reload();
         this.waitForPageLoad();
 
-        return new StudyGuidePage(getPage()).init();
+        new StudyGuidePage(getPage()).init();
     }
 
 }
