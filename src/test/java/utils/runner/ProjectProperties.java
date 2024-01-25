@@ -25,7 +25,7 @@ public final class ProjectProperties {
     public static final String PASSWORD = properties.getProperty("password").trim();
     public static final String COMMON_EMAIL_PART = properties.getProperty("commonEmailPart").trim();
     public static final String API_BASE_URL = properties.getProperty("apiBaseUrl").trim();
-    public static final String ADMIN_EMAIL = properties.getProperty("adminEmail").trim();
+    public static final String ADMIN_USERNAME = properties.getProperty("adminEmail").trim();
     public static final String ADMIN_PASSWORD = properties.getProperty("adminPassword").trim();
 
     private static Properties init_properties() {
