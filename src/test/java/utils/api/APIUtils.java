@@ -4,9 +4,29 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
+import com.microsoft.playwright.Playwright;
 import utils.reports.LoggerUtils;
 
 public final class APIUtils {
+
+    private static Playwright playwright;
+
+    private static APIRequestContext createAdminAPIRequestContext() {
+        playwright = Playwright.create();
+        APIRequestContext APIcontext = playwright.request()
+                .newContext();
+        LoggerUtils.logInfo("Playwright Admin API created");
+
+        return APIcontext;
+    }
+
+    private static void closeAdminAPIRequestContext() {
+        if (playwright != null) {
+            playwright.close();
+            playwright = null;
+            LoggerUtils.logInfo("Playwright Admin API closed");
+        }
+    }
 
     static JsonObject initJsonObject(String apiResponseBody) {
         JsonObject object = new JsonObject();
@@ -53,6 +73,9 @@ public final class APIUtils {
                 .getAsJsonObject().getAsJsonObject("data")
                 .addProperty("text", unit1Text);
 
-        APIServices.changeChapterText(requestContext, unit1);
+        APIRequestContext adminRequestContext = createAdminAPIRequestContext();
+        APIServices.changeChapterText(adminRequestContext, unit1);
+        closeAdminAPIRequestContext();
     }
+
 }
