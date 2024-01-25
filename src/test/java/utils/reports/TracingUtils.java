@@ -6,7 +6,6 @@ import com.microsoft.playwright.Tracing;
 import org.testng.ITestResult;
 import utils.runner.ProjectProperties;
 
-import java.io.File;
 import java.lang.reflect.Method;
 import java.nio.file.Paths;
 
@@ -40,7 +39,6 @@ public final class TracingUtils {
             }
         } else {
             page.video().delete();
-//            new File("target/videos/").delete();
         }
 
         context.tracing().stop(tracingStopOptions);
