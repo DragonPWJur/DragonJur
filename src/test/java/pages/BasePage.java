@@ -32,7 +32,7 @@ abstract class BasePage<TPage> {
         String pageUrl = ProjectProperties.BASE_URL + endPoint;
 
         if (!getPage().url().contains(pageUrl) || getPage().content().isEmpty()) {
-            getPage().waitForTimeout(2000);
+            getPage().waitForTimeout(3000);
         } else {
             getPage().onLoad(p -> getPage().content());
             if(!getPage().content().isEmpty()) {

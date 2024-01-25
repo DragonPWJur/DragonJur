@@ -40,7 +40,7 @@ public final class TracingUtils {
             }
         } else {
             page.video().delete();
-            new File("target/videos/").delete();
+//            new File("target/videos/").delete();
         }
 
         context.tracing().stop(tracingStopOptions);
