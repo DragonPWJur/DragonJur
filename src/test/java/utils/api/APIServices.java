@@ -15,7 +15,6 @@ import java.util.Map;
 import static utils.api.APIUtils.*;
 
 public final class APIServices {
-
     private static final String COURSES_RESULTS = "/courses/results";
     private static final String AUTH_ADMIN_SIGN_IN = "/auth/admin/signIn";
     private static final String COURSES_ACTIVE = "/courses/active";
