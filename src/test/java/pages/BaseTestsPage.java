@@ -5,7 +5,7 @@ import com.microsoft.playwright.Page;
 
 import java.util.List;
 
-abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
+abstract class BaseTestsPage<TPage, Self extends BaseTestsPage<?,?>> extends BaseFooter<TPage> implements IRandom {
     private final Locator testQuestion = locator("form span");
     private final Locator questionMark = exactText("?");
     private final Locator answerRadioButton = radio();
@@ -24,78 +24,78 @@ abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
         super(page);
     }
 
-//    public Locator getH3Header() {
-//
-//        return h3Header;
-//    }
-//
-//    public Locator getCorrectAnswerBackgroundColor() {
-//
-//        return correctAnswerBackgroundColor;
-//    }
-//
-//    public Locator getExplanationHeader() {
-//
-//        return explanationHeader;
-//    }
-//
-//    public String getExplanationText() {
-//
-//        return explanationTextLocator.innerText();
-//    }
-//
-//    public int countAnswersRadioButtons() {
-//
-//        return answerRadioButton.count();
-//    }
-//
-//    public Locator getTestQuestion() {
-//
-//        return testQuestion;
-//    }
-//
-//    public int getAnswersCount() {
-//
-//        return radioButtons.size();
-//    }
-//
-//    public Locator getQuestionMark() {
-//
-//        return questionMark;
-//    }
+    public Locator getH3Header() {
 
-//    public Self clickCorrectAnswerRadioButton() {
-//        correctAnswer.click();
-//
-//        return (Self) this;
-//    }
-//
-//    public Self clickConfirmButton() {
-//        confirmButton.click();
-//
-//        return (Self) this;
-//    }
+        return h3Header;
+    }
 
-//    public Locator getIncorrectAnswer() {
-//
-//        return incorrectAnswer;
-//    }
-//
-//    public void clickNextQuestionButton() {
-//
-//        nextQuestionButton.click();
-//    }
+    public Locator getCorrectAnswerBackgroundColor() {
 
-//
-//    public Self clickFinishTestButton() {
-//        finishTestButton.click();
-//
-//        return (Self) this;
-//    }
+        return correctAnswerBackgroundColor;
+    }
 
-//    public Self clickRandomIncorrectAnswer() {
-//        TestUtils.clickRandomElement(getIncorrectAnswer());
-//
-//        return (Self) this;
-//    }
+    public Locator getExplanationHeader() {
+
+        return explanationHeader;
+    }
+
+    public String getExplanationText() {
+
+        return explanationTextLocator.innerText();
+    }
+
+    public int countAnswersRadioButtons() {
+
+        return answerRadioButton.count();
+    }
+
+    public Locator getTestQuestion() {
+
+        return testQuestion;
+    }
+
+    public int getAnswersCount() {
+
+        return radioButtons.size();
+    }
+
+    public Locator getQuestionMark() {
+
+        return questionMark;
+    }
+
+    public Self clickCorrectAnswerRadioButton() {
+        correctAnswer.click();
+
+        return (Self) this;
+    }
+
+    public Self clickConfirmButton() {
+        confirmButton.click();
+
+        return (Self) this;
+    }
+
+    public Locator getIncorrectAnswer() {
+
+        return incorrectAnswer;
+    }
+
+    public void clickNextQuestionButton() {
+
+        nextQuestionButton.click();
+    }
+
+
+    public Self clickFinishTestButton() {
+        finishTestButton.click();
+
+        return (Self) this;
+    }
+
+    public Self clickRandomIncorrectAnswer() {
+        clickRandomElement(getIncorrectAnswer());
+
+        return (Self) this;
+    }
 }

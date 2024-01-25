@@ -53,16 +53,14 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
 
     @Step("Precondition: Start random domain test with {number} question(s).")
     public TestTutorPage startRandomDomainTest(String number) {
-        new HomePage(getPage())
+        return new HomePage(getPage())
                 .init()
                 .clickTestsMenu()
                 .cancelDialogIfVisible()
                 .clickDomainsButtonIfNotActive()
                 .clickRandomCheckbox()
                 .inputNumberOfQuestions(number)
-                .clickGenerateAndStartButton();
-
-        return new TestTutorPage(getPage()).init();
+                .clickGenerateAndStartButtonTutor();
     }
 
     public void collectRandomFlashcardPackInfo() {
