@@ -1,6 +1,16 @@
 package tests;
 
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Test;
+import pages.HomePage;
+import pages.PerformancePage;
+import utils.api.APIServices;
+import utils.api.APIUtils;
+
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class PerformanceTest extends BaseTest {
@@ -67,5 +77,22 @@ public class PerformanceTest extends BaseTest {
 //        assertThat(performancePage.getTestsButtonInBanner()).isVisible();
 //        assertThat(performancePage.getAllFlashcardsButtonInBanner()).isVisible();
 //    }
+
+    @Test(description = "TC1357-01 - ")
+    @Description("Objective: .")
+    @Story("Performance")
+    @TmsLink(" ")
+
+    public void testStatistics() {
+        APIUtils.saveAnswerFlashCardPacks(getPage().request());
+
+        PerformancePage performancePage = new HomePage(getPage()).init()
+                .clickPerformanceMenu();
+    }
+
+    @AfterMethod
+    public void testResetFlashCardPacks() {
+        APIServices.resetFlashCardPacks(getPage().request());
+    }
 }
 
