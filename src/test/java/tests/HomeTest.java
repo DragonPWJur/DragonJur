@@ -126,9 +126,18 @@ public final class HomeTest extends BaseTest {
     @TmsLink("nf0bbnl8cpe4")
     public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive(){
 
-        Assert.assertNotEquals(utils.api.APIUtils.clickAllCheckBoxes(getPage().request()), 0,
-                "If FAIL: Precondition is not reached. Checkboxes are not checked.\n");
+//        Assert.assertNotEquals(utils.api.APIUtils.clickAllCheckBoxes(getPage().request()), 0,
+//                "If FAIL: Precondition is not reached. Checkboxes are not checked.\n");
+//        getPage().reload();
+
+        utils.api.APIUtils.clickAllCheckBoxes(getPage().request());
         getPage().reload();
+
+        boolean all = new PreconditionPage(getPage())
+                .init()
+                .areAllCheckboxesChecked();
+
+        Assert.assertTrue(all);
 
         HomePage homePage = new HomePage(getPage()).init();
 

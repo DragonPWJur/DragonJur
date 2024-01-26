@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
+import org.testng.Assert;
 import utils.reports.LoggerUtils;
 
 import java.util.ArrayList;
@@ -50,6 +51,7 @@ public final class APIUtils {
                     "response status: " + apiResponse.status()
                     + "\n url: " + apiResponse.url()
                     + "\n body: " + apiResponse.text());
+            Assert.fail();
         } else {
             LoggerUtils.logInfo("API: " + methodName + " " + apiResponse.status());
         }
@@ -129,19 +131,14 @@ public final class APIUtils {
         return checkBoxIds;
     }
 
-    private static boolean clickCheckBoxes(APIRequestContext requestContext, List<String> checkBoxIds) {
-
-        boolean allCheckboxesChecked = true;
+    private static void clickCheckBoxes(APIRequestContext requestContext, List<String> checkBoxIds) {
 
         for (String markId : checkBoxIds) {
-            if (!APIServices.clickCheckboxesById(requestContext, markId)) {
-                allCheckboxesChecked = false;
-            }
+            APIServices.markCheckboxesById(requestContext, markId);
         }
-        return allCheckboxesChecked;
     }
 
-    public static int clickAllCheckBoxes(APIRequestContext request) {
+    public static void clickAllCheckBoxes(APIRequestContext request) {
 
         JsonObject plans = APIServices.getPlans(request);
         String _2WeekPlanId = get2WeekId(plans);
@@ -149,17 +146,13 @@ public final class APIUtils {
         APIServices.changeCurrentPlan(request, _2WeekPlanId);
         JsonObject planPhases = APIServices.getPlanPhases(request, _2WeekPlanId);
 
-        List<String> checkboxIds = getPlanPhasesId(planPhases);
+        List<String> checkboxesIds = getPlanPhasesId(planPhases);
 
-        if (checkboxIds.isEmpty()) {
-            LoggerUtils.logError("[ERROR] checkboxId list is empty.");
+        if (checkboxesIds.isEmpty()) {
+            LoggerUtils.logError("[ERROR] checkboxesIds list is empty.");
+            Assert.fail();
         }
 
-        if (!clickCheckBoxes(request, checkboxIds)) {
-            LoggerUtils.logError("[ERROR] checkboxes are not checked.");
-
-            return 0;
-        }
-        return checkboxIds.size();
+        clickCheckBoxes(request, checkboxesIds);
     }
 }

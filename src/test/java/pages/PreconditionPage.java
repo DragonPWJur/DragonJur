@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import io.qameta.allure.Step;
+import utils.api.APIUtils;
 
 import java.util.List;
 
@@ -90,6 +91,14 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return new HomePage(getPage())
                 .init()
                 .areAllCheckboxesUnchecked();
+    }
+
+    public boolean areAllCheckboxesChecked() {
+
+        return new HomePage(getPage())
+                .init()
+                .areAllCheckboxesChecked();
+
     }
 
 

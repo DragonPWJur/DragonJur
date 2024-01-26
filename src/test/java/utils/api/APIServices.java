@@ -24,7 +24,10 @@ public final class APIServices {
     private static final String TABLE_OF_CONTENT = "/table-of-content";
     private static final String ADMIN_GUIDES_UNITS = "/admin/guides/units/";
     private static final String PLANS = "/plans";
+    private static final String PHASES = "/phases";
     private static final String PLANS_CURRENT = "/plans/current";
+    private static final String TASKS = "/tasks";
+    private static final String MARK = "/mark";
     private static final String userToken = LoginUtils.getUserToken();
     private static String adminToken;
 
@@ -165,11 +168,9 @@ public final class APIServices {
 
     public static JsonObject getPlanPhases(APIRequestContext requestContext, String currentPlanId) {
 
-        final String URL_CURRENT_PLAN_PHASES = "/plans/" + currentPlanId + "/phases";
-
         APIResponse apiResponse = requestContext
                 .get(
-                        ProjectProperties.API_BASE_URL + URL_CURRENT_PLAN_PHASES,
+                        ProjectProperties.API_BASE_URL + PLANS + "/" + currentPlanId + PHASES,
                         RequestOptions
                                 .create()
                                 .setHeader("accept", "application/json")
@@ -181,13 +182,11 @@ public final class APIServices {
         return initJsonObject(apiResponse.text());
     }
 
-    public static boolean clickCheckboxesById(APIRequestContext requestContext, String markId) {
-
-        String url_tasks_markId_mark = "/tasks/" + markId + "/mark";
+    public static void markCheckboxesById(APIRequestContext requestContext, String markId) {
 
         APIResponse apiResponse = requestContext
                 .post(
-                        ProjectProperties.API_BASE_URL + url_tasks_markId_mark,
+                        ProjectProperties.API_BASE_URL + TASKS + "/" +markId + MARK,
                         RequestOptions
                                 .create()
                                 .setHeader("accept", "application/json")
@@ -195,7 +194,5 @@ public final class APIServices {
                 );
 
         checkStatus(apiResponse, "markId");
-
-        return apiResponse.ok();
     }
 }
