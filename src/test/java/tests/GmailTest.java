@@ -31,7 +31,7 @@ public final class GmailTest {
 
     @Test(priority = -2)
     public void testExtractGmailPasswordOauth2() throws Exception {
-        String email = COMMON_EMAIL_PART.substring(0, 15)+ "1021";
+        String email = COMMON_EMAIL_PART + "1021";
         String expectedPassword = "MjXQ350#@&";
 
         String actualPassword = GmailUtils

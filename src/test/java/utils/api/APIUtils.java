@@ -90,7 +90,7 @@ public final class APIUtils {
     }
 
     public static String getNumberFromDateAndTime() {
-        String number = new SimpleDateFormat("yyMMddHHmmss").format(new Date());
+        String number = new SimpleDateFormat("yyMMddHHmmssSSS").format(new Date());
         logInfo("Customer number is " + number);
 
         return number;
