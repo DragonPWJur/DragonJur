@@ -80,7 +80,7 @@ public final class HomeTest extends BaseTest {
     }
 
     @Test(
-            testName = "TC1341-01 - The single non-active Checkbox can be checked." ,
+            testName = "TC1341-01 - The single non-active Checkbox can be checked.",
             description = "LMS-1341 https://app.qase.io/plan/LMS/1?case=1341"
     )
     public void testTheSingleNonActiveCheckboxCanBeChecked() {
