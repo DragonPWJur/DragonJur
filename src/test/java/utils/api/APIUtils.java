@@ -131,14 +131,14 @@ public final class APIUtils {
         return checkBoxIds;
     }
 
-    private static void clickCheckBoxes(APIRequestContext requestContext, List<String> checkBoxIds) {
+    private static void markCheckBoxes(APIRequestContext requestContext, List<String> checkBoxIds) {
 
         for (String markId : checkBoxIds) {
             APIServices.markCheckboxesById(requestContext, markId);
         }
     }
 
-    public static void clickAllCheckBoxes(APIRequestContext request) {
+    public static void markCheckBoxes(APIRequestContext request) {
 
         JsonObject plans = APIServices.getPlans(request);
         String _2WeekPlanId = get2WeekId(plans);
@@ -153,6 +153,6 @@ public final class APIUtils {
             Assert.fail();
         }
 
-        clickCheckBoxes(request, checkboxesIds);
+        markCheckBoxes(request, checkboxesIds);
     }
 }

@@ -126,30 +126,25 @@ public final class HomeTest extends BaseTest {
     @TmsLink("nf0bbnl8cpe4")
     public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive(){
 
-//        Assert.assertNotEquals(utils.api.APIUtils.clickAllCheckBoxes(getPage().request()), 0,
-//                "If FAIL: Precondition is not reached. Checkboxes are not checked.\n");
-//        getPage().reload();
-
-        utils.api.APIUtils.clickAllCheckBoxes(getPage().request());
-        getPage().reload();
-
-        boolean all = new PreconditionPage(getPage())
-                .init()
-                .areAllCheckboxesChecked();
-
-        Assert.assertTrue(all);
+        Assert.assertTrue(new PreconditionPage(getPage()).init().areAllCheckboxesChecked(),
+                "If FAIL: Precondition 'All checkboxes should be checked' is not reached.\n");
 
         HomePage homePage = new HomePage(getPage()).init();
 
-        int randomIndexCheckBox = homePage.getCheckboxRandomNumber();
+        final int randomIndexCheckBox = homePage.getCheckboxRandomNumber();
 
-        homePage.clickRandomCheckbox();
+        homePage
+                .clickRandomCheckbox();
 
-        assertThat(homePage.getNthCheckbox(randomIndexCheckBox)).not().isChecked();
+        final Locator randomCheckBox = homePage.getNthCheckbox(randomIndexCheckBox);
+        final List<Locator> allCheckboxes = homePage.getAllCheckboxesInA2WeeksPlan();
 
-        for (int nth = 0; nth < homePage.getAllCheckboxesInA2WeeksPlan().size(); nth++) {
-            if (nth != randomIndexCheckBox) {
-                assertThat(homePage.getNthCheckbox(nth)).isChecked();
+        assertThat(randomCheckBox).not().isChecked();
+
+        for (Locator checkbox: allCheckboxes) {
+            if (checkbox != randomCheckBox) {
+
+                assertThat(checkbox).isChecked();
             }
         }
     }

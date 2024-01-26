@@ -95,10 +95,12 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
 
     public boolean areAllCheckboxesChecked() {
 
+        APIUtils.markCheckBoxes(getPage().request());
+        getPage().reload();
+
         return new HomePage(getPage())
                 .init()
                 .areAllCheckboxesChecked();
-
     }
 
 
