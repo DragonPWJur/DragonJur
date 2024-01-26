@@ -119,12 +119,20 @@ public class TestTutorTest extends BaseTest {
 //        assertThat(numberMarked).isVisible();
 //    }
 //
-//    @Test
+//    @Test(
+//            testName = "LMS-1352 Возможность получать результаты. https://app.qase.io/project/LMS?suite=179&case=1352",
+//            description = "TC1352-01 Verify the user is able to retrieve test results"
+//    )
+//    @Description("Objective: To confirm that users can access their test results successfully.")
+//    @Story("Tests")
+//    @TmsLink("rihwv9xhblbu")
 //    public void testUserIsAbleToRetrieveTestResults () {
 //
-//        HomePage homePage = new HomePage(getPage(), getPlaywright());
-//        int beforeHomeCountPoints = homePage.getProgressbarPointsNumber();
-//        int beforeHomeCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
+//        HomePage homePage =
+//                new HomePage(getPage()).init();
+//
+//        final int mainSectionPointsBefore = homePage.getMainSectionPoints();
+//        final int sideMenuPointsBefore = homePage.getSideMenuPoints();
 //
 //        TestTutorPage testTutorPage = new HomePage(getPage(), getPlaywright())
 //                .clickTestsMenu()
@@ -156,12 +164,12 @@ public class TestTutorTest extends BaseTest {
 //                .clickCloseTheTestButton()
 //                .clickHomeMenu();
 //
-//        int afterHomeCountPoints = homePage.getProgressbarPointsNumber();
-//        int afterHomeCountSideMenuPoints = homePage.getProgressbarSideMenuPointsNumber();
+//        int mainSectionPointsAfter = homePage.getProgressbarPointsNumber();
+//        int sideMenuPointsAfter = homePage.getProgressbarSideMenuPointsNumber();
 //
-//        Assert.assertTrue(beforeHomeCountPoints < afterHomeCountPoints,
+//        Assert.assertTrue(mainSectionPointsBefore < afterHomeCountPoints,
 //                "Expected on Home diagram points after test to be greater than before test, but didn't.");
-//        Assert.assertTrue(beforeHomeCountSideMenuPoints < afterHomeCountSideMenuPoints,
+//        Assert.assertTrue(sideMenuPointsBefore < sideMenuPointsAfter,
 //                "Expected side menu diagram points after test to be greater than before test, but didn't.");
 //        assertThat(homePage.getProgressbarPoints()).hasText(TestData.CORRECT_ANSWER_POINTS);
 //    }
