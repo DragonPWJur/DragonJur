@@ -19,7 +19,7 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     private final Locator searchResultTextbox = locator("div:has(input[placeholder='Search']) + div>div");
     private final Locator longBonesFirstText = text("Long bones").first();
     private final Locator unit1Text = locator("#body .ce-block__content").first();
-    private final List<Locator> listOfMatches = allCheckboxes("button:not(:has(> *))");
+    private final String match = "div:has(button > span) > button:not(:has(> *))";
 
     StudyGuidePage(Page page) {
         super(page);
@@ -52,8 +52,9 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return searchResultTextbox;
     }
 
-    public List<Locator> getListOfMatches() {
-        return listOfMatches;
+    public List<Locator> getMatchesList() {
+
+        return allItems(match);
     }
 
     public StudyGuidePage clickSaveButton() {
@@ -90,13 +91,13 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return getProjectionsFirstWord().textContent();
     }
 
-    public StudyGuidePage inputRandomStringInSearchField(String text) {
+    public StudyGuidePage inputRandomWordInSearchField(String text) {
         searchField.fill(text);
 
         return this;
     }
 
-    public StudyGuidePage inputExistingKeywordInSearchField(String text) {
+    public StudyGuidePage inputSearchWordInSearchField(String text) {
         searchField.fill(text);
 
         return this;

@@ -23,12 +23,12 @@ public class SearchTest extends BaseTest {
             " a non-existent keyword is typed.")
     @Story("Search")
     @TmsLink("m9rydpfuvuw6")
-    public void testSearchByNotExistingKeyWord() {
+    public void testSearchByNotExistingWord() {
 
         StudyGuidePage studyGuidePage =
                 new HomePage(getPage()).init()
                         .clickStudyGuideMenu()
-                        .inputRandomStringInSearchField(TestData.SEARCH_WORD);
+                        .inputRandomWordInSearchField(TestData.SEARCH_WORD);
 
         final Locator nothingFoundMessage = studyGuidePage.getNothingFoundMessage();
         final Locator searchResultMessage = studyGuidePage.getSearchResultMessage();
@@ -45,17 +45,17 @@ public class SearchTest extends BaseTest {
             " the Search field.")
     @Story("Search")
     @TmsLink("vdluszdw85zh")
-    public void testSearchByExistingKeyWord() {
+    public void testSearchByExistingWord() {
 
         StudyGuidePage studyGuidePage =
                 new HomePage(getPage()).init()
                         .clickStudyGuideMenu()
-                        .inputExistingKeywordInSearchField(TestData.STAND_WORD);
+                        .inputSearchWordInSearchField(TestData.STAND);
 
-        final List<Locator> listOfMatches = studyGuidePage.getListOfMatches();
+        final List<Locator> matchesList = studyGuidePage.getMatchesList();
 
-        for (int i = 3; i < listOfMatches.size(); i++) {
-            assertThat(listOfMatches.get(i)).containsText(TestData.STAND_WORD);
+        for (Locator match : matchesList) {
+            assertThat(match).containsText(TestData.STAND);
         }
     }
 }
