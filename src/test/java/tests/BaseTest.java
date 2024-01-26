@@ -137,9 +137,4 @@ abstract class BaseTest {
 
         return playwright;
     }
-
-    public Browser getBrowser() {
-
-        return browser;
-    }
 }
