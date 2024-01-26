@@ -43,6 +43,7 @@ public final class TestData {
             "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03";
     public static final String SEARCH_WORD = TestUtils.getRandomString(10);
     public static final String TEST = "Test";
+    public static final String STAND = "stand";
     @DataProvider
     public static Object[][] sideMenuItems() {
         return new Object[][]{
