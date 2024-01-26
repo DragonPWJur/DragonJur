@@ -23,10 +23,10 @@ public final class APIServices {
     private static final String CHAPTERS = "/chapters/";
     private static final String TABLE_OF_CONTENT = "/table-of-content";
     private static final String ADMIN_GUIDES_UNITS = "/admin/guides/units/";
-    private static final String PLANS = "/plans";
+    private static final String PLANS = "/plans/";
     private static final String PHASES = "/phases";
     private static final String PLANS_CURRENT = "/plans/current";
-    private static final String TASKS = "/tasks";
+    private static final String TASKS = "/tasks/";
     private static final String MARK = "/mark";
     private static final String userToken = LoginUtils.getUserToken();
     private static String adminToken;
@@ -170,7 +170,7 @@ public final class APIServices {
 
         APIResponse apiResponse = requestContext
                 .get(
-                        ProjectProperties.API_BASE_URL + PLANS + "/" + currentPlanId + PHASES,
+                        ProjectProperties.API_BASE_URL + PLANS + currentPlanId + PHASES,
                         RequestOptions
                                 .create()
                                 .setHeader("accept", "application/json")
@@ -186,7 +186,7 @@ public final class APIServices {
 
         APIResponse apiResponse = requestContext
                 .post(
-                        ProjectProperties.API_BASE_URL + TASKS + "/" +markId + MARK,
+                        ProjectProperties.API_BASE_URL + TASKS + markId + MARK,
                         RequestOptions
                                 .create()
                                 .setHeader("accept", "application/json")
