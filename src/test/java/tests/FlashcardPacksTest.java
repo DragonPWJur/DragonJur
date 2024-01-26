@@ -5,7 +5,6 @@ import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
 import jdk.jfr.Description;
 import org.testng.Assert;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.FlashcardsPackIDPage;
 import pages.HomePage;
@@ -18,7 +17,6 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public final class FlashcardPacksTest extends BaseTest {
 
-    @Ignore
     @Test(
             testName = "LMS-1349 Возможность для юзера добавлять во флешкарточки. https://app.qase.io/plan/LMS/1?case=1349",
             description = "TC1349-01 - User can mark cards for re-checking (“Add to flashcards”)."
@@ -30,8 +28,6 @@ public final class FlashcardPacksTest extends BaseTest {
     public void testAddToFlashCard() {
 
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
-        precondition
-                .collectRandomFlashcardPackInfo();
 
         final String initialCardsAmount = precondition.getInitialAmountOfCardsMarkedForRechecking();
         final String expectedCardsAmount = TestUtils.add(initialCardsAmount, 1);

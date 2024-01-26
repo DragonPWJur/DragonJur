@@ -9,6 +9,7 @@ abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
     private final Locator testQuestion = locator("form span");
     private final Locator questionMark = exactText("?");
     private final Locator answerRadioButton = radio();
+    private final List<Locator> testAnswersList = allRadioButtons();
     private final List<Locator> radioButtons = allRadioButtons();
     private final Locator correctAnswer = text("Correct Answer");
     private final Locator correctAnswerBackgroundColor = locator("[fill='#55B47D']");
@@ -49,20 +50,25 @@ abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
 //        return answerRadioButton.count();
 //    }
 //
-//    public Locator getTestQuestion() {
-//
-//        return testQuestion;
-//    }
+    public Locator getTestQuestion() {
+
+        return testQuestion;
+    }
 //
 //    public int getAnswersCount() {
 //
 //        return radioButtons.size();
 //    }
 //
-//    public Locator getQuestionMark() {
-//
-//        return questionMark;
-//    }
+    public Locator getQuestionMark() {
+
+        return questionMark;
+    }
+
+    public List<Locator> getTestAnswers() {
+
+        return testAnswersList;
+    }
 
 //    public Self clickCorrectAnswerRadioButton() {
 //        correctAnswer.click();

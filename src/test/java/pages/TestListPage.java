@@ -17,7 +17,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     private final Locator startButton = exactButton("Start");
     private final Locator automationTestingForStatsText = text("Automation testing for stats");
     private final Locator historyAndCivilizationForStatsText = text("History and Civilization for Stats");
-    private final List<Locator> allCheckboxes = allCheckboxes("label");
+    private final List<Locator> allCheckboxes = allCheckboxes("div:has(button) label > span");
 
     TestListPage(Page page) {
         super(page);
@@ -31,9 +31,8 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
 
     @Step("Click 'Domains' button if not active")
     public TestListPage clickDomainsButtonIfNotActive() {
-        if (!domainsButton.isChecked()) {
-            domainsButton.click();
-        }
+        domainsButton.check();
+        getPage().reload();
 
         return this;
     }

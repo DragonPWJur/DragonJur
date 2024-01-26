@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import io.qameta.allure.Step;
+import org.testng.Assert;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
     private int flashcardsPackRandomIndex;
     private String flashcardsPackName;
     private String flashcardsPackCardsAmount;
+    private int randomIndex;
 
     public PreconditionPage(Page page) {
         super(page);
@@ -32,6 +34,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return flashcardsPackName;
     }
 
+    @Step("Precondition: Save the initial amount of 'Marked for re-checking' cards.")
     public String getFlashcardsPackCardsAmount() {
 
         return flashcardsPackCardsAmount;
@@ -40,8 +43,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
     @Step("Precondition: Save the initial amount of 'Marked for re-checking' cards.")
     public String getInitialAmountOfCardsMarkedForRechecking() {
         final String amountMarkedForRechecking =
-                new HomePage(getPage())
-                        .init()
+                new HomePage(getPage()).init()
                         .clickFlashcardsMenu()
                         .getAmountOfCardsMarkedForRechecking();
 
@@ -67,8 +69,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
 
     public void collectRandomFlashcardPackInfo() {
         FlashcardPacksPage flashcardPacksPage =
-                new HomePage(getPage())
-                        .init()
+                new HomePage(getPage()).init()
                         .clickFlashcardsMenu();
 
         this.flashcardsPackRandomIndex = flashcardPacksPage.getRandomPackIndex();
@@ -90,6 +91,31 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return new HomePage(getPage())
                 .init()
                 .areAllCheckboxesUnchecked();
+    }
+
+    public boolean oneCheckboxShouldBeCheckedAndAllOthersUnchecked() {
+        HomePage homePage =
+                new HomePage(getPage()).init()
+                        .click2WeeksButton();
+
+        randomIndex = homePage.getSingleCheckedCheckboxIndex();
+
+        if (homePage.isListCheckboxesNotEmpty()) {
+            if(homePage.areAllCheckboxesUnchecked()) {
+                homePage
+                        .clickNthCheckbox(randomIndex)
+                        .waitForPointsAnimationToStop();
+
+                return homePage.getAllCheckedCheckboxes().size() == 1;
+            }
+        }
+
+        return false;
+    }
+
+    public int getSingleCheckedCheckboxIndex() {
+
+        return randomIndex;
     }
 
 
@@ -188,24 +214,8 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
 //
 //    public boolean checkIfListCheckBoxesIsNotEmptyAndOneIsChecked() {
 //
-////    public boolean checkIfListCheckBoxesIsNotEmptyAndOneIsChecked() {
-////
-////        HomePage homePage = new HomePage(getPage(), getPlaywright());
-////        if (homePage.isListCheckBoxesNotEmpty()) {
-////            homePage.clickRandomCheckBox();
-////
-////            return homePage.getListCheckedCheckBoxes().size() == 1;
-////        }
-////        return false;
-////    }
-//        HomePage homePage = new HomePage(getPage());
-////        if (homePage.isListCheckBoxesNotEmpty()) {
-////            homePage.clickRandomCheckBox();
-////
-////            return homePage.getListCheckedCheckBoxes().size() == 1;
-////        }
-//        return false;
-//    }
+
+//
 //
 ////    public boolean checkIfListCheckBoxesIsNotEmptyAndAllCheckBoxesAreChecked() {
 ////        HomePage homePage = new HomePage(getPage());

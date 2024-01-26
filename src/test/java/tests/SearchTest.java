@@ -4,10 +4,14 @@ import com.microsoft.playwright.Locator;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
 import jdk.jfr.Description;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.StudyGuidePage;
 import tests.helpers.TestData;
+
+import java.util.List;
+import java.util.Locale;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
@@ -35,20 +39,23 @@ public class SearchTest extends BaseTest {
         assertThat(searchResultMessage).hasText(TestData.NOTHING_FOUND);
     }
 
-//    @Test
-//    public void testSearchByExistingKeyWord() {
-//        List<Locator> listOfMatches = new ArrayList<>();
-//
-//        listOfMatches.add(getPage().locator("button:not(:has(> *))"));
-//
-//        getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Study guide")).click();
-//
-//        getPage().getByPlaceholder("Search").fill(EXISTING_KEYWORD);
-//
-//        for (int i = 3; i <= listOfMatches.size(); i++) {
-//            assertThat(getPage()
-//                    .locator("listOfMatches.get(i)"))
-//                    .hasText(EXISTING_KEYWORD);
-//        }
-//    }
+    @Test
+    public void testSearchByExistingKeyWord() {
+
+        StudyGuidePage studyGuidePage =
+                new HomePage(getPage()).init()
+                        .clickStudyGuideMenu()
+                        .inputSearchWord(TestData.BONE);
+
+        final List<String> searchResultText = studyGuidePage.getSearchResultText();
+
+        System.out.println(searchResultText);
+
+        for (String result : searchResultText) {
+            Assert.assertTrue(
+                    result.toLowerCase().contains(TestData.BONE),
+                    "If FAIL: Search result '" + result + "' does NOT contains the search word '" + TestData.BONE + "'.\n"
+            );
+        }
+    }
 }

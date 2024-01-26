@@ -80,7 +80,7 @@ public final class HomeTest extends BaseTest {
     }
 
     @Test(
-            testName = "TC1341-01 - The single non-active Checkbox can be checked." ,
+            testName = "TC1341-01 - The single non-active Checkbox can be checked.",
             description = "LMS-1341 https://app.qase.io/plan/LMS/1?case=1341"
     )
     public void testTheSingleNonActiveCheckboxCanBeChecked() {
@@ -103,61 +103,53 @@ public final class HomeTest extends BaseTest {
 
         homePage.init();
 
-        final int randomCheckboxNumber = homePage.getCheckboxRandomNumber();
+        final int randomIndex = homePage.getRandomIndex();
 
-        assertThat(homePage.getNthCheckbox(randomCheckboxNumber)).not().isChecked();
+        assertThat(homePage.getNthCheckbox(randomIndex)).not().isChecked();
 
         homePage
-                .clickNthCheckbox(randomCheckboxNumber);
+                .clickNthCheckbox(randomIndex);
 
-        assertThat(homePage.getNthCheckbox(randomCheckboxNumber)).isChecked();
+        assertThat(homePage.getNthCheckbox(randomIndex)).isChecked();
 
         final Locator checkboxImage = homePage.getCheckboxImage();
 
         assertThat(checkboxImage).hasCount(1);
         assertThat(checkboxImage).isVisible();
     }
-//<<<<<<< HEAD
-////
-////    @Test
-////    public void testDeactivationOfAlreadyActiveSingleCheckbox() {
-////
-////        Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
-////                .checkIfListCheckBoxesIsNotEmptyAndOneIsChecked(), "Precondition is not reached.");
-////
-////        HomePage homePage = new HomePage(getPage(), getPlaywright());
-////
-////        boolean allUnchecked = homePage
-////                .clickCheckedBox()
-////                .areAllCheckBoxesUnchecked();
-////
-////        Locator checkboxImage = homePage.getCheckboxImage();
-////
-////        Assert.assertTrue(allUnchecked, "All checkboxes are expected to be unchecked, but checked.");
-////        Assert.assertFalse(checkboxImage.isVisible(), "All images of checkboxes are expected to be not visible, but visible");
-////    }
-//=======
-//
-//    @Ignore
-//    @Test
-//    public void testDeactivationOfAlreadyActiveSingleCheckbox() {
-//
-//        Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
-//                .checkIfListCheckBoxesIsNotEmptyAndOneIsChecked(), "Precondition is not reached.");
-//
-//        HomePage homePage = new HomePage(getPage(), getPlaywright());
-//
-//        boolean allUnchecked = homePage
-//                .clickCheckedBox()
-//                .areAllCheckBoxesUnchecked();
-//
-//        Locator checkboxImage = homePage.getCheckboxImage();
-//
-//        Assert.assertTrue(allUnchecked, "All checkboxes are expected to be unchecked, but checked.");
-//        Assert.assertFalse(checkboxImage.isVisible(), "All images of checkboxes are expected to be not visible, but visible");
-//    }
-//
-//    @Test
+
+    @Test
+    public void testDeactivationOfAlreadyActiveSingleCheckbox() {
+        PreconditionPage preconditionPage = new PreconditionPage(getPage()).init();
+
+        Assert.assertTrue(
+                preconditionPage
+                        .oneCheckboxShouldBeCheckedAndAllOthersUnchecked(),
+                "If FAIL: Expected precondition 'A single checkbox is checked.' is not reached."
+        );
+
+        final int indexOfCheckedCheckbox = preconditionPage.getSingleCheckedCheckboxIndex();
+
+        HomePage homePage = new HomePage(getPage()).init();
+
+        final Locator singleRandomCheckbox = homePage.getNthCheckbox(indexOfCheckedCheckbox);
+        final Locator checkboxImage = homePage.getCheckboxImage();
+
+        assertThat(singleRandomCheckbox).isChecked();
+        assertThat(checkboxImage).isVisible();
+
+        homePage
+                .clickNthCheckbox(indexOfCheckedCheckbox);
+
+        assertThat(singleRandomCheckbox).not().isChecked();
+        assertThat(homePage.getCheckboxImage()).not().isVisible();
+        Assert.assertTrue(
+                homePage.areAllCheckboxesUnchecked(),
+                "If FAIL: All checkboxes are expected to be unchecked, but found checked checkbox(es)."
+        );
+    }
+
+    //    @Test
 //    public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive() {
 //
 //        Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
@@ -179,14 +171,15 @@ public final class HomeTest extends BaseTest {
 //        }
 //    }
 //
-//    @Test
-//    public void testModalWindowStudyIsOpened() {
-//        HomePage homePage = new HomePage(getPage(), getPlaywright())
-//                .clickStudyThisButton();
-//
-//        assertThat(homePage.getWeakestExamAreasModal()).isVisible();
-//        assertThat(homePage.getWeakestExamAreasHeader()).hasText(TestData.STUDY_THIS_MODAL_HEADER);
-//        assertThat(homePage.getWeakestExamAreasMessage()).isVisible();
-//    }
-//>>>>>>> 8952b8e84f53dbc1d24376ded00a911bdb48372e
+    @Test
+    public void testModalWindowStudyIsOpened() {
+        HomePage homePage =
+                new HomePage(getPage()).init()
+                        .clickStudyThisButton();
+
+        assertThat(homePage.getDialog()).isVisible();
+        assertThat(homePage.getWeakestExamAreasHeader()).hasText(TestData.WEAKEST_EXAM_AREAS);
+        assertThat(homePage.getWeakestExamAreasMessage()).isVisible();
+        assertThat(homePage.getWeakestExamAreasMessage()).hasText(TestData.YOU_HAVE_NOT_STUDIED_ENOUGH);
+    }
 }

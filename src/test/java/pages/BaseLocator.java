@@ -130,6 +130,11 @@ abstract class BaseLocator<TPage> extends BaseWait<TPage> {
         return getList(radio());
     }
 
+    protected List<Locator> allItems(String css) {
+
+        return getList(locator(css));
+    }
+
     private List<Locator> getList(Locator locator) {
         while(!locator.first().isVisible() && !locator.last().isVisible()) {
             locator.first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));

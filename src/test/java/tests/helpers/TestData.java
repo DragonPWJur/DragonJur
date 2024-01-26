@@ -38,11 +38,13 @@ public final class TestData {
     public static final String CORRECT_ANSWER_POINTS = "38";
     public static final String PROJECTIONS = "Projections";
     public static final String LONG_BONES = "Long bones";
-    public static final String STUDY_THIS_MODAL_HEADER = "Weakest Exam Areas";
-    public static final String STUDY_THIS_MODAL_MESSAGE =
+    public static final String WEAKEST_EXAM_AREAS = "Weakest Exam Areas";
+    public static final String YOU_HAVE_NOT_STUDIED_ENOUGH =
             "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03";
     public static final String SEARCH_WORD = TestUtils.getRandomString(10);
     public static final String TEST = "Test";
+    public static final String BONE = "bone";
+
     @DataProvider
     public static Object[][] sideMenuItems() {
         return new Object[][]{

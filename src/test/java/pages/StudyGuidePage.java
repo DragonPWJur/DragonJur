@@ -6,6 +6,10 @@ import com.microsoft.playwright.options.BoundingBox;
 import io.qameta.allure.Step;
 import pages.constants.Constants;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements IRandom{
     private final Locator projectionsFirstWord = text("Projections").first();
     private final Locator projectionsFirstButton = button("Projections").first();
@@ -17,6 +21,9 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     private final Locator searchResultTextbox = locator("div:has(input[placeholder='Search']) + div>div");
     private final Locator longBonesFirstText = text("Long bones").first();
     private final Locator unit1Text = locator("#body .ce-block__content").first();
+    private final Locator yesButton = locator("button:not(:has(> *))").first();
+    private final Locator searchResult = locator("div:has(button > span) > button:not(:has(> *))");
+
     StudyGuidePage(Page page) {
         super(page);
     }
@@ -79,6 +86,7 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     }
 
     public String getWordText() {
+
         return getProjectionsFirstWord().textContent();
     }
 
@@ -100,7 +108,6 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return this;
     }
 
-
     public String getUnit1Text() {
 
         return unit1Text.innerText();
@@ -113,5 +120,29 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
 
         new StudyGuidePage(getPage()).init();
     }
+
+    public StudyGuidePage inputSearchWord(String word) {
+        searchField.fill(word);
+
+        return this;
+    }
+
+    public List<String> getSearchResultText() {
+        waitWithTimeout(2000);
+        List<Locator> searchResultsList = allItems("div:has(button > span) > button:not(:has(> *))");
+
+        List<String> resultsText = new ArrayList<>();
+        for(Locator result : searchResultsList) {
+            resultsText.add(result.innerText());
+        }
+
+        return resultsText;
+    }
+
+//    public List<String> getAllSearchResultText() {
+//
+//      searchResult.innerText();
+//
+//    }
 
 }

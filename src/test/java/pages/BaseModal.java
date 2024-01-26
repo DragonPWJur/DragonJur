@@ -24,17 +24,18 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
         super(page);
     }
 
-    protected Locator getDialog() {
+    public Locator getDialog() {
 
         return dialog;
     }
 
     public Locator getCloseButton() {
+
         return closeButton;
     }
 
     @Step("Click 'Cansel' button to cancel dialog if visible.")
-    protected void cancelDialog() {
+    public void cancelDialog() {
         if (dialog.isVisible() && cancelButton.isVisible()) {
             getPage().onDialog(Dialog::dismiss);
             cancelButton.click();
@@ -69,6 +70,16 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
         return new TestResultPage(getPage()).init();
     }
 
+    public Locator getWeakestExamAreasHeader() {
+
+        return weakestExamAreasHeader;
+    }
+
+    public Locator getWeakestExamAreasMessage() {
+
+        return weakestExamAreasMessage;
+    }
+
     @Step("Click 'Back' button on dialog window if visible.")
     protected TPage clickBackButton() {
         if(dialog.isVisible() && backButton.isVisible()) {
@@ -89,4 +100,6 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
 
         return init();
     }
+
+
 }

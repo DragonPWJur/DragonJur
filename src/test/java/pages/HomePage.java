@@ -17,8 +17,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     private final Locator checkboxImage = locator("label:has(input) svg");
     private final List<Locator> allCheckboxes = allCheckboxes("label");
 
-    private final int checkboxRandomNumber = getRandomInt(0, allCheckboxes.size());
-
+    private final int randomIndex = getRandomInt(0, allCheckboxes.size());
 
     public HomePage(Page page) {
         super(page);
@@ -104,20 +103,39 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return getDialog();
     }
 
-    boolean areAllCheckboxesUnchecked() {
+    public int getRandomIndex() {
+
+        return randomIndex;
+    }
+
+    public int getSingleCheckedCheckboxIndex() {
+        final int index = randomIndex;
+
+        return index;
+    }
+
+    private List<Locator> getAllCheckboxes() {
+
+        return allCheckboxes;
+    }
+
+    public Locator getCheckboxImage() {
+
+        return checkboxImage;
+    }
+
+    boolean isListCheckboxesNotEmpty() {
+
+        return !allCheckboxes.isEmpty();
+    }
+
+    public boolean areAllCheckboxesUnchecked() {
 
         return allCheckboxes.stream().noneMatch(Locator::isChecked);
     }
 
-    public  HomePage clickRandomCheckbox(){
-        getNthCheckbox(checkboxRandomNumber).click();
-
-        return this;
-    }
-
-    public int getCheckboxRandomNumber() {
-
-        return checkboxRandomNumber;
+    public void clickRandomCheckbox(){
+        getNthCheckbox(randomIndex).click();
     }
 
     public Locator getNthCheckbox(int number) {
@@ -125,33 +143,32 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return allCheckboxes.get(number);
     }
 
-    public void clickNthCheckbox(int randomNumber) {
-
+    public HomePage clickNthCheckbox(int randomNumber) {
         getNthCheckbox(randomNumber).click();
+
+        return this;
     }
 
-    public Locator getCheckboxImage() {
+    List<Locator> getAllCheckedCheckboxes() {
 
-        return checkboxImage;
+        return allCheckboxes.stream().filter(Locator::isChecked).toList();
     }
-//
-//    public HomePage checkAllCheckBoxes() {
-//
-//        for (int i = 0; i < listCheckboxes.size(); i++) {
-//            while (!listCheckboxes.get(i).isChecked()) {
-//                listCheckboxes.get(i).check();
-//                getPage().waitForTimeout(1000);
-//            }
-//            System.out.println(listCheckboxes.get(i).isChecked());
-//        }
-//        return this;
-//    }
-//
-////    protected boolean isListCheckBoxesNotEmpty() {
-////
-////        return allCheckboxes;
-////    }
-//
+
+    boolean isCheckboxChecked() {
+
+        return allCheckboxes.get(randomIndex).isChecked();
+    }
+
+    public HomePage clickCheckedBox() {
+        for (Locator checkBox : allCheckboxes) {
+            if (checkBox.isChecked()) {
+                checkBox.click();
+                break;
+            }
+        }
+        return this;
+    }
+
 
 //
 ////    public boolean isCheckBoxChecked() {
@@ -169,7 +186,17 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
 //        return listCheckboxes.get(checkBoxNumber).isChecked();
 //    }
 //
-
+//public HomePage checkAllCheckBoxes() {
+//
+//        for (int i = 0; i < listCheckboxes.size(); i++) {
+//            while (!listCheckboxes.get(i).isChecked()) {
+//                listCheckboxes.get(i).check();
+//                getPage().waitForTimeout(1000);
+//            }
+//            System.out.println(listCheckboxes.get(i).isChecked());
+//        }
+//        return this;
+//    }
 //
 //    protected List<Locator> getListCheckedCheckBoxes() {
 //
@@ -187,20 +214,11 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
 //        return this;
 //    }
 //
-//    public Locator getWeakestExamAreasModal() {
-//        return weakestExamAreasModal;
-//    }
-//
-//    public HomePage clickStudyThisButton() {
-//        studyThisButton.click();
-//        return this;
-//    }
-//
-//    public  Locator getWeakestExamAreasHeader() {
-//        return weakestExamAreasHeader;
-//    }
-//
-//    public  Locator getWeakestExamAreasMessage() {
-//        return weakestExamAreasMessage;
-//    }
+
+    public HomePage clickStudyThisButton() {
+        studyThisButton.click();
+
+        return this;
+    }
+
 }

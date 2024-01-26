@@ -1,6 +1,5 @@
 package tests;
 
-
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class PerformanceTest extends BaseTest {
