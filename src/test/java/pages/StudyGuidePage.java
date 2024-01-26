@@ -6,6 +6,8 @@ import com.microsoft.playwright.options.BoundingBox;
 import io.qameta.allure.Step;
 import pages.constants.Constants;
 
+import java.util.List;
+
 public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements IRandom{
     private final Locator projectionsFirstWord = text("Projections").first();
     private final Locator projectionsFirstButton = button("Projections").first();
@@ -17,6 +19,8 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     private final Locator searchResultTextbox = locator("div:has(input[placeholder='Search']) + div>div");
     private final Locator longBonesFirstText = text("Long bones").first();
     private final Locator unit1Text = locator("#body .ce-block__content").first();
+    private final List<Locator> listOfMatches = allCheckboxes("button:not(:has(> *))");
+
     StudyGuidePage(Page page) {
         super(page);
     }
@@ -46,6 +50,10 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     public Locator getSearchResultMessage() {
 
         return searchResultTextbox;
+    }
+
+    public List<Locator> getListOfMatches() {
+        return listOfMatches;
     }
 
     public StudyGuidePage clickSaveButton() {
@@ -83,6 +91,12 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     }
 
     public StudyGuidePage inputRandomStringInSearchField(String text) {
+        searchField.fill(text);
+
+        return this;
+    }
+
+    public StudyGuidePage inputExistingKeywordInSearchField(String text) {
         searchField.fill(text);
 
         return this;
