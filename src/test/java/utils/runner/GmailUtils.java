@@ -22,6 +22,8 @@ import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.List;
 
+import static utils.reports.LoggerUtils.logInfo;
+
 public final class GmailUtils {
 
     public static final String CREDENTIALS_FILE_PATH = "/credentials.json";
@@ -31,7 +33,6 @@ public final class GmailUtils {
 
     private static final List<String> SCOPES = List.of(GmailScopes.MAIL_GOOGLE_COM);
     private static final String USER_ID = "me";
-    private static final String EMAIL_END_PART = "@gmail.com";
     private static final String QUERY = "subject:You have been invited";
 
     public static Gmail getGmailService() throws Exception {
@@ -67,8 +68,7 @@ public final class GmailUtils {
         return credential;
     }
 
-    public static String extractPasswordFromEmail(Gmail service, String numericPart) throws IOException {
-        String email = ProjectProperties.COMMON_EMAIL_PART + numericPart + EMAIL_END_PART;
+    public static String extractPasswordFromEmail(Gmail service, String email) throws IOException {
         String combinedQuery = "to:" + email + " " + QUERY;
 
         ListMessagesResponse response = service.users().messages().list(USER_ID).setQ(combinedQuery).execute();
@@ -85,6 +85,7 @@ public final class GmailUtils {
                     passwordValue = lines[i + 1].trim().replace("&amp;", "&");
                 }
             }
+            logInfo("API: Password was successfully extracted from Gmail");
 
             return passwordValue;
         } else {

@@ -7,9 +7,20 @@ import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
 import utils.reports.LoggerUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static utils.reports.LoggerUtils.logInfo;
+
 public final class APIUtils {
 
     private static Playwright playwright;
+
+    private static final String numericPart = getNumberFromDateAndTime();
+
+    public static String getNumericPart() {
+        return numericPart;
+    }
 
     private static APIRequestContext createAdminAPIRequestContext() {
         playwright = Playwright.create();
@@ -78,4 +89,10 @@ public final class APIUtils {
         closeAdminAPIRequestContext();
     }
 
+    public static String getNumberFromDateAndTime() {
+        String number = new SimpleDateFormat("yyMMddHHmmss").format(new Date());
+        logInfo("Customer number is " + number);
+
+        return number;
+    }
 }

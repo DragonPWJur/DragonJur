@@ -7,21 +7,22 @@ import com.microsoft.playwright.Playwright;
 import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.ITestContext;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.ITestResult;
+import org.testng.annotations.*;
 import utils.api.APIServices;
 import utils.reports.ExceptionListener;
+import utils.reports.ReportUtils;
 import utils.runner.GmailUtils;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static utils.api.APIServices.getNumericPart;
+import static utils.api.APIData.COURSE_ID_GOLD;
+import static utils.api.APIData.username;
 import static utils.reports.LoggerUtils.logInfo;
-import static utils.runner.ProjectProperties.API_BASE_URL;
+import static utils.runner.ProjectProperties.*;
 
 @Listeners(ExceptionListener.class)
 public class APIUnitTest {
@@ -47,6 +48,17 @@ public class APIUnitTest {
                 );
     }
 
+    @BeforeMethod
+    void beforeMethod(Method method) {
+        logInfo("Run " + ReportUtils.getTestMethodName(method));
+    }
+
+    @AfterMethod
+    void afterMethod(Method method, ITestResult testResult) {
+        ReportUtils.logTestStatistic(method, testResult);
+        logInfo(ReportUtils.getEndLine());
+    }
+
     @AfterClass(alwaysRun = true)
     public void tearDown(ITestContext iTestContext) {
         iTestContext.setAttribute("adminToken", adminToken);
@@ -68,7 +80,7 @@ public class APIUnitTest {
     @Test(dependsOnMethods = {"testCRUDCallVerification"})
     public void testSignInAdminAPI() {
         APIResponse response = APIServices
-                .signInAdmin(apiRequestContext);
+                .signInAdmin(apiRequestContext, ADMIN_USERNAME, ADMIN_PASSWORD);
 
         JSONObject object = new JSONObject(response.text());
         adminToken = object.getString("token");
@@ -84,7 +96,7 @@ public class APIUnitTest {
         inviteCode = null;
 
         APIResponse response = APIServices
-                .inviteCustomer(apiRequestContext, adminToken);
+                .inviteCustomer(apiRequestContext, username, COURSE_ID_GOLD, adminToken);
 
         JSONObject object = new JSONObject(response.text());
         inviteCode = object.getString("code");
@@ -100,10 +112,10 @@ public class APIUnitTest {
     public void testSignUpPromoAPI() throws Exception {
         Thread.sleep(5000);
         String password = GmailUtils
-                .extractPasswordFromEmail(GmailUtils.getGmailService(), getNumericPart());
+                .extractPasswordFromEmail(GmailUtils.getGmailService(), username);
 
         APIResponse response = APIServices
-                .signUpPromo(apiRequestContext, password, inviteCode);
+                .signUpPromo(apiRequestContext, username, password, inviteCode);
 
         JSONObject object = new JSONObject(response.text());
         customerId = object.getJSONObject("customer").getString("id");

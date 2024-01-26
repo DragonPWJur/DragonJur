@@ -9,15 +9,11 @@ import com.microsoft.playwright.options.RequestOptions;
 import utils.runner.LoginUtils;
 import utils.runner.ProjectProperties;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static utils.reports.LoggerUtils.logInfo;
-import static utils.runner.ProjectProperties.*;
-
-import static utils.api.APIUtils.*;
+import static utils.api.APIUtils.checkStatus;
+import static utils.api.APIUtils.initJsonObject;
 
 public final class APIServices {
     private static final String COURSES_RESULTS = "/courses/results";
@@ -28,20 +24,12 @@ public final class APIServices {
     private static final String CHAPTERS = "/chapters/";
     private static final String TABLE_OF_CONTENT = "/table-of-content";
     private static final String ADMIN_GUIDES_UNITS = "/admin/guides/units/";
+    private static final String ADMIN_CUSTOMER_INVITES = "/admin/customer-invites";
+    private static final String AUTH_CUSTOMER_SIGN_UP_PROMO = "/auth/customer/signUp/promo";
+    private static final String ADMIN_CUSTOMERS = "/admin/customers/";
 
     private static final String userToken = LoginUtils.getUserToken();
     private static String adminToken;
-
-    public static String getNumericPart() {
-        return numericPart;
-    }
-
-    public static String getNumberFromDateAndTime() {
-        String number = new SimpleDateFormat("yyMMddHHmmss").format(new Date());
-        logInfo("Customer number is " + number);
-
-        return number;
-    }
 
     public static void cleanData(Playwright playwright) {
         APIRequest request = playwright.request();
@@ -143,35 +131,35 @@ public final class APIServices {
         checkStatus(apiResponse, "changeChapterText");
     }
 
-    public static APIResponse signInAdmin(APIRequestContext apiRequestContext) {
+    public static APIResponse signInAdmin(APIRequestContext apiRequestContext, String adminUsername, String adminPassword) {
         Map<String, String> signInAdminData = new HashMap<>();
-        signInAdminData.put("email", ADMIN_USERNAME);
-        signInAdminData.put("password", ADMIN_PASSWORD);
+        signInAdminData.put("email", adminUsername);
+        signInAdminData.put("password", adminPassword);
 
         return apiRequestContext
                 .post(
-                        "/auth/admin/signIn",
+                        AUTH_ADMIN_SIGN_IN,
                         RequestOptions
                                 .create()
                                 .setData(signInAdminData)
                 );
     }
 
-    public static APIResponse inviteCustomer(APIRequestContext apiRequestContext, String adminToken) {
+    public static APIResponse inviteCustomer(APIRequestContext apiRequestContext, String username, String coursId, String adminToken) {
         Map<String, String> inviteCustomerData = new HashMap<>();
         inviteCustomerData.put("customerEmail", username);
-        inviteCustomerData.put("courseId", COURSE_ID);
+        inviteCustomerData.put("courseId", coursId);
 
         return apiRequestContext
                 .post(
-                        "/admin/customer-invites",
+                        ADMIN_CUSTOMER_INVITES,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + adminToken)
                                 .setData(inviteCustomerData)
                 );
     }
 
-    public static APIResponse signUpPromo(APIRequestContext apiRequestContext, String password, String inviteCode) {
+    public static APIResponse signUpPromo(APIRequestContext apiRequestContext, String username, String password, String inviteCode) {
         Map<String, String> loginCustomerData = new HashMap<>();
         loginCustomerData.put("email", username);
         loginCustomerData.put("password", password);
@@ -179,7 +167,7 @@ public final class APIServices {
 
         return apiRequestContext
                 .post(
-                        "/auth/customer/signUp/promo",
+                        AUTH_CUSTOMER_SIGN_UP_PROMO,
                         RequestOptions
                                 .create()
                                 .setData(loginCustomerData)
@@ -190,7 +178,7 @@ public final class APIServices {
 
         return apiRequestContext
                 .delete(
-                        "/admin/customers/" + customerId,
+                        ADMIN_CUSTOMERS + customerId,
                         RequestOptions
                                 .create()
                                 .setHeader("Authorization", "Bearer " + adminToken)
