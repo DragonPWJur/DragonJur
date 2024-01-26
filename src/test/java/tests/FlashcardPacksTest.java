@@ -99,7 +99,7 @@ public final class FlashcardPacksTest extends BaseTest {
 
     @Test(
             testName = "LMS-1368 Возможность оставлять пометки yes. https://app.qase.io/plan/LMS/1?case=1368",
-            description = "TC1368-01 - Flashcard turned when clicking the “Show Answer” button."
+            description = "TC1368 - Flashcard turned when clicking the “Show Answer” button."
     )
     @Description("Objective: Verify that the user can see the Answer when the flashcard is turned.")
     @Story("Flashcards")
@@ -145,7 +145,7 @@ public final class FlashcardPacksTest extends BaseTest {
 
     @Test(
             testName = "LMS-1368 Возможность оставлять пометки yes. https://app.qase.io/plan/LMS/1?case=1368",
-            description = "TC1368-02 - Possibility to leave a “Yes” mark."
+            description = "TC1368-01 - Possibility to leave a “Yes” mark."
     )
     @Description("Objective: Verify that the user can successfully leave a 'Yes' mark on a flashcard"
             + " when the card is turned.")
@@ -186,11 +186,11 @@ public final class FlashcardPacksTest extends BaseTest {
 
     @Test(
             testName = "LMS-1373 Возможность оставлять пометки kinda. https://app.qase.io/plan/LMS/1?case=1373",
-            description = "TC1373-02 - Possibility to leave a “Kinda” mark."
+            description = "TC1373-01 - Possibility to leave a “Kinda” mark."
     )
     @Description("Objective: Verify that the user can successfully leave a 'Kinda' mark on a flashcard when the card is turned.")
     @Story("Flashcards")
-    @TmsLink("")
+    @TmsLink("65ov9eivu5o5")
     public void testUserCanLeaveKindaMark() {
 
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
