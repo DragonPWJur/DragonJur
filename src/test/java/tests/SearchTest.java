@@ -9,6 +9,8 @@ import pages.HomePage;
 import pages.StudyGuidePage;
 import tests.helpers.TestData;
 
+import java.util.List;
+
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class SearchTest extends BaseTest {
@@ -21,12 +23,12 @@ public class SearchTest extends BaseTest {
             " a non-existent keyword is typed.")
     @Story("Search")
     @TmsLink("m9rydpfuvuw6")
-    public void testSearchByNotExistingKeyWord() {
+    public void testSearchByNotExistingWord() {
 
         StudyGuidePage studyGuidePage =
                 new HomePage(getPage()).init()
                         .clickStudyGuideMenu()
-                        .inputRandomStringInSearchField(TestData.SEARCH_WORD);
+                        .inputRandomWordInSearchField(TestData.SEARCH_WORD);
 
         final Locator nothingFoundMessage = studyGuidePage.getNothingFoundMessage();
         final Locator searchResultMessage = studyGuidePage.getSearchResultMessage();
@@ -35,20 +37,25 @@ public class SearchTest extends BaseTest {
         assertThat(searchResultMessage).hasText(TestData.NOTHING_FOUND);
     }
 
-//    @Test
-//    public void testSearchByExistingKeyWord() {
-//        List<Locator> listOfMatches = new ArrayList<>();
-//
-//        listOfMatches.add(getPage().locator("button:not(:has(> *))"));
-//
-//        getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Study guide")).click();
-//
-//        getPage().getByPlaceholder("Search").fill(EXISTING_KEYWORD);
-//
-//        for (int i = 3; i <= listOfMatches.size(); i++) {
-//            assertThat(getPage()
-//                    .locator("listOfMatches.get(i)"))
-//                    .hasText(EXISTING_KEYWORD);
-//        }
-//    }
+    @Test(
+            testName = "LMS-1361 Поиск по конкретному слову. https://app.qase.io/plan/LMS/1?case=1361",
+            description = "TC1361-02 - Displaying All Matches for the Searched Keyword."
+    )
+    @Description("Objective: To confirm that searching a keyword displays all partial or full matches under" +
+            " the Search field.")
+    @Story("Search")
+    @TmsLink("vdluszdw85zh")
+    public void testSearchByExistingWord() {
+
+        StudyGuidePage studyGuidePage =
+                new HomePage(getPage()).init()
+                        .clickStudyGuideMenu()
+                        .inputSearchWordInSearchField(TestData.STAND);
+
+        final List<Locator> matchesList = studyGuidePage.getMatchesList();
+
+        for (Locator match : matchesList) {
+            assertThat(match).containsText(TestData.STAND);
+        }
+    }
 }
