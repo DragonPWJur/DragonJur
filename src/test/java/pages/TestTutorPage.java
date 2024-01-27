@@ -11,6 +11,9 @@ public final class TestTutorPage extends BaseTestsPage<TestTutorPage> {
 
     private final List<Locator> listOfActiveButtons = button("Previous").locator("xpath=following-sibling::div[1]//button").all();
 
+    private final Locator testQuestion = locator("form span");
+    private final Locator answerRadioButton = radio();
+
     TestTutorPage(Page page) {
         super(page);
     }
@@ -25,6 +28,16 @@ public final class TestTutorPage extends BaseTestsPage<TestTutorPage> {
     public List<String> listOfButtonNamesInFooter() {
 
         return listOfActiveButtons.stream().map(Locator::innerText).toList();
+    }
+
+    public int countAnswersRadioButtons() {
+
+        return answerRadioButton.count();
+    }
+
+    public Locator getTestQuestion() {
+
+        return testQuestion;
     }
 
 

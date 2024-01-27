@@ -28,6 +28,10 @@ public final class APIServices {
     private static final String PLANS_CURRENT = "/plans/current";
     private static final String TASKS = "/tasks/";
     private static final String MARK = "/mark";
+    private static final String COURSES = "/courses/";
+    private static final String SUBSCRIBE = "/subscribe";
+    private static final String SET_ACTIVE = "/setActive";
+
     private static final String userToken = LoginUtils.getUserToken();
     private static String adminToken;
 
@@ -194,5 +198,40 @@ public final class APIServices {
                 );
 
         checkStatus(apiResponse, "markId");
+    }
+    public static APIResponse courseSubscribe(APIRequestContext apiRequestContext, String courseId, String period, String type) {
+        Map<String, String> courseData = new HashMap<>();
+        courseData.put("period", period);
+        courseData.put("type", type);
+
+        return apiRequestContext
+                .post(
+                        COURSES + courseId + SUBSCRIBE,
+                        RequestOptions
+                                .create()
+                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setData(courseData)
+                );
+    }
+
+    public static APIResponse setActive(APIRequestContext apiRequestContext, String courseId) {
+
+        return apiRequestContext
+                .post(
+                        COURSES + courseId + SET_ACTIVE,
+                        RequestOptions
+                                .create()
+                                .setHeader("Authorization", "Bearer " + userToken)
+                );
+    }
+
+    public static APIResponse activeCourse(APIRequestContext apiRequestContext) {
+
+        return apiRequestContext
+                .get(
+                        COURSES_ACTIVE,
+                        RequestOptions
+                                .create()
+                                .setHeader("Authorization", "Bearer " + userToken));
     }
 }
