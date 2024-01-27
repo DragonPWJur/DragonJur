@@ -24,8 +24,8 @@ import static utils.reports.LoggerUtils.*;
 
 @Listeners(ExceptionListener.class)
 abstract class BaseTest {
-    private final Playwright playwright = Playwright.create();;
-    private final Browser browser = BrowserManager.createBrowser(playwright);;
+    private final Playwright playwright = Playwright.create();
+    private final Browser browser = BrowserManager.createBrowser(playwright);
     private BrowserContext context;
     private Page page;
 

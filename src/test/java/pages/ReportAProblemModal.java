@@ -6,8 +6,7 @@ import com.microsoft.playwright.Page;
 public final class ReportAProblemModal extends BaseModal<ReportAProblemModal> implements IRandom {
     private final Locator describeTheProblemTextarea = textbox();
     private final Locator sendButton = button("Send");
-    private final Locator reportSentSuccessfullyMessage = exactText("The report has been sent successfully");
-
+    private final Locator reportMessage = locator(".ReactModalPortal div:has(svg) span");
     ReportAProblemModal(Page page) {
         super(page);
     }
@@ -18,9 +17,9 @@ public final class ReportAProblemModal extends BaseModal<ReportAProblemModal> im
         return new ReportAProblemModal(getPage());
     }
 
-    public ReportAProblemModal inputText() {
+    public ReportAProblemModal inputText(String text) {
         if (describeTheProblemTextarea.isVisible()) {
-            describeTheProblemTextarea.fill(getRandomString(10));
+            describeTheProblemTextarea.fill(text);
         }
 
         return this;
@@ -29,17 +28,20 @@ public final class ReportAProblemModal extends BaseModal<ReportAProblemModal> im
     public ReportAProblemModal clickSendButton() {
         sendButton.click();
 
-        return this;
+        return new ReportAProblemModal(getPage());
     }
 
-    public Locator getReportSentSuccessfullyMessage() {
-        getCloseButton().waitFor();
-        if (getCloseButton().isVisible()) {
+    public Locator getReportMessage() {
+        waitWithTimeout(2000);
 
-            return reportSentSuccessfullyMessage;
-        }
-
-        return null;
+        return reportMessage;
     }
 
+    public Locator getDescribeTheProblemTextarea() {
+        return describeTheProblemTextarea;
+    }
+
+    public Locator getSendButton() {
+        return sendButton;
+    }
 }

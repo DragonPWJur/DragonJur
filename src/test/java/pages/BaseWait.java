@@ -22,4 +22,8 @@ abstract class BaseWait<TPage> extends BasePage<TPage> {
         getPage().locator(css)
                 .waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(timeout));
     }
+
+    protected void waitForLocator(Locator locator, int timeout) {
+        locator.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE).setTimeout(timeout));
+    }
 }

@@ -21,20 +21,20 @@ public final class TestTimedTest extends BaseTest {
                         .clickTestsMenu()
                         .cancelDialogIfVisible()
                         .clickTimedButton()
-                        .clickGenerateAndStartButton()
+                        .clickGenerateAndStartTimedTestButton()
                         .clickStartTestButton()
                         .clickStartButton();
 
         final String expectedUrl = ProjectProperties.BASE_URL + TestData.TEST_TIMED_END_POINT;
         final Locator timer = testTimedPage.getTimer();
         final Locator testQuestion = testTimedPage.getTestQuestion();
-        final List<Locator> answers = testTimedPage.getTestAnswers();
+        final List<Locator> testAnswers = testTimedPage.getRadioButtons();
 
         assertThat(getPage()).hasURL(expectedUrl);
         assertThat(timer).isVisible();
         assertThat(testQuestion).containsText(TestData.QUESTION_MARK);
         Assert.assertTrue(
-                testTimedPage.getTestAnswers().size() >= 1,
+                testAnswers.size() >= 1,
                 "If FAIL: The multiple-choice test should contain at least one answer.\n"
         );
     }

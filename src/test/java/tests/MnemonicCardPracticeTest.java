@@ -1,5 +1,8 @@
 package tests;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
@@ -11,7 +14,13 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class MnemonicCardPracticeTest extends BaseTest {
 
-    @Test
+    @Test(
+            testName = "LMS-1355 Получение карточек. https://app.qase.io/plan/LMS/1?case=1355",
+            description = "TC1355-02 - Opening Mnemonic Card after Starting Practice."
+    )
+    @Description("Objective: To verify that the user can successfully open any Mnemonic Card after clicking the Start Practice button.")
+    @Story("Mnemonic Cards")
+    @TmsLink("bhhgxa6zrj99")
     public void testOpeningMnemonicCardAfterStartingPractice() {
         MnemonicCardPracticePage mnemonicCardPracticePage =
                 new HomePage(getPage()).init()

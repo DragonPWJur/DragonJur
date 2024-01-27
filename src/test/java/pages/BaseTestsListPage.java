@@ -12,7 +12,14 @@ abstract class BaseTestsListPage<TPage> extends BaseSideMenu<TPage> {
     }
 
     @Step("Click 'Generate and Start' button")
-    public TestListPage clickGenerateAndStartButton() {
+    public TestTutorPage clickGenerateAndStartButton() {
+        generateAndStartButton.click();
+
+        return new TestTutorPage(getPage()).init();
+    }
+
+    @Step("Click 'Generate and Start' button")
+    public TestListPage clickGenerateAndStartTimedTestButton() {
         generateAndStartButton.click();
 
         return new TestListPage(getPage()).init();

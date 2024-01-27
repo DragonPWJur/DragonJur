@@ -1,9 +1,11 @@
 package pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Step;
 import pages.constants.Constants;
 
-public final class TestTutorPage extends BaseFooter<TestTutorPage> {
+public final class TestTutorPage extends BaseTestsPage<TestTutorPage> implements IRandom {
 
     TestTutorPage(Page page) {
         super(page);
@@ -36,10 +38,11 @@ public final class TestTutorPage extends BaseFooter<TestTutorPage> {
 //        return explanationTextSpan.innerText();
 //    }
 //
-//    @Step("Click 'Add to flashcard' button to mark current test question for re-checking.")
-//    public Locator getListOfIncorrectAnswers() {
-//        return listOfIncorrectAnswers;
-//    }
+    @Step("Click 'Add to flashcard' button to mark current test question for re-checking.")
+    public Locator getListOfIncorrectAnswers() {
+
+        return getIncorrectAnswer();
+    }
 //
 //    public TestTutorPage clickAddToFlashCardButton() {
 //        addToFlashcardButton.click();
@@ -60,38 +63,33 @@ public final class TestTutorPage extends BaseFooter<TestTutorPage> {
 //        return this;
 //    }
 //
-//    public TestTutorPage clickCorrectAnswerRadioButton() {
-//        correctAnswerRadioButton.click();
-//        return this;
-//    }
-//
-//    public TestTutorPage clickConfirmButton() {
-//        confirmButton.click();
-//        return this;
-//    }
-//
-//
-//    public void clickNextQuestionButton() {
-//        nextQuestionButton.click();
-//    }
-//
-//    public TestTutorPage clickFinishTestButton() {
-//        finishTestButton.click();
-//
-//        return this;
-//    }
-//
-//    public TestTutorPage clickRandomIncorrectAnswer() {
-//        TestUtils.clickRandomElement(getListOfIncorrectAnswers());
-//
-//        return this;
-//    }
-//
-//    public TestTutorPage clickReportButton() {
-//        reportAProblem.click();
-//
-//        return this;
-//    }
+    public TestTutorPage clickCorrectAnswerRadioButton() {
+        getCorrectAnswer().click();
+        return this;
+    }
+
+    public TestTutorPage clickConfirmButton() {
+        getConfirmButton().click();
+        return this;
+    }
+
+
+    public void clickNextQuestionButton() {
+        getNextQuestionButton().click();
+    }
+
+    public TestTutorPage clickFinishTestButton() {
+        getFinishTestButton().click();
+
+        return this;
+    }
+
+    public TestTutorPage clickRandomIncorrectAnswer() {
+        clickRandomElement(getListOfIncorrectAnswers());
+
+        return this;
+    }
+
 //
 //    public TestTutorPage inputSymbolsIntoReportAProblemTextarea() {
 //        if (describeTheProblemTextarea.isVisible()) {
@@ -105,14 +103,7 @@ public final class TestTutorPage extends BaseFooter<TestTutorPage> {
 //
 //        return this;
 //    }
-//
-//    public Locator getReportSentSuccessfullyMessage() {
-//        closeButton.waitFor();
-//        if (closeButton.isVisible()) {
-//            return reportSentSuccessfullyMessage;
-//        }
-//
-//        return null;
+
 //    }
 //
 //    public Locator getReportAProblemModal() {
@@ -134,9 +125,7 @@ public final class TestTutorPage extends BaseFooter<TestTutorPage> {
 //
 //        return this;
 //    }
-//    public String getTestProgressbarPointsText() {
-//        return testProgressbarPoints.innerText();
-//    }
+
 //
 //    public int getTestProgressbarPointsNumber() {
 //        String pointsText = getTestProgressbarPointsText();
@@ -144,10 +133,6 @@ public final class TestTutorPage extends BaseFooter<TestTutorPage> {
 //        return parseInt(pointsText);
 //    }
 //
-//    public TestResultPage clickTestOkButton() {
-//        okButton.click();
-//
-//        return new TestResultPage(getPage(), getPlaywright());
-//    }
+
 }
 

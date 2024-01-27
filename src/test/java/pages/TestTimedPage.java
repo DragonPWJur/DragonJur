@@ -24,4 +24,9 @@ public final class TestTimedPage extends BaseTestsPage<TestTimedPage> {
 
         return timer;
     }
+
+    public List<Locator> getRadioButtons() {
+
+        return radioButtons;
+    }
 }

@@ -46,4 +46,9 @@ interface IRandom {
 
         return randomString.toString();
     }
+
+    default void clickRandomElement(Locator locator) {
+        int randomValue = getRandomNumber(locator);
+        locator.nth(randomValue).click();
+    }
 }

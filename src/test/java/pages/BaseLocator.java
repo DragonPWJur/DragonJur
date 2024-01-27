@@ -135,11 +135,15 @@ abstract class BaseLocator<TPage> extends BaseWait<TPage> {
         return getList(locator(css));
     }
 
+    protected List<Locator> allItems(Locator locator) {
+
+        return getList(locator);
+    }
+
     private List<Locator> getList(Locator locator) {
         while(!locator.first().isVisible() && !locator.last().isVisible()) {
             locator.first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
             locator.last().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED));
-            locator.last().scrollIntoViewIfNeeded();
             locator.last().focus();
         }
 

@@ -6,10 +6,10 @@ import com.microsoft.playwright.Page;
 abstract class BaseFooter<TPage> extends BaseHeader<TPage> {
     private final Locator reportAProblem = exactButton("Report a problem");
     private final Locator markForReviewButton = exactButton("Mark for review");
-    private final Locator removeFromMarkedButton = exactButton("Remove from marked");
     private final Locator addToFlashcardButton = exactButton("Add to flashcard");
     private final Locator removeFromFlashcards = exactButton("Remove from flashcards");
     private final Locator resetResultsButton = exactButton("Reset results");
+    private final Locator removeFromMarkedButton = locator("button[disabled] + div > button").nth(2);
 
     BaseFooter(Page page) {
         super(page);
@@ -25,24 +25,9 @@ abstract class BaseFooter<TPage> extends BaseHeader<TPage> {
         return resetResultsButton;
     }
 
-    public Locator getReportAProblem() {
-
-        return reportAProblem;
-    }
-
     public Locator getMarkForReviewButton() {
 
         return markForReviewButton;
-    }
-
-    public Locator getAddToFlashcardButton() {
-
-        return addToFlashcardButton;
-    }
-
-    public Locator getRemoveFromFlashcards() {
-
-        return removeFromFlashcards;
     }
 
     public TestTutorPage clickAddToFlashCardButton() {
@@ -57,10 +42,10 @@ abstract class BaseFooter<TPage> extends BaseHeader<TPage> {
         return new TestTutorPage(getPage());
     }
 
-    public TestTutorPage clickReportAProblemButton() {
+    public ReportAProblemModal clickReportAProblemButton() {
         reportAProblem.click();
 
-        return new TestTutorPage(getPage());
+        return new ReportAProblemModal(getPage());
     }
 
 }

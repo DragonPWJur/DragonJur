@@ -4,7 +4,6 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import io.qameta.allure.Step;
-import org.testng.Assert;
 
 import java.util.List;
 
@@ -101,7 +100,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         randomIndex = homePage.getSingleCheckedCheckboxIndex();
 
         if (homePage.isListCheckboxesNotEmpty()) {
-            if(homePage.areAllCheckboxesUnchecked()) {
+            if (homePage.areAllCheckboxesUnchecked()) {
                 homePage
                         .clickNthCheckbox(randomIndex)
                         .waitForPointsAnimationToStop();
@@ -118,112 +117,108 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return randomIndex;
     }
 
+    public void endTest() {
+        new TestTutorPage(getPage())
+                .clickEndButton()
+                .clickYesButton()
+                .clickSkipButton()
+                .clickCloseTheTestButton();
+    }
 
-//    public void endTest() {
-//        new TestTutorPage(getPage())
-//                .clickEndButton()
+//    public void startFlashcardPackAndGoBack(int index) {
+//        new HomePage(getPage())
+//                .clickHomeMenu()
+//                .clickFlashcardsMenu()
+//                .clickNthFlashcardPack(index)
+//                .clickGotItButton()
+//                .clickFlashcardsBackButton()
 //                .clickYesButton()
-//                .clickSkipButton()
-//                .clickCloseTheTestButton();
-//    }
-//
-//
-
-//
-
-//
-////    public void startFlashcardPackAndGoBack(int index) {
-////        new HomePage(getPage())
-////                .clickHomeMenu()
-////                .clickFlashcardsMenu()
-////                .clickNthFlashcardPack(index)
-////                .clickGotItButtonIfVisible()
-////                .clickFlashcardsBackButton()
-////                .clickYesButton()
-////                .clickHomeMenu();
-////    }
-//
-
-//
-////    @Step("Start test for the stats")
-////    public void startTestDomainForStats(String nameTest, String numberOfQuestions) {
-////        TestListPage testListPage = new HomePage(getPage())
-////                .clickTestsMenu()
-////                .cancelDialogIfVisible()
-////                .clickDomainsButton();
-////        if(nameTest.equals("Automation testing for stats")) {
-////            testListPage
-////                    .clickAutomationTestingForStatsCheckBox()
-////                    .inputNumberOfQuestions(numberOfQuestions)
-////                    .clickGenerateAndStartButton2();
-////        } else if(nameTest.equals("History and Civilization for Stats")) {
-////            testListPage
-////                    .clickHistoryAndCivilizationForStatsCheckBox()
-////                    .inputNumberOfQuestions(numberOfQuestions)
-////                    .clickGenerateAndStartButton2();
-////        }
-////    }
-//
-////    @Step("Pass the test with the correct answers of {numberOfQuestions} questions")
-////    public void passTestAllAnswersCorrect(int numberOfQuestions) {
-////        TestTutorPage testTutorPage = new TestTutorPage(getPage());
-////        for (int numOfQuestion = 1; numOfQuestion < numberOfQuestions; numOfQuestion++) {
-////            testTutorPage
-////                    .clickCorrectAnswerRadioButton()
-////                    .clickConfirmButton()
-////                    .clickNextQuestionButton();
-////        }
-////
-////        testTutorPage
-////                .clickCorrectAnswerRadioButton()
-////                .clickConfirmButton()
-////                .clickFinishTestButton()
-////                .clickSkipButton()
-////                .clickCloseTheTestButton()
-////                .clickHomeMenu();
-////    }
-//
-//    @Step("Pass the test with one wrong answer of {numberOfQuestions} questions\"")
-//    public void passTestOneAnswersIncorrect(int numberOfQuestions) {
-//        TestTutorPage testTutorPage = new TestTutorPage(getPage());
-//        for (int numOfQuestion = 1; numOfQuestion < numberOfQuestions; numOfQuestion++) {
-//            testTutorPage
-//                    .clickCorrectAnswerRadioButton()
-//                    .clickConfirmButton()
-//                    .clickNextQuestionButton();
-//        }
-//
-//        testTutorPage
-//                .clickRandomIncorrectAnswer()
-//                .clickConfirmButton()
-//                .clickFinishTestButton()
-//                .clickSkipButton()
-//                .clickCloseTheTestButton()
 //                .clickHomeMenu();
 //    }
-//
-//    @Step("Checking the number of questions on PerformancePage")
-//    public int checkNumberOfQuestions() {
-//        int numberOfQuestions = new HomePage(getPage())
-//                .clickPerformanceMenu()
-//                .getNumberOfQuestions();
-//        new PerformancePage(getPage()).clickHomeMenu();
-//
-//        return numberOfQuestions;
-//    }
-//
-//    public boolean checkIfListCheckBoxesIsNotEmptyAndOneIsChecked() {
-//
 
-//
-//
-////    public boolean checkIfListCheckBoxesIsNotEmptyAndAllCheckBoxesAreChecked() {
-////        HomePage homePage = new HomePage(getPage());
-////
-////        if (homePage.isListCheckBoxesNotEmpty()) {
-////            homePage.checkAllCheckBoxes();
-////            return homePage.areAllCheckBoxesChecked();
-////        }
-////        return false;
-////    }
+
+    @Step("Start test for the stats")
+    public void startTestDomainForStats(String nameTest, String numberOfQuestions) {
+        TestListPage testListPage =
+                new HomePage(getPage()).init()
+                        .clickTestsMenu()
+                        .cancelDialogIfVisible()
+                        .clickDomainsButtonIfNotActive();
+        if (nameTest.equals("Automation testing for stats")) {
+            testListPage
+                    .clickAutomationTestingForStatsCheckBox()
+                    .inputNumberOfQuestions(numberOfQuestions)
+                    .clickGenerateAndStartButton();
+        } else if (nameTest.equals("History and Civilization for Stats")) {
+            testListPage
+                    .clickHistoryAndCivilizationForStatsCheckBox()
+                    .inputNumberOfQuestions(numberOfQuestions)
+                    .clickGenerateAndStartButton();
+        }
+    }
+
+    @Step("Pass the test with the correct answers of {questionsAmount} questions")
+    public void passTestAllAnswersCorrect(String questionsAmount) {
+        int numberOfQuestions = Integer.parseInt(questionsAmount);
+
+        TestTutorPage testTutorPage = new TestTutorPage(getPage()).init();
+
+        for (int numOfQuestion = 1; numOfQuestion < numberOfQuestions; numOfQuestion++) {
+            testTutorPage
+                    .clickCorrectAnswerRadioButton()
+                    .clickConfirmButton()
+                    .clickNextQuestionButton();
+        }
+
+        testTutorPage
+                .clickCorrectAnswerRadioButton()
+                .clickConfirmButton()
+                .clickFinishTestButton()
+                .clickSkipButton()
+                .clickCloseTheTestButton()
+                .clickHomeMenu();
+    }
+
+    @Step("Pass the test with one wrong answer of {questionsAmount} questions\"")
+    public void passTestOneAnswersIncorrect(String questionsAmount) {
+        int numberOfQuestions = Integer.parseInt(questionsAmount);
+
+        TestTutorPage testTutorPage = new TestTutorPage(getPage()).init();
+
+        for (int numOfQuestion = 1; numOfQuestion < numberOfQuestions; numOfQuestion++) {
+            testTutorPage
+                    .clickCorrectAnswerRadioButton()
+                    .clickConfirmButton()
+                    .clickNextQuestionButton();
+        }
+
+        testTutorPage
+                .clickRandomIncorrectAnswer()
+                .clickConfirmButton()
+                .clickFinishTestButton()
+                .clickSkipButton()
+                .clickCloseTheTestButton()
+                .clickHomeMenu();
+    }
+
+    @Step("Get the number of questions on PerformancePage")
+    public int getNumberOfQuestions() {
+
+        PerformancePage performancePage =
+                new HomePage(getPage()).init()
+                        .clickPerformanceMenu();
+
+        final int numberOfQuestions = performancePage.getNumberOfQuestions();
+
+        performancePage
+                .clickHomeMenu();
+
+        return numberOfQuestions;
+    }
+
+    public int getNumberQuestionsMarkedBeforeTest() {
+        return new HomePage(getPage()).init()
+                .clickTestsMenu()
+                .getMarkedNumber();
+    }
 }
