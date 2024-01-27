@@ -19,8 +19,9 @@ import static utils.runner.ProjectProperties.BASE_URL;
 public class BronzeSubscriptionTest extends BaseTest {
 
     @BeforeMethod
-    protected void setUpBronzeSubscription(Method method) {
+    void activateRequiredCourse(Method method) {
         APIUtils.bronzeCourseSubscription(getPlaywright());
+        getPage().reload();
     }
 
     @Test

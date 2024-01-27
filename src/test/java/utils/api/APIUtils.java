@@ -102,10 +102,10 @@ public final class APIUtils {
         APIResponse apiResponse = APIServices.courseSubscribe(apiRequestContext, BRONZE_SUBSCRIPTION, MONTHLY, BRONZE);
 
         if (apiResponse.status() == 201) {
-            LoggerUtils.logInfo("API: Successfully subscribed to the BRONZE subscription");
+            LoggerUtils.logInfo("API: Successfully subscribed to 'TEST AUTOMATION _DO NOT DELETE_BRONZE' course with Bronze level");
         }
         if (apiResponse.status() == 422) {
-            LoggerUtils.logInfo("API: BRONZE subscription is activated");
+            LoggerUtils.logInfo("API: 'TEST AUTOMATION _DO NOT DELETE_BRONZE' course is exist");
             setActiveCourse(playwright, BRONZE_SUBSCRIPTION);
         }
         if (apiResponse.status() != 201 && apiResponse.status() != 422) {
@@ -123,13 +123,13 @@ public final class APIUtils {
             LoggerUtils.logError(apiResponse.status() + " - " + object.getString("message"));
             System.exit(1);
         } else {
-            LoggerUtils.logInfo("API: Switched to " + getCourseName(courseId) + " subscription"); //+ ReportUtils.getEndLine());
+            LoggerUtils.logInfo("API: Switched to " + getCourseName(courseId) + " subscription");
         }
     }
 
     public static String getIdActiveCourse(Playwright playwright) {
         APIRequestContext apiRequestContext = createApiRequestContext(playwright);
-        APIResponse apiResponse =  APIServices.activeCourse(apiRequestContext);
+        APIResponse apiResponse = APIServices.activeCourse(apiRequestContext);
 
         JSONObject object = new JSONObject(apiResponse.text());
 
