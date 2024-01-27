@@ -67,4 +67,9 @@ public final class FlashcardsPackIDPage extends BaseFooter<FlashcardsPackIDPage>
         kindaButton.click();
         waitWithTimeout(1500);
     }
+
+    public void clickNoMarkButton() {
+        noButton.click();
+        waitWithTimeout(1500);
+    }
 }
