@@ -77,6 +77,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
+    @Step("Click 'Chapters' button")
     public TestListPage clickChaptersButton() {
         if (!chaptersButton.isChecked()) {
             chaptersButton.click();
@@ -134,6 +135,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
+    @Step("Click random checkbox and return related number of questions (for Bronze subscription)")
     public int clickRandomActiveCheckboxAndReturnNumberOfQuestions() {
         activeCheckbox = activeCheckbox.filter(new Locator.FilterOptions().setHasText(Pattern.compile("\\d+")));
         activeCheckbox.last().waitFor();
