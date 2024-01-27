@@ -78,10 +78,16 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     }
 
     public TestListPage clickChaptersButton() {
+        // while block was added due to a bug in the application (Generate And Start button inactive)
         if (!chaptersButton.isChecked()) {
             chaptersButton.click();
-            waitWithTimeout(2000);
-            getPage().reload();
+
+            int attempt = 0;
+            while (checkbox.count() <= 24 && attempt < 3) {
+                getPage().reload();
+                waitWithTimeout(3000);
+                attempt++;
+            }
         }
 
         return this;
@@ -134,6 +140,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
+    @Step("Click random checkbox and return related number of questions (for Bronze subscription)")
     public int clickRandomActiveCheckboxAndReturnNumberOfQuestions() {
         activeCheckbox = activeCheckbox.filter(new Locator.FilterOptions().setHasText(Pattern.compile("\\d+")));
         activeCheckbox.last().waitFor();
