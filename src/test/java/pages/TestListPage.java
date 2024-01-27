@@ -77,12 +77,17 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    @Step("Click 'Chapters' button")
     public TestListPage clickChaptersButton() {
+        // while block was added due to a bug in the application (Generate And Start button inactive)
         if (!chaptersButton.isChecked()) {
             chaptersButton.click();
-            waitWithTimeout(2000);
-            getPage().reload();
+
+            int attempt = 0;
+            while (checkbox.count() <= 24 && attempt < 3) {
+                getPage().reload();
+                waitWithTimeout(3000);
+                attempt++;
+            }
         }
 
         return this;
