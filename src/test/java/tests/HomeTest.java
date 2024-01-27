@@ -80,9 +80,11 @@ public final class HomeTest extends BaseTest {
     }
 
     @Test(
-            testName = "TC1341-01 - The single non-active Checkbox can be checked." ,
-            description = "LMS-1341 https://app.qase.io/plan/LMS/1?case=1341"
-    )
+            testName = "LMS-1341 Нажатие чекбоксов, https://app.qase.io/plan/LMS/1?case=1341",
+            description = "TC1341-03 - Deactivation of a single Already Active Checkbox when all checkboxes are active.")
+    @Description("To verify that a non-active checkbox can be successfully checked.")
+    @Story("Home page")
+    @TmsLink("oz4bwi8yjqj")
     public void testTheSingleNonActiveCheckboxCanBeChecked() {
 
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
