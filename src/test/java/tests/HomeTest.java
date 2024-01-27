@@ -81,7 +81,8 @@ public final class HomeTest extends BaseTest {
 
     @Test(
             testName = "LMS-1341 Нажатие чекбоксов, https://app.qase.io/plan/LMS/1?case=1341",
-            description = "TC1341-01 - Deactivation of a single Already Active Checkbox when all checkboxes are active.")
+            description = "TC1341-01 - Deactivation of a single Already Active Checkbox when all checkboxes are active."
+    )
     @Description("To verify that a non-active checkbox can be successfully checked.")
     @Story("Home page")
     @TmsLink("oz4bwi8yjqj")

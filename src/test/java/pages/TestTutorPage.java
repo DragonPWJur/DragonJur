@@ -1,9 +1,13 @@
 package pages;
 
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import pages.constants.Constants;
 
 public final class TestTutorPage extends BaseFooter<TestTutorPage> {
+
+    private final Locator testQuestion = locator("form span");
+    private final Locator answerRadioButton = radio();
 
     TestTutorPage(Page page) {
         super(page);
@@ -13,6 +17,16 @@ public final class TestTutorPage extends BaseFooter<TestTutorPage> {
     public TestTutorPage init() {
 
         return createPage(new TestTutorPage(getPage()), Constants.TEST_TUTOR_END_POINT);
+    }
+
+    public int countAnswersRadioButtons() {
+
+        return answerRadioButton.count();
+    }
+
+    public Locator getTestQuestion() {
+
+        return testQuestion;
     }
 
 

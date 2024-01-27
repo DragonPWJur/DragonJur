@@ -6,6 +6,7 @@ import io.qameta.allure.Step;
 import pages.constants.Constants;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 public final class TestListPage extends BaseTestsListPage<TestListPage> implements IRandom {
     private final Locator domainsButton = text("Domains");
@@ -18,6 +19,9 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     private final Locator automationTestingForStatsText = text("Automation testing for stats");
     private final Locator historyAndCivilizationForStatsText = text("History and Civilization for Stats");
     private final List<Locator> allCheckboxes = allCheckboxes("label");
+    private final Locator checkbox = locator("button:has(input[type='checkbox'])>div");
+    private Locator activeCheckbox = checkbox.filter(new Locator.FilterOptions().setHasNot(locator("[disabled]")));
+    private final Locator generateAndStartButton = button("Generate & Start");
 
     TestListPage(Page page) {
         super(page);
@@ -74,10 +78,16 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     }
 
     public TestListPage clickChaptersButton() {
+        // while block was added due to a bug in the application (Generate And Start button inactive)
         if (!chaptersButton.isChecked()) {
             chaptersButton.click();
-            waitWithTimeout(2000);
-            getPage().reload();
+
+            int attempt = 0;
+            while (checkbox.count() <= 24 && attempt < 3) {
+                getPage().reload();
+                waitWithTimeout(3000);
+                attempt++;
+            }
         }
 
         return this;
@@ -121,5 +131,31 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         historyAndCivilizationForStatsText.click();
 
         return this;
+    }
+
+    @Step("Set random number of questions")
+    public TestListPage inputRandomNumberOfQuestions(int maxNumberOfQuestions) {
+        String number = String.valueOf(getRandomInt(maxNumberOfQuestions));
+        numberOfQuestionsInputField.fill(number);
+        return this;
+    }
+
+    @Step("Click random checkbox and return related number of questions (for Bronze subscription)")
+    public int clickRandomActiveCheckboxAndReturnNumberOfQuestions() {
+        activeCheckbox = activeCheckbox.filter(new Locator.FilterOptions().setHasText(Pattern.compile("\\d+")));
+        activeCheckbox.last().waitFor();
+
+        int randomValue = getRandomNumber(activeCheckbox);
+        activeCheckbox.nth(randomValue).click();
+        getPage().waitForTimeout(1000);
+
+        return Integer.parseInt(activeCheckbox.nth(randomValue).textContent().replaceAll("[^\\d/]+", "").split("/")[0]);
+    }
+
+    @Step("Click 'Generate and Start' button")
+    public TestTutorPage clickGenerateAndStartButtonTutor() {
+        generateAndStartButton.click();
+
+        return new TestTutorPage(getPage()).init();
     }
 }
