@@ -1,5 +1,14 @@
 package tests;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import pages.HomePage;
+import pages.TestTutorPage;
+import tests.helpers.TestData;
+
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class TestTutorTest extends BaseTest {
@@ -173,4 +182,27 @@ public class TestTutorTest extends BaseTest {
 //                "Expected side menu diagram points after test to be greater than before test, but didn't.");
 //        assertThat(homePage.getProgressbarPoints()).hasText(TestData.CORRECT_ANSWER_POINTS);
 //    }
+
+    @Test(
+            testName = "LMS-1364 Запуск тестов. https://app.qase.io/case/LMS-1364",
+            description = "TC1364-01 - Running Test in Study Guide with Gold Subscription"
+    )
+    @Description("Objective: To confirm that users with a Gold subscription can successfully run a test in the Study Guide section.")
+    @Story("Study Guide")
+    @TmsLink("ufe2bohbd0sy")
+    public void testTestIsRunWhenOpenFromStudyGuide() {
+        TestTutorPage testTutorPage =
+                new HomePage(getPage()).init()
+                        .clickStudyGuideMenu()
+                        .scrollToPageBottom()
+                        .clickYesButton();
+
+        Assert.assertEquals(
+                TestData.LIST_OF_TUTOR_TEST_FOOTER_BUTTONS, testTutorPage.listOfButtonNamesInFooter()
+        );
+        assertThat(testTutorPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
+        Assert.assertTrue(
+                testTutorPage.getAnswersCount() > 0);
+    }
+
 }

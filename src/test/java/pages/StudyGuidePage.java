@@ -20,6 +20,7 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     private final Locator longBonesFirstText = text("Long bones").first();
     private final Locator unit1Text = locator("#body .ce-block__content").first();
     private final String match = "div:has(button > span) > button:not(:has(> *))";
+    private final Locator yesButton = exactButton("Yes");
 
     StudyGuidePage(Page page) {
         super(page);
@@ -129,4 +130,15 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         new StudyGuidePage(getPage()).init();
     }
 
+    @Step("Scroll to the bottom of the StudyGuide page")
+    public StudyGuidePage scrollToPageBottom() {
+        yesButton.scrollIntoViewIfNeeded();
+        return this;
+    }
+
+    @Step("Click 'Yes' button at the bottom of the StudyGiude page")
+    public TestTutorPage clickYesButton() {
+        yesButton.click();
+        return new TestTutorPage(getPage()).init();
+    }
 }

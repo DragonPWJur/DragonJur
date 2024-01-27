@@ -2,6 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Step;
 
 import java.util.List;
 
@@ -49,15 +50,17 @@ abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
 //        return answerRadioButton.count();
 //    }
 //
-//    public Locator getTestQuestion() {
-//
-//        return testQuestion;
-//    }
-//
-//    public int getAnswersCount() {
-//
-//        return radioButtons.size();
-//    }
+    @Step("Get test question")
+    public Locator getTestQuestion() {
+
+        return testQuestion;
+    }
+
+    @Step("Count answers radio buttons")
+    public int getAnswersCount() {
+
+        return radioButtons.size();
+    }
 //
 //    public Locator getQuestionMark() {
 //
