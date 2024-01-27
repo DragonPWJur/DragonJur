@@ -117,6 +117,38 @@ public final class HomeTest extends BaseTest {
         assertThat(checkboxImage).hasCount(1);
         assertThat(checkboxImage).isVisible();
     }
+
+    @Test(
+            testName = "LMS-1341 Нажатие чекбоксов, https://app.qase.io/plan/LMS/1?case=1341",
+            description = "TC1341-03 - Deactivation of a single Already Active Checkbox when all checkboxes are active.")
+    @Description("To verify the functionality when all checkboxes are checked, and a single active checkbox becomes inactive upon clicking again.")
+    @Story("Home page")
+    @TmsLink("nf0bbnl8cpe4")
+    public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive(){
+
+        Assert.assertTrue(new PreconditionPage(getPage()).init().areAllCheckboxesChecked(),
+                "If FAIL: Precondition 'All checkboxes should be checked' is not reached.\n");
+
+        HomePage homePage = new HomePage(getPage()).init();
+
+        final int randomIndexCheckBox = homePage.getCheckboxRandomNumber();
+
+        homePage
+                .clickRandomCheckbox();
+
+        final Locator randomCheckBox = homePage.getNthCheckbox(randomIndexCheckBox);
+        final List<Locator> allCheckboxes = homePage.getAllCheckboxesInA2WeeksPlan();
+
+        assertThat(randomCheckBox).not().isChecked();
+
+        for (Locator checkbox: allCheckboxes) {
+            if (checkbox != randomCheckBox) {
+
+                assertThat(checkbox).isChecked();
+            }
+        }
+    }
+
 //<<<<<<< HEAD
 ////
 ////    @Test

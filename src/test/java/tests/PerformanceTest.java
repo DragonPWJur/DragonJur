@@ -1,10 +1,17 @@
 package tests;
 
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
+import org.testng.annotations.Test;
+
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class PerformanceTest extends BaseTest {
-//    @Test(description = "TC1356-02 - Displaying Statistics for Tests")
+//    @Test(
+//            testName = "LMS-1356 Получение статистики по тестам. https://app.qase.io/plan/LMS/1?case=1356",
+//            description = "TC1356-02 - Displaying Statistics for Tests")
 //    @Description("Objective: To confirm the accurate display of statistics for Tests in the Performance section.")
 //    @Story("Performance")
 //    @TmsLink("p0i1q95cgr11")
@@ -49,7 +56,9 @@ public class PerformanceTest extends BaseTest {
 //        Assert.assertEquals(performancePage.getIncorrectNumbers(), 0);
 //    }
 //
-//    @Test(description = "TC1356-01 - The dropdown menu displaying statistics is opened.")
+//    @Test(
+//            testName = "LMS-1356 Получение статистики по тестам. https://app.qase.io/plan/LMS/1?case=1356",
+//            description = "TC1356-01 - The dropdown menu displaying statistics is opened.")
 //    @Description("Objective: To confirm the display of statistics for Tests in the Performance section.")
 //    @Story("Performance")
 //    @TmsLink("nyqyh86yrv3b")

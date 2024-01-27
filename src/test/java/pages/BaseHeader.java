@@ -6,9 +6,12 @@ import com.microsoft.playwright.Page;
 abstract class BaseHeader<TPage> extends BaseModal<TPage> {
     private final Locator endButton = exactButton("End");
     private final Locator yesCardsAmount = locator("span").getByText("Yes");
+    private final Locator kindaCardsAmount = locator("span").getByText("Kinda");
+    private final Locator noCardsAmount = locator("span").getByText("No");
     private final Locator flashcardsButton = button("Flashcards /");
     private final Locator packName = locator("div:has(svg) + span");
     private final Locator mnemonicCardHeader = locator("div~span").first();
+
 
     BaseHeader(Page page) {
         super(page);
@@ -21,6 +24,18 @@ abstract class BaseHeader<TPage> extends BaseModal<TPage> {
 
     public String getYesCardsAmount() {
         String[] textToArray = yesCardsAmount.innerText().split(" ");
+
+        return textToArray[0];
+    }
+
+    public String getKindaCardsAmount() {
+        String[] textToArray = kindaCardsAmount.innerText().split(" ");
+
+        return textToArray[0];
+    }
+
+    public String getNoCardsAmount() {
+        String[] textToArray = noCardsAmount.innerText().split(" ");
 
         return textToArray[0];
     }

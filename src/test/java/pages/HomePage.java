@@ -109,6 +109,11 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return allCheckboxes.stream().noneMatch(Locator::isChecked);
     }
 
+    boolean areAllCheckboxesChecked() {
+
+        return allCheckboxes.stream().allMatch(Locator::isChecked);
+    }
+
     public  HomePage clickRandomCheckbox(){
         getNthCheckbox(checkboxRandomNumber).click();
 
