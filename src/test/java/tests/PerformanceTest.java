@@ -12,6 +12,8 @@ import pages.PreconditionPage;
 import tests.helpers.TestData;
 import tests.helpers.TestUtils;
 
+import java.util.List;
+
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static utils.runner.ProjectProperties.BASE_URL;
 
@@ -99,6 +101,31 @@ public class PerformanceTest extends BaseTest {
         assertThat(overallButton).isVisible();
         assertThat(testsButton).isVisible();
         assertThat(allFlashcardsButton).isVisible();
+    }
+
+    @Test(description = "TC1357-01 - ")
+    @Description("Objective: .")
+    @Story("Performance")
+    @TmsLink(" ")
+
+    public void displayingStatisticsForAllFlashcards() {
+        new PreconditionPage(getPage()).completeFlashCardWithMetricsYes3No3Kinda3();
+
+        PerformancePage performancePage =
+                new HomePage(getPage()).init()
+                        .clickPerformanceMenu()
+                        .clickOverallDropdown()
+                        .clickAllFlashcardsButtonInBanner();
+
+
+//        Locator l = getPage().getByText("Sleek Soft Keyboard");
+//        System.out.println(l.innerText());
+//
+//        List<Locator> l = performancePage.getStackList();
+//        for (Locator i : l) {
+//            System.out.println(i.innerText());
+//            System.out.println(i.textContent());
+//        }
     }
 }
 

@@ -232,4 +232,8 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 .clickTestsMenu()
                 .getMarkedNumber();
     }
+
+    public void completeFlashCardWithMetricsYes3No3Kinda3() {
+        APIUtils.saveAnswerFlashCardPacks(getPage().request());
+    }
 }

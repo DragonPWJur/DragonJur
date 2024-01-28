@@ -19,6 +19,8 @@ public final class PerformancePage extends BaseSideMenu<PerformancePage> {
     private final Locator incorrectNumberText = exactText("Total:").last().locator("~div>span:last-child");
     private final Locator lastTestLocator = locator(".eaNKjL>div:nth-child(2)");
 
+   // "sc-jGyvXW fAYibz" = 20шт
+
     PerformancePage(Page page) {
         super(page);
     }
@@ -98,5 +100,11 @@ public final class PerformancePage extends BaseSideMenu<PerformancePage> {
     public Locator getAllFlashcardsButtonInBanner() {
 
         return allFlashcardsButtonInBanner;
+    }
+
+    public PerformancePage clickAllFlashcardsButtonInBanner() {
+        allFlashcardsButtonInBanner.click();
+
+        return this;
     }
 }
