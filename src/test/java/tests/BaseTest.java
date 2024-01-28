@@ -56,9 +56,8 @@ abstract class BaseTest {
 
     @BeforeMethod
     void createContextAndPage(Method method) {
-        logInfo("Run " + ReportUtils.getTestMethodName(method));
 
-        APIUtils.checkIfGoldIsActive(playwright);
+        APIUtils.isGoldSubscriptionActive(playwright);
         logInfo("Run " + ReportUtils.getTestMethodName(method));
 
         APIServices.cleanData(playwright);

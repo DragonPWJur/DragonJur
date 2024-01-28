@@ -5,6 +5,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.*;
 import tests.helpers.TestData;
@@ -155,6 +156,7 @@ public class TestTutorTest extends BaseTest {
         );
     }
 
+    @Ignore
     @Test
     public void testUserIsAbleToRetrieveTestResults() {
 

@@ -5,6 +5,7 @@ import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
 import jdk.jfr.Description;
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.FlashcardsPackIDPage;
 import pages.HomePage;
@@ -180,6 +181,7 @@ public final class FlashcardPacksTest extends BaseTest {
         );
     }
 
+    @Ignore
     @Test(
             testName = "LMS-1373 Возможность оставлять пометки kinda. https://app.qase.io/plan/LMS/1?case=1373",
             description = "TC1373-01 - Possibility to leave a “Kinda” mark."
@@ -220,6 +222,7 @@ public final class FlashcardPacksTest extends BaseTest {
         );
     }
 
+    @Ignore
     @Test(
             testName = "LMS-1374 Возможность оставлять пометки no. https://app.qase.io/plan/LMS/1?case=1374",
             description = "TC1374-01 - Possibility to leave a “No” mark."

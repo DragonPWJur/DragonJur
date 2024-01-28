@@ -154,7 +154,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     }
 
     @Step("Click random checkbox and return related number of questions (for Bronze subscription)")
-    public int clickRandomActiveCheckboxAndReturnNumberOfQuestions() {
+    public int getNumberOfQuestionsForRandomCheckbox() {
         activeCheckbox = activeCheckbox.filter(new Locator.FilterOptions().setHasText(Pattern.compile("\\d+")));
         activeCheckbox.last().waitFor();
 

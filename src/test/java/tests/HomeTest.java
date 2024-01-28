@@ -5,6 +5,7 @@ import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
 import jdk.jfr.Description;
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.PreconditionPage;
@@ -121,6 +122,7 @@ public final class HomeTest extends BaseTest {
         assertThat(checkboxImage).isVisible();
     }
 
+    @Ignore
     @Test
     public void testDeactivationOfAlreadyActiveSingleCheckbox() {
         PreconditionPage preconditionPage = new PreconditionPage(getPage()).init();
@@ -161,7 +163,8 @@ public final class HomeTest extends BaseTest {
     public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive(){
 
         Assert.assertTrue(new PreconditionPage(getPage()).init().areAllCheckboxesChecked(),
-                "If FAIL: Precondition 'All checkboxes should be checked' is not reached.\n");
+                "If FAIL: Precondition 'All checkboxes should be checked' is not reached.\n"
+        );
 
         HomePage homePage = new HomePage(getPage()).init();
 

@@ -22,8 +22,8 @@ import java.util.Objects;
 public final class APIUtils {
     private static final String _2_WEEK_PLAN = "2 Weeks";
 
-    public static final String BRONZE_SUBSCRIPTION = "f64edfa6-1aca-4d9a-9c49-8f29970790af";
-    public static final String GOLD_SUBSCRIPTION = "bcf37a9f-af5f-47b0-b9aa-c8e36bbd8278";
+    public static final String BRONZE_SUBSCRIPTION_ID = "f64edfa6-1aca-4d9a-9c49-8f29970790af";
+    public static final String GOLD_SUBSCRIPTION_ID = "bcf37a9f-af5f-47b0-b9aa-c8e36bbd8278";
     public static final String MONTHLY = "monthly";
     public static final String BRONZE = "bronze";
     private static Playwright playwright;
@@ -175,16 +175,16 @@ public final class APIUtils {
                 .setExtraHTTPHeaders(headers));
     }
 
-    public static void bronzeCourseSubscription(Playwright playwright) {
+    public static void activateBronzeSubscriptionCourse(Playwright playwright) {
         APIRequestContext apiRequestContext = createApiRequestContext(playwright);
-        APIResponse apiResponse = APIServices.courseSubscribe(apiRequestContext, BRONZE_SUBSCRIPTION, MONTHLY, BRONZE);
+        APIResponse apiResponse = APIServices.courseSubscribe(apiRequestContext, BRONZE_SUBSCRIPTION_ID, MONTHLY, BRONZE);
 
         if (apiResponse.status() == 201) {
             LoggerUtils.logInfo("API: Successfully subscribed to 'TEST AUTOMATION _DO NOT DELETE_BRONZE' course with Bronze level");
         }
         if (apiResponse.status() == 422) {
             LoggerUtils.logInfo("API: 'TEST AUTOMATION _DO NOT DELETE_BRONZE' course is exist");
-            setActiveCourse(playwright, BRONZE_SUBSCRIPTION);
+            setActiveCourse(playwright, BRONZE_SUBSCRIPTION_ID);
         }
         if (apiResponse.status() != 201 && apiResponse.status() != 422) {
             LoggerUtils.logError("ERROR: " + apiResponse.status() + " - " + apiResponse.statusText());
@@ -205,7 +205,7 @@ public final class APIUtils {
         }
     }
 
-    public static String getIdActiveCourse(Playwright playwright) {
+    public static String getActiveCourseId(Playwright playwright) {
         APIRequestContext apiRequestContext = createApiRequestContext(playwright);
         APIResponse apiResponse = APIServices.activeCourse(apiRequestContext);
 
@@ -214,18 +214,18 @@ public final class APIUtils {
         return object.getString("id");
     }
 
-    public static void checkIfGoldIsActive(Playwright playwright) {
+    public static void isGoldSubscriptionActive(Playwright playwright) {
 
-        if (!GOLD_SUBSCRIPTION.equals(getIdActiveCourse(playwright))) {
-            setActiveCourse(playwright, GOLD_SUBSCRIPTION);
+        if (!GOLD_SUBSCRIPTION_ID.equals(getActiveCourseId(playwright))) {
+            setActiveCourse(playwright, GOLD_SUBSCRIPTION_ID);
         }
         LoggerUtils.logInfo("API: The user currently has a Gold subscription");
     }
 
     public static String getCourseName(String courseId) {
-        if (courseId.equals(GOLD_SUBSCRIPTION)) {
+        if (courseId.equals(GOLD_SUBSCRIPTION_ID)) {
             return "GOLD";
-        } else if (courseId.equals(BRONZE_SUBSCRIPTION)) {
+        } else if (courseId.equals(BRONZE_SUBSCRIPTION_ID)) {
             return "BRONZE";
         } else {
             return "Unknown Subscription";
