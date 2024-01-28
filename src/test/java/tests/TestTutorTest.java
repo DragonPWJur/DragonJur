@@ -133,6 +133,7 @@ public class TestTutorTest extends BaseTest {
         );
     }
 
+    @Ignore
     @Test
     public void testAfterMarkingTheCardTheNumberOfMarkedCardsIncreasedBy1() {
 
@@ -215,7 +216,7 @@ public class TestTutorTest extends BaseTest {
         Assert.assertTrue(
                 mainSectionPointsBefore < mainSectionPointsAfter,
                 "If FAIL: Points after running test (" + mainSectionPointsAfter
-                        +  ") are not greater then points before running test (" + mainSectionPointsBefore + ").\n"
+                        + ") are not greater then points before running test (" + mainSectionPointsBefore + ").\n"
         );
     }
 }

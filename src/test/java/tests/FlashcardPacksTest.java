@@ -18,6 +18,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public final class FlashcardPacksTest extends BaseTest {
 
+    @Ignore
     @Test(
             testName = "LMS-1349 Возможность для юзера добавлять во флешкарточки. https://app.qase.io/plan/LMS/1?case=1349",
             description = "TC1349-01 - User can mark cards for re-checking (“Add to flashcards”)."

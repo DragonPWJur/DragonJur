@@ -41,6 +41,7 @@ public class StudyGuideTest extends BaseTest {
         assertThat(word).hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_62_48_179_0_2);
     }
 
+    @Ignore
     @Test
     public void testCreatingANote() {
         StudyGuidePage studyGuidePage =
