@@ -34,14 +34,10 @@ public final class CongratulationsModal extends BaseModal<CongratulationsModal> 
         return parseInt(pointsText);
     }
 
-    public String getTestProgressbarPointsText() {
+    public int getTestPoints() {
 
-        return testProgressbarPoints.innerText();
+        return parseInt(testProgressbarPoints.innerText());
     }
 
-    public int getTestProgressbarPointsNumber() {
-        String pointsText = getTestProgressbarPointsText();
 
-        return parseInt(pointsText);
-    }
 }

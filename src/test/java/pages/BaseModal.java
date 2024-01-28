@@ -4,6 +4,7 @@ import com.microsoft.playwright.Dialog;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
+import pages.constants.Constants;
 
 abstract class BaseModal<TPage> extends BaseLocator<TPage> {
     private final Locator dialog = dialog();
@@ -16,25 +17,19 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
     private final Locator okButton = exactButton("Ok");
     private final Locator nextButton = exactButton("Next");
     private final Locator weakestExamAreasHeader = dialog.locator("span");
-    private final Locator weakestExamAreasMessage = dialog.getByText(
-            "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03"
-    );
+    private final Locator weakestExamAreasMessage = dialog.getByText(Constants.YOU_HAVE_NOT_STUDIED_ENOUGH);
 
     BaseModal(Page page) {
         super(page);
     }
 
-    protected Locator getDialog() {
+    public Locator getDialog() {
 
         return dialog;
     }
 
-    public Locator getCloseButton() {
-        return closeButton;
-    }
-
     @Step("Click 'Cansel' button to cancel dialog if visible.")
-    protected void cancelDialog() {
+    public void cancelDialog() {
         if (dialog.isVisible() && cancelButton.isVisible()) {
             getPage().onDialog(Dialog::dismiss);
             cancelButton.click();
@@ -57,6 +52,15 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
         return new TestTutorPage(getPage());
     }
 
+    @Step("Click 'Yes' button on dialog window if visible.")
+    public CongratulationsModal clickYesToCongratulationButton() {
+        if(dialog.isVisible() && yesButton.isVisible()) {
+            yesButton.click();
+        }
+
+        return new CongratulationsModal(getPage());
+    }
+
     @Step("Click 'Skip' button on dialog window if visible.")
     public TestResultPage clickSkipButton() {
         if(skipButton.isVisible()) {
@@ -69,6 +73,16 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
         return new TestResultPage(getPage()).init();
     }
 
+    public Locator getWeakestExamAreasHeader() {
+
+        return weakestExamAreasHeader;
+    }
+
+    public Locator getWeakestExamAreasMessage() {
+
+        return weakestExamAreasMessage;
+    }
+
     @Step("Click 'Back' button on dialog window if visible.")
     protected TPage clickBackButton() {
         if(dialog.isVisible() && backButton.isVisible()) {
@@ -78,15 +92,17 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
         return init();
     }
 
-    public TPage clickNextButton() {
+    public CongratulationsModal clickNextButton() {
         nextButton.click();
 
-        return init();
+        return new CongratulationsModal(getPage()).init();
     }
 
-    public TPage clickOkButton() {
+    public TestResultPage clickOkButton() {
         okButton.click();
 
-        return init();
+        return new TestResultPage(getPage()).init();
     }
+
+
 }

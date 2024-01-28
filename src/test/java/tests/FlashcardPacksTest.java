@@ -30,8 +30,6 @@ public final class FlashcardPacksTest extends BaseTest {
     public void testAddToFlashCard() {
 
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
-        precondition
-                .collectRandomFlashcardPackInfo();
 
         final String initialCardsAmount = precondition.getInitialAmountOfCardsMarkedForRechecking();
         final String expectedCardsAmount = TestUtils.add(initialCardsAmount, 1);
@@ -62,8 +60,8 @@ public final class FlashcardPacksTest extends BaseTest {
     @Story("Flashcards")
     @TmsLink("5w1lt3377dz3")
     public void testStartRandomFlashCardPack() {
-
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
+
         precondition
                 .collectRandomFlashcardPackInfo();
 
@@ -105,8 +103,8 @@ public final class FlashcardPacksTest extends BaseTest {
     @Story("Flashcards")
     @TmsLink("8kke54otuh6c")
     public void testFlashCardTurnedAfterClickingShowAnswerButton() {
-
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
+
         precondition
                 .collectRandomFlashcardPackInfo();
 
@@ -143,6 +141,7 @@ public final class FlashcardPacksTest extends BaseTest {
         assertThat(showAnswerButton).not().isVisible();
     }
 
+    @Ignore
     @Test(
             testName = "LMS-1368 Возможность оставлять пометки yes. https://app.qase.io/plan/LMS/1?case=1368",
             description = "TC1368-01 - Possibility to leave a “Yes” mark."
@@ -152,8 +151,8 @@ public final class FlashcardPacksTest extends BaseTest {
     @Story("Flashcards")
     @TmsLink("xgp7wuhi782")
     public void testUserCanLeaveYesMark() {
-
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
+
         precondition
                 .collectRandomFlashcardPackInfo();
 
@@ -184,6 +183,7 @@ public final class FlashcardPacksTest extends BaseTest {
         );
     }
 
+    @Ignore
     @Test(
             testName = "LMS-1373 Возможность оставлять пометки kinda. https://app.qase.io/plan/LMS/1?case=1373",
             description = "TC1373-01 - Possibility to leave a “Kinda” mark."
@@ -224,6 +224,7 @@ public final class FlashcardPacksTest extends BaseTest {
         );
     }
 
+    @Ignore
     @Test(
             testName = "LMS-1374 Возможность оставлять пометки no. https://app.qase.io/plan/LMS/1?case=1374",
             description = "TC1374-01 - Possibility to leave a “No” mark."

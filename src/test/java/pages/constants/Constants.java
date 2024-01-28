@@ -16,6 +16,10 @@ public final class  Constants {
     public static final String MNEMONIC_CARD_PRACTICE_END_POINT = "/mnemonic-card-practice/";
     public static final String FLASHCARDS_PACK_ID_END_POINT = "/flashcards?packId";
     public static final String ADD_NEW_COURSE_END_POINT = "/add-new-course";
+
+    //POM Constants
     public static final String NOTHING_FOUND = "Nothing found. Try to use other key words";
     public static final String SEARCH = "Search";
+    public static final String YOU_HAVE_NOT_STUDIED_ENOUGH =
+            "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03";
 }

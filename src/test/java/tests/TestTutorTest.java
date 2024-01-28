@@ -1,176 +1,222 @@
 package tests;
 
+import com.microsoft.playwright.Locator;
+import io.qameta.allure.Description;
+import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
+import org.testng.Assert;
+import org.testng.annotations.Ignore;
+import org.testng.annotations.Test;
+import pages.*;
+import tests.helpers.TestData;
+import tests.helpers.TestUtils;
+import utils.runner.ProjectProperties;
+
+import java.util.List;
+
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class TestTutorTest extends BaseTest {
 
-//    @Test
-//    public void testUserCanMarkTheCard() {
-//        PreconditionPage preconditionPage = new PreconditionPage(getPage(), getPlaywright());
-//        preconditionPage.startTest(TestData.ONE);
-//
-//        Locator removeFromMarkedButton = new TestTutorPage(getPage(), getPlaywright())
-//                .clickMarkForReviewButton()
-//                .getRemoveFromMarkedButton();
-//
-//        assertThat(removeFromMarkedButton).isVisible();
-//    }
-//
-//    @Test
-//    public void testUserCanSeeTheRightAnswerAndTheExplanation() {
-//
-//        TestTutorPage testTutorPage = new HomePage(getPage(), getPlaywright())
-//                .clickTestsMenu()
-//                .cancelDialogIfVisible()
-//                .clickDomainsButton()
-//                .clickRandomCheckbox()
-//                .clickTutorButton()
-//                .inputNumberOfQuestions(TestData.ONE)
-//                .clickGenerateAndStartButton2()
-//                .clickCorrectAnswerRadioButton()
-//                .clickConfirmButton();
-//
-//        assertThat(testTutorPage.getCorrectAnswerBackgroundColor()).isVisible();
-//        assertThat(testTutorPage.getH3Header()).hasText(TestData.EXPLANATION);
-//        assertThat(testTutorPage.getH3HeaderExplanationText()).isVisible();
-//        Assert.assertFalse(testTutorPage.getExplanationText().isEmpty(), "Explanation text is empty");
-//    }
-//
-//    @Test
-//    public void testSuccessfulReportSubmission() {
-//        new PreconditionPage(getPage(), getPlaywright()).startTest(TestData.ONE);
-//
-//        TestTutorPage testTutorPage = new TestTutorPage(getPage(), getPlaywright())
-//                .clickReportButton()
-//                .inputSymbolsIntoReportAProblemTextarea()
-//                .clickSendButton();
-//
-//        assertThat(testTutorPage.getReportAProblemModal()).isVisible();
-//        assertThat(testTutorPage.getReportSentSuccessfullyMessage()).hasText(TestData.REPORT_MESSAGE);
-//    }
-//
-//    @Test(description = "TC1344-01 The single non-active Checkbox can be checked.")
-//    @Description("Objective: To verify that a non-active checkbox ca be successfully checked.")
-//    @Story("Tests")
-//    @TmsLink("9lf328qwx4bv")
-//    public void testTheSingleCheckboxCanBeChecked() {
-//        String checkboxText = new HomePage(getPage(), getPlaywright())
-//                .clickTestsMenu()
-//                .cancelDialogIfVisible()
-//                .clickDomainsButton()
-//                .clickRandomCheckboxAndReturnItsName();
-//
-//        assertThat(new TestListPage(getPage(), getPlaywright()).checkIcon(checkboxText)).isVisible();
-//    }
-//
-//    @Test(description = "TC1344-02 Execute Tutor Mode with a randomly selected checkbox in the Domain section.")
-//    @Description("Objective: To verify that User can successfully activate Tutor mode by checking a random checkbox " +
-//            "in the Domain section and entering valid data in the ‘Number of Questions’ field.")
-//    @Story("Tests")
-//    @TmsLink("9a0yelvj0jdh")
-//    public void testTutorModeWithRandomCheckboxInDomain() {
-//        TestTutorPage testTutorPage = new HomePage(getPage(), getPlaywright())
-//                .clickTestsMenu()
-//                .cancelDialogIfVisible()
-//                .clickDomainsButton()
-//                .clickRandomCheckbox()
-//                .clickTutorButton()
-//                .inputNumberOfQuestions(TestData.ONE)
-//                .clickGenerateAndStartButton();
-//
-//        waitForPageLoad(TestData.TEST_TUTOR_END_POINT);
-//
-//        assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
-//        assertThat(testTutorPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
-//        Assert.assertTrue(testTutorPage.countTestRadioButtons() >= 1);
-//    }
-//
-//    @Test
-//    public void testTutorModeWithRandomCheckboxInChapter() {
-//        TestTutorPage testTutorPage = new HomePage(getPage(), getPlaywright())
-//                .clickTestsMenu()
-//                .cancelDialogIfVisible()
-//                .clickChaptersButton()
-//                .clickRandomCheckbox()
-//                .clickTutorButton()
-//                .inputNumberOfQuestions(TestData.ONE)
-//                .clickGenerateAndStartButton();
-//
-//        waitForPageLoad( TestData.TEST_TUTOR_END_POINT);
-//
-//        assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
-//        assertThat(testTutorPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
-//        Assert.assertTrue(testTutorPage.countTestRadioButtons() >= 1);
-//    }
-//
-//    @Test
-//    public void testAfterMarkingTheCardTheNumberOfMarkedCardsIncreasedBy1() {
-//        new PreconditionPage(getPage(), getPlaywright())
-//                .startTest(TestData.ONE);
-//
-//        Locator numberMarked = new TestTutorPage(getPage(), getPlaywright())
-//                .clickMarkForReviewButton()
-//                .clickEndButton()
-//                .clickYesButton()
-//                .clickSkipButton()
-//                .clickCloseTheTestButton()
-//                .getNumberMarked();
-//
-//        assertThat(numberMarked).isVisible();
-//    }
-//
-//    @Test(
-//            testName = "LMS-1352 Возможность получать результаты. https://app.qase.io/project/LMS?suite=179&case=1352",
-//            description = "TC1352-01 Verify the user is able to retrieve test results"
-//    )
-//    @Description("Objective: To confirm that users can access their test results successfully.")
-//    @Story("Tests")
-//    @TmsLink("rihwv9xhblbu")
-//    public void testUserIsAbleToRetrieveTestResults () {
-//
-//        HomePage homePage =
-//                new HomePage(getPage()).init();
-//
-//        final int mainSectionPointsBefore = homePage.getMainSectionPoints();
-//        final int sideMenuPointsBefore = homePage.getSideMenuPoints();
-//
-//        TestTutorPage testTutorPage = new HomePage(getPage(), getPlaywright())
-//                .clickTestsMenu()
-//                .cancelDialogIfVisible()
-//                .clickDomainsButton()
-//                .clickRandomCheckbox()
-//                .inputNumberOfQuestions(TestData.ONE)
-//                .clickGenerateAndStartButton2()
-//                .clickCorrectAnswerRadioButton()
-//                .clickConfirmButton()
-//                .clickEndButton()
-//                .clickYesButton();
-//
-//        getPage().waitForTimeout(2000);
-//
-//        int testCongratulationCountPoints = testTutorPage
-//                .getCongratulationPoints();
-//
-//        Assert.assertTrue(beforeHomeCountPoints < testCongratulationCountPoints,
-//                "On Congratulation pop-up, expected points after tests to be increased, but didn't");
-//
-//        int testCountPoints2 = testTutorPage.clickTestNextButton().getTestProgressbarPointsNumber();
-//
-//        Assert.assertTrue(beforeHomeCountPoints < testCountPoints2,
-//                "On test progress bar pop-up, expected points after test to be be increased, but didn't.");
-//
-//        testTutorPage
-//                .clickTestOkButton()
-//                .clickCloseTheTestButton()
-//                .clickHomeMenu();
-//
-//        int mainSectionPointsAfter = homePage.getProgressbarPointsNumber();
-//        int sideMenuPointsAfter = homePage.getProgressbarSideMenuPointsNumber();
-//
-//        Assert.assertTrue(mainSectionPointsBefore < afterHomeCountPoints,
-//                "Expected on Home diagram points after test to be greater than before test, but didn't.");
-//        Assert.assertTrue(sideMenuPointsBefore < sideMenuPointsAfter,
-//                "Expected side menu diagram points after test to be greater than before test, but didn't.");
-//        assertThat(homePage.getProgressbarPoints()).hasText(TestData.CORRECT_ANSWER_POINTS);
-//    }
+    @Test
+    public void testUserCanMarkTheCard() {
+        PreconditionPage precondition = new PreconditionPage(getPage()).init();
+
+        TestTutorPage testTutorPage =
+                precondition
+                        .startRandomDomainTest(TestData.ONE_QUESTION)
+                        .clickMarkForReviewButton();
+
+        final Locator markForReviewButton = testTutorPage.getMarkForReviewButton();
+        final Locator removeFromMarkedButton = testTutorPage.getRemoveFromMarkedButton();
+
+        assertThat(markForReviewButton).not().isVisible();
+        assertThat(removeFromMarkedButton).isVisible();
+        assertThat(removeFromMarkedButton).hasText(TestData.REMOVE_FROM_MARKED);
+    }
+
+    @Test
+    public void testUserCanSeeTheRightAnswerAndTheExplanation() {
+
+        TestTutorPage testTutorPage =
+                new HomePage(getPage()).init()
+                        .clickTestsMenu()
+                        .cancelDialogIfVisible()
+                        .clickDomainsButtonIfNotActive()
+                        .clickRandomCheckbox()
+                        .clickTutorButton()
+                        .inputNumberOfQuestions(TestData.ONE_QUESTION)
+                        .clickGenerateAndStartTutorTestButton()
+                        .clickCorrectAnswer()
+                        .clickConfirmButton();
+
+        final Locator correctAnswerBgColor55B47D = testTutorPage.getCorrectAnswerBackgroundColor55B47D();
+        final Locator explanationHeader = testTutorPage.getH3Header();
+        final Locator answerExplanation = testTutorPage.getExplanationTextLocator();
+
+        assertThat(correctAnswerBgColor55B47D).isVisible();
+        assertThat(explanationHeader).hasText(TestData.EXPLANATION);
+        assertThat(answerExplanation).isVisible();
+        Assert.assertFalse(answerExplanation.innerText().isEmpty(),
+                "If FAIL: Explanation text is empty."
+        );
+    }
+
+    @Ignore
+    @Test
+    public void testSuccessfulReportSubmission() {
+
+        ReportAProblemModal reportAProblemModal =
+                new PreconditionPage(getPage()).init()
+                        .startRandomDomainTest(TestData.ONE_QUESTION)
+                        .clickReportAProblemButton()
+                        .inputText(TestUtils.getRandomString(10))
+                        .clickSendButton();
+
+        final Locator modalDialog = reportAProblemModal.getDialog();
+        final Locator message = reportAProblemModal.getReportMessage();
+
+        assertThat(modalDialog).isVisible();
+        assertThat(message).isVisible();
+        assertThat(message).hasText(TestData.THE_REPORT_HAS_BEEN_SENT_SUCCESSFULLY);
+    }
+
+    @Test(description = "TC1344-02 Execute Tutor Mode with a randomly selected checkbox in the Domain section.")
+    @Description("Objective: To verify that User can successfully activate Tutor mode by checking a random checkbox " +
+            "in the Domain section and entering valid data in the ‘Number of Questions’ field.")
+    @Story("Tests")
+    @TmsLink("9a0yelvj0jdh")
+    public void testTutorModeWithRandomCheckboxInDomain() {
+        TestTutorPage testTutorPage =
+                new HomePage(getPage()).init()
+                        .clickTestsMenu()
+                        .cancelDialogIfVisible()
+                        .clickDomainsButtonIfNotActive()
+                        .clickRandomCheckbox()
+                        .clickTutorButton()
+                        .inputNumberOfQuestions(TestData.ONE_QUESTION)
+                        .clickGenerateAndStartTutorTestButton();
+
+        final String expectedUrl = ProjectProperties.BASE_URL + TestData.TEST_TUTOR_END_POINT;
+        final Locator question = testTutorPage.getTestQuestion();
+        final List<Locator> answers = testTutorPage.getRadioButtons();
+
+        assertThat(getPage()).hasURL(expectedUrl);
+        assertThat(question).containsText(TestData.QUESTION_MARK);
+        Assert.assertTrue(
+                answers.size() >= 1,
+                "If FAIL: There are no answers for the question."
+        );
+    }
+
+    @Test
+    public void testTutorModeWithRandomCheckboxInChapter() {
+        TestTutorPage testTutorPage =
+                new HomePage(getPage()).init()
+                        .clickTestsMenu()
+                        .cancelDialogIfVisible()
+                        .clickChaptersButton()
+                        .clickRandomCheckbox()
+                        .clickTutorButton()
+                        .inputNumberOfQuestions(TestData.ONE_QUESTION)
+                        .clickGenerateAndStartTutorTestButton();
+
+        final String expectedUrl = ProjectProperties.BASE_URL + TestData.TEST_TUTOR_END_POINT;
+        final Locator question = testTutorPage.getTestQuestion();
+        final List<Locator> answers = testTutorPage.getRadioButtons();
+
+        assertThat(getPage()).hasURL(expectedUrl);
+        assertThat(question).containsText(TestData.QUESTION_MARK);
+        Assert.assertTrue(
+                answers.size() >= 1,
+                "If FAIL: There are no answers for the question."
+        );
+    }
+
+    @Ignore
+    @Test
+    public void testAfterMarkingTheCardTheNumberOfMarkedCardsIncreasedBy1() {
+
+        PreconditionPage precondition = new PreconditionPage(getPage()).init();
+
+        final int numberOfQuestionsMarkedBeforeTest = precondition.getNumberQuestionsMarkedBeforeTest();
+
+        final int markedQuestionsNumber =
+                precondition
+                        .startRandomDomainTest(TestData.ONE_QUESTION)
+                        .clickMarkForReviewButton()
+                        .clickEndButton()
+                        .clickYesButton()
+                        .clickSkipButton()
+                        .clickCloseTheTestButton()
+                        .getMarkedNumber();
+
+        Assert.assertEquals(
+                markedQuestionsNumber, 1,
+                "If FAIL: NumberOfMarkedCards (" + numberOfQuestionsMarkedBeforeTest
+                        + ") does NOT increased by 1 (" + markedQuestionsNumber + ")."
+        );
+    }
+
+    @Ignore
+    @Test
+    public void testUserIsAbleToRetrieveTestResults() {
+
+        HomePage homePage = new HomePage(getPage()).init();
+
+        final int mainSectionPointsBefore = homePage.getMainSectionPoints();
+        final int sideMenuPointsBefore = homePage.getSideMenuPoints();
+
+        Assert.assertEquals(
+                mainSectionPointsBefore, sideMenuPointsBefore,
+                "If FAIL: Points on Main Section (" + mainSectionPointsBefore
+                        + ") does NOT match points on Side Menu (" + sideMenuPointsBefore + ").\n"
+        );
+
+        CongratulationsModal congratulationsModal =
+                new HomePage(getPage()).init()
+                        .clickTestsMenu()
+                        .cancelDialogIfVisible()
+                        .clickDomainsButtonIfNotActive()
+                        .clickRandomCheckbox()
+                        .inputNumberOfQuestions(TestData.ONE_QUESTION)
+                        .clickGenerateAndStartTutorTestButton()
+                        .clickCorrectAnswer()
+                        .clickConfirmButton()
+                        .clickEndButton()
+                        .clickYesToCongratulationButton();
+
+        final int pointsOnModalAfter = congratulationsModal.getCongratulationPoints();
+
+        Assert.assertTrue(
+                sideMenuPointsBefore < pointsOnModalAfter,
+                "If FAIL: On Congratulation pop-up, expected points after test does NOT increased."
+        );
+
+        congratulationsModal
+                .clickNextButton();
+
+        final int secondModalPointsAfter = congratulationsModal.getTestPoints();
+
+        Assert.assertTrue(mainSectionPointsBefore < secondModalPointsAfter,
+                "If FAIL: On Congratulation second pop-up, expected points after test does NOT increased.");
+
+        congratulationsModal
+                .clickOkButton()
+                .clickCloseTheTestButton()
+                .clickHomeMenu();
+
+        final int mainSectionPointsAfter = homePage.getMainSectionPoints();
+        final int sideMenuPointsAfter = homePage.getSideMenuPoints();
+
+        Assert.assertEquals(mainSectionPointsAfter, sideMenuPointsAfter,
+                "If FAIL: Points on Main Section (" + mainSectionPointsAfter
+                        + ") does NOT match points on Side Menu (" + sideMenuPointsAfter + ").\\n"
+        );
+        Assert.assertTrue(
+                mainSectionPointsBefore < mainSectionPointsAfter,
+                "If FAIL: Points after running test (" + mainSectionPointsAfter
+                        + ") are not greater then points before running test (" + mainSectionPointsBefore + ").\n"
+        );
+    }
 }
