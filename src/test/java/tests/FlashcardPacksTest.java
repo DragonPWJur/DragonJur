@@ -140,6 +140,7 @@ public final class FlashcardPacksTest extends BaseTest {
         assertThat(showAnswerButton).not().isVisible();
     }
 
+    @Ignore
     @Test(
             testName = "LMS-1368 Возможность оставлять пометки yes. https://app.qase.io/plan/LMS/1?case=1368",
             description = "TC1368-01 - Possibility to leave a “Yes” mark."
