@@ -2,6 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Step;
 
 import java.util.List;
 
@@ -24,48 +25,73 @@ abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
         super(page);
     }
 
-
     public List<Locator> getRadioButtons() {
+
         return radioButtons;
     }
 
     public Locator getCorrectAnswer() {
+
         return correctAnswer;
     }
 
     public Locator getCorrectAnswerBackgroundColor55B47D() {
+
         return correctAnswerBackgroundColor55B47D;
     }
 
     public Locator getH3Header() {
+
         return h3Header;
     }
 
     public Locator getExplanationHeader() {
+
         return explanationHeader;
     }
 
     public Locator getExplanationTextLocator() {
+
         return explanationTextLocator;
     }
 
     public Locator getConfirmButton() {
+
         return confirmButton;
     }
 
     public Locator getNextQuestionButton() {
+
         return nextQuestionButton;
     }
 
     public Locator getFinishTestButton() {
+
         return finishTestButton;
     }
 
     public Locator getIncorrectAnswer() {
+
         return incorrectAnswer;
     }
 
-//
+    @Step("Get test question")
+    public Locator getTestQuestion() {
+
+        return testQuestion;
+    }
+
+    @Step("Count answers radio buttons")
+    public int getAnswersCount() {
+
+        return radioButtons.size();
+    }
+
+    public Locator getQuestionMark() {
+
+        return questionMark;
+    }
+
 //    public Locator getCorrectAnswerBackgroundColor() {
 //
 //        return correctAnswerBackgroundColor;
@@ -86,20 +112,10 @@ abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
 //        return answerRadioButton.count();
 //    }
 //
-    public Locator getTestQuestion() {
-
-        return testQuestion;
-    }
-//
 //    public int getAnswersCount() {
 //
 //        return radioButtons.size();
 //    }
-//
-    public Locator getQuestionMark() {
-
-        return questionMark;
-    }
 
 //    public List<Locator> getTestAnswers() {
 //
@@ -140,6 +156,4 @@ abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
 //
 //        return (Self) this;
 //    }
-
-
 }

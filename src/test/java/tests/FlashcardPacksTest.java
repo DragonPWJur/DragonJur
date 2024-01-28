@@ -58,8 +58,8 @@ public final class FlashcardPacksTest extends BaseTest {
     @Story("Flashcards")
     @TmsLink("5w1lt3377dz3")
     public void testStartRandomFlashCardPack() {
-
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
+
         precondition
                 .collectRandomFlashcardPackInfo();
 
@@ -95,14 +95,14 @@ public final class FlashcardPacksTest extends BaseTest {
 
     @Test(
             testName = "LMS-1368 Возможность оставлять пометки yes. https://app.qase.io/plan/LMS/1?case=1368",
-            description = "TC1368-01 - Flashcard turned when clicking the “Show Answer” button."
+            description = "TC1368 - Flashcard turned when clicking the “Show Answer” button."
     )
     @Description("Objective: Verify that the user can see the Answer when the flashcard is turned.")
     @Story("Flashcards")
     @TmsLink("8kke54otuh6c")
     public void testFlashCardTurnedAfterClickingShowAnswerButton() {
-
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
+
         precondition
                 .collectRandomFlashcardPackInfo();
 
@@ -141,15 +141,15 @@ public final class FlashcardPacksTest extends BaseTest {
 
     @Test(
             testName = "LMS-1368 Возможность оставлять пометки yes. https://app.qase.io/plan/LMS/1?case=1368",
-            description = "TC1368-02 - Possibility to leave a “Yes” mark."
+            description = "TC1368-01 - Possibility to leave a “Yes” mark."
     )
     @Description("Objective: Verify that the user can successfully leave a 'Yes' mark on a flashcard"
             + " when the card is turned.")
     @Story("Flashcards")
     @TmsLink("xgp7wuhi782")
     public void testUserCanLeaveYesMark() {
-
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
+
         precondition
                 .collectRandomFlashcardPackInfo();
 
@@ -177,6 +177,86 @@ public final class FlashcardPacksTest extends BaseTest {
         Assert.assertEquals(
                 yesCardsAmountAfterClick, expectedYesCardsAmount,
                 "If FAIL: Expected 'Yes Mark' number does NOT increased by 1 after clicking the 'Yes Mark' button.\n"
+        );
+    }
+
+    @Test(
+            testName = "LMS-1373 Возможность оставлять пометки kinda. https://app.qase.io/plan/LMS/1?case=1373",
+            description = "TC1373-01 - Possibility to leave a “Kinda” mark."
+    )
+    @Description("Objective: Verify that the user can successfully leave a 'Kinda' mark on a flashcard when the card is turned.")
+    @Story("Flashcards")
+    @TmsLink("65ov9eivu5o5")
+    public void testUserCanLeaveKindaMark() {
+
+        PreconditionPage precondition = new PreconditionPage(getPage()).init();
+        precondition
+                .collectRandomFlashcardPackInfo();
+
+        final int packIndex = precondition.getFlashcardsPackRandomIndex();
+
+        FlashcardsPackIDPage flashcardsPackIDPage =
+                new HomePage(getPage()).init()
+                        .clickFlashcardsMenu()
+                        .clickNthFlashcardPack(packIndex)
+                        .clickGotItButton()
+                        .clickShowAnswerButton();
+
+        final String kindaCardsAmountBeforeClick = flashcardsPackIDPage.getKindaCardsAmount();
+        final String expectedKindaCardsAmount = TestUtils.add(kindaCardsAmountBeforeClick, 1);
+        final Locator resetResultsButton = flashcardsPackIDPage.getResetResultsButton();
+
+        assertThat(resetResultsButton).not().isVisible();
+
+        flashcardsPackIDPage
+                .clickKindaMarkButton();
+
+        final String kindaCardsAmountAfterClick = flashcardsPackIDPage.getKindaCardsAmount();
+
+        assertThat(resetResultsButton).isVisible();
+        Assert.assertEquals(
+                kindaCardsAmountAfterClick, expectedKindaCardsAmount,
+                "If FAIL: Expected 'Kinda Mark' number does NOT increased by 1 after clicking the 'Kinda Mark' button.\n"
+        );
+    }
+
+    @Test(
+            testName = "LMS-1374 Возможность оставлять пометки no. https://app.qase.io/plan/LMS/1?case=1374",
+            description = "TC1374-01 - Possibility to leave a “No” mark."
+    )
+    @Description("Objective: Verify that the user can successfully leave a 'No' mark on a flashcard when the card is turned.")
+    @Story("Flashcards")
+    @TmsLink("8aif3r2l9kd2")
+    public void testUserCanLeaveNoMark() {
+
+        PreconditionPage precondition = new PreconditionPage(getPage()).init();
+        precondition
+                .collectRandomFlashcardPackInfo();
+
+        final int packIndex = precondition.getFlashcardsPackRandomIndex();
+
+        FlashcardsPackIDPage flashcardsPackIDPage =
+                new HomePage(getPage()).init()
+                        .clickFlashcardsMenu()
+                        .clickNthFlashcardPack(packIndex)
+                        .clickGotItButton()
+                        .clickShowAnswerButton();
+
+        final String noCardsAmountBeforeClick = flashcardsPackIDPage.getNoCardsAmount();
+        final String expectedNoCardsAmount = TestUtils.add(noCardsAmountBeforeClick, 1);
+        final Locator resetResultsButton = flashcardsPackIDPage.getResetResultsButton();
+
+        assertThat(resetResultsButton).not().isVisible();
+
+        flashcardsPackIDPage
+                .clickNoMarkButton();
+
+        final String noCardsAmountAfterClick = flashcardsPackIDPage.getNoCardsAmount();
+
+        assertThat(resetResultsButton).isVisible();
+        Assert.assertEquals(
+                noCardsAmountAfterClick, expectedNoCardsAmount,
+                "If FAIL: Expected 'No Mark' number does NOT increased by 1 after clicking the 'No Mark' button.\n"
         );
     }
 }

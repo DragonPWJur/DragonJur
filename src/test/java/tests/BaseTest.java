@@ -9,6 +9,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.*;
 import tests.helpers.TestData;
 import utils.api.APIServices;
+import utils.api.APIUtils;
 import utils.reports.LoggerInfo;
 import utils.runner.BrowserManager;
 import utils.runner.LoginUtils;
@@ -55,6 +56,9 @@ abstract class BaseTest {
 
     @BeforeMethod
     void createContextAndPage(Method method) {
+        logInfo("Run " + ReportUtils.getTestMethodName(method));
+
+        APIUtils.checkIfGoldIsActive(playwright);
         logInfo("Run " + ReportUtils.getTestMethodName(method));
 
         APIServices.cleanData(playwright);
@@ -129,5 +133,10 @@ abstract class BaseTest {
     protected Page getPage() {
 
         return page;
+    }
+
+    public Playwright getPlaywright() {
+
+        return playwright;
     }
 }

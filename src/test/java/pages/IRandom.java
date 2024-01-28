@@ -32,6 +32,12 @@ interface IRandom {
         return random.nextInt(max - min) + min;
     }
 
+    default int getRandomInt(int max) {
+        Random random = new Random();
+
+        return random.nextInt(1, max + 1);
+    }
+
     default String getRandomTextValue(Locator locator) {
 
         return locator.all().get(getRandomNumber(locator)).innerText();

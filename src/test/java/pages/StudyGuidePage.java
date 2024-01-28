@@ -1,17 +1,15 @@
 package pages;
 
 import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.Mouse;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.BoundingBox;
 import io.qameta.allure.Step;
 import pages.constants.Constants;
-import tests.helpers.TestData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements IRandom {
+public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements IRandom{
     private final Locator noteTextAria = locator("//textarea");
     private final Locator saveButton = button("Save");
     private final Locator highlightsAndNotesButton = button("Highlights and notes");
@@ -21,6 +19,8 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     private final Locator searchResultTextbox = locator("div:has(input[placeholder='Search']) + div>div");
     private final Locator unit1Text = locator("#body .ce-block__content").first();
     private final Locator searchResult = locator("div:has(button > span) > button:not(:has(> *))");
+    private final String match = "div:has(button > span) > button:not(:has(> *))";
+    private final Locator yesButton = exactButton("Yes");
 
     StudyGuidePage(Page page) {
         super(page);
@@ -69,6 +69,34 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return highlightedWordButton;
     }
 
+    public StudyGuidePage inputStringIntoSearchField(String text) {
+        searchField.fill(text);
+
+        return this;
+    }
+    public StudyGuidePage inputSearchWord(String word) {
+        searchField.fill(word);
+
+        return this;
+    }
+
+    public List<Locator> getMatchesList() {
+
+        return allItems(match);
+    }
+
+    public StudyGuidePage clickNoteSaveButton() {
+        saveButton.click();
+
+        return this;
+    }
+
+    public StudyGuidePage inputRandomWordInSearchField(String text) {
+        searchField.fill(text);
+
+        return this;
+    }
+
     public StudyGuidePage highlightWords(String words) {
         final Locator wordsFirst = text(words).first();
 
@@ -83,11 +111,6 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return this;
     }
 
-    public StudyGuidePage inputStringIntoSearchField(String text) {
-        searchField.fill(text);
-
-        return this;
-    }
 
     public Locator getNothingFoundMessage() {
 
@@ -112,12 +135,6 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return new StudyGuidePage(getPage()).init();
     }
 
-    public StudyGuidePage inputSearchWord(String word) {
-        searchField.fill(word);
-
-        return this;
-    }
-
     public List<String> getSearchResultText() {
         waitWithTimeout(2000);
         List<Locator> searchResultsList = allItems("div:has(button > span) > button:not(:has(> *))");
@@ -130,10 +147,22 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return resultsText;
     }
 
-//    public List<String> getAllSearchResultText() {
-//
-//      searchResult.innerText();
-//
-//    }
+    @Step("Scroll to the bottom of the StudyGuide page")
+    public StudyGuidePage scrollToPageBottom() {
+        yesButton.scrollIntoViewIfNeeded();
+        return this;
+    }
 
+    @Step("Click 'Yes' button at the bottom of the StudyGiude page")
+    public TestTutorPage clickYesButton() {
+        yesButton.click();
+        return new TestTutorPage(getPage()).init();
+    }
+
+
+    public StudyGuidePage inputSearchWordInSearchField(String text) {
+        searchField.fill(text);
+
+        return this;
+    }
 }

@@ -80,9 +80,12 @@ public final class HomeTest extends BaseTest {
     }
 
     @Test(
-            testName = "TC1341-01 - The single non-active Checkbox can be checked.",
-            description = "LMS-1341 https://app.qase.io/plan/LMS/1?case=1341"
+            testName = "LMS-1341 Нажатие чекбоксов, https://app.qase.io/plan/LMS/1?case=1341",
+            description = "TC1341-01 - Deactivation of a single Already Active Checkbox when all checkboxes are active."
     )
+    @Description("To verify that a non-active checkbox can be successfully checked.")
+    @Story("Home page")
+    @TmsLink("oz4bwi8yjqj")
     public void testTheSingleNonActiveCheckboxCanBeChecked() {
 
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
@@ -149,28 +152,37 @@ public final class HomeTest extends BaseTest {
         );
     }
 
-    //    @Test
-//    public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive() {
-//
-//        Assert.assertTrue(new PreconditionPage(getPage(), getPlaywright())
-//                .checkIfListCheckBoxesIsNotEmptyAndAllCheckBoxesAreChecked(), "Precondition is not reached.");
-//
-//        HomePage homePage = new HomePage(getPage(), getPlaywright());
-//
-//        int randomIndexCheckBox = homePage.getCheckBoxNumber();
-//
-//        homePage.clickCheckBox(randomIndexCheckBox);
-//
-//        assertThat(homePage.getNthCheckbox(randomIndexCheckBox)).not().isChecked();
-//
-//        for (int i = 0; i < homePage.getListCheckboxes().size(); i++) {
-//            if (i != randomIndexCheckBox) {
-//                System.out.println(homePage.getListCheckboxes().get(i).isChecked());
-//                assertThat(homePage.getListCheckboxes().get(i)).isChecked();
-//            }
-//        }
-//    }
-//
+    @Test(
+            testName = "LMS-1341 Нажатие чекбоксов, https://app.qase.io/plan/LMS/1?case=1341",
+            description = "TC1341-03 - Deactivation of a single Already Active Checkbox when all checkboxes are active.")
+    @Description("To verify the functionality when all checkboxes are checked, and a single active checkbox becomes inactive upon clicking again.")
+    @Story("Home page")
+    @TmsLink("nf0bbnl8cpe4")
+    public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive(){
+
+        Assert.assertTrue(new PreconditionPage(getPage()).init().areAllCheckboxesChecked(),
+                "If FAIL: Precondition 'All checkboxes should be checked' is not reached.\n");
+
+        HomePage homePage = new HomePage(getPage()).init();
+
+        final int randomIndexCheckBox = homePage.getRandomIndex();
+
+        homePage
+                .clickRandomCheckbox();
+
+        final Locator randomCheckBox = homePage.getNthCheckbox(randomIndexCheckBox);
+        final List<Locator> allCheckboxes = homePage.getAllCheckboxesInA2WeeksPlan();
+
+        assertThat(randomCheckBox).not().isChecked();
+
+        for (Locator checkbox: allCheckboxes) {
+            if (checkbox != randomCheckBox) {
+
+                assertThat(checkbox).isChecked();
+            }
+        }
+    }
+
     @Test
     public void testModalWindowStudyIsOpened() {
         HomePage homePage =

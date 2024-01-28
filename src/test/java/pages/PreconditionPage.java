@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import io.qameta.allure.Step;
+import utils.api.APIUtils;
 
 import java.util.List;
 
@@ -61,7 +62,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 .clickDomainsButtonIfNotActive()
                 .clickRandomCheckbox()
                 .inputNumberOfQuestions(number)
-                .clickGenerateAndStartButton();
+                .clickGenerateAndStartTutorTestButton();
 
         return new TestTutorPage(getPage()).init();
     }
@@ -112,6 +113,16 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return false;
     }
 
+    public boolean areAllCheckboxesChecked() {
+
+        APIUtils.markCheckBoxes(getPage().request());
+        getPage().reload();
+
+        return new HomePage(getPage())
+                .init()
+                .areAllCheckboxesChecked();
+    }
+
     public int getSingleCheckedCheckboxIndex() {
 
         return randomIndex;
@@ -148,12 +159,12 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
             testListPage
                     .clickAutomationTestingForStatsCheckBox()
                     .inputNumberOfQuestions(numberOfQuestions)
-                    .clickGenerateAndStartButton();
+                    .clickGenerateAndStartTutorTestButton();
         } else if (nameTest.equals("History and Civilization for Stats")) {
             testListPage
                     .clickHistoryAndCivilizationForStatsCheckBox()
                     .inputNumberOfQuestions(numberOfQuestions)
-                    .clickGenerateAndStartButton();
+                    .clickGenerateAndStartTutorTestButton();
         }
     }
 
@@ -165,13 +176,13 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
 
         for (int numOfQuestion = 1; numOfQuestion < numberOfQuestions; numOfQuestion++) {
             testTutorPage
-                    .clickCorrectAnswerRadioButton()
+                    .clickCorrectAnswer()
                     .clickConfirmButton()
                     .clickNextQuestionButton();
         }
 
         testTutorPage
-                .clickCorrectAnswerRadioButton()
+                .clickCorrectAnswer()
                 .clickConfirmButton()
                 .clickFinishTestButton()
                 .clickSkipButton()
@@ -187,7 +198,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
 
         for (int numOfQuestion = 1; numOfQuestion < numberOfQuestions; numOfQuestion++) {
             testTutorPage
-                    .clickCorrectAnswerRadioButton()
+                    .clickCorrectAnswer()
                     .clickConfirmButton()
                     .clickNextQuestionButton();
         }

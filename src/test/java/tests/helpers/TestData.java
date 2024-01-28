@@ -3,6 +3,9 @@ package tests.helpers;
 import org.testng.annotations.DataProvider;
 import utils.runner.ProjectProperties;
 
+import java.util.Arrays;
+import java.util.List;
+
 public final class TestData {
     //Side Menu
     public static final String HOME_END_POINT = "/home";
@@ -46,6 +49,11 @@ public final class TestData {
     public static final String CHOOSE_A_PRODUCT = "Choose a product";
     public static final String REMOVE_FROM_MARKED = "Remove from marked";
     public static final String THE_REPORT_HAS_BEEN_SENT_SUCCESSFULLY = "The report has been sent successfully";
+
+    public static final String STAND = "stand";
+    public static final List<String> LIST_OF_TUTOR_TEST_FOOTER_BUTTONS = Arrays.asList(
+            "Report a problem", "Hint", "Mark for review", "Add to flashcard"
+    );
 
     @DataProvider
     public static Object[][] sideMenuItems() {

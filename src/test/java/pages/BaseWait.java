@@ -7,14 +7,17 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 abstract class BaseWait<TPage> extends BasePage<TPage> {
 
     BaseWait(Page page) {
+
         super(page);
     }
 
     protected void waitWithTimeout(int timeout) {
+
         getPage().waitForTimeout(timeout);
     }
 
     protected void waitForPageLoad() {
+
         getPage().waitForLoadState();
     }
 

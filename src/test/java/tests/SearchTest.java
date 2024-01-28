@@ -9,6 +9,8 @@ import pages.HomePage;
 import pages.StudyGuidePage;
 import tests.helpers.TestData;
 
+import java.util.List;
+
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class SearchTest extends BaseTest {
@@ -21,7 +23,7 @@ public class SearchTest extends BaseTest {
             " a non-existent keyword is typed.")
     @Story("Search")
     @TmsLink("m9rydpfuvuw6")
-    public void testSearchByNotExistingKeyWord() {
+    public void testSearchByNotExistingWord() {
 
         StudyGuidePage studyGuidePage =
                 new HomePage(getPage()).init()
@@ -35,23 +37,25 @@ public class SearchTest extends BaseTest {
         assertThat(searchResultMessage).hasText(TestData.NOTHING_FOUND);
     }
 
-//    @Test
-//    public void testSearchByExistingKeyWord() {
-//
-//        StudyGuidePage studyGuidePage =
-//                new HomePage(getPage()).init()
-//                        .clickStudyGuideMenu()
-//                        .inputSearchWord(TestData.BONE);
-//
-//        final List<String> searchResultText = studyGuidePage.getSearchResultText();
-//
-//        System.out.println(searchResultText);
-//
-//        for (String result : searchResultText) {
-//            Assert.assertTrue(
-//                    result.toLowerCase().contains(TestData.BONE),
-//                    "If FAIL: Search result '" + result + "' does NOT contains the search word '" + TestData.BONE + "'.\n"
-//            );
-//        }
-//    }
+    @Test(
+            testName = "LMS-1361 Поиск по конкретному слову. https://app.qase.io/plan/LMS/1?case=1361",
+            description = "TC1361-02 - Displaying All Matches for the Searched Keyword."
+    )
+    @Description("Objective: To confirm that searching a keyword displays all partial or full matches under" +
+            " the Search field.")
+    @Story("Search")
+    @TmsLink("vdluszdw85zh")
+    public void testSearchByExistingWord() {
+
+        StudyGuidePage studyGuidePage =
+                new HomePage(getPage()).init()
+                        .clickStudyGuideMenu()
+                        .inputSearchWordInSearchField(TestData.STAND);
+
+        final List<Locator> matchesList = studyGuidePage.getMatchesList();
+
+        for (Locator match : matchesList) {
+            assertThat(match).containsText(TestData.STAND);
+        }
+    }
 }

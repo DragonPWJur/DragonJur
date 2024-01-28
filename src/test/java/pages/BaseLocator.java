@@ -144,6 +144,7 @@ abstract class BaseLocator<TPage> extends BaseWait<TPage> {
         while(!locator.first().isVisible() && !locator.last().isVisible()) {
             locator.first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
             locator.last().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED));
+            locator.last().scrollIntoViewIfNeeded();
             locator.last().focus();
         }
 

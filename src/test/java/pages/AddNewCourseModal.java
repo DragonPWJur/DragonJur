@@ -12,6 +12,7 @@ public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
     private final Locator purchaseButton = exactButton("Purchase");
 
     AddNewCourseModal(Page page) {
+
         super(page);
     }
 

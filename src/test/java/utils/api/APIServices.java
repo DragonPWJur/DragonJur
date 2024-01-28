@@ -23,6 +23,14 @@ public final class APIServices {
     private static final String CHAPTERS = "/chapters/";
     private static final String TABLE_OF_CONTENT = "/table-of-content";
     private static final String ADMIN_GUIDES_UNITS = "/admin/guides/units/";
+    private static final String PLANS = "/plans/";
+    private static final String PHASES = "/phases";
+    private static final String PLANS_CURRENT = "/plans/current";
+    private static final String TASKS = "/tasks/";
+    private static final String MARK = "/mark";
+    private static final String COURSES = "/courses/";
+    private static final String SUBSCRIBE = "/subscribe";
+    private static final String SET_ACTIVE = "/setActive";
 
     private static final String userToken = LoginUtils.getUserToken();
     private static String adminToken;
@@ -127,4 +135,103 @@ public final class APIServices {
         checkStatus(apiResponse, "changeChapterText");
     }
 
+    public static JsonObject getPlans(APIRequestContext requestContext) {
+
+        APIResponse apiResponse = requestContext
+                .get(
+                        ProjectProperties.API_BASE_URL + PLANS,
+                        RequestOptions
+                                .create()
+                                .setHeader("accept", "application/json")
+                                .setHeader("Authorization", "Bearer " + userToken)
+                );
+
+        checkStatus(apiResponse, "getPlans");
+
+        return initJsonObject(apiResponse.text());
+    }
+
+    public static void changeCurrentPlan(APIRequestContext requestContext, String _2WeeksPlanId) {
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("newPlanId", _2WeeksPlanId);
+
+        APIResponse apiResponse = requestContext
+                .post(
+                        ProjectProperties.API_BASE_URL + PLANS_CURRENT,
+                        RequestOptions
+                                .create()
+                                .setHeader("accept", "*/*")
+                                .setHeader("Content-Type", "application/json")
+                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setData(data)
+                );
+
+        checkStatus(apiResponse, "changeCurrentPlan");
+    }
+
+    public static JsonObject getPlanPhases(APIRequestContext requestContext, String currentPlanId) {
+
+        APIResponse apiResponse = requestContext
+                .get(
+                        ProjectProperties.API_BASE_URL + PLANS + currentPlanId + PHASES,
+                        RequestOptions
+                                .create()
+                                .setHeader("accept", "application/json")
+                                .setHeader("Authorization", "Bearer " + userToken)
+                );
+
+        checkStatus(apiResponse, "planPhases");
+
+        return initJsonObject(apiResponse.text());
+    }
+
+    public static void markCheckboxesById(APIRequestContext requestContext, String markId) {
+
+        APIResponse apiResponse = requestContext
+                .post(
+                        ProjectProperties.API_BASE_URL + TASKS + markId + MARK,
+                        RequestOptions
+                                .create()
+                                .setHeader("accept", "application/json")
+                                .setHeader("Authorization", "Bearer " + userToken)
+                );
+
+        checkStatus(apiResponse, "markId");
+    }
+    public static APIResponse courseSubscribe(APIRequestContext apiRequestContext, String courseId, String period, String type) {
+        Map<String, String> courseData = new HashMap<>();
+        courseData.put("period", period);
+        courseData.put("type", type);
+
+        return apiRequestContext
+                .post(
+                        COURSES + courseId + SUBSCRIBE,
+                        RequestOptions
+                                .create()
+                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setData(courseData)
+                );
+    }
+
+    public static APIResponse setActive(APIRequestContext apiRequestContext, String courseId) {
+
+        return apiRequestContext
+                .post(
+                        COURSES + courseId + SET_ACTIVE,
+                        RequestOptions
+                                .create()
+                                .setHeader("Authorization", "Bearer " + userToken)
+                );
+    }
+
+    public static APIResponse activeCourse(APIRequestContext apiRequestContext) {
+
+        return apiRequestContext
+                .get(
+                        COURSES_ACTIVE,
+                        RequestOptions
+                                .create()
+                                .setHeader("Authorization", "Bearer " + userToken));
+    }
 }

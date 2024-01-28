@@ -1,14 +1,31 @@
 package utils.api;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.microsoft.playwright.APIRequest;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
+import org.testng.Assert;
+import org.json.JSONObject;
 import utils.reports.LoggerUtils;
+import utils.runner.ProjectProperties;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public final class APIUtils {
+    private static final String _2_WEEK_PLAN = "2 Weeks";
 
+    public static final String BRONZE_SUBSCRIPTION = "f64edfa6-1aca-4d9a-9c49-8f29970790af";
+    public static final String GOLD_SUBSCRIPTION = "bcf37a9f-af5f-47b0-b9aa-c8e36bbd8278";
+    public static final String MONTHLY = "monthly";
+    public static final String BRONZE = "bronze";
     private static Playwright playwright;
 
     private static APIRequestContext createAdminAPIRequestContext() {
@@ -45,6 +62,7 @@ public final class APIUtils {
                     "response status: " + apiResponse.status()
                     + "\n url: " + apiResponse.url()
                     + "\n body: " + apiResponse.text());
+            Assert.fail();
         } else {
             LoggerUtils.logInfo("API: " + methodName + " " + apiResponse.status());
         }
@@ -78,4 +96,139 @@ public final class APIUtils {
         closeAdminAPIRequestContext();
     }
 
+    private static String get2WeekId(JsonObject plans) {
+
+        try {
+            JsonArray jArrayPlans = plans.getAsJsonArray("plans");
+
+            for (int i = 0; i < jArrayPlans.size(); i++) {
+                JsonObject object = jArrayPlans.get(i).getAsJsonObject();
+
+                if (Objects.equals(object.get("name").getAsString(), _2_WEEK_PLAN)) {
+                    return object.get("id").getAsString();
+                }
+            }
+        } catch (Exception e) {
+            LoggerUtils.logException("EXCEPTION: API response body, can not extract '2 Weeks' plan id.");
+        }
+
+        return "";
+    }
+
+    private static List<String> getPlanPhasesId(JsonObject planPhases) {
+
+        List<String> checkBoxIds = new ArrayList<>();
+
+        try {
+
+            JsonArray jArrayItems = planPhases.getAsJsonArray("items");
+
+            for (int i = 0; i < jArrayItems.size(); i++) {
+                JsonObject object = jArrayItems.get(i).getAsJsonObject();
+                JsonArray tasks = object.getAsJsonArray("tasks");
+
+                for (int j = 0; j < tasks.size(); j++) {
+                    String id = tasks.get(j).getAsJsonObject().get("id").getAsString();
+                    checkBoxIds.add(id);
+                }
+            }
+
+            return checkBoxIds;
+
+        } catch (Exception e) {
+            LoggerUtils.logException("EXCEPTION: FAILED to extract IDs from tasks of " + _2_WEEK_PLAN + " plan.");
+        }
+
+        return checkBoxIds;
+    }
+
+    private static void markCheckBoxes(APIRequestContext requestContext, List<String> checkBoxIds) {
+
+        for (String markId : checkBoxIds) {
+            APIServices.markCheckboxesById(requestContext, markId);
+        }
+    }
+
+    public static void markCheckBoxes(APIRequestContext request) {
+
+        JsonObject plans = APIServices.getPlans(request);
+        String _2WeekPlanId = get2WeekId(plans);
+
+        APIServices.changeCurrentPlan(request, _2WeekPlanId);
+        JsonObject planPhases = APIServices.getPlanPhases(request, _2WeekPlanId);
+
+        List<String> checkboxesIds = getPlanPhasesId(planPhases);
+
+        if (checkboxesIds.isEmpty()) {
+            LoggerUtils.logError("[ERROR] checkboxesIds list is empty.");
+            Assert.fail();
+        }
+
+        markCheckBoxes(request, checkboxesIds);
+    }
+    public static APIRequestContext createApiRequestContext(Playwright playwright) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+
+        return playwright.request().newContext(new APIRequest.NewContextOptions()
+                .setBaseURL(ProjectProperties.API_BASE_URL)
+                .setExtraHTTPHeaders(headers));
+    }
+
+    public static void bronzeCourseSubscription(Playwright playwright) {
+        APIRequestContext apiRequestContext = createApiRequestContext(playwright);
+        APIResponse apiResponse = APIServices.courseSubscribe(apiRequestContext, BRONZE_SUBSCRIPTION, MONTHLY, BRONZE);
+
+        if (apiResponse.status() == 201) {
+            LoggerUtils.logInfo("API: Successfully subscribed to 'TEST AUTOMATION _DO NOT DELETE_BRONZE' course with Bronze level");
+        }
+        if (apiResponse.status() == 422) {
+            LoggerUtils.logInfo("API: 'TEST AUTOMATION _DO NOT DELETE_BRONZE' course is exist");
+            setActiveCourse(playwright, BRONZE_SUBSCRIPTION);
+        }
+        if (apiResponse.status() != 201 && apiResponse.status() != 422) {
+            LoggerUtils.logError("ERROR: " + apiResponse.status() + " - " + apiResponse.statusText());
+        }
+    }
+
+    public static void setActiveCourse(Playwright playwright, String courseId) {
+        APIRequestContext apiRequestContext = createApiRequestContext(playwright);
+        APIResponse apiResponse = APIServices.setActive(apiRequestContext, courseId);
+
+        JSONObject object = new JSONObject(apiResponse.text());
+
+        if (apiResponse.status() != 201) {
+            LoggerUtils.logError(apiResponse.status() + " - " + object.getString("message"));
+            System.exit(1);
+        } else {
+            LoggerUtils.logInfo("API: Switched to " + getCourseName(courseId) + " subscription");
+        }
+    }
+
+    public static String getIdActiveCourse(Playwright playwright) {
+        APIRequestContext apiRequestContext = createApiRequestContext(playwright);
+        APIResponse apiResponse = APIServices.activeCourse(apiRequestContext);
+
+        JSONObject object = new JSONObject(apiResponse.text());
+
+        return object.getString("id");
+    }
+
+    public static void checkIfGoldIsActive(Playwright playwright) {
+
+        if (!GOLD_SUBSCRIPTION.equals(getIdActiveCourse(playwright))) {
+            setActiveCourse(playwright, GOLD_SUBSCRIPTION);
+        }
+        LoggerUtils.logInfo("API: The user currently has a Gold subscription");
+    }
+
+    public static String getCourseName(String courseId) {
+        if (courseId.equals(GOLD_SUBSCRIPTION)) {
+            return "GOLD";
+        } else if (courseId.equals(BRONZE_SUBSCRIPTION)) {
+            return "BRONZE";
+        } else {
+            return "Unknown Subscription";
+        }
+    }
 }

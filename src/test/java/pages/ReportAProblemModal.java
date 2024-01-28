@@ -7,7 +7,9 @@ public final class ReportAProblemModal extends BaseModal<ReportAProblemModal> im
     private final Locator describeTheProblemTextarea = textbox();
     private final Locator sendButton = button("Send");
     private final Locator reportMessage = locator(".ReactModalPortal div:has(svg) span");
+
     ReportAProblemModal(Page page) {
+
         super(page);
     }
 
@@ -38,10 +40,12 @@ public final class ReportAProblemModal extends BaseModal<ReportAProblemModal> im
     }
 
     public Locator getDescribeTheProblemTextarea() {
+
         return describeTheProblemTextarea;
     }
 
     public Locator getSendButton() {
+
         return sendButton;
     }
 }

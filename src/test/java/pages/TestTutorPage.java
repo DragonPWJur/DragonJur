@@ -5,7 +5,13 @@ import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 import pages.constants.Constants;
 
+import java.util.List;
+
 public final class TestTutorPage extends BaseTestsPage<TestTutorPage> implements IRandom {
+
+    private final List<Locator> listOfActiveButtons = button("Previous").locator("xpath=following-sibling::div[1]//button").all();
+    private final Locator testQuestion = locator("form span");
+    private final Locator answerRadioButton = radio();
 
     TestTutorPage(Page page) {
         super(page);
@@ -15,6 +21,22 @@ public final class TestTutorPage extends BaseTestsPage<TestTutorPage> implements
     public TestTutorPage init() {
 
         return createPage(new TestTutorPage(getPage()), Constants.TEST_TUTOR_END_POINT);
+    }
+
+    @Step("Collect list of active button names in the footer")
+    public List<String> listOfButtonNamesInFooter() {
+
+        return listOfActiveButtons.stream().map(Locator::innerText).toList();
+    }
+
+    public int countAnswersRadioButtons() {
+
+        return answerRadioButton.count();
+    }
+
+    public Locator getTestQuestion() {
+
+        return testQuestion;
     }
 
 
@@ -63,7 +85,7 @@ public final class TestTutorPage extends BaseTestsPage<TestTutorPage> implements
 //        return this;
 //    }
 //
-    public TestTutorPage clickCorrectAnswerRadioButton() {
+    public TestTutorPage clickCorrectAnswer() {
         getCorrectAnswer().click();
         return this;
     }

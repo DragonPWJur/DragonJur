@@ -20,14 +20,17 @@ public final class ProfilePage extends BaseSideMenu<ProfilePage> {
     }
 
     public Locator getAccount() {
+
         return account;
     }
 
     public Locator getPaymentMethod() {
+
         return paymentMethod;
     }
 
     public Locator getAddANewCourseButton() {
+
         return addANewCourseButton;
     }
 

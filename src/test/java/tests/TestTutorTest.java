@@ -45,8 +45,8 @@ public class TestTutorTest extends BaseTest {
                         .clickRandomCheckbox()
                         .clickTutorButton()
                         .inputNumberOfQuestions(TestData.ONE_QUESTION)
-                        .clickGenerateAndStartButton()
-                        .clickCorrectAnswerRadioButton()
+                        .clickGenerateAndStartTutorTestButton()
+                        .clickCorrectAnswer()
                         .clickConfirmButton();
 
         final Locator correctAnswerBgColor55B47D = testTutorPage.getCorrectAnswerBackgroundColor55B47D();
@@ -93,7 +93,7 @@ public class TestTutorTest extends BaseTest {
                         .clickRandomCheckbox()
                         .clickTutorButton()
                         .inputNumberOfQuestions(TestData.ONE_QUESTION)
-                        .clickGenerateAndStartButton();
+                        .clickGenerateAndStartTutorTestButton();
 
         final String expectedUrl = ProjectProperties.BASE_URL + TestData.TEST_TUTOR_END_POINT;
         final Locator question = testTutorPage.getTestQuestion();
@@ -117,7 +117,7 @@ public class TestTutorTest extends BaseTest {
                         .clickRandomCheckbox()
                         .clickTutorButton()
                         .inputNumberOfQuestions(TestData.ONE_QUESTION)
-                        .clickGenerateAndStartButton();
+                        .clickGenerateAndStartTutorTestButton();
 
         final String expectedUrl = ProjectProperties.BASE_URL + TestData.TEST_TUTOR_END_POINT;
         final Locator question = testTutorPage.getTestQuestion();
@@ -176,8 +176,8 @@ public class TestTutorTest extends BaseTest {
                         .clickDomainsButtonIfNotActive()
                         .clickRandomCheckbox()
                         .inputNumberOfQuestions(TestData.ONE_QUESTION)
-                        .clickGenerateAndStartButton()
-                        .clickCorrectAnswerRadioButton()
+                        .clickGenerateAndStartTutorTestButton()
+                        .clickCorrectAnswer()
                         .clickConfirmButton()
                         .clickEndButton()
                         .clickYesToCongratulationButton();
