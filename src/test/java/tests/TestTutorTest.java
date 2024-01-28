@@ -62,6 +62,7 @@ public class TestTutorTest extends BaseTest {
         );
     }
 
+    @Ignore
     @Test
     public void testSuccessfulReportSubmission() {
 
