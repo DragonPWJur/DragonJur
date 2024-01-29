@@ -108,8 +108,8 @@ public class PerformanceTest extends BaseTest {
     @Story("Performance")
     @TmsLink(" ")
 
-    public void displayingStatisticsForAllFlashcards() {
-        new PreconditionPage(getPage()).completeFlashCardWithMetricsYes3No3Kinda3();
+    public void testDisplayingStatisticsForAllFlashcards() {
+//        new PreconditionPage(getPage()).completeFlashCardWithMetricsYes3No3Kinda3();
 
         PerformancePage performancePage =
                 new HomePage(getPage()).init()
@@ -120,12 +120,13 @@ public class PerformanceTest extends BaseTest {
 
 //        Locator l = getPage().getByText("Sleek Soft Keyboard");
 //        System.out.println(l.innerText());
-//
-//        List<Locator> l = performancePage.getStackList();
-//        for (Locator i : l) {
-//            System.out.println(i.innerText());
-//            System.out.println(i.textContent());
-//        }
+
+        List<Locator> l = performancePage.getStackList();
+        System.out.println(l.size());
+        for (Locator i : l) {
+            System.out.println(i.innerText());
+            System.out.println(i.textContent());
+        }
     }
 }
 

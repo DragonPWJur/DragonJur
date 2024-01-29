@@ -6,6 +6,8 @@ import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 import pages.constants.Constants;
 
+import java.util.List;
+
 public final class PerformancePage extends BaseSideMenu<PerformancePage> {
     private final Locator overallButton = button("Overall");
     private final Locator testsButtonInBanner = buttonInBanner("Tests");
@@ -18,6 +20,8 @@ public final class PerformancePage extends BaseSideMenu<PerformancePage> {
     private final Locator incorrectPercentageText = exactText("Total:").last().locator("~div>span:first-child");
     private final Locator incorrectNumberText = exactText("Total:").last().locator("~div>span:last-child");
     private final Locator lastTestLocator = locator(".eaNKjL>div:nth-child(2)");
+
+    private final List<Locator> stackList = locator("//*text()='sc-jGyvXW.fAYibz']").all();
 
    // "sc-jGyvXW fAYibz" = 20шт
 
@@ -79,6 +83,11 @@ public final class PerformancePage extends BaseSideMenu<PerformancePage> {
     public int getIncorrectNumbers() {
 
         return Integer.parseInt(incorrectNumberText.innerText());
+    }
+
+    public List<Locator> getStackList() {
+        getPage().waitForTimeout(5000);
+        return stackList;
     }
 
     public PerformancePage setLastTest() {

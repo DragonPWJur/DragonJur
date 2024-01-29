@@ -238,7 +238,7 @@ public final class APIServices {
     public static JsonObject getFlashcardsPacks(APIRequestContext requestContext) {
         APIResponse apiResponse = requestContext
                 .get(
-                        ProjectProperties.API_BASE_URL + "/flashcards/packs",
+                        ProjectProperties.API_BASE_URL + "/flashcards/packs?limit=20",
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + userToken)
                 );
