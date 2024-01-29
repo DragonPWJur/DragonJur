@@ -3,7 +3,7 @@ package pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
-public final class StripeModal extends BaseModal<StripeModal>{
+public final class StripeModal extends BaseModal<StripeModal> {
     private final Locator stripeModalHeader = text("Add a payment method");
     private final Locator stripeElement = locator("div.StripeElement");
 
@@ -19,12 +19,18 @@ public final class StripeModal extends BaseModal<StripeModal>{
     }
 
     public Locator getStripeModalHeader() {
+        if (!getDialog().isVisible()) {
+            waitForLocator(getDialog(), 4000);
+            if (getDialog().isVisible()) {
+                waitForLocator(stripeModalHeader, 4000);
+            }
+        }
         waitForLocator(stripeModalHeader, 4000);
 
         return stripeModalHeader;
     }
 
-    public Locator getStripeElement(){
+    public Locator getStripeElement() {
 
         return stripeElement;
     }
