@@ -36,7 +36,7 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
         }
     }
 
-    @Step("Click 'Got It' button on dialog window if visible.")
+    @Step("Click 'Got It' button on dialog window.")
     public FlashcardsPackIDPage clickGotItButton() {
         gotItButton.click();
 

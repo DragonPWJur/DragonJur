@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 import pages.constants.Constants;
+import utils.reports.LoggerUtils;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -24,6 +25,8 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     private final List<Locator> allCheckboxes = allCheckboxes("div:has(button) label > span");
     private final Locator markedNumber = locator("label:has(input[value=\"MARKED\"])>span");
 
+    private int randomNumber;
+
     TestListPage(Page page) {
         super(page);
     }
@@ -36,18 +39,28 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
 
     @Step("Click 'Domains' button if not active")
     public TestListPage clickDomainsButtonIfNotActive() {
-        waitWithTimeout(1000);
-        if (text("Please select subject").isVisible()) {
+        domainsButton.click();
+        getPage().reload();
+        waitWithTimeout(2000);
+
+        if(!domainsButton.isChecked()) {
             getPage().reload();
             waitWithTimeout(2000);
 
             domainsButton.click();
-        }
-        if (!domainsButton.isChecked()) {
-            domainsButton.click();
-            waitWithTimeout(2000);
 
-            getPage().reload();
+            //A 'while' block is added to address the bug related to the 'Domains' button
+            int count = 3;
+            while (!domainsButton.isChecked() && count > 0) {
+                getPage().reload();
+                waitWithTimeout(1000);
+                domainsButton.click();
+                waitWithTimeout(2000);
+                count--;
+                if (count == 0 && !domainsButton.isChecked() || count == 0 && text("Please select subject").isVisible()) {
+                    LoggerUtils.logError("ERROR: Domains button is not active.");
+                }
+            }
         }
 
         return this;
@@ -60,7 +73,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    @Step("Set '{number}' as number of questions")
+    @Step("Input '{number}' as number of questions")
     public TestListPage inputNumberOfQuestions(String number) {
         numberOfQuestionsInputField.fill(number);
 
@@ -88,6 +101,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
+    @Step("Click 'Chapters' button if not active")
     public TestListPage clickChaptersButton() {
         // while block was added due to a bug in the application (Generate And Start button inactive)
         if (!chaptersButton.isChecked()) {
@@ -146,22 +160,36 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    @Step("Set random number of questions")
-    public TestListPage inputRandomNumberOfQuestions(int maxNumberOfQuestions) {
-        String number = String.valueOf(getRandomInt(maxNumberOfQuestions));
-        numberOfQuestionsInputField.fill(number);
-        return this;
-    }
-
-    @Step("Click random checkbox and return related number of questions (for Bronze subscription)")
-    public int getNumberOfQuestionsForRandomCheckbox() {
+    private void setRandomNumberOutOfAvailableCheckboxes() {
         activeCheckbox = activeCheckbox.filter(new Locator.FilterOptions().setHasText(Pattern.compile("\\d+")));
         activeCheckbox.last().waitFor();
 
-        int randomValue = getRandomNumber(activeCheckbox);
-        activeCheckbox.nth(randomValue).click();
-        getPage().waitForTimeout(1000);
+        this.randomNumber = getRandomNumber(activeCheckbox);
+    }
 
-        return Integer.parseInt(activeCheckbox.nth(randomValue).textContent().replaceAll("[^\\d/]+", "").split("/")[0]);
+    @Step("Click random available checkbox")
+    public TestListPage clickRandomAvailableCheckbox() {
+        setRandomNumberOutOfAvailableCheckboxes();
+        activeCheckbox.nth(randomNumber).click();
+        waitWithTimeout(1000);
+
+        return this;
+    }
+
+    private int getNumberOfAvailableQuestions() {
+
+        return Integer.parseInt(activeCheckbox.nth(randomNumber)
+                .textContent()
+                .replaceAll("[^\\d/]+", "").split("/")[0]);
+    }
+
+    @Step("Input a random number within the range of available questions")
+    public TestListPage inputRandomNumberOfQuestions() {
+        final int numberOfAvailableQuestions = getNumberOfAvailableQuestions();
+        final String numberToInput = String.valueOf(getRandomInt(numberOfAvailableQuestions));
+
+        numberOfQuestionsInputField.fill(numberToInput);
+
+        return this;
     }
 }
