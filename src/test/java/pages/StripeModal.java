@@ -22,16 +22,37 @@ public final class StripeModal extends BaseModal<StripeModal> {
     }
 
     public Locator getStripeModalHeader() {
-        if (!getDialog().isVisible()) {
-            waitForLocator(getDialog(), 4000);
-            System.out.println(stripeElement);
-            if (getDialog().isVisible()) {
+        if (!stripeDialog.isVisible()) {
+            System.out.println("1. stripeDialog is NOT visible");
+
+            int count = 3;
+            while (count > 0 && !getDialog().isVisible()) {
+                System.out.println("2. stripeDialog is NOT visible");
+                waitForLocator(stripeDialog, 4000);
+
+                count --;
+                if (count == 0) {
+                    System.out.println("3. stripeDialog is NOT visible");
+                }
+            }
+            waitForLocator(stripeElement, 4000);
+
+            if (stripeElement.isVisible()) {
+                System.out.println(stripeElement + " is visible - 1");
                 waitForLocator(stripeModalHeader, 4000);
                 System.out.println(stripeModalHeader);
             }
         }
+        System.out.println("stripeDialog.isVisible()");
+        waitForLocator(stripeElement, 4000);
+        if (stripeElement.isVisible()) {
+            System.out.println(stripeElement + "is visible - 2");
+        }
         waitForLocator(stripeModalHeader, 4000);
-        System.out.println(stripeElement);
+        if (stripeModalHeader.isVisible()) {
+            System.out.println(stripeModalHeader + " is visible - 3");
+        }
+
         System.out.println(stripeModalHeader);
 
         return stripeModalHeader;
