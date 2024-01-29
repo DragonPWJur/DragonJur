@@ -25,7 +25,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     private final List<Locator> allCheckboxes = allCheckboxes("div:has(button) label > span");
     private final Locator markedNumber = locator("label:has(input[value=\"MARKED\"])>span");
 
-    private final int randomNumber = getRandomNumberOutOfAvailableCheckboxes();
+    private int randomNumber;
 
     TestListPage(Page page) {
         super(page);
@@ -39,22 +39,27 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
 
     @Step("Click 'Domains' button if not active")
     public TestListPage clickDomainsButtonIfNotActive() {
-        int count = 3;
-        waitWithTimeout(1000);
-        if (text("Please select subject").isVisible()) {
+        domainsButton.click();
+        getPage().reload();
+        waitWithTimeout(2000);
+
+        if(!domainsButton.isChecked()) {
             getPage().reload();
             waitWithTimeout(2000);
 
             domainsButton.click();
-        }
-        while (!domainsButton.isChecked() && count > 0) {
-            domainsButton.click();
-            waitWithTimeout(2000);
 
-            getPage().reload();
-            count--;
-            if (count == 0) {
-                LoggerUtils.logError("ERROR: Domains button is not active.");
+            //A 'while' block is added to address the bug related to the 'Domains' button
+            int count = 3;
+            while (!domainsButton.isChecked() && count > 0) {
+                getPage().reload();
+                waitWithTimeout(1000);
+                domainsButton.click();
+                waitWithTimeout(2000);
+                count--;
+                if (count == 0 && !domainsButton.isChecked() || count == 0 && text("Please select subject").isVisible()) {
+                    LoggerUtils.logError("ERROR: Domains button is not active.");
+                }
             }
         }
 
@@ -68,7 +73,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    @Step("Set '{number}' as number of questions")
+    @Step("Input '{number}' as number of questions")
     public TestListPage inputNumberOfQuestions(String number) {
         numberOfQuestionsInputField.fill(number);
 
@@ -155,15 +160,16 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    private int getRandomNumberOutOfAvailableCheckboxes() {
+    private void setRandomNumberOutOfAvailableCheckboxes() {
         activeCheckbox = activeCheckbox.filter(new Locator.FilterOptions().setHasText(Pattern.compile("\\d+")));
         activeCheckbox.last().waitFor();
 
-        return getRandomNumber(activeCheckbox);
+        this.randomNumber = getRandomNumber(activeCheckbox);
     }
 
     @Step("Click random available checkbox")
     public TestListPage clickRandomAvailableCheckbox() {
+        setRandomNumberOutOfAvailableCheckboxes();
         activeCheckbox.nth(randomNumber).click();
         waitWithTimeout(1000);
 
@@ -174,8 +180,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
 
         return Integer.parseInt(activeCheckbox.nth(randomNumber)
                 .textContent()
-                .replaceAll("[^\\d/]+", "").split("/")[0]
-        );
+                .replaceAll("[^\\d/]+", "").split("/")[0]);
     }
 
     @Step("Input a random number within the range of available questions")
