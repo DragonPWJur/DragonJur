@@ -2,10 +2,7 @@ package tests;
 
 import com.microsoft.playwright.Locator;
 import org.testng.annotations.Test;
-import pages.AddNewCourseModal;
-import pages.AddNewCoursePage;
-import pages.HomePage;
-import pages.ProfilePage;
+import pages.*;
 import tests.helpers.TestData;
 import utils.runner.ProjectProperties;
 
@@ -15,7 +12,6 @@ public class ProfileTest extends BaseTest {
 
     @Test
     public void testProfilePageDisplaysHeaders() {
-
         final String profileUrl = ProjectProperties.BASE_URL + TestData.PROFILE_END_POINT;
 
         ProfilePage profilePage =
@@ -35,7 +31,6 @@ public class ProfileTest extends BaseTest {
 
     @Test
     public void testAddNewCourseButtonNavigation() {
-
         final String addNewCourseUrl = ProjectProperties.BASE_URL + TestData.ADD_NEW_COURSE_END_POINT;
 
         AddNewCoursePage addNewCoursePage =
@@ -50,7 +45,6 @@ public class ProfileTest extends BaseTest {
 
     @Test
     public void testOpenChooseAProductModalByClickAGetButton() {
-
         AddNewCourseModal addNewCourseModal =
                 new HomePage(getPage()).init()
                         .clickProfileMenu()
@@ -69,7 +63,6 @@ public class ProfileTest extends BaseTest {
 
     @Test
     public void testClickOnTheLifeTimeButton() {
-
         AddNewCourseModal addNewCourseModal =
                 new HomePage(getPage()).init()
                         .clickProfileMenu()
@@ -88,5 +81,23 @@ public class ProfileTest extends BaseTest {
         assertThat(purchaseButton).isVisible();
         assertThat(purchaseButton).hasCount(1);
         assertThat(purchaseButton).isEnabled();
+    }
+
+    @Test
+    public void testPurchaseButtonNavigatesToStripeElement() {
+        StripeModal stripeModal =
+                new HomePage(getPage()).init()
+                        .clickProfileMenu()
+                        .clickAddANewCourseButton()
+                        .clickGetButton()
+                        .clickLifeTimeButton()
+                        .clickPurchaseButton();
+
+        final Locator stripeModalHeader = stripeModal.getStripeModalHeader();
+        final Locator stripeElement = stripeModal.getStripeElement();
+
+        assertThat(stripeModalHeader).isVisible();
+        assertThat(stripeElement).isAttached();
+        assertThat(stripeElement).isVisible();
     }
 }
