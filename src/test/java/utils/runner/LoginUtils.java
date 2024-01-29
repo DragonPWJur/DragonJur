@@ -37,9 +37,7 @@ public final class LoginUtils {
         loginOnceAndStoreCookies();
 
         parseUserToken();
-        logInfo("Login context: User token extracted from cookies");
-
-        logInfo(ReportUtils.getEndLine());
+        logInfo("Login context: User token extracted from cookies" + ReportUtils.getEndLine());
     }
 
     private static void loginOnceAndStoreCookies() {

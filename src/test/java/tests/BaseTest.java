@@ -45,23 +45,22 @@ abstract class BaseTest {
 
         if (browser.isConnected()) {
             logInfo("Browser " + browser.browserType().name().toUpperCase() + " "
-                    + LoggerInfo.getBrowserId(browser) + " launched.\n");
+                    + LoggerInfo.getBrowserId(browser) + " launched.\n" + ReportUtils.getEndLine());
         } else {
-            logFatal("FATAL: Browser " + browser.browserType().name().toUpperCase() + " is NOT connected\n");
+            logFatal("FATAL: Browser " + browser.browserType().name().toUpperCase() + " is NOT connected\n"
+                    + ReportUtils.getEndLine());
             System.exit(1);
         }
-
-        logInfo(ReportUtils.getEndLine());
     }
 
     @BeforeMethod
     void createContextAndPage(Method method) {
 
         APIUtils.isGoldSubscriptionActive(playwright);
-        logInfo("Run " + ReportUtils.getTestMethodName(method));
+
+        logInfo("RUN " + ReportUtils.getTestMethodName(method));
 
         APIServices.cleanData(playwright);
-        logInfo("API: Course data cleared");
 
         context = BrowserManager.createContextWithCookies(browser);
         logInfo("Context created");
@@ -114,8 +113,8 @@ abstract class BaseTest {
         }
         if(playwright != null) {
             playwright.close();
-            logInfo("Playwright closed");
-            logInfo(ReportUtils.getEndLine() + "\n");
+            logInfo("Playwright closed"
+                    + ReportUtils.getEndLine());
         }
     }
 

@@ -2,6 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Step;
 import pages.constants.Constants;
 
 import java.util.List;
@@ -49,6 +50,7 @@ public final class FlashcardPacksPage extends BaseSideMenu<FlashcardPacksPage> i
         return textToArray[textToArray.length - 1];
     }
 
+    @Step("Click {randomIndex}-th Flashcards pack")
     public FlashcardsPackIDPage clickNthFlashcardPack(int randomIndex) {
         allLearnedButtons.get(randomIndex).click();
 
