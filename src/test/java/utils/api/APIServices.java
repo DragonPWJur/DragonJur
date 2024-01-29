@@ -31,6 +31,7 @@ public final class APIServices {
     private static final String COURSES = "/courses/";
     private static final String SUBSCRIBE = "/subscribe";
     private static final String SET_ACTIVE = "/setActive";
+    private static final String PAYMENT_METHOD = "/customer/paymentMethod";
 
     private static final String userToken = LoginUtils.getUserToken();
     private static String adminToken;
@@ -47,6 +48,19 @@ public final class APIServices {
                 );
 
         checkStatus(apiResponse, "cleanData");
+    }
+
+    public static void deletePaymentMethod(Playwright playwright) {
+        APIRequestContext requestContext = playwright.request().newContext();
+
+        APIResponse apiResponse = requestContext
+                .delete(
+                        ProjectProperties.API_BASE_URL + PAYMENT_METHOD,
+                        RequestOptions.create()
+                                .setHeader("Authorization", "Bearer " + userToken)
+                );
+
+        checkStatus(apiResponse, "deletePaymentMethod");
     }
 
     private static String getAdminToken(APIRequestContext requestContext) {
