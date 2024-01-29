@@ -106,11 +106,11 @@ public final class ReportUtils {
     public static void addVideoAndTracingToAllureReportForCIFailure(Method testMethod, ITestResult testResult) throws IOException {
         if (!testResult.isSuccess() && ProjectProperties.isServerRun()) {
             Allure.getLifecycle().addAttachment("video", "videos/webm", "webm",
-                    Files.readAllBytes(Paths.get("videos/" + testMethod.getName() + ".webm")));
+                    Files.readAllBytes(Paths.get("target/videos/" + testMethod.getName() + ".webm")));
             logInfo("Video added to Allure report");
 
             Allure.getLifecycle().addAttachment("tracing", "archive/zip", "zip",
-                    Files.readAllBytes(Paths.get("testTracing/" + testMethod.getName() + ".zip")));
+                    Files.readAllBytes(Paths.get("target/testTracing/" + testMethod.getName() + ".zip")));
             logInfo("Tracing added to Allure report");
         }
     }
