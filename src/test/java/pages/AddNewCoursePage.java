@@ -8,6 +8,7 @@ public final class AddNewCoursePage extends BaseHeader<AddNewCoursePage> {
     private final Locator getButton = locator("div:nth-child(3) > .sc-jKDlA-D > .sc-dkzDqf");
 
     AddNewCoursePage(Page page) {
+
         super(page);
     }
 

@@ -3,6 +3,9 @@ package tests.helpers;
 import org.testng.annotations.DataProvider;
 import utils.runner.ProjectProperties;
 
+import java.util.Arrays;
+import java.util.List;
+
 public final class TestData {
     //Side Menu
     public static final String HOME_END_POINT = "/home";
@@ -19,31 +22,38 @@ public final class TestData {
     public static final String MNEMONIC_CARDS_END_POINT = "/mnemonic-cards/";
     public static final String MNEMONIC_CARD_PRACTICE_END_POINT = "/mnemonic-card-practice/";
     public static final String FLASHCARDS_PACK_ID_END_POINT = "/flashcards?packId";
+    public static final String ADD_NEW_COURSE_END_POINT = "/add-new-course";
 
     //Data
     public static final String ONE_QUESTION = "1";
-    public static final String FLASHCARDS = "Flashcards";
-    public static final String GOT_IT = "Got it";
-    public static final String YES = "Yes";
-    public static final String QUESTION = "Question";
     public static final String BACKGROUND_COLOR = "background-color";
     public static final String RGBA_62_48_179_0_2 = "rgba(62, 48, 179, 0.2)";
-    public static final String RGBA_0_0_0_0 = "rgba(0, 0, 0, 0)";
     public static final String QUESTION_MARK = "?";
     public static final String EXPLANATION = "Explanation";
     public static final String CHECKBOX_POINTS = "833";
-    public static final String REPORT_MESSAGE = "The report has been sent successfully";
     public static final String PRACTICE = "Practice";
     public static final String NOTHING_FOUND = "Nothing found. Try to use other key words";
-    public static final String CORRECT_ANSWER_POINTS = "38";
     public static final String PROJECTIONS = "Projections";
     public static final String LONG_BONES = "Long bones";
-    public static final String STUDY_THIS_MODAL_HEADER = "Weakest Exam Areas";
-    public static final String STUDY_THIS_MODAL_MESSAGE =
+    public static final String WEAKEST_EXAM_AREAS = "Weakest Exam Areas";
+    public static final String YOU_HAVE_NOT_STUDIED_ENOUGH =
             "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03";
     public static final String SEARCH_WORD = TestUtils.getRandomString(10);
     public static final String TEST = "Test";
+    public static final String HISTORY_AND_CIVILIZATION_FOR_STATS = "History and Civilization for Stats";
+    public static final String FOUR_QUESTIONS = "4";
+    public static final String AUTOMATION_TESTING_FOR_STATS = "Automation testing for stats";
+    public static final String FIVE_QUESTIONS = "5";
+    public static final String ALL_TESTS = "All tests";
+    public static final String ADD_NEW_COURSE = "Add new course";
+    public static final String CHOOSE_A_PRODUCT = "Choose a product";
+    public static final String REMOVE_FROM_MARKED = "Remove from marked";
+    public static final String THE_REPORT_HAS_BEEN_SENT_SUCCESSFULLY = "The report has been sent successfully";
     public static final String STAND = "stand";
+    public static final List<String> LIST_OF_TUTOR_TEST_FOOTER_BUTTONS = Arrays.asList(
+            "Report a problem", "Hint", "Mark for review", "Add to flashcard"
+    );
+
     @DataProvider
     public static Object[][] sideMenuItems() {
         return new Object[][]{

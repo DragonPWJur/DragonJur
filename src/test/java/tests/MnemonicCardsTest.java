@@ -37,7 +37,6 @@ public class MnemonicCardsTest extends BaseTest {
         final String actualUrl = getPage().url();
         final String actualStackName = mnemonicCardsPage.getMnemonicCardName();
         final String actualStackQuantity = mnemonicCardsPage.getMnemonicCardTotalQuantity();
-        System.out.println(mnemonicCardsPage.getMnemonicCardTotalQuantity());
 
         Assert.assertTrue(
                 actualUrl.contains(expectedUrlPart),

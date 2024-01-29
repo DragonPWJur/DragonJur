@@ -5,6 +5,7 @@ import com.microsoft.playwright.Page;
 import pages.constants.Constants;
 
 import java.util.List;
+import java.util.Random;
 
 public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPage> implements IRandom {
 
@@ -43,10 +44,4 @@ public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPag
 
         return new MnemonicCardsPage(getPage()).init();
     }
-
-//    default int getRandomNumber(List<Locator> list) {
-//
-//        return new Random().nextInt(0, list.size() - 1);
-//    }
-
 }

@@ -28,7 +28,7 @@ public class SearchTest extends BaseTest {
         StudyGuidePage studyGuidePage =
                 new HomePage(getPage()).init()
                         .clickStudyGuideMenu()
-                        .inputRandomWordInSearchField(TestData.SEARCH_WORD);
+                        .inputStringIntoSearchField(TestData.SEARCH_WORD);
 
         final Locator nothingFoundMessage = studyGuidePage.getNothingFoundMessage();
         final Locator searchResultMessage = studyGuidePage.getSearchResultMessage();
