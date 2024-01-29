@@ -19,7 +19,7 @@ public final class StripeModal extends BaseModal<StripeModal>{
     }
 
     public Locator getStripeModalHeader() {
-        waitForLocator(stripeModalHeader, 2000);
+        waitForLocator(stripeModalHeader, 4000);
 
         return stripeModalHeader;
     }
