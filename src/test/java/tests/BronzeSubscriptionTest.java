@@ -1,12 +1,10 @@
 package tests;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Story;
-import io.qameta.allure.TmsLink;
+import com.microsoft.playwright.Locator;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.HomePage;
-import pages.TestListPage;
 import pages.TestTutorPage;
 import tests.helpers.TestData;
 import utils.api.APIUtils;
@@ -21,14 +19,17 @@ public class BronzeSubscriptionTest extends BaseTest {
 
     @BeforeMethod
     void activateRequiredCourse(Method method) {
-
         APIUtils.activateBronzeSubscriptionCourse(getPlaywright());
         getPage().reload();
     }
 
-    @Test
-    public void testBronzeCourseShouldBeActive() {
-
+    @Test(
+            testName = "Verify the active course is on the Bronze plan."
+    )
+    @Description("To ensure that a user account has an active Bronze subscription course.")
+    @Story("Tests")
+    @Severity(SeverityLevel.BLOCKER)
+    public void testBronzeSubscriptionCourseShouldBeActive() {
         Assert.assertEquals(
                 APIUtils.getActiveCourseId(getPlaywright()), APIUtils.BRONZE_SUBSCRIPTION_ID,
                 "If FAIL: Active course id does NOT match the Bronze subscription id.\n"
@@ -38,57 +39,56 @@ public class BronzeSubscriptionTest extends BaseTest {
     @Test(
             testName = "LMS-1369 Доступность для юзера доменов в тестах. Valid. https://app.qase.io/case/LMS-1369",
             description = "TC1369-01 - Running Tests with Available Questions Amount for Domain Under Partial Test Access",
-            dependsOnMethods = {"testBronzeCourseShouldBeActive"}
-    )
+            dependsOnMethods = {"testBronzeSubscriptionCourseShouldBeActive"})
     @Description("To ensure the user can start a test only if the number of questions they enter " +
             "is within the available question count.")
     @Story("Tests")
     @TmsLink("th3tah60ic6k")
+    @Severity(SeverityLevel.NORMAL)
     public void testRunDomainsTestsUnderPartialAccess() {
-
-        TestListPage testListPage =
+        TestTutorPage testTutorPage =
                 new HomePage(getPage()).init()
                         .clickTestsMenu()
-                        .clickDomainsButtonIfNotActive();
-
-        final int maxNumberOfQuestions = testListPage.getNumberOfQuestionsForRandomCheckbox();
-
-        TestTutorPage testTutorPage =
-                testListPage
+                        .clickDomainsButtonIfNotActive()
+                        .clickRandomAvailableCheckbox()
                         .clickTutorButton()
-                        .inputRandomNumberOfQuestions(maxNumberOfQuestions)
+                        .inputRandomNumberOfQuestions()
                         .clickGenerateAndStartTutorTestButton();
 
+        final Locator testQuestion = testTutorPage.getTestQuestion();
+        final int testAnswersCount = testTutorPage.countAnswers();
+
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
-        assertThat(testTutorPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
-        Assert.assertTrue(testTutorPage.countAnswers() >= 1);
+        assertThat(testQuestion).isVisible();
+        assertThat(testQuestion).containsText(TestData.QUESTION_MARK);
+        Assert.assertTrue(testAnswersCount >= 1);
     }
 
     @Test(
             testName = "LMS-1371 Доступность для юзера чаптеров в тестах. Valid. https://app.qase.io/case/LMS-1371",
             description = "TC1371-01 - Running Tests with Available Question Amount for Chapter Under Partial Test Access",
-            dependsOnMethods = {"testBronzeCourseShouldBeActive"})
+            dependsOnMethods = {"testBronzeSubscriptionCourseShouldBeActive"})
     @Description("To verify the user's ability to start a test when the entered number of questions does not exceed "
             + "the available question count in the test")
     @Story("Tests")
     @TmsLink("os387mfeov9")
+    @Severity(SeverityLevel.NORMAL)
     public void testRunChapterTestsUnderPartialAccess() {
-
-        TestListPage testListPage =
+        TestTutorPage testTutorPage =
                 new HomePage(getPage()).init()
                         .clickTestsMenu()
-                        .clickChaptersButton();
-
-        final int maxNumberOfQuestions = testListPage.getNumberOfQuestionsForRandomCheckbox();
-
-        TestTutorPage testTutorPage =
-                testListPage
+                        .clickChaptersButton()
+                        .clickRandomAvailableCheckbox()
                         .clickTutorButton()
-                        .inputRandomNumberOfQuestions(maxNumberOfQuestions)
+                        .inputRandomNumberOfQuestions()
                         .clickGenerateAndStartTutorTestButton();
 
+        final Locator testQuestion = testTutorPage.getTestQuestion();
+        final int testAnswersCount = testTutorPage.countAnswers();
+
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
-        assertThat(testTutorPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
-        Assert.assertTrue(testTutorPage.countAnswers() >= 1);
+        assertThat(testQuestion).isVisible();
+        assertThat(testQuestion).containsText(TestData.QUESTION_MARK);
+        Assert.assertTrue(testAnswersCount >= 1);
     }
 }

@@ -10,6 +10,7 @@ import com.microsoft.playwright.Playwright;
 import org.testng.Assert;
 import org.json.JSONObject;
 import utils.reports.LoggerUtils;
+import utils.reports.ReportUtils;
 import utils.runner.ProjectProperties;
 
 import java.util.HashMap;
@@ -215,11 +216,11 @@ public final class APIUtils {
     }
 
     public static void isGoldSubscriptionActive(Playwright playwright) {
-
         if (!GOLD_SUBSCRIPTION_ID.equals(getActiveCourseId(playwright))) {
             setActiveCourse(playwright, GOLD_SUBSCRIPTION_ID);
         }
-        LoggerUtils.logInfo("API: The user currently has a Gold subscription");
+        LoggerUtils.logInfo("API: The active course is on the GOLD plan." + ReportUtils.getEndLine());
+
     }
 
     public static String getCourseName(String courseId) {
