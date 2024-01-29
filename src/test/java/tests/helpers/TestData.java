@@ -55,6 +55,13 @@ public final class TestData {
             "Report a problem", "Hint", "Mark for review", "Add to flashcard"
     );
 
+    public static final String[] STACKS_NAME = {
+            "Rustic Granite Pants",
+            "Rustic Wooden Bacon",
+            "Lorem ipsum dolor sit amet",
+            "Sleek Soft Keyboard"
+    };
+
     @DataProvider
     public static Object[][] sideMenuItems() {
         return new Object[][]{

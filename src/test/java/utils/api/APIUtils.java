@@ -10,15 +10,11 @@ import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
 import org.testng.Assert;
 import org.json.JSONObject;
+import tests.helpers.TestData;
 import utils.reports.LoggerUtils;
 import utils.runner.ProjectProperties;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public final class APIUtils {
     private static final String _2_WEEK_PLAN = "2 Weeks";
@@ -241,10 +237,7 @@ public final class APIUtils {
         for (JsonElement packElm : allPacks) {
             JsonObject pack = packElm.getAsJsonObject();
             if (
-                    pack.get("name").getAsString().equals("Rustic Granite Pants") ||
-                            pack.get("name").getAsString().equals("Rustic Wooden Bacon") ||
-                            pack.get("name").getAsString().equals("Lorem ipsum dolor sit amet") ||
-                            pack.get("name").getAsString().equals("Sleek Soft Keyboard")
+                    Arrays.asList(TestData.STACKS_NAME).contains(pack.get("name").getAsString())
             ) {
 
                 JsonArray flashcards = APIServices.getFlashcardsByPack(requestContext, pack.get("id").getAsString()).getAsJsonArray("items");

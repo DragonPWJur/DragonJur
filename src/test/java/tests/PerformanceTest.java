@@ -12,8 +12,6 @@ import pages.PreconditionPage;
 import tests.helpers.TestData;
 import tests.helpers.TestUtils;
 
-import java.util.List;
-
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static utils.runner.ProjectProperties.BASE_URL;
 
@@ -103,29 +101,70 @@ public class PerformanceTest extends BaseTest {
         assertThat(allFlashcardsButton).isVisible();
     }
 
-    @Test(description = "TC1357-01 - ")
-    @Description("Objective: .")
+    @Test(
+            testName = "LMS-1357 Получение статистики по стопкам. https://app.qase.io/plan/LMS/1?case=1357",
+            description = "TC1357-01 - Displaying Statistics for All Flashcards."
+    )
+    @Description("Objective: To confirm the accurate display of statistics for all flashcards in the Performance section.")
     @Story("Performance")
-    @TmsLink(" ")
-
+    @TmsLink("qkc4xrnd166z")
     public void testDisplayingStatisticsForAllFlashcards() {
-//        new PreconditionPage(getPage()).completeFlashCardWithMetricsYes3No3Kinda3();
+        new PreconditionPage(getPage()).completeFlashCardWithMetricsYes3No3Kinda3();
 
         PerformancePage performancePage =
                 new HomePage(getPage()).init()
-                        .clickPerformanceMenu()
-                        .clickOverallDropdown()
-                        .clickAllFlashcardsButtonInBanner();
+                        .clickPerformanceMenu();
+        final int numbersOfFlashcards = performancePage
+                .getNumberOfFlashcards();
 
+        final Locator overallButton = performancePage.getOverallButtonInBanner();
+        final Locator testsButton = performancePage.getTestsButtonInBanner();
+        final Locator allFlashcardsButton = performancePage.getAllFlashcardsButtonInBanner();
 
-//        Locator l = getPage().getByText("Sleek Soft Keyboard");
-//        System.out.println(l.innerText());
+        assertThat(overallButton).isHidden();
+        assertThat(testsButton).isHidden();
+        assertThat(allFlashcardsButton).isHidden();
 
-        List<Locator> l = performancePage.getStackList();
-        System.out.println(l.size());
-        for (Locator i : l) {
-            System.out.println(i.innerText());
-            System.out.println(i.textContent());
+        performancePage
+                .clickOverallDropdown();
+
+        assertThat(overallButton).isVisible();
+        assertThat(testsButton).isVisible();
+        assertThat(allFlashcardsButton).isVisible();
+
+        performancePage
+                .clickAllFlashcardsButtonInBanner()
+                .clickDropdown();
+
+        getPage().waitForTimeout(1500);
+
+        final double expectedYesPercentage = TestUtils.getPercentageOfNumber(12, numbersOfFlashcards);
+        final double expectedNoPercentage = TestUtils.getPercentageOfNumber(12, numbersOfFlashcards);
+        final double expectedKindaPercentage = TestUtils.getPercentageOfNumber(12, numbersOfFlashcards);
+        final double expectedUnusedPercentage = TestUtils.getPercentageOfNumber(
+                numbersOfFlashcards - 36, numbersOfFlashcards);
+
+        final double actualYesPercentage = performancePage.getYesPercentageText();
+        final double actualYesNumbers = performancePage.getYesNumberText();
+        final double actualKindaPercentage = performancePage.getKindaPercentageText();
+        final double actualKindaNumbers = performancePage.getKindaNumberText();
+        final double actualNoPercentage = performancePage.getNoPercentageText();
+        final double actualNoNumbers = performancePage.getNoNumberText();
+        final double actualUnusedPercentage = performancePage.getUnusedPercentageText();
+        final double actualUnusedNumbers = performancePage.getUnusedNumberText();
+
+        Assert.assertEquals(actualYesPercentage, expectedYesPercentage);
+        Assert.assertEquals(actualYesNumbers, 12);
+        Assert.assertEquals(actualKindaPercentage, expectedKindaPercentage);
+        Assert.assertEquals(actualKindaNumbers, 12);
+        Assert.assertEquals(actualNoPercentage, expectedNoPercentage);
+        Assert.assertEquals(actualNoNumbers, 12);
+        Assert.assertEquals(actualUnusedPercentage, expectedUnusedPercentage);
+        Assert.assertEquals(actualUnusedNumbers, numbersOfFlashcards - 36);
+
+        for (Locator stack : performancePage.getStacks()) {
+            assertThat(stack).isVisible();
+            System.out.println(stack.innerText());
         }
     }
 }
