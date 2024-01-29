@@ -241,10 +241,10 @@ public final class APIUtils {
         for (JsonElement packElm : allPacks) {
             JsonObject pack = packElm.getAsJsonObject();
             if (
-                    pack.get("name").getAsString().contains("Rustic Granite Pants") ||
-                            pack.get("name").getAsString().contains("Rustic Wooden Bacon") ||
-                            pack.get("name").getAsString().contains("Lorem ipsum dolor sit amet") ||
-                            pack.get("name").getAsString().contains("Sleek Soft Keyboard")
+                    pack.get("name").getAsString().equals("Rustic Granite Pants") ||
+                            pack.get("name").getAsString().equals("Rustic Wooden Bacon") ||
+                            pack.get("name").getAsString().equals("Lorem ipsum dolor sit amet") ||
+                            pack.get("name").getAsString().equals("Sleek Soft Keyboard")
             ) {
 
                 JsonArray flashcards = APIServices.getFlashcardsByPack(requestContext, pack.get("id").getAsString()).getAsJsonArray("items");
