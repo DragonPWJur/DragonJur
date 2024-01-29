@@ -48,19 +48,19 @@ public final class APIServices {
                 );
 
         checkStatus(apiResponse, "cleanData");
+        requestContext.dispose();
     }
 
-    public static void deletePaymentMethod(Playwright playwright) {
-        APIRequestContext requestContext = playwright.request().newContext();
+    public static APIResponse deleteCustomerPaymentMethod(Playwright playwright) {
+        APIRequest request = playwright.request();
+        APIRequestContext requestContext = request.newContext();
 
-        APIResponse apiResponse = requestContext
+         return requestContext
                 .delete(
                         ProjectProperties.API_BASE_URL + PAYMENT_METHOD,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + userToken)
                 );
-
-        checkStatus(apiResponse, "deletePaymentMethod");
     }
 
     private static String getAdminToken(APIRequestContext requestContext) {

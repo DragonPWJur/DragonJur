@@ -97,6 +97,18 @@ public final class APIUtils {
         closeAdminAPIRequestContext();
     }
 
+    public static void deletePaymentMethod(Playwright playwright) {
+        final int status = APIServices.deleteCustomerPaymentMethod(playwright).status();
+        switch (status) {
+            case 422 -> LoggerUtils.logInfo("API: Payment method NOT found " + status);
+            case 204 -> LoggerUtils.logInfo("API: deleteCustomerPaymentMethod " + status);
+            default -> {
+                LoggerUtils.logException("EXCEPTION: API request FAILED " + status);
+                Assert.fail();
+            }
+        }
+    }
+
     private static String get2WeekId(JsonObject plans) {
 
         try {

@@ -61,7 +61,7 @@ abstract class BaseTest {
         logInfo("RUN " + ReportUtils.getTestMethodName(method));
 
         APIServices.cleanData(playwright);
-        APIServices.deletePaymentMethod(playwright);
+        APIUtils.deletePaymentMethod(playwright);
 
         context = BrowserManager.createContextWithCookies(browser);
         logInfo("Context created");
