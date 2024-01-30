@@ -49,11 +49,17 @@ public final class TestData {
     public static final String CHOOSE_A_PRODUCT = "Choose a product";
     public static final String REMOVE_FROM_MARKED = "Remove from marked";
     public static final String THE_REPORT_HAS_BEEN_SENT_SUCCESSFULLY = "The report has been sent successfully";
-
     public static final String STAND = "stand";
     public static final List<String> LIST_OF_TUTOR_TEST_FOOTER_BUTTONS = Arrays.asList(
             "Report a problem", "Hint", "Mark for review", "Add to flashcard"
     );
+    public static final String ALERT_NOT_ENOUGH_QUESTIONS = "There are not enough questions in the sections that you have chosen";
+    public static final String PAYMENT_CARD_NUMBER = "4242424242424242";
+    public static final String CARD_EXPIRATION_DATE = "12/26";
+    public static final String CVC_DATE = "333";
+    public static final String COUNTRY_DATE = "United States";
+    public static final String ZIP_CODE_DATE = "07920";
+
 
     public static final String[] STACKS_NAME = {
             "Rustic Granite Pants",

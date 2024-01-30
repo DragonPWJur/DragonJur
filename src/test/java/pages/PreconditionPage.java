@@ -24,23 +24,25 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return new PreconditionPage(getPage());
     }
 
+    @Step("Collect random index.")
     public int getFlashcardsPackRandomIndex() {
 
         return flashcardsPackRandomIndex;
     }
 
+    @Step("Collect chosen Flashcards pack name.")
     public String getFlashcardsPackName() {
 
         return flashcardsPackName;
     }
 
-    @Step("Precondition: Save the initial amount of 'Marked for re-checking' cards.")
+    @Step("Collect chosen Flashcards pack cards amount.")
     public String getFlashcardsPackCardsAmount() {
 
         return flashcardsPackCardsAmount;
     }
 
-    @Step("Precondition: Save the initial amount of 'Marked for re-checking' cards.")
+    @Step("Precondition: Save the initial Flashcards pack information.")
     public String getInitialAmountOfCardsMarkedForRechecking() {
         final String amountMarkedForRechecking =
                 new HomePage(getPage()).init()
@@ -53,10 +55,9 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return amountMarkedForRechecking;
     }
 
-    @Step("Precondition: Start random domain test with {number} question(s).")
+    @Step("Precondition: Start random domain test with {number} of question(s).")
     public TestTutorPage startRandomDomainTest(String number) {
-        new HomePage(getPage())
-                .init()
+        new HomePage(getPage()).init()
                 .clickTestsMenu()
                 .cancelDialogIfVisible()
                 .clickDomainsButtonIfNotActive()
@@ -67,6 +68,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return new TestTutorPage(getPage()).init();
     }
 
+    @Step("Precondition: Collect the random index, Flashcards pack name, and initial amount of cards in the pack")
     public void collectRandomFlashcardPackInfo() {
         FlashcardPacksPage flashcardPacksPage =
                 new HomePage(getPage()).init()
@@ -76,7 +78,8 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         this.flashcardsPackCardsAmount = flashcardPacksPage.getAmountOfCardsInPack();
         this.flashcardsPackName = flashcardPacksPage.getFlashcardsPackName();
 
-        flashcardPacksPage.clickHomeMenu();
+        flashcardPacksPage
+                .clickHomeMenu();
     }
 
     public List<Locator> getAllCheckboxesInA2WeeksPlan() {

@@ -12,6 +12,7 @@ import org.testng.Assert;
 import org.json.JSONObject;
 import tests.helpers.TestData;
 import utils.reports.LoggerUtils;
+import utils.reports.ReportUtils;
 import utils.runner.ProjectProperties;
 
 import java.util.*;
@@ -93,6 +94,18 @@ public final class APIUtils {
         APIRequestContext adminRequestContext = createAdminAPIRequestContext();
         APIServices.changeChapterText(adminRequestContext, unit1);
         closeAdminAPIRequestContext();
+    }
+
+    public static void deletePaymentMethod(Playwright playwright) {
+        final int status = APIServices.deleteCustomerPaymentMethod(playwright).status();
+        switch (status) {
+            case 401 -> LoggerUtils.logError("API: ERROR: Unauthorized " + status);
+            case 422 -> LoggerUtils.logInfo("API: Payment method NOT found " + status);
+            case 204 -> LoggerUtils.logInfo("API: deleteCustomerPaymentMethod " + status);
+            default -> {
+                LoggerUtils.logException("EXCEPTION: API request FAILED " + status);
+            }
+        }
     }
 
     private static String get2WeekId(JsonObject plans) {
@@ -214,11 +227,11 @@ public final class APIUtils {
     }
 
     public static void isGoldSubscriptionActive(Playwright playwright) {
-
         if (!GOLD_SUBSCRIPTION_ID.equals(getActiveCourseId(playwright))) {
             setActiveCourse(playwright, GOLD_SUBSCRIPTION_ID);
         }
-        LoggerUtils.logInfo("API: The user currently has a Gold subscription");
+        LoggerUtils.logInfo("API: The active course is on the GOLD plan." + ReportUtils.getEndLine());
+
     }
 
     public static String getCourseName(String courseId) {
