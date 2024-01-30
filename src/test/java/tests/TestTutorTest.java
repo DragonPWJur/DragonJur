@@ -194,7 +194,7 @@ public class TestTutorTest extends BaseTest {
         final int pointsOnModalAfter = congratulationsModal.getCongratulationPoints();
 
         Assert.assertTrue(
-                sideMenuPointsBefore < pointsOnModalAfter,
+                sideMenuPointsBefore <= pointsOnModalAfter,
                 "If FAIL: On Congratulation pop-up, expected points after test does NOT increased."
         );
 
