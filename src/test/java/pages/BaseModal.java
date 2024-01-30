@@ -92,12 +92,14 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
         return init();
     }
 
+    @Step("Click 'Next' button on dialog pop-up.")
     public CongratulationsModal clickNextButton() {
         nextButton.click();
 
         return new CongratulationsModal(getPage()).init();
     }
 
+    @Step("Click 'Ok' button on dialog pop-up.")
     public TestResultPage clickOkButton() {
         okButton.click();
 

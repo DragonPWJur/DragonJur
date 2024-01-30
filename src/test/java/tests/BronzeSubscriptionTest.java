@@ -5,6 +5,7 @@ import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.HomePage;
+import pages.TestListPage;
 import pages.TestTutorPage;
 import tests.helpers.TestData;
 import utils.api.APIUtils;
@@ -90,5 +91,30 @@ public class BronzeSubscriptionTest extends BaseTest {
         assertThat(testQuestion).isVisible();
         assertThat(testQuestion).containsText(TestData.QUESTION_MARK);
         Assert.assertTrue(testAnswersCount >= 1);
+    }
+
+    @Test(testName = "LMS-1370 Доступность для юзера чаптеров в тестах. Invalid. https://app.qase.io/case/LMS-1370",
+            description = "TC1370-01 - User can’t run tests for Chapter if the entered amount of questions exceeds the actual amount of questions in the test",
+            dependsOnMethods = {"testBronzeSubscriptionCourseShouldBeActive"})
+    @Description("To verify that the user cannot run tests if the entered amount of questions exceeds the actual number of questions in the test section.")
+    @Story("Tests")
+    @TmsLink(".y3phtxjw1pu")
+    @Severity(SeverityLevel.NORMAL)
+    public void testChapterTestLimitValidation() {
+        TestListPage testListPage =
+                new HomePage(getPage()).init()
+                        .clickTestsMenu()
+                        .clickChaptersButton()
+                        .clickRandomAvailableCheckbox()
+                        .clickTutorButton()
+                        .inputGreaterBy1NumberOfQuestions()
+                        .clickGenerateAndStartTimedTestButton();
+
+        final Locator alertNotEnoughQuestions = testListPage.getTostifyAlert();
+        final String alertMessage = testListPage.getTestifyAlertMessage();
+
+        assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_LIST_END_POINT);
+        assertThat(alertNotEnoughQuestions).isVisible();
+        Assert.assertEquals(alertMessage,TestData.ALERT_NOT_ENOUGH_QUESTIONS);
     }
 }
