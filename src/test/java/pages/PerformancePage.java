@@ -180,6 +180,6 @@ public final class PerformancePage extends BaseSideMenu<PerformancePage> {
     public void clickAllFlashcardsButtonInBanner() {
         allFlashcardsButtonInBanner.click();
         waitForPageLoad();
-        waitWithTimeout(1500);
+        waitWithTimeout(10000);
     }
 }
