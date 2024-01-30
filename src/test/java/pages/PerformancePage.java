@@ -71,6 +71,7 @@ public final class PerformancePage extends BaseSideMenu<PerformancePage> {
     }
 
     public int getNumberOfQuestions() {
+        waitForLocator(totalTests, 2000);
 
         return Integer.parseInt(totalTests.innerText().replaceAll("[^0-9]", ""));
     }
