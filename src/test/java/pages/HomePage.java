@@ -198,12 +198,6 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
 
         return streaksButton;
     }
-    @Step("Click '2 Weeks' button.")
-    public List<Locator> getListCheckboxesInA2WeeksPlan() {
-        twoWeeksButton.click();
-
-        return allCheckboxes("label");
-    }
 
     public int getRandomCheckboxIndex(List<Locator> list) {
 

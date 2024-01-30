@@ -9,6 +9,7 @@ import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.HomePage;
+import pages.PreconditionPage;
 import tests.helpers.TestData;
 import utils.api.APIServices;
 import utils.reports.LoggerInfo;
@@ -135,12 +136,18 @@ public class NewCustomerTest extends BaseTest {
     @Story("Home Page")
     @TmsLink("j0y70alubidi")
     public void testStreaksModalWindowTextVerification() {
+        PreconditionPage precondition = new PreconditionPage(getPage()).init();
         HomePage homePage = new HomePage(getPage()).init();
 
         assertThat(homePage.getStreaksButton()).hasText("0");
 
         List<Locator> checkboxesList = homePage
-                .getListCheckboxesInA2WeeksPlan();
+                .getAllCheckboxesInA2WeeksPlan();
+
+        Assert.assertTrue(
+                precondition.areAllCheckboxesUnchecked(),
+                "If FAIL: Precondition is not reached. NOT All Checkboxes are unchecked.\n"
+        );
 
         final int randomIndexCheckbox = homePage.getRandomCheckboxIndex(checkboxesList);
 
