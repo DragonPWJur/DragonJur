@@ -2,6 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Step;
 
 import java.util.regex.Pattern;
 
@@ -23,17 +24,20 @@ public final class CongratulationsModal extends BaseModal<CongratulationsModal> 
         return new CongratulationsModal(getPage());
     }
 
+    @Step("Get Points text on 'Congratulation' dialog pop-up.")
     public String getCongratulationPointsText() {
 
         return congratulationPoints.innerText();
     }
 
+    @Step("Get Points number on the first 'Congratulation' dialog pop-up.")
     public int getCongratulationPoints() {
         String pointsText = getCongratulationPointsText();
 
         return parseInt(pointsText);
     }
 
+    @Step("Get Points number on the second 'Congratulation' dialog pop-up.")
     public int getTestPoints() {
 
         return parseInt(testProgressbarPoints.innerText());

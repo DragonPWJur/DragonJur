@@ -36,23 +36,27 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return mainSectionPoints;
     }
 
+    @Step("Get Main Section Points text")
     public String getMainSectionPointsText() {
         waitForPointsAnimationToStop();
 
         return mainSectionPoints.innerText();
     }
 
+    @Step("Get Main Section Points number")
     public int getMainSectionPoints() {
 
         return Integer.parseInt(getMainSectionPointsText());
     }
 
+    @Step("Get Side Menu Points text")
     public String getSideMenuPointsText() {
         waitForPointsAnimationToStop();
 
         return sideMenuPoints.innerText();
     }
 
+    @Step("Get Main Section Points number")
     public int getSideMenuPoints() {
 
         return Integer.parseInt(getSideMenuPointsText());

@@ -95,6 +95,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return allCheckboxes.get(randomValue).textContent();
     }
 
+    @Step("Click 'Cancel' button to cancel 'Unfinished test' dialog if it's visible")
     public TestListPage cancelDialogIfVisible() {
         cancelDialog();
 
