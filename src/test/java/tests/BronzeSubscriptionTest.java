@@ -95,8 +95,7 @@ public class BronzeSubscriptionTest extends BaseTest {
 
     @Test(testName = "LMS-1370 Доступность для юзера чаптеров в тестах. Invalid. https://app.qase.io/case/LMS-1370",
             description = "TC1370-01 - User can’t run tests for Chapter if the entered amount of questions exceeds the actual amount of questions in the test",
-            dependsOnMethods = {"testBronzeSubscriptionCourseShouldBeActive"},
-            invocationCount = 30)
+            dependsOnMethods = {"testBronzeSubscriptionCourseShouldBeActive"})
     @Description("To verify that the user cannot run tests if the entered amount of questions exceeds the actual number of questions in the test section.")
     @Story("Tests")
     @TmsLink(".y3phtxjw1pu")
