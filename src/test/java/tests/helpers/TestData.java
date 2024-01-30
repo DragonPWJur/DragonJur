@@ -54,6 +54,12 @@ public final class TestData {
             "Report a problem", "Hint", "Mark for review", "Add to flashcard"
     );
     public static final String ALERT_NOT_ENOUGH_QUESTIONS = "There are not enough questions in the sections that you have chosen";
+    public static final String PAYMENT_CARD_NUMBER = "4242424242424242";
+    public static final String CARD_EXPIRATION_DATE = "12/26";
+    public static final String CVC_DATE = "333";
+    public static final String COUNTRY_DATE = "United States";
+    public static final String ZIP_CODE_DATE = "07920";
+
 
     @DataProvider
     public static Object[][] sideMenuItems() {
