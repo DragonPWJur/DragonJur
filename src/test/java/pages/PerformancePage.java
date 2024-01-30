@@ -51,6 +51,7 @@ public final class PerformancePage extends BaseSideMenu<PerformancePage> {
         return this;
     }
 
+    @Step("Click dropdown from Overall")
     public PerformancePage clickDropdown() {
         dropdownLocator.click();
 
@@ -64,7 +65,7 @@ public final class PerformancePage extends BaseSideMenu<PerformancePage> {
         return this;
     }
 
-    public Locator getSettedFilter() {
+    public Locator getDropdownFilter() {
 
         return dropdownLocator;
     }
@@ -147,7 +148,7 @@ public final class PerformancePage extends BaseSideMenu<PerformancePage> {
     public List<Locator> getStackList() {
         List<Locator> stackList = new ArrayList<>();
 
-        for (String stackName : TestData.STACKS_NAME) {
+        for (String stackName : TestData.STACKS_NAMES) {
             stackList.add(exactText(stackName).locator(".."));
         }
 
@@ -175,9 +176,10 @@ public final class PerformancePage extends BaseSideMenu<PerformancePage> {
         return allFlashcardsButtonInBanner;
     }
 
-    public PerformancePage clickAllFlashcardsButtonInBanner() {
+    @Step("Click 'All flashcards' filter.")
+    public void clickAllFlashcardsButtonInBanner() {
         allFlashcardsButtonInBanner.click();
-
-        return this;
+        waitForPageLoad();
+        waitWithTimeout(1500);
     }
 }

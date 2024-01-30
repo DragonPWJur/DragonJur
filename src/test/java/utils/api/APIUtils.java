@@ -10,7 +10,6 @@ import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
 import org.testng.Assert;
 import org.json.JSONObject;
-import tests.helpers.TestData;
 import utils.reports.LoggerUtils;
 import utils.reports.ReportUtils;
 import utils.runner.ProjectProperties;
@@ -244,13 +243,15 @@ public final class APIUtils {
         }
     }
 
-    public static void saveAnswerFlashCardPacks(APIRequestContext requestContext) {
+    public static void setAnswerOptionsForFlashcardPacks(APIRequestContext requestContext, String[] stacksNames ) {
         final JsonArray allPacks = APIServices.getFlashcardsPacks(requestContext).getAsJsonArray("items");
 
         for (JsonElement packElm : allPacks) {
             JsonObject pack = packElm.getAsJsonObject();
+
             if (
-                    Arrays.asList(TestData.STACKS_NAME).contains(pack.get("name").getAsString())
+                    stacksNames.length != 0
+                            && Arrays.asList(stacksNames).contains(pack.get("name").getAsString())
             ) {
 
                 JsonArray flashcards = APIServices.getFlashcardsByPack(requestContext, pack.get("id").getAsString()).getAsJsonArray("items");
