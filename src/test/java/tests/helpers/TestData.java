@@ -53,6 +53,7 @@ public final class TestData {
     public static final List<String> LIST_OF_TUTOR_TEST_FOOTER_BUTTONS = Arrays.asList(
             "Report a problem", "Hint", "Mark for review", "Add to flashcard"
     );
+    public static final String ALERT_NOT_ENOUGH_QUESTIONS = "There are not enough questions in the sections that you have chosen";
 
     @DataProvider
     public static Object[][] sideMenuItems() {
