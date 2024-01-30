@@ -186,6 +186,23 @@ public final class HomeTest extends BaseTest {
         }
     }
 
+    @Test(
+            testName = "LMS-1341 Нажатие чекбоксов, https://app.qase.io/plan/LMS/1?case=1341",
+            description = "TC1341-04-E2E - Deactivation of a single Already Active Checkbox when all checkboxes are active does not impact the main checkbox functionality.")
+    @Description("To verify that the deactivated single checkbox can be checked again and the amount of points is decreasing and increasing accordingly.")
+    @Story("Home page")
+    @TmsLink("sc19hl34f3cj")
+    public void testDeactivationCheckboxWithAllCheckboxesActiveE2E(){
+
+        Assert.assertTrue(new PreconditionPage(getPage()).init().areAllCheckboxesChecked(),
+                "If FAIL: Precondition 'All checkboxes should be checked' is not reached.\n"
+        );
+
+
+
+
+    }
+
     @Test
     public void testModalWindowStudyIsOpened() {
         HomePage homePage =
