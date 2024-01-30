@@ -29,11 +29,13 @@ public final class TestTutorPage extends BaseTestsPage<TestTutorPage> implements
         return listOfActiveButtons.stream().map(Locator::innerText).toList();
     }
 
+    @Step("Count answers radio buttons")
     public int countAnswers() {
 
         return answerRadioButton.count();
     }
 
+    @Step("Get test question")
     public Locator getTestQuestion() {
 
         return testQuestion;
@@ -85,27 +87,31 @@ public final class TestTutorPage extends BaseTestsPage<TestTutorPage> implements
 //        return this;
 //    }
 //
+    @Step("Click Correct Answer.")
     public TestTutorPage clickCorrectAnswer() {
         getCorrectAnswer().click();
         return this;
     }
 
+    @Step("Click 'Confirm' button.")
     public TestTutorPage clickConfirmButton() {
         getConfirmButton().click();
         return this;
     }
 
-
+    @Step("Click 'Next Question' button.")
     public void clickNextQuestionButton() {
         getNextQuestionButton().click();
     }
 
+    @Step("click 'Finish Test' button.")
     public TestTutorPage clickFinishTestButton() {
         getFinishTestButton().click();
 
         return this;
     }
 
+    @Step("Click wrong answer randomly.")
     public TestTutorPage clickRandomIncorrectAnswer() {
         clickRandomElement(getListOfIncorrectAnswers());
 
