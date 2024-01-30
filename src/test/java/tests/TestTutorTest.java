@@ -242,6 +242,7 @@ public class TestTutorTest extends BaseTest {
         );
         assertThat(testTutorPage.getTestQuestion()).containsText(TestData.QUESTION_MARK);
         Assert.assertTrue(
-                testTutorPage.getAnswersCount() > 0);
+                testTutorPage.getAnswersCount() > 0,
+                "If FAIL: The multiple-choice test should contain at least one answer.\n");
     }
 }
