@@ -42,12 +42,12 @@ public final class BrowserManager {
         );
     }
 
-    public static BrowserContext createContextWithCookies(Browser browser) {
+    public static BrowserContext createContextWithCookies(Browser browser, String path) {
         return browser.newContext(new Browser.NewContextOptions()
                 .setViewportSize(ProjectProperties.SCREEN_SIZE_WIDTH, ProjectProperties.SCREEN_SIZE_HEIGHT)
                 .setRecordVideoDir(Paths.get("target/videos/"))
                 .setRecordVideoSize(1280, 720)
-                .setStorageStatePath(Paths.get(LoginUtils.COOKIES_FILE_PATH))
+                .setStorageStatePath(Paths.get(path))
         );
     }
 

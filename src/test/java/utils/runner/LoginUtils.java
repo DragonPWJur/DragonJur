@@ -19,6 +19,7 @@ public final class LoginUtils {
     public static final String COOKIES_FILE_PATH = "src/test/resources/state.json";
     private static final String HOME_PAGE_URL = ProjectProperties.BASE_URL + "/home";
     private static final String SIGN_IN_URL = ProjectProperties.BASE_URL + "/sign-in";
+    public static final String NEW_CUSTOMER_COOKIES_FILE_PATH = "src/test/resources/stateNew.json";
 
     private static Playwright playwright;
     private static Browser browser;
@@ -32,24 +33,24 @@ public final class LoginUtils {
         return userToken;
     }
 
-    public static void loginAndCollectCookies() {
+    public static void loginAndCollectCookies(String path, String email, String password) {
         setUpPlaywright();
-        loginOnceAndStoreCookies();
+        loginOnceAndStoreCookies(path, email, password);
 
-        parseUserToken();
+        parseUserToken(path);
         logInfo("Login context: User token extracted from cookies" + ReportUtils.getEndLine());
     }
 
-    private static void loginOnceAndStoreCookies() {
+    private static void loginOnceAndStoreCookies(String path, String email, String password) {
         boolean isLogged = false;
         try {
-            login();
+            login(email, password);
 
             if (isOnHomePage()) {
                 isLogged = true;
                 logInfo("Login context: Login successful.");
 
-                context.storageState(getStorageStateOptions());
+                context.storageState(getStorageStateOptions(path));
                 logInfo("Login context: Cookies collected.");
             }
 
@@ -142,12 +143,12 @@ public final class LoginUtils {
         return page.url().equals(SIGN_IN_URL);
     }
 
-    private static void login() {
+    private static void login(String email, String password) {
         navigateToBaseUrl();
 
         if (isOnSignInPage()) {
-            page.fill("form input:only-child", ProjectProperties.USERNAME);
-            page.fill("input[type='password']", ProjectProperties.PASSWORD);
+            page.fill("form input:only-child", email);
+            page.fill("input[type='password']", password);
             page.click("button[type='submit']");
 
             logInfo("Login context: Fill user credentials.");
@@ -156,15 +157,15 @@ public final class LoginUtils {
         }
     }
 
-    private static BrowserContext.StorageStateOptions getStorageStateOptions() {
+    private static BrowserContext.StorageStateOptions getStorageStateOptions(String path) {
         return new BrowserContext
                 .StorageStateOptions()
-                .setPath(Paths.get(COOKIES_FILE_PATH));
+                .setPath(Paths.get(path));
     }
 
-    private static void parseUserToken() {
+    private static void parseUserToken(String path) {
         try {
-            String jsonString = new String(Files.readAllBytes(Paths.get(COOKIES_FILE_PATH)));
+            String jsonString = new String(Files.readAllBytes(Paths.get(path)));
             JSONObject apiLoginResponseJSON = new JSONObject(jsonString);
 
             String jsonValue = apiLoginResponseJSON

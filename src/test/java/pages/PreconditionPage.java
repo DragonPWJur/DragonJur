@@ -138,15 +138,6 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 .clickSkipButton()
                 .clickCloseTheTestButton();
     }
-
-    public List<Locator> getListCheckboxesIn2WeeksPlan() {
-
-        return new HomePage(getPage())
-                .init()
-                .click2WeeksButton()
-                .getAllCheckboxesIn2WeeksPlan();
-    }
-
 //    public void startFlashcardPackAndGoBack(int index) {
 //        new HomePage(getPage())
 //                .clickHomeMenu()

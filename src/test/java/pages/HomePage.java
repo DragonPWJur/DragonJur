@@ -2,6 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Step;
 import pages.constants.Constants;
 
 import java.util.List;
@@ -17,7 +18,6 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     private final Locator checkboxImage = locator("label:has(input) svg");
     private final List<Locator> allCheckboxes = allCheckboxes("label");
     private final Locator streakDaysModalWindowText = locator("div[role='dialog']>div>p");
-    private final List<Locator> allCheckboxes2WeeksPlan = allCheckboxesFromExactPlan(exactText("Week 1").locator("~label"));
 
     private final int randomIndex = getRandomInt(0, allCheckboxes.size());
 
@@ -85,6 +85,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return this;
     }
 
+    @Step("Click '2 Weeks' button.")
     public HomePage click2WeeksButton() {
         twoWeeksButton.click();
 
@@ -189,9 +190,20 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return streakDaysModalWindowText;
     }
 
-    public List<Locator> getAllCheckboxesIn2WeeksPlan() {
+    public Locator getStreaksButton() {
 
-        return allCheckboxes2WeeksPlan;
+        return streaksButton;
+    }
+    @Step("Click '2 Weeks' button.")
+    public List<Locator> getListCheckboxesInA2WeeksPlan() {
+        twoWeeksButton.click();
+
+        return allCheckboxes("label");
+    }
+
+    public int getRandomCheckboxIndex(List<Locator> list) {
+
+        return getRandomNumber(list);
     }
 
 

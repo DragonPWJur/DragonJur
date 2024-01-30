@@ -9,7 +9,6 @@ import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.HomePage;
-import pages.PreconditionPage;
 import tests.helpers.TestData;
 import utils.api.APIServices;
 import utils.reports.LoggerInfo;
@@ -136,16 +135,14 @@ public class NewCustomerTest extends BaseTest {
     @Story("Home Page")
     @TmsLink("j0y70alubidi")
     public void testStreaksModalWindowTextVerification() {
-        HomePage homePage =
-                new HomePage(getPage()).init().click2WeeksButton();
+        HomePage homePage = new HomePage(getPage()).init();
 
         assertThat(homePage.getStreaksButton()).hasText("0");
-        PreconditionPage precondition = new PreconditionPage(getPage()).init();
 
-        precondition
-                .getListCheckboxesIn2WeeksPlan();
+        List<Locator> checkboxesList = homePage
+                .getListCheckboxesInA2WeeksPlan();
 
-        final int randomIndexCheckbox = homePage.getCheckboxRandomNumber();
+        final int randomIndexCheckbox = homePage.getRandomCheckboxIndex(checkboxesList);
 
         assertThat(homePage.getNthCheckbox(randomIndexCheckbox)).not().isChecked();
 

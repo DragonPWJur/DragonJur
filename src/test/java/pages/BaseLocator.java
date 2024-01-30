@@ -150,9 +150,4 @@ abstract class BaseLocator<TPage> extends BaseWait<TPage> {
 
         return locator.all();
     }
-
-    protected List<Locator> allCheckboxesFromExactPlan(Locator locator) {
-
-        return getList(locator);
-    }
 }
