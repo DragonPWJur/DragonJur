@@ -157,6 +157,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
+    @Step("Click 'History and Civilization' checkbox")
     public TestListPage clickHistoryAndCivilizationForStatsCheckBox() {
         statsTests.click();
 
