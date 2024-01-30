@@ -2,6 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import io.qameta.allure.Step;
 import pages.constants.Constants;
 import utils.reports.LoggerUtils;
@@ -24,6 +25,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     private final Locator statsTests = exactText("Stats");
     private final List<Locator> allCheckboxes = allCheckboxes("div:has(button) label > span");
     private final Locator markedNumber = locator("label:has(input[value=\"MARKED\"])>span");
+    private final Locator tostifyAlert = getPage().getByRole(AriaRole.ALERT).locator("div~div");
 
     private int randomNumber;
 
@@ -192,5 +194,25 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         numberOfQuestionsInputField.fill(numberToInput);
 
         return this;
+    }
+
+    @Step("Input a random number within the range of available questions")
+    public TestListPage inputGreaterBy1NumberOfQuestions() {
+        final int numberOfAvailableQuestions = getNumberOfAvailableQuestions() + 1;
+        final String numberToInput = String.valueOf(numberOfAvailableQuestions);
+
+        numberOfQuestionsInputField.fill(numberToInput);
+
+        return this;
+    }
+
+    public Locator getTostifyAlert() {
+
+        return tostifyAlert;
+    }
+
+    public String getTestifyAlertMessage() {
+
+        return tostifyAlert.textContent();
     }
 }
