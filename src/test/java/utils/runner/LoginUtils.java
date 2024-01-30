@@ -5,6 +5,7 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import org.json.JSONObject;
+import utils.api.APINewCustomerUtils;
 import utils.reports.LoggerInfo;
 import utils.reports.ReportUtils;
 import utils.reports.TracingUtils;
@@ -146,8 +147,8 @@ public final class LoginUtils {
         navigateToBaseUrl();
 
         if (isOnSignInPage()) {
-            page.fill("form input:only-child", ProjectProperties.USERNAME);
-            page.fill("input[type='password']", ProjectProperties.PASSWORD);
+            page.fill("form input:only-child", APINewCustomerUtils.getUsername());
+            page.fill("input[type='password']", APINewCustomerUtils.getPassword());
             page.click("button[type='submit']");
 
             logInfo("Login context: Fill user credentials.");
