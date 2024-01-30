@@ -137,24 +137,27 @@ public class NewCustomerTest extends BaseTest {
     @TmsLink("j0y70alubidi")
     public void testStreaksModalWindowTextVerification() {
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
-        HomePage homePage = new HomePage(getPage()).init();
+        HomePage homePage = new HomePage(getPage());
 
-        assertThat(homePage.getStreaksButton()).hasText("0");
+                precondition
+                        .getAllCheckboxesInA2WeeksPlan();
 
-        List<Locator> checkboxesList = homePage
-                .getAllCheckboxesInA2WeeksPlan();
 
         Assert.assertTrue(
                 precondition.areAllCheckboxesUnchecked(),
                 "If FAIL: Precondition is not reached. NOT All Checkboxes are unchecked.\n"
         );
 
-        final int randomIndexCheckbox = homePage.getRandomCheckboxIndex(checkboxesList);
+        homePage.init();
 
-        assertThat(homePage.getNthCheckbox(randomIndexCheckbox)).not().isChecked();
+        final int randomIndex = homePage.getRandomIndex();
+
+        assertThat(homePage.getNthCheckbox(randomIndex)).not().isChecked();
+
+        assertThat(homePage.getStreaksButton()).hasText("0");
 
         homePage
-                .clickNthCheckbox(randomIndexCheckbox);
+                .clickNthCheckbox(randomIndex);
 
         assertThat(homePage.getStreaksButton()).hasText("1");
 
