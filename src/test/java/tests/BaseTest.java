@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 
 import static utils.reports.LoggerUtils.*;
-import static utils.runner.LoginUtils.COOKIES_FILE_PATH;
 
 @Listeners(ExceptionListener.class)
 abstract class BaseTest {
@@ -33,7 +32,7 @@ abstract class BaseTest {
 
     @BeforeSuite
     void launchBrowser(ITestContext testContext) {
-        LoginUtils.loginAndCollectCookies(COOKIES_FILE_PATH, ProjectProperties.USERNAME, ProjectProperties.PASSWORD);
+        LoginUtils.loginAndCollectCookies(LoginUtils.COOKIES_FILE_PATH, ProjectProperties.USERNAME, ProjectProperties.PASSWORD);
 
         logInfo(ReportUtils.getReportHeader());
 
@@ -64,7 +63,7 @@ abstract class BaseTest {
         APIServices.cleanData(playwright);
         APIUtils.deletePaymentMethod(playwright);
 
-        context = BrowserManager.createContextWithCookies(browser, COOKIES_FILE_PATH);
+        context = BrowserManager.createContextWithCookies(browser, LoginUtils.COOKIES_FILE_PATH);
         logInfo("Context created");
 
         TracingUtils.startTracing(context);
