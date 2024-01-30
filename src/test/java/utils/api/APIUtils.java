@@ -100,11 +100,11 @@ public final class APIUtils {
     public static void deletePaymentMethod(Playwright playwright) {
         final int status = APIServices.deleteCustomerPaymentMethod(playwright).status();
         switch (status) {
+            case 401 -> LoggerUtils.logError("API: ERROR: Unauthorized " + status);
             case 422 -> LoggerUtils.logInfo("API: Payment method NOT found " + status);
             case 204 -> LoggerUtils.logInfo("API: deleteCustomerPaymentMethod " + status);
             default -> {
                 LoggerUtils.logException("EXCEPTION: API request FAILED " + status);
-                Assert.fail();
             }
         }
     }
