@@ -61,6 +61,13 @@ public final class TestData {
     public static final String ZIP_CODE_DATE = "07920";
 
 
+    public static final String[] STACKS_NAMES = {
+            "Rustic Granite Pants",
+            "Rustic Wooden Bacon",
+            "Lorem ipsum dolor sit amet",
+            "Sleek Soft Keyboard"
+    };
+
     @DataProvider
     public static Object[][] sideMenuItems() {
         return new Object[][]{
