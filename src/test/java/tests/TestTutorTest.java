@@ -1,9 +1,7 @@
 package tests;
 
 import com.microsoft.playwright.Locator;
-import io.qameta.allure.Description;
-import io.qameta.allure.Story;
-import io.qameta.allure.TmsLink;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
@@ -231,6 +229,7 @@ public class TestTutorTest extends BaseTest {
     @Description("Objective: To confirm that users with a Gold subscription can successfully run a test in the Study Guide section.")
     @Story("Study Guide")
     @TmsLink("ufe2bohbd0sy")
+    @Severity(SeverityLevel.NORMAL)
     public void testTestIsRunWhenOpenFromStudyGuide() {
         TestTutorPage testTutorPage =
                 new HomePage(getPage()).init()
