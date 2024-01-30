@@ -248,4 +248,66 @@ public final class APIServices {
                                 .create()
                                 .setHeader("Authorization", "Bearer " + userToken));
     }
+
+    public static JsonObject getFlashcardsPacks(APIRequestContext requestContext) {
+        APIResponse apiResponse = requestContext
+                .get(
+                        ProjectProperties.API_BASE_URL + "/flashcards/packs?limit=20",
+                        RequestOptions.create()
+                                .setHeader("Authorization", "Bearer " + userToken)
+                );
+
+        checkStatus(apiResponse, "getFlashcardsPacks");
+
+        return initJsonObject(apiResponse.text());
+    }
+
+    public static JsonObject getFlashcardsByPack(APIRequestContext requestContext, String packId) {
+        APIResponse apiResponse = requestContext
+                .get(
+                        ProjectProperties.API_BASE_URL + "/flashcards/packs/cards?packType=cards&packId="+packId,
+                        RequestOptions.create()
+                                .setHeader("Authorization", "Bearer " + userToken)
+                );
+
+        checkStatus(apiResponse, "getFlashcardsByPack");
+
+        return initJsonObject(apiResponse.text());
+    }
+
+    public static void saveFlashcardAnswer(APIRequestContext requestContext, String flashcardId, String answer) {
+        Map<String, String> data = new HashMap<>();
+        data.put("packType", "cards");
+        data.put("answer", answer);
+
+        APIResponse apiResponse = requestContext
+                .post(
+                        ProjectProperties.API_BASE_URL + "/flashcards/"+flashcardId+"/answers",
+                        RequestOptions.create()
+                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setData(data));
+
+        checkStatus(apiResponse, "saveFlashcardAnswer");
+
+    }
+
+    public static void completePack(APIRequestContext requestContext, String packId) {
+        APIResponse apiResponse = requestContext
+                .post(
+                        ProjectProperties.API_BASE_URL + "/flashcards/packs/"+packId+"/complete",
+                        RequestOptions.create()
+                                .setHeader("Authorization", "Bearer " + userToken));
+
+        checkStatus(apiResponse, "completePack");
+    }
+
+    public static void resetFlashCardPacks(APIRequestContext requestContext) {
+        APIResponse apiResponse = requestContext
+                .delete(
+                        ProjectProperties.API_BASE_URL + "/flashcards/results",
+                        RequestOptions.create()
+                                .setHeader("Authorization", "Bearer " + userToken));
+
+        checkStatus(apiResponse, "resetFlashCardPacks");
+    }
 }
