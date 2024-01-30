@@ -57,4 +57,10 @@ public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
 
         return purchaseButton;
     }
+
+    public StripeModal clickPurchaseButton() {
+        purchaseButton.click();
+
+        return new StripeModal(getPage()).init();
+    }
 }
