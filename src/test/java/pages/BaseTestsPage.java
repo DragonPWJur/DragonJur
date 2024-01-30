@@ -25,11 +25,13 @@ abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
         super(page);
     }
 
+    @Step("Get Radio Buttons option by text.")
     public List<Locator> getRadioButtons() {
 
         return radioButtons;
     }
 
+    @Step("Get 'Correct Answer' option by text.")
     public Locator getCorrectAnswer() {
 
         return correctAnswer;
@@ -55,6 +57,7 @@ abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
         return explanationTextLocator;
     }
 
+    @Step("Get 'Confirm' button.")
     public Locator getConfirmButton() {
 
         return confirmButton;

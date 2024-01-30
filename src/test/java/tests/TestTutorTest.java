@@ -158,8 +158,13 @@ public class TestTutorTest extends BaseTest {
         );
     }
 
-    @Ignore
-    @Test
+    @Test(
+            testName = "LMS-1352 Возможность получать результаты. https://app.qase.io/project/LMS?suite=179&case=1352",
+            description = "TC1352-01 Verify the user is able to retrieve test results"
+    )
+    @Description("Objective: To confirm that users can access their test results successfully.")
+    @Story("Tests")
+    @TmsLink("rihwv9xhblbu")
     public void testUserIsAbleToRetrieveTestResults() {
 
         HomePage homePage = new HomePage(getPage()).init();
