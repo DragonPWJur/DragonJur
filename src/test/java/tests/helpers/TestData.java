@@ -53,6 +53,9 @@ public final class TestData {
     public static final List<String> LIST_OF_TUTOR_TEST_FOOTER_BUTTONS = Arrays.asList(
             "Report a problem", "Hint", "Mark for review", "Add to flashcard"
     );
+    public static final String COURSE_ID = "bcf37a9f-af5f-47b0-b9aa-c8e36bbd8278";
+    public static final String EMAIL_END_PART = "@gmail.com";
+    public static final String ONE_DAY_STUDY_STREAK_MESSAGE = "You are on a 1 day study streak!";
 
     @DataProvider
     public static Object[][] sideMenuItems() {

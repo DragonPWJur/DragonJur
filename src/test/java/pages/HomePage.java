@@ -16,6 +16,8 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     private final Locator streaksButton = locator("button>svg+p").last();
     private final Locator checkboxImage = locator("label:has(input) svg");
     private final List<Locator> allCheckboxes = allCheckboxes("label");
+    private final Locator streakDaysModalWindowText = locator("div[role='dialog']>div>p");
+    private final List<Locator> allCheckboxes2WeeksPlan = allCheckboxesFromExactPlan(exactText("Week 1").locator("~label"));
 
     private final int randomIndex = getRandomInt(0, allCheckboxes.size());
 
@@ -181,6 +183,17 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
 
             return this;
         }
+
+    public Locator getStreakDaysModalWindowTextLocator() {
+
+        return streakDaysModalWindowText;
+    }
+
+    public List<Locator> getAllCheckboxesIn2WeeksPlan() {
+
+        return allCheckboxes2WeeksPlan;
+    }
+
 
 
 //

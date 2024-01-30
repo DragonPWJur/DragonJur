@@ -6,6 +6,7 @@ import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.RequestOptions;
+import tests.helpers.TestData;
 import utils.runner.LoginUtils;
 import utils.runner.ProjectProperties;
 
@@ -32,9 +33,26 @@ public final class APIServices {
     private static final String SUBSCRIBE = "/subscribe";
     private static final String SET_ACTIVE = "/setActive";
     private static final String PAYMENT_METHOD = "/customer/paymentMethod";
+    private static final String CUSTOMER_INVITES = "/admin/customer-invites";
+    private static final String CUSTOMER_INVITE_CONFIRMATION = "/auth/customer/signUp/promo";
+    private static final String ADMIN_CUSTOMERS = "/admin/customers";
 
     private static final String userToken = LoginUtils.getUserToken();
     private static String adminToken;
+    private static String newCustomerEmail;
+    private static String newCustomerPassword;
+    private static String inviteCode;
+    private static String newCustomerID;
+
+    public static String getNewCustomerUsername() {
+
+        return newCustomerEmail;
+    }
+
+    public static String getNewCustomerPassword() {
+
+        return newCustomerPassword;
+    }
 
     public static void cleanData(Playwright playwright) {
         APIRequest request = playwright.request();
@@ -247,5 +265,91 @@ public final class APIServices {
                         RequestOptions
                                 .create()
                                 .setHeader("Authorization", "Bearer " + userToken));
+    }
+
+    private static String getAdminAccessToken(Playwright playwright) {
+        APIRequest request = playwright.request();
+        APIRequestContext requestContext = request.newContext();
+
+        if (adminToken == null || adminToken.isEmpty()) {
+            Map<String, String> data = new HashMap<>();
+            data.put("email", ProjectProperties.ADMIN_USERNAME);
+            data.put("password", ProjectProperties.ADMIN_PASSWORD);
+
+            APIResponse apiResponse = requestContext
+                    .post(
+                            ProjectProperties.API_BASE_URL + AUTH_ADMIN_SIGN_IN,
+                            RequestOptions.create()
+                                    .setData(data)
+                    );
+
+            checkStatus(apiResponse, "getAdminToken");
+
+            JsonObject admin = initJsonObject(apiResponse.text());
+
+            adminToken = admin.get("token").getAsString();
+        }
+
+        return adminToken;
+    }
+
+    public static void sendCustomerInvite(Playwright playwright) {
+        APIRequest request = playwright.request();
+        APIRequestContext requestContext = request.newContext();
+
+        String uniqueNumbers = APIUtils.generateUniqueNumbersForCustomerEmail();
+        newCustomerEmail = ProjectProperties.COMMON_EMAIL_PART + uniqueNumbers + TestData.EMAIL_END_PART;
+
+        Map<String, String> data = new HashMap<>();
+        data.put("customerEmail", newCustomerEmail);
+        data.put("courseId", TestData.COURSE_ID);
+        APIResponse apiResponse = requestContext
+                .post(
+                        ProjectProperties.API_BASE_URL + CUSTOMER_INVITES,
+                        RequestOptions.create()
+                                .setHeader("Authorization", "Bearer " + getAdminAccessToken(playwright))
+                                .setData(data)
+                );
+        JsonObject inviteResponse = initJsonObject(apiResponse.text());
+
+        newCustomerPassword = inviteResponse.get("password").getAsString();
+        inviteCode = inviteResponse.get("code").getAsString();
+
+        checkStatus(apiResponse, "sendCustomerInvite");
+    }
+
+    public static void confirmCustomerInvite(Playwright playwright) {
+        APIRequest request = playwright.request();
+        APIRequestContext requestContext = request.newContext();
+
+        Map<String, String> data = new HashMap<>();
+        data.put("email", newCustomerEmail);
+        data.put("password", newCustomerPassword);
+        data.put("code", inviteCode);
+        APIResponse apiResponse = requestContext
+                .post(
+                        ProjectProperties.API_BASE_URL + CUSTOMER_INVITE_CONFIRMATION,
+                        RequestOptions.create()
+                                .setData(data)
+                );
+        JsonObject inviteResponse = initJsonObject(apiResponse.text());
+        JsonObject newCustomer = inviteResponse.get("customer").getAsJsonObject();
+        newCustomerID = newCustomer.get("id").getAsString();
+
+        checkStatus(apiResponse, "confirmCustomerInvite");
+    }
+
+    public static void deleteNewCustomer(Playwright playwright) {
+        APIRequest request = playwright.request();
+        APIRequestContext requestContext = request.newContext();
+
+        APIResponse apiResponse = requestContext
+                .delete(
+                        ProjectProperties.API_BASE_URL + ADMIN_CUSTOMERS + "/" + newCustomerID,
+                        RequestOptions.create()
+                                .setHeader("Authorization", "Bearer " + adminToken)
+                );
+
+        checkStatus(apiResponse, "deleteNewCustomer");
     }
 }

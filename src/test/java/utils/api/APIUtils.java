@@ -13,12 +13,8 @@ import utils.reports.LoggerUtils;
 import utils.reports.ReportUtils;
 import utils.runner.ProjectProperties;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public final class APIUtils {
     private static final String _2_WEEK_PLAN = "2 Weeks";
@@ -243,5 +239,12 @@ public final class APIUtils {
         } else {
             return "Unknown Subscription";
         }
+    }
+
+    public  static  String generateUniqueNumbersForCustomerEmail() {
+        Date dNow = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("yyyyMMddHHmmssSS");
+
+        return ft.format(dNow);
     }
 }
