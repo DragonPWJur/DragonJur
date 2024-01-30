@@ -100,4 +100,27 @@ public class ProfileTest extends BaseTest {
         assertThat(stripeElement).isAttached();
         assertThat(stripeElement).isVisible();
     }
+
+    @Test
+    public void testE2EPurchaseLifeTimeCourse() {
+        StripeModal stripeModal =
+                new HomePage(getPage()).init()
+                        .clickProfileMenu()
+                        .clickAddANewCourseButton()
+                        .clickGetButton()
+                        .clickLifeTimeButton()
+                        .clickPurchaseButton()
+                        .inputCreditCardNumber(TestData.PAYMENT_CARD_NUMBER)
+                        .inputCardExpirationDate(TestData.CARD_EXPIRATION_DATE)
+                        .inputCardCVCDate(TestData.CVC_DATE)
+                        .inputCardCountryDate(TestData.COUNTRY_DATE)
+                        .inputCardZipCodeDate(TestData.ZIP_CODE_DATE);
+
+        final Locator stripeModalHeader = stripeModal.getStripeModalHeader();
+        final Locator stripeElement = stripeModal.getStripeElement();
+
+        assertThat(stripeModalHeader).isVisible();
+        assertThat(stripeElement).isAttached();
+        assertThat(stripeElement).isVisible();
+    }
 }
