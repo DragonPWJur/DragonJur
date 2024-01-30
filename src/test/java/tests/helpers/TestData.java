@@ -54,6 +54,12 @@ public final class TestData {
             "Report a problem", "Hint", "Mark for review", "Add to flashcard"
     );
     public static final String ALERT_NOT_ENOUGH_QUESTIONS = "There are not enough questions in the sections that you have chosen";
+    public static final String PAYMENT_CARD_NUMBER = "4242424242424242";
+    public static final String CARD_EXPIRATION_DATE = "12/26";
+    public static final String CVC_DATE = "333";
+    public static final String COUNTRY_DATE = "United States";
+    public static final String ZIP_CODE_DATE = "07920";
+
     public static final String COURSE_ID = "bcf37a9f-af5f-47b0-b9aa-c8e36bbd8278";
     public static final String EMAIL_END_PART = "@gmail.com";
     public static final String ONE_DAY_STUDY_STREAK_MESSAGE = "You are on a 1 day study streak!";
