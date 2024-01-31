@@ -9,8 +9,11 @@ import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.PreconditionPage;
+import pages.constants.Constants;
 import tests.helpers.TestData;
+import tests.helpers.TestUtils;
 
+import javax.swing.text.Utilities;
 import java.util.List;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
@@ -198,12 +201,52 @@ public final class HomeTest extends BaseTest {
                 "If FAIL: Precondition 'All checkboxes should be checked' is not reached.\n"
         );
 
+        HomePage homePage = new HomePage(getPage()).init();
 
+        final Locator randomCheckBox = homePage.getRandomCheckbox();
+        Locator imageInsideTheBox = homePage.getImageOfCheckbox(randomCheckBox);
 
+        assertThat(randomCheckBox).isChecked();
+        assertThat(imageInsideTheBox).isVisible();
+        Assert.assertEquals(imageInsideTheBox.getAttribute("d"), Constants.CHECKBOX_IMAGE,
+                "If FAIL: Checked checkbox image does not match.\n");
+        Assert.assertEquals(imageInsideTheBox.getAttribute("fill"), Constants.CHECKBOX_IMAGE_COLOR,
+                "If FAIL: Checked checkbox image color does not match.\n");
 
+        int pointsAllCheckboxesChecked = homePage.getMainSectionPoints();
+
+        imageInsideTheBox = homePage
+                .clickRandomCheckbox()
+                .getImageOfCheckbox(randomCheckBox);
+
+        assertThat(randomCheckBox).not().isChecked();
+        assertThat(imageInsideTheBox).not().isVisible();
+
+        int pointsOneCheckboxUnchecked = homePage.getMainSectionPoints();
+
+        Assert.assertTrue(pointsOneCheckboxUnchecked < pointsAllCheckboxesChecked,
+                "If FAIL: Amount of points is not decreased as expected.\n");
+
+        imageInsideTheBox = homePage
+                .clickRandomCheckbox()
+                .getImageOfCheckbox(randomCheckBox);
+
+        assertThat(randomCheckBox).isChecked();
+
+        assertThat(imageInsideTheBox).isVisible();
+
+        int pointsAfterCheckingBox = homePage.getMainSectionPoints();
+
+        Assert.assertEquals(pointsAllCheckboxesChecked, pointsAfterCheckingBox,
+                "If FAIL: Amount of points is not increased as expected€.\n");
     }
 
-    @Test
+    @Test(
+            testName = "LMS-1342 https://app.qase.io/plan/LMS/1?case=1342",
+            description = "1342-01 The modal window is open when clicking the Study This button")
+    @Description("To verify the modal window is open when clicking the Study This button.")
+    @Story("Home page")
+    @TmsLink("zhdhkv1f6nk7")
     public void testModalWindowStudyIsOpened() {
         HomePage homePage =
                 new HomePage(getPage()).init()
