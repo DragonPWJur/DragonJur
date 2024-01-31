@@ -195,9 +195,9 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return this;
     }
 
-    public Locator getImageOfCheckbox(Locator randomCheckBox) {
+    public Locator getCheckboxImage(Locator randomCheckBox) {
 
-        return randomCheckBox.locator("svg").locator("path");
+        return randomCheckBox.locator("svg");
     }
 
 

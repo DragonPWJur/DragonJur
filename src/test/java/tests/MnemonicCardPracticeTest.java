@@ -15,7 +15,6 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class MnemonicCardPracticeTest extends BaseTest {
 
-    @Ignore
     @Test(
             testName = "LMS-1355 Получение карточек. https://app.qase.io/plan/LMS/1?case=1355",
             description = "TC1355-02 - Opening Mnemonic Card after Starting Practice."

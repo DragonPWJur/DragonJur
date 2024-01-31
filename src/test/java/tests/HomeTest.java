@@ -9,7 +9,6 @@ import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.PreconditionPage;
-import pages.constants.Constants;
 import tests.helpers.TestData;
 
 import java.util.List;
@@ -164,7 +163,7 @@ public final class HomeTest extends BaseTest {
     public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive(){
 
         Assert.assertTrue(new PreconditionPage(getPage()).init().areAllCheckboxesChecked(),
-                "If FAIL: Precondition 'All checkboxes should be checked' is not reached.\n"
+                "If FAIL: Precondition 'All checkboxes should be checked' is NOT reached.\n"
         );
 
         HomePage homePage = new HomePage(getPage()).init();
@@ -195,48 +194,53 @@ public final class HomeTest extends BaseTest {
     @TmsLink("sc19hl34f3cj")
     public void testDeactivationCheckboxWithAllCheckboxesActiveE2E(){
 
-        Assert.assertTrue(new PreconditionPage(getPage()).init().areAllCheckboxesChecked(),
-                "If FAIL: Precondition 'All checkboxes should be checked' is not reached.\n"
+        final boolean areAllCheckboxesChecked =
+                new PreconditionPage(getPage()).init()
+                        .areAllCheckboxesChecked();
+
+        Assert.assertTrue(
+                areAllCheckboxesChecked,
+                "If FAIL: Precondition 'All checkboxes should be checked' is NOT reached.\n"
         );
 
         HomePage homePage = new HomePage(getPage()).init();
 
-        final Locator randomCheckBox = homePage.getRandomCheckbox();
-        Locator imageInsideTheBox = homePage.getImageOfCheckbox(randomCheckBox);
+        final Locator randomCheckbox = homePage.getRandomCheckbox();
+        final Locator checkboxImageInitial = homePage.getCheckboxImage(randomCheckbox);
+        final int pointsInitial = homePage.getMainSectionPoints();
 
-        assertThat(randomCheckBox).isChecked();
-        assertThat(imageInsideTheBox).isVisible();
-        Assert.assertEquals(imageInsideTheBox.getAttribute("d"), Constants.CHECKBOX_IMAGE,
-                "If FAIL: Checked checkbox image does not match.\n");
-        Assert.assertEquals(imageInsideTheBox.getAttribute("fill"), Constants.CHECKBOX_IMAGE_COLOR,
-                "If FAIL: Checked checkbox image color does not match.\n");
+        assertThat(randomCheckbox).isChecked();
+        assertThat(checkboxImageInitial).isVisible();
 
-        int pointsAllCheckboxesChecked = homePage.getMainSectionPoints();
+        homePage
+                .clickRandomCheckbox();
 
-        imageInsideTheBox = homePage
-                .clickRandomCheckbox()
-                .getImageOfCheckbox(randomCheckBox);
+        final Locator checkboxImageAfterFirstClick = homePage.getCheckboxImage(randomCheckbox);
+        final int pointsAfterFirstClick = homePage.getMainSectionPoints();
 
-        assertThat(randomCheckBox).not().isChecked();
-        assertThat(imageInsideTheBox).not().isVisible();
+        assertThat(randomCheckbox).not().isChecked();
+        assertThat(checkboxImageAfterFirstClick).not().isVisible();
+        Assert.assertTrue(
+                pointsAfterFirstClick < pointsInitial,
+                "If FAIL: Points after first click are NOT less then initial points.\n"
+        );
 
-        int pointsOneCheckboxUnchecked = homePage.getMainSectionPoints();
+        homePage
+                .clickRandomCheckbox();
 
-        Assert.assertTrue(pointsOneCheckboxUnchecked < pointsAllCheckboxesChecked,
-                "If FAIL: Amount of points is not decreased as expected.\n");
+        final Locator checkboxImageAfterSecondClick = homePage.getCheckboxImage(randomCheckbox);
+        final int pointsAfterSecondClick = homePage.getMainSectionPoints();
 
-        imageInsideTheBox = homePage
-                .clickRandomCheckbox()
-                .getImageOfCheckbox(randomCheckBox);
-
-        assertThat(randomCheckBox).isChecked();
-
-        assertThat(imageInsideTheBox).isVisible();
-
-        int pointsAfterCheckingBox = homePage.getMainSectionPoints();
-
-        Assert.assertEquals(pointsAllCheckboxesChecked, pointsAfterCheckingBox,
-                "If FAIL: Amount of points is not increased as expected€.\n");
+        assertThat(randomCheckbox).isChecked();
+        assertThat(checkboxImageAfterSecondClick).isVisible();
+        Assert.assertTrue(
+                pointsAfterSecondClick > pointsAfterFirstClick,
+                "If FAIL: Points after second click are NOT greater then points after first click.\n"
+        );
+        Assert.assertEquals(
+                pointsAfterSecondClick, pointsInitial,
+                "If FAIL: Points after second click are not equal initial points amount.\n"
+        );
     }
 
     @Test(

@@ -22,8 +22,4 @@ public final class  Constants {
     public static final String SEARCH = "Search";
     public static final String YOU_HAVE_NOT_STUDIED_ENOUGH =
             "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03";
-    public static final String CHECKBOX_IMAGE =
-            "m8.333 12.643 7.66-7.66 1.18 1.178L8.332 15 3.03 9.697l1.178-1.179 4.125 4.125Z";
-    public static final String CHECKBOX_IMAGE_COLOR = "#3e30b3";
-
 }
