@@ -2,6 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Step;
 import pages.constants.Constants;
 
 public final class ProfilePage extends BaseSideMenu<ProfilePage> {
@@ -34,6 +35,7 @@ public final class ProfilePage extends BaseSideMenu<ProfilePage> {
         return addANewCourseButton;
     }
 
+    @Step("Click on the '+ Add a new course' button.")
     public AddNewCoursePage clickAddANewCourseButton() {
         addANewCourseButton.click();
 
