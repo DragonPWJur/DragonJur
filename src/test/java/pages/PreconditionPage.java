@@ -24,19 +24,19 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return new PreconditionPage(getPage());
     }
 
-    @Step("Collect random index.")
+    @Step("Precondition: Collect random index.")
     public int getFlashcardsPackRandomIndex() {
 
         return flashcardsPackRandomIndex;
     }
 
-    @Step("Collect chosen Flashcards pack name.")
+    @Step("Precondition: Collect chosen Flashcards pack name.")
     public String getFlashcardsPackName() {
 
         return flashcardsPackName;
     }
 
-    @Step("Collect chosen Flashcards pack cards amount.")
+    @Step("Precondition: Collect chosen Flashcards pack cards amount.")
     public String getFlashcardsPackCardsAmount() {
 
         return flashcardsPackCardsAmount;
@@ -68,7 +68,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return new TestTutorPage(getPage()).init();
     }
 
-    @Step("Precondition: Collect the random index, Flashcards pack name, and initial amount of cards in the pack")
+    @Step("Precondition: Collect the random index, Flashcards pack name, and initial amount of cards in the pack.")
     public void collectRandomFlashcardPackInfo() {
         FlashcardPacksPage flashcardPacksPage =
                 new HomePage(getPage()).init()
@@ -82,21 +82,21 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 .clickHomeMenu();
     }
 
-    public List<Locator> getAllCheckboxesInA2WeeksPlan() {
+    @Step("Precondition: Collect all checkboxes within current plan.")
+    public List<Locator> getAllCheckboxesWithinCurrentPlan() {
 
-        return new HomePage(getPage())
-                .init()
+        return new HomePage(getPage()).init()
                 .getAllCheckboxesInA2WeeksPlan();
     }
 
+    @Step("Precondition: Ensure all checkboxes should be unchecked.")
     public boolean areAllCheckboxesUnchecked() {
 
-        return new HomePage(getPage())
-                .init()
+        return new HomePage(getPage()).init()
                 .areAllCheckboxesUnchecked();
     }
 
-    @Step("Precondition: Only one checkbox is checked.")
+    @Step("Precondition: One checkbox should be checked and all others unchecked.")
     public boolean oneCheckboxShouldBeCheckedAndAllOthersUnchecked() {
         HomePage homePage =
                 new HomePage(getPage()).init()
@@ -117,43 +117,23 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return false;
     }
 
-    @Step("Precondition: Click all checkboxes for 2 weeks plan on home page.")
+    @Step("Precondition: Ensure all checkboxes should be checked.")
     public boolean areAllCheckboxesChecked() {
 
         APIUtils.markCheckBoxes(getPage().request());
         getPage().reload();
 
-        return new HomePage(getPage())
-                .init()
+        return new HomePage(getPage()).init()
                 .areAllCheckboxesChecked();
     }
 
+    @Step("Precondition: Get single checked checkbox index.")
     public int getSingleCheckedCheckboxIndex() {
 
         return randomIndex;
     }
 
-    public void endTest() {
-        new TestTutorPage(getPage())
-                .clickEndButton()
-                .clickYesButton()
-                .clickSkipButton()
-                .clickCloseTheTestButton();
-    }
-
-//    public void startFlashcardPackAndGoBack(int index) {
-//        new HomePage(getPage())
-//                .clickHomeMenu()
-//                .clickFlashcardsMenu()
-//                .clickNthFlashcardPack(index)
-//                .clickGotItButton()
-//                .clickFlashcardsBackButton()
-//                .clickYesButton()
-//                .clickHomeMenu();
-//    }
-
-
-    @Step("Start test for the stats")
+    @Step("Precondition: Start test for the stats.")
     public void startTestDomainForStats(String nameTest, String numberOfQuestions) {
         TestListPage testListPage =
                 new HomePage(getPage()).init()
@@ -173,7 +153,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         }
     }
 
-    @Step("Pass the test with the correct answers of {questionsAmount} questions")
+    @Step("Precondition: Pass the test with the correct answers of {questionsAmount} questions.")
     public void passTestAllAnswersCorrect(String questionsAmount) {
         int numberOfQuestions = Integer.parseInt(questionsAmount);
 
@@ -195,7 +175,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 .clickHomeMenu();
     }
 
-    @Step("Pass the test with one wrong answer of {questionsAmount} questions\"")
+    @Step("Precondition: Pass the test with one wrong answer of {questionsAmount} questions.")
     public void passTestOneAnswersIncorrect(String questionsAmount) {
         int numberOfQuestions = Integer.parseInt(questionsAmount);
 
@@ -217,7 +197,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 .clickHomeMenu();
     }
 
-    @Step("Get the number of questions on PerformancePage")
+    @Step("Precondition: Get the number of questions on PerformancePage.")
     public int getNumberOfQuestions() {
 
         PerformancePage performancePage =
@@ -232,13 +212,14 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return numberOfQuestions;
     }
 
+    @Step("Precondition: Get number questions marked before test.")
     public int getNumberQuestionsMarkedBeforeTest() {
         return new HomePage(getPage()).init()
                 .clickTestsMenu()
                 .getMarkedNumber();
     }
 
-    @Step("Set answer options for 9 cards as: 3 cards - Yes, 3 cards - Kinda, 3 cards - No.")
+    @Step("Precondition: Set answer options for 9 cards as: 3 cards - Yes, 3 cards - Kinda, 3 cards - No.")
     public void setOptionsYes3No3Kinda3(String[] stackNames) {
         APIUtils.setAnswerOptionsForFlashcardPacks(getPage().request(), stackNames);
     }
