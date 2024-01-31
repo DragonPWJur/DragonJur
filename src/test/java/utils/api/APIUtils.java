@@ -17,15 +17,25 @@ import utils.runner.ProjectProperties;
 import java.util.*;
 
 public final class APIUtils {
-    private static final String _2_WEEK_PLAN = "2 Weeks";
 
-    public static final String BRONZE_SUBSCRIPTION_ID = "f64edfa6-1aca-4d9a-9c49-8f29970790af";
-    public static final String GOLD_SUBSCRIPTION_ID = "bcf37a9f-af5f-47b0-b9aa-c8e36bbd8278";
-    public static final String MONTHLY = "monthly";
-    public static final String BRONZE = "bronze";
-    private static Playwright playwright;
+    static void checkStatus(APIResponse apiResponse, String methodName) {
+        if (apiResponse.status() < 200 || apiResponse.status() >= 300) {
+            LoggerUtils.logException("EXCEPTION: API request FAILED." + apiResponse.status());
+            Assert.fail();
+        } else {
+            LoggerUtils.logInfo("API: " + methodName + " " + apiResponse.status());
+        }
+    }
 
-    private enum answerStatus {YES, NO, KINDA};
+    public static void cleanUserData(Playwright playwright) {
+
+        APIResponse deleteCoursesResults = APIServices.deleteCoursesResults(playwright);
+        checkStatus(deleteCoursesResults, "Delete Courses Results");
+
+        APIResponse deleteCustomerPaymentMethod = APIServices.deleteCustomerPaymentMethod(playwright);
+        checkStatus(deleteCustomerPaymentMethod, "Delete Customer Payment Method");
+    }
+
 
     private static APIRequestContext createAdminAPIRequestContext() {
         playwright = Playwright.create();
@@ -55,17 +65,7 @@ public final class APIUtils {
         return object;
     }
 
-    static void checkStatus(APIResponse apiResponse, String methodName) {
-        if (apiResponse.status() < 200 || apiResponse.status() >= 300) {
-            LoggerUtils.logException("EXCEPTION: API request FAILED. \n" +
-                    "response status: " + apiResponse.status()
-                    + "\n url: " + apiResponse.url()
-                    + "\n body: " + apiResponse.text());
-            Assert.fail();
-        } else {
-            LoggerUtils.logInfo("API: " + methodName + " " + apiResponse.status());
-        }
-    }
+
 
     public static void goToAdminAndChangeChapter1Unit1Text(String word, String action, APIRequestContext requestContext) {
         final String courseId = APIServices.getActiveCourse(requestContext).get("id").getAsString();

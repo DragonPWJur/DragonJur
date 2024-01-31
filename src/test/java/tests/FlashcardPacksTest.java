@@ -1,11 +1,8 @@
 package tests;
 
 import com.microsoft.playwright.Locator;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
-import io.qameta.allure.TmsLink;
-import jdk.jfr.Description;
+
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.FlashcardsPackIDPage;

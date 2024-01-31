@@ -63,8 +63,7 @@ abstract class BaseTest {
 
         logInfo("RUN " + ReportUtils.getTestMethodName(method));
 
-        APIServices.cleanData(playwright);
-        APIUtils.deletePaymentMethod(playwright);
+        APIUtils.cleanUserData(playwright);
 
         context = BrowserManager.createContextWithCookies(browser);
         logInfo("Context created");
@@ -120,6 +119,8 @@ abstract class BaseTest {
             logInfo("Playwright closed"
                     + ReportUtils.getEndLine());
         }
+
+        APIServices.closeAdminPlaywright();
 
         APINewCustomerUtils.deleteNewCustomer();
     }
