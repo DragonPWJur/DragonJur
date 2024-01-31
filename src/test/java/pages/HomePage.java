@@ -117,7 +117,6 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return randomIndex;
     }
 
-
     public int getSingleCheckedCheckboxIndex() {
         final int index = randomIndex;
 
