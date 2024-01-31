@@ -147,7 +147,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return allCheckboxes.stream().allMatch(Locator::isChecked);
     }
 
-    @Step("Click checkbox.")
+    @Step("Click random checkbox '{randomIndex}'.")
     public HomePage clickRandomCheckbox(){
         getNthCheckbox(randomIndex).click();
 
