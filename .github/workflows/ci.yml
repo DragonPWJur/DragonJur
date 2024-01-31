@@ -26,7 +26,7 @@ jobs:
         run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
 
       - name: Run tests
-        run: mvn test
+        run: mvn clean test -Dsurefire
         env:
           BROWSER_OPTIONS: browserType=chromium;width=1366;height=768;headless=true;slowMo=0;tracing=true;video=true
           WEB_OPTIONS: username=${{ secrets.USERNAME }};password=${{ secrets.PASSWORD }};baseUrl=${{ secrets.BASE_URL }};commonEmailPart=${{ secrets.COMMON_EMAIL_PART }};apiBaseUrl=${{ secrets.API_BASE_URL }};adminUsername=${{ secrets.ADMIN_USERNAME }};adminPassword=${{ secrets.ADMIN_PASSWORD }}

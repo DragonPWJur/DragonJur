@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Dragon Tests">
+    <test name="Smoke tests">
+        <classes>
+            <class name="tests.BronzeSubscriptionTest"/>
+            <class name="tests.FlashcardPacksTest"/>
+            <class name="tests.HomeTest"/>
+            <class name="tests.MnemonicCardPracticeTest"/>
+            <class name="tests.MnemonicCardsTest"/>
+            <class name="tests.NavigationTest"/>
+            <class name="tests.PerformanceTest"/>
+            <class name="tests.ProfileTest"/>
+            <class name="tests.SearchTest"/>
+            <class name="tests.StudyGuideAdminTest"/>
+            <class name="tests.StudyGuideTest"/>
+            <class name="tests.TestTimedTest"/>
+            <class name="tests.TestTutorTest"/>
+        </classes>
+    </test>
+</suite>
