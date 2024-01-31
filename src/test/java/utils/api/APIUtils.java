@@ -163,10 +163,10 @@ public final class APIUtils {
     public static void markCheckBoxes(APIRequestContext request) {
 
         JsonObject plans = APIServices.getPlans(request);
-        String _2WeekPlanId = get2WeekId(plans);
+        String _2WeeksPlanId = get2WeekId(plans);
 
-        APIServices.changeCurrentPlan(request, _2WeekPlanId);
-        JsonObject planPhases = APIServices.getPlanPhases(request, _2WeekPlanId);
+        APIServices.changeCurrentPlan(request, _2WeeksPlanId);
+        JsonObject planPhases = APIServices.getPlanPhases(request, _2WeeksPlanId);
 
         List<String> checkboxesIds = getPlanPhasesId(planPhases);
 

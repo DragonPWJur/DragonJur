@@ -96,6 +96,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 .areAllCheckboxesUnchecked();
     }
 
+    @Step("Precondition: Only one checkbox is checked.")
     public boolean oneCheckboxShouldBeCheckedAndAllOthersUnchecked() {
         HomePage homePage =
                 new HomePage(getPage()).init()
@@ -116,6 +117,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return false;
     }
 
+    @Step("Precondition: Click all checkboxes for 2 weeks plan on home page.")
     public boolean areAllCheckboxesChecked() {
 
         APIUtils.markCheckBoxes(getPage().request());
