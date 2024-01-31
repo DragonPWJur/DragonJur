@@ -1,9 +1,11 @@
 package tests;
 
 import com.microsoft.playwright.Locator;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
 import io.qameta.allure.Story;
+import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.TmsLink;
-import jdk.jfr.Description;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.StudyGuidePage;
@@ -23,6 +25,7 @@ public class SearchTest extends BaseTest {
             " a non-existent keyword is typed.")
     @Story("Search")
     @TmsLink("m9rydpfuvuw6")
+    @Severity(SeverityLevel.NORMAL)
     public void testSearchByNotExistingWord() {
 
         StudyGuidePage studyGuidePage =
@@ -45,6 +48,7 @@ public class SearchTest extends BaseTest {
             " the Search field.")
     @Story("Search")
     @TmsLink("vdluszdw85zh")
+    @Severity(SeverityLevel.NORMAL)
     public void testSearchByExistingWord() {
 
         StudyGuidePage studyGuidePage =

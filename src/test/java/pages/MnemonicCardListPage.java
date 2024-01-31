@@ -6,7 +6,6 @@ import io.qameta.allure.Step;
 import pages.constants.Constants;
 
 import java.util.List;
-import java.util.Random;
 
 public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPage> implements IRandom {
 

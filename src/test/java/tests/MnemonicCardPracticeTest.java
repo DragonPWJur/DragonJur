@@ -1,8 +1,6 @@
 package tests;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Story;
-import io.qameta.allure.TmsLink;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
@@ -21,6 +19,7 @@ public class MnemonicCardPracticeTest extends BaseTest {
     @Description("Objective: To verify that the user can successfully open any Mnemonic Card after clicking the Start Practice button.")
     @Story("Mnemonic Cards")
     @TmsLink("bhhgxa6zrj99")
+    @Severity(SeverityLevel.NORMAL)
     public void testOpeningMnemonicCardAfterStartingPractice() {
         MnemonicCardPracticePage mnemonicCardPracticePage =
                 new HomePage(getPage()).init()

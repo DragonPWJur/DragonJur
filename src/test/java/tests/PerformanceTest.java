@@ -1,9 +1,7 @@
 package tests;
 
 import com.microsoft.playwright.Locator;
-import io.qameta.allure.Description;
-import io.qameta.allure.Story;
-import io.qameta.allure.TmsLink;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
@@ -26,6 +24,7 @@ public class PerformanceTest extends BaseTest {
     @Description("Objective: To confirm the accurate display of statistics for Tests in the Performance section.")
     @Story("Performance")
     @TmsLink("p0i1q95cgr11")
+    @Severity(SeverityLevel.NORMAL)
     public void testDisplayingStatisticsForTests() {
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
 
@@ -43,7 +42,7 @@ public class PerformanceTest extends BaseTest {
         PerformancePage performancePage =
                 new HomePage(getPage()).init()
                         .clickPerformanceMenu()
-                        .clickOverallDropdown()
+                        .clickDropdown()
                         .clickTestsButtonInBanner();
 
         final String expectedUrl = BASE_URL + TestData.PERFORMANCE_END_POINT;
@@ -88,6 +87,7 @@ public class PerformanceTest extends BaseTest {
     @Description("Objective: To confirm the display of statistics for Tests in the Performance section.")
     @Story("Performance")
     @TmsLink("nyqyh86yrv3b")
+    @Severity(SeverityLevel.NORMAL)
     public void testShowDropdownMenuInPerformanceSection() {
         PerformancePage performancePage =
                 new HomePage(getPage()).init()
@@ -102,7 +102,7 @@ public class PerformanceTest extends BaseTest {
         assertThat(allFlashcardsButton).isHidden();
 
         performancePage
-                .clickOverallDropdown();
+                .clickDropdown();
 
         assertThat(overallButton).isVisible();
         assertThat(testsButton).isVisible();
@@ -116,6 +116,7 @@ public class PerformanceTest extends BaseTest {
     @Description("Objective: To confirm the accurate display of statistics for all flashcards in the Performance section.")
     @Story("Performance")
     @TmsLink("qkc4xrnd166z")
+    @Severity(SeverityLevel.NORMAL)
     public void testDisplayingStatisticsForAllFlashcards() {
         new PreconditionPage(getPage())
                 .setOptionsYes3No3Kinda3(TestData.STACKS_NAMES);
@@ -137,7 +138,7 @@ public class PerformanceTest extends BaseTest {
         assertThat(allFlashcardsButton).isHidden();
 
         performancePage
-                .clickOverallDropdown();
+                .clickDropdown();
 
         assertThat(overallButton).isVisible();
         assertThat(testsButton).isVisible();
