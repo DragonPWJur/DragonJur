@@ -20,7 +20,10 @@ public class ANewCustomerTest extends BaseTest {
     @Story("Home Page")
     @TmsLink("j0y70alubidi")
     public void testStreaksModalWindowTextVerification() {
-        HomePage homePage = new HomePage(getPage()).init();
+        HomePage homePage =
+                new HomePage(getPage())
+                        .init()
+                        .clickHomeMenu();
 
         assertThat(homePage.getStreaksButton()).hasText("0");
 

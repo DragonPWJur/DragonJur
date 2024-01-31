@@ -101,7 +101,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         waitWithTimeout(2000);
     }
 
-    @Step("Click on the “Streaks” button")
+    @Step("Click on the 'Streaks' button")
     public HomePage clickStreaksButton() {
         streaksButton.click();
 
