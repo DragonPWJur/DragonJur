@@ -12,6 +12,7 @@ public final class TestUtils {
 
         return text.replaceAll("[^0-9]", "");
     }
+
     public static int getInt(String text) {
 
         return Integer.parseInt(onlyNumbers(text));
