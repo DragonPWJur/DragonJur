@@ -79,7 +79,6 @@ public class TestTutorTest extends BaseTest {
         assertThat(message).hasText(TestData.THE_REPORT_HAS_BEEN_SENT_SUCCESSFULLY);
     }
 
-    @Ignore
     @Test(description = "TC1344-02 Execute Tutor Mode with a randomly selected checkbox in the Domain section.")
     @Description("Objective: To verify that User can successfully activate Tutor mode by checking a random checkbox " +
             "in the Domain section and entering valid data in the ‘Number of Questions’ field.")

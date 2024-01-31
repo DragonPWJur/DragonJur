@@ -2,6 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Step;
 import pages.constants.Constants;
 
 public final class AddNewCoursePage extends BaseHeader<AddNewCoursePage> {
@@ -18,6 +19,7 @@ public final class AddNewCoursePage extends BaseHeader<AddNewCoursePage> {
         return createPage(new AddNewCoursePage(getPage()), Constants.ADD_NEW_COURSE_END_POINT);
     }
 
+    @Step("Click on any 'Get' button.")
     public AddNewCourseModal clickGetButton() {
         getButton.click();
 

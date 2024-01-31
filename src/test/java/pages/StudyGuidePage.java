@@ -37,18 +37,21 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return text(word).nth(1);
     }
 
+    @Step("Double click on the word {word}")
     public StudyGuidePage doubleClickOnWord(String word) {
         getWord(word).dblclick();
 
         return this;
     }
 
+    @Step("Enter text {text} for the note")
     public StudyGuidePage inputNoteText(String text) {
         noteTextAria.fill(text);
 
         return this;
     }
 
+    @Step("Click 'Save' button")
     public StudyGuidePage clickSaveButton() {
         saveButton.click();
 
@@ -60,6 +63,7 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return noteTextAria;
     }
 
+    @Step("Click the 'Highlights and Notes' button")
     public void clickHighlightsAndNotesButton() {
         highlightsAndNotesButton.click();
     }
@@ -69,34 +73,41 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return highlightedWordButton;
     }
 
+    @Step("Enter text {text} into the search field")
     public StudyGuidePage inputStringIntoSearchField(String text) {
         searchField.fill(text);
 
         return this;
     }
+
+    @Step("Enter the search word {word}")
     public StudyGuidePage inputSearchWord(String word) {
         searchField.fill(word);
 
         return this;
     }
 
+    @Step("Get list of matches words")
     public List<Locator> getMatchesList() {
 
         return allItems(match);
     }
 
+    @Step("Click the 'Save' button in the note")
     public StudyGuidePage clickNoteSaveButton() {
         saveButton.click();
 
         return this;
     }
 
+    @Step("Enter {text} into search field")
     public StudyGuidePage inputRandomWordInSearchField(String text) {
         searchField.fill(text);
 
         return this;
     }
 
+    @Step("Highlight words {words}")
     public StudyGuidePage highlightWords(String words) {
         final Locator wordsFirst = text(words).first();
 
@@ -111,12 +122,13 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return this;
     }
 
-
+    @Step("Get 'Nothing found. Try to use other key words' message")
     public Locator getNothingFoundMessage() {
 
         return nothingFoundMessage;
     }
 
+    @Step("Get search result message")
     public Locator getSearchResultMessage() {
 
         return searchResultTextbox;
@@ -159,7 +171,7 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return new TestTutorPage(getPage()).init();
     }
 
-
+    @Step("Input search word {text} in the search field")
     public StudyGuidePage inputSearchWordInSearchField(String text) {
         searchField.fill(text);
 
