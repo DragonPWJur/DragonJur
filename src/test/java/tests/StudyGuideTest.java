@@ -3,9 +3,7 @@ package tests;
 import com.microsoft.playwright.Locator;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
-import io.qameta.allure.TmsLink;
-import jdk.jfr.Description;
+import io.qameta.allure.*;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
@@ -58,7 +56,6 @@ public class StudyGuideTest extends BaseTest {
         assertThat(word).hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_62_48_179_0_2);
     }
 
-    @Ignore
     @Test(
             testName = "LMS-1362 Создание заметок. https://app.qase.io/case/LMS-1362",
             description = "TC1362-01 - Creating a Note")
