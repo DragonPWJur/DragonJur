@@ -152,7 +152,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return allCheckboxes.stream().allMatch(Locator::isChecked);
     }
 
-    @Step("Click random checkbox ({randomIndex}).")
+    @Step("Click random checkbox.")
     public HomePage clickRandomCheckbox(){
         getNthCheckbox(randomIndex).click();
 
@@ -165,7 +165,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return allCheckboxes.get(number);
     }
 
-    @Step("Select any of the checkboxes on home page ({randomIndex}).")
+    @Step("Select any of the checkboxes.")
     public Locator getRandomCheckbox() {
 
         return allCheckboxes.get(randomIndex);
