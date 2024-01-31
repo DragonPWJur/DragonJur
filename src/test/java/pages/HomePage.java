@@ -147,22 +147,26 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return allCheckboxes.stream().allMatch(Locator::isChecked);
     }
 
+    @Step("Click checkbox.")
     public HomePage clickRandomCheckbox(){
         getNthCheckbox(randomIndex).click();
 
         return this;
     }
 
+    @Step("Get checkbox by number {number}.")
     public Locator getNthCheckbox(int number) {
 
         return allCheckboxes.get(number);
     }
 
+    @Step("Select any of the checkboxes on home page.")
     public Locator getRandomCheckbox() {
 
         return allCheckboxes.get(randomIndex);
     }
 
+    @Step("Click checkbox by number {number}.")
     public HomePage clickNthCheckbox(int randomNumber) {
         getNthCheckbox(randomNumber).click();
 
@@ -189,12 +193,14 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return this;
     }
 
+    @Step("Click study this button.")
     public HomePage clickStudyThisButton() {
         studyThisButton.click();
 
         return this;
     }
 
+    @Step("Get checkbox image.")
     public Locator getCheckboxImage(Locator randomCheckBox) {
 
         return randomCheckBox.locator("svg");

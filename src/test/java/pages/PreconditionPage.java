@@ -116,6 +116,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return false;
     }
 
+    @Step("Precondition: Click all checkboxes for 2 weex plan on home page.")
     public boolean areAllCheckboxesChecked() {
 
         APIUtils.markCheckBoxes(getPage().request());

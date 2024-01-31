@@ -17,7 +17,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 public class TestTutorTest extends BaseTest {
 
     @Test(
-            testName = "LMS-1350 возможность для юзера помечать., https://app.qase.io/plan/LMS/1?case=1350",
+            testName = "LMS-1350 возможность для юзера помечать, https://app.qase.io/plan/LMS/1?case=1350",
             description = "TC1350-01 User can mark the card."
     )
     @Description("Objective: To confirm the functionality allowing the user to mark a card for review and verify the change in the button's label from 'Mark for review' to 'Remove from marked.'")
