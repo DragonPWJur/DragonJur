@@ -122,8 +122,13 @@ public final class HomeTest extends BaseTest {
         assertThat(checkboxImage).isVisible();
     }
 
-    @Ignore
-    @Test
+
+    @Test(
+            testName = "LMS-1341 Нажатие чекбоксов, https://app.qase.io/plan/LMS/1?case=1341",
+            description = "TC1341-02 - Deactivation of Already Active single Checkbox.")
+    @Description("To verify the functionality where an active checkbox becomes inactive upon being clicked again.")
+    @Story("Home page")
+    @TmsLink("khucr6xuqdib")
     public void testDeactivationOfAlreadyActiveSingleCheckbox() {
         PreconditionPage preconditionPage = new PreconditionPage(getPage()).init();
 
