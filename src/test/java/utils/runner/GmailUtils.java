@@ -31,7 +31,6 @@ public final class GmailUtils {
 
     private static final List<String> SCOPES = List.of(GmailScopes.MAIL_GOOGLE_COM);
     private static final String USER_ID = "me";
-    private static final String EMAIL_END_PART = "@gmail.com";
     private static final String QUERY = "subject:You have been invited";
 
     public static Gmail getGmailService() throws Exception {
@@ -67,8 +66,7 @@ public final class GmailUtils {
         return credential;
     }
 
-    public static String extractPasswordFromEmail(Gmail service, int numericPart) throws IOException {
-        String email = ProjectProperties.COMMON_EMAIL_PART + numericPart + EMAIL_END_PART;
+    public static String extractPasswordFromEmail(Gmail service, String email) throws IOException {
         String combinedQuery = "to:" + email + " " + QUERY;
 
         ListMessagesResponse response = service.users().messages().list(USER_ID).setQ(combinedQuery).execute();
