@@ -18,6 +18,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     private final Locator streaksButton = locator("button>svg+p").last();
     private final Locator checkboxImage = locator("label:has(input) svg");
     private final List<Locator> allCheckboxes = allCheckboxes("label");
+    private final Locator streakDaysModalWindowText = locator("div[role='dialog']>div>p");
 
     private final int randomIndex = getRandomInt(0, allCheckboxes.size());
 
@@ -100,6 +101,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         waitWithTimeout(2000);
     }
 
+    @Step("Click on the 'Streaks' button")
     public HomePage clickStreaksButton() {
         streaksButton.click();
 
@@ -162,7 +164,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
 
         return allCheckboxes.get(randomIndex);
     }
-
+    @Step("Click on {randomNumber}-nth checkbox")
     public HomePage clickNthCheckbox(int randomNumber) {
         getNthCheckbox(randomNumber).click();
 
@@ -198,6 +200,22 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     public Locator getCheckboxImage(Locator randomCheckBox) {
 
         return randomCheckBox.locator("svg");
+    }
+
+    @Step("The modal window contains the text: 'You are on a 1 day study streak!'")
+    public Locator getStreakDaysModalWindowTextLocator() {
+
+        return streakDaysModalWindowText;
+    }
+
+    public Locator getStreaksButton() {
+
+        return streaksButton;
+    }
+
+    public int getRandomCheckboxIndex(List<Locator> list) {
+
+        return getRandomNumber(list);
     }
 
 
