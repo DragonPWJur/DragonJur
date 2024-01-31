@@ -58,7 +58,6 @@ public class StudyGuideTest extends BaseTest {
         assertThat(word).hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_62_48_179_0_2);
     }
 
-    @Ignore
     @Test(
             testName = "LMS-1362 Создание заметок. https://app.qase.io/case/LMS-1362",
             description = "TC1362-01 - Creating a Note")
