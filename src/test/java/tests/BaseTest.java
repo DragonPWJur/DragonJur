@@ -8,6 +8,7 @@ import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import tests.helpers.TestData;
+import utils.api.APINewCustomerUtils;
 import utils.api.APIServices;
 import utils.api.APIUtils;
 import utils.reports.LoggerInfo;
@@ -31,7 +32,9 @@ abstract class BaseTest {
     private Page page;
 
     @BeforeSuite
-    void launchBrowser(ITestContext testContext) {
+    void launchBrowser(ITestContext testContext) throws Exception {
+        APINewCustomerUtils.createNewCustomer();
+
         LoginUtils.loginAndCollectCookies();
 
         logInfo(ReportUtils.getReportHeader());
@@ -106,7 +109,7 @@ abstract class BaseTest {
         }
     }
 
-    @AfterSuite
+    @AfterSuite(alwaysRun = true)
     void closeBrowser() {
         if(browser != null) {
             browser.close();
@@ -117,6 +120,8 @@ abstract class BaseTest {
             logInfo("Playwright closed"
                     + ReportUtils.getEndLine());
         }
+
+        APINewCustomerUtils.deleteNewCustomer();
     }
 
     protected  boolean isOnHomePage() {

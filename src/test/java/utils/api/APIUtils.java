@@ -2,6 +2,7 @@ package utils.api;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.microsoft.playwright.APIRequest;
 import com.microsoft.playwright.APIRequestContext;
@@ -13,12 +14,7 @@ import utils.reports.LoggerUtils;
 import utils.reports.ReportUtils;
 import utils.runner.ProjectProperties;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public final class APIUtils {
     private static final String _2_WEEK_PLAN = "2 Weeks";
@@ -28,6 +24,8 @@ public final class APIUtils {
     public static final String MONTHLY = "monthly";
     public static final String BRONZE = "bronze";
     private static Playwright playwright;
+
+    private enum answerStatus {YES, NO, KINDA};
 
     private static APIRequestContext createAdminAPIRequestContext() {
         playwright = Playwright.create();
@@ -242,6 +240,33 @@ public final class APIUtils {
             return "BRONZE";
         } else {
             return "Unknown Subscription";
+        }
+    }
+
+    public static void setAnswerOptionsForFlashcardPacks(APIRequestContext requestContext, String[] stacksNames ) {
+        final JsonArray allPacks = APIServices.getFlashcardsPacks(requestContext).getAsJsonArray("items");
+
+        for (JsonElement packElm : allPacks) {
+            JsonObject pack = packElm.getAsJsonObject();
+
+            if (
+                    stacksNames.length != 0
+                            && Arrays.asList(stacksNames).contains(pack.get("name").getAsString())
+            ) {
+
+                JsonArray flashcards = APIServices.getFlashcardsByPack(requestContext, pack.get("id").getAsString()).getAsJsonArray("items");
+                for (int i = 0; i <= 2; i++) {
+                    APIServices.saveFlashcardAnswer(requestContext, flashcards.get(i).getAsJsonObject().get("id").getAsString(), answerStatus.YES.name());
+                }
+                for (int i = 3; i <= 5; i++) {
+                    APIServices.saveFlashcardAnswer(requestContext, flashcards.get(i).getAsJsonObject().get("id").getAsString(), answerStatus.NO.name());
+                }
+                for (int i = 6; i <= 8; i++) {
+                    APIServices.saveFlashcardAnswer(requestContext, flashcards.get(i).getAsJsonObject().get("id").getAsString(), answerStatus.KINDA.name());
+                }
+
+                APIServices.completePack(requestContext , pack.get("id").getAsString());
+            }
         }
     }
 }

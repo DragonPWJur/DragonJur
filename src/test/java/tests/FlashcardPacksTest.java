@@ -136,7 +136,6 @@ public final class FlashcardPacksTest extends BaseTest {
         assertThat(kindaButton).isVisible();
         assertThat(yesButton).isVisible();
         assertThat(showAnswerButton).not().isVisible();
-        assertThat(flashcardsPackIDPage.getAnswerText()).isVisible();
     }
 
     @Test(

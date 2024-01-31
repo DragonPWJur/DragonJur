@@ -1,12 +1,21 @@
 package tests.helpers;
 
+import com.microsoft.playwright.Locator;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public final class TestUtils {
 
+    public static String onlyNumbers(String text) {
+
+        return text.replaceAll("[^0-9]", "");
+    }
+
     public static int getInt(String text) {
 
-        return Integer.parseInt(text);
+        return Integer.parseInt(onlyNumbers(text));
     }
 
     public static String getString(int number) {
@@ -32,5 +41,26 @@ public final class TestUtils {
         }
 
         return randomString.toString();
+    }
+
+    public static List<Integer> getStatistic(Locator stack) {
+
+        String[] statistic = stack.innerText().replace("%", "").split("\n");
+        String packName = statistic[statistic.length - 1];
+
+        return Arrays
+                .stream(statistic)
+                .filter(x -> !x.contains(packName))
+                .map(Integer::parseInt)
+                .toList();
+    }
+
+    public static int getSum(List<Integer> stack) {
+
+        int sum = 0;
+        for (int i : stack) {
+            sum += i;
+        }
+        return (int) sum;
     }
 }
