@@ -40,6 +40,8 @@ public class ANewCustomerTest extends BaseTest {
                 .clickStreaksButton();
 
         assertThat(homePage.getStreakDaysModalWindowTextLocator()).hasText(TestData.ONE_DAY_STUDY_STREAK_MESSAGE);
-        Assert.assertTrue(homePage.getMainSectionPoints() > 0);
+        Assert.assertTrue(
+                homePage.getMainSectionPoints() > 0,
+                "If FAIL: Expected result 'Upon opening the modal window, points greater than 0 are visible' is not reached.");
     }
 }
