@@ -1,8 +1,6 @@
 package tests;
 
 import com.microsoft.playwright.Locator;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.*;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
@@ -20,7 +18,7 @@ public class StudyGuideTest extends BaseTest {
             description = "TC1363-01 - Executing Word Highlighting by Double Click")
     @Description("To confirm the user's ability to successfully highlight a word")
     @Story("Study Guide")
-    @TmsLink(".f8cnmz6sy744")
+    @TmsLink("f8cnmz6sy744")
     @Severity(SeverityLevel.NORMAL)
     public void testExecutingWordHighlightingByDoubleClick() {
         StudyGuidePage studyGuidePage =
@@ -41,7 +39,7 @@ public class StudyGuideTest extends BaseTest {
             description = "TC1363-02 - Highlighting Multiple Words")
     @Description("To confirm that the user can successfully highlight multiple words")
     @Story("Study Guide")
-    @TmsLink(".yerkt67nt8zq")
+    @TmsLink("yerkt67nt8zq")
     @Severity(SeverityLevel.NORMAL)
     public void testHighlightingMultipleWords() {
         StudyGuidePage studyGuidePage =
@@ -61,7 +59,7 @@ public class StudyGuideTest extends BaseTest {
             description = "TC1362-01 - Creating a Note")
     @Description("To verify that the User can successfully create a note")
     @Story("Study Guide")
-    @TmsLink(".qqog7vjki13b")
+    @TmsLink("qqog7vjki13b")
     @Severity(SeverityLevel.NORMAL)
     public void testCreatingANote() {
         StudyGuidePage studyGuidePage =
