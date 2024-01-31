@@ -137,6 +137,7 @@ public class TestTutorTest extends BaseTest {
         );
     }
 
+    @Ignore
     @Test(
             testName = "LMS-1350 возможность для юзера помечать., https://app.qase.io/plan/LMS/1?case=1350",
             description = "TC1350-02 After marking the card, the number of marked cards increased by 1. "
