@@ -151,13 +151,13 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
 //        return allCheckboxes.getByText(text).locator("svg");
 //    }
 
+    @Step("Click 'Automation testing for stats' checkbox")
     public TestListPage clickAutomationTestingForStatsCheckBox() {
         automationTestingForStatsText.click();
 
         return this;
     }
 
-    @Step("Click 'History and Civilization' checkbox")
     public TestListPage clickHistoryAndCivilizationForStatsCheckBox() {
         statsTests.click();
 
