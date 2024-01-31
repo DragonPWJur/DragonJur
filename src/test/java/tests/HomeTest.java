@@ -163,7 +163,7 @@ public final class HomeTest extends BaseTest {
     public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive(){
 
         Assert.assertTrue(new PreconditionPage(getPage()).init().areAllCheckboxesChecked(),
-                "If FAIL: Precondition 'All checkboxes should be checked' is not reached.\n"
+                "If FAIL: Precondition 'All checkboxes should be checked' is NOT reached.\n"
         );
 
         HomePage homePage = new HomePage(getPage()).init();
@@ -186,7 +186,69 @@ public final class HomeTest extends BaseTest {
         }
     }
 
-    @Test
+    @Test(
+            testName = "LMS-1341 Нажатие чекбоксов, https://app.qase.io/plan/LMS/1?case=1341",
+            description = "TC1341-04-E2E - Deactivation of a single Already Active Checkbox when all checkboxes are active does not impact the main checkbox functionality.")
+    @Description("To verify that the deactivated single checkbox can be checked again and the amount of points is decreasing and increasing accordingly.")
+    @Story("Home page")
+    @TmsLink("sc19hl34f3cj")
+    public void testDeactivationCheckboxWithAllCheckboxesActiveE2E(){
+
+        final boolean areAllCheckboxesChecked =
+                new PreconditionPage(getPage()).init()
+                        .areAllCheckboxesChecked();
+
+        Assert.assertTrue(
+                areAllCheckboxesChecked,
+                "If FAIL: Precondition 'All checkboxes should be checked' is NOT reached.\n"
+        );
+
+        HomePage homePage = new HomePage(getPage()).init();
+
+        final Locator randomCheckbox = homePage.getRandomCheckbox();
+        final Locator checkboxImageInitial = homePage.getCheckboxImage(randomCheckbox);
+        final int pointsInitial = homePage.getMainSectionPoints();
+
+        assertThat(randomCheckbox).isChecked();
+        assertThat(checkboxImageInitial).isVisible();
+
+        homePage
+                .clickRandomCheckbox();
+
+        final Locator checkboxImageAfterFirstClick = homePage.getCheckboxImage(randomCheckbox);
+        final int pointsAfterFirstClick = homePage.getMainSectionPoints();
+
+        assertThat(randomCheckbox).not().isChecked();
+        assertThat(checkboxImageAfterFirstClick).not().isVisible();
+        Assert.assertTrue(
+                pointsAfterFirstClick < pointsInitial,
+                "If FAIL: Points after first click are NOT less then initial points.\n"
+        );
+
+        homePage
+                .clickRandomCheckbox();
+
+        final Locator checkboxImageAfterSecondClick = homePage.getCheckboxImage(randomCheckbox);
+        final int pointsAfterSecondClick = homePage.getMainSectionPoints();
+
+        assertThat(randomCheckbox).isChecked();
+        assertThat(checkboxImageAfterSecondClick).isVisible();
+        Assert.assertTrue(
+                pointsAfterSecondClick > pointsAfterFirstClick,
+                "If FAIL: Points after second click are NOT greater then points after first click.\n"
+        );
+        Assert.assertEquals(
+                pointsAfterSecondClick, pointsInitial,
+                "If FAIL: Points after second click are not equal initial points amount.\n"
+        );
+    }
+
+    @Test(
+            testName = "LMS-1342 https://app.qase.io/plan/LMS/1?case=1342",
+            description = "1342-01 The modal window is open when clicking the Study This button")
+    @Description("To verify the modal window is open when clicking the Study This button.")
+    @Story("Home page")
+    @TmsLink("zhdhkv1f6nk7")
     public void testModalWindowStudyIsOpened() {
         HomePage homePage =
                 new HomePage(getPage()).init()

@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 import pages.constants.Constants;
+import tests.helpers.TestUtils;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     @Step("Get Main Section Points number")
     public int getMainSectionPoints() {
 
-        return Integer.parseInt(getMainSectionPointsText());
+        return TestUtils.getInt(getMainSectionPointsText());
     }
 
     @Step("Get Side Menu Points text")
@@ -58,7 +59,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     @Step("Get Main Section Points number")
     public int getSideMenuPoints() {
 
-        return Integer.parseInt(getSideMenuPointsText());
+        return TestUtils.getInt(getSideMenuPointsText());
     }
 
     public HomePage focusWeek1Header() {
@@ -146,13 +147,20 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return allCheckboxes.stream().allMatch(Locator::isChecked);
     }
 
-    public void clickRandomCheckbox(){
+    public HomePage clickRandomCheckbox(){
         getNthCheckbox(randomIndex).click();
+
+        return this;
     }
 
     public Locator getNthCheckbox(int number) {
 
         return allCheckboxes.get(number);
+    }
+
+    public Locator getRandomCheckbox() {
+
+        return allCheckboxes.get(randomIndex);
     }
 
     public HomePage clickNthCheckbox(int randomNumber) {
@@ -181,11 +189,16 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return this;
     }
 
-        public HomePage clickStudyThisButton() {
-            studyThisButton.click();
+    public HomePage clickStudyThisButton() {
+        studyThisButton.click();
 
-            return this;
-        }
+        return this;
+    }
+
+    public Locator getCheckboxImage(Locator randomCheckBox) {
+
+        return randomCheckBox.locator("svg");
+    }
 
 
 //
