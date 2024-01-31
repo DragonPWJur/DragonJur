@@ -1,9 +1,10 @@
 package tests;
 
 import com.microsoft.playwright.Locator;
+import io.qameta.allure.Description;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
-import jdk.jfr.Description;
+
 import org.testng.Assert;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
@@ -18,7 +19,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 public final class HomeTest extends BaseTest {
 
     @Test(
-            testName = "LMS-1365 https://app.qase.io/plan/LMS/1?case=1365",
+            testName = "LMS-1365 Начисление points. https://app.qase.io/plan/LMS/1?case=1365",
             description = "TC1365-01 - Upon clicking the empty checkbox, the point count increases."
     )
     @Description("Objective: Verify that user points increase when you click on the empty checkbox.")
@@ -27,6 +28,7 @@ public final class HomeTest extends BaseTest {
     public void testUponClickingCheckboxPointsCountIncreases() {
         HomePage homePage =
                 new HomePage(getPage()).init()
+                        .clickHomeMenu()
                         .click2WeeksButton()
                         .focusWeek1Header();
 
@@ -66,7 +68,7 @@ public final class HomeTest extends BaseTest {
     }
 
     @Test(
-            testName = "LMS-1343 https://app.qase.io/plan/LMS/1?case=1343",
+            testName = "LMS-1343 Отработка streaks. https://app.qase.io/plan/LMS/1?case=1343",
             description = "TC1343-01 - Verification “Streaks” modal window appears."
     )
     @Description("Objective: To verify that the modal window will be opened after clicking on the “Streaks” button.")
@@ -75,6 +77,7 @@ public final class HomeTest extends BaseTest {
     public void testStreaksModalWindowIsAppeared() {
         HomePage homePage =
                 new HomePage(getPage()).init()
+                        .clickHomeMenu()
                         .clickStreaksButton();
 
         assertThat(homePage.getStreaksModalWindow()).isVisible();

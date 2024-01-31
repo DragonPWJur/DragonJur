@@ -57,12 +57,13 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return sideMenuPoints.innerText();
     }
 
-    @Step("Get Main Section Points number")
+    @Step("Get Side Menu Section Points number")
     public int getSideMenuPoints() {
 
         return TestUtils.getInt(getSideMenuPointsText());
     }
 
+    @Step("Find a block 'Week 1'")
     public HomePage focusWeek1Header() {
         week1Header.focus();
 
@@ -84,6 +85,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return allCheckboxes;
     }
 
+    @Step("Click on empty checkbox")
     public HomePage clickWeek1FirstCheckbox() {
         week1FirstCheckbox.click();
 
@@ -108,6 +110,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return this;
     }
 
+    @Step("The modal window will be opened")
     public Locator getStreaksModalWindow() {
 
         return getDialog();
