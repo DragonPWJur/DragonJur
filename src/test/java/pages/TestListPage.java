@@ -121,24 +121,28 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
+    @Step("Click 'Timed' button")
     public TestListPage clickTimedButton() {
         timedButton.click();
 
         return this;
     }
 
+    @Step("Click 'Start test' button")
     public TestListPage clickStartTestButton() {
         startTestButton.click();
 
         return this;
     }
 
+    @Step("Click 'Start' button")
     public TestTimedPage clickStartButton() {
         startButton.click();
 
         return new TestTimedPage(getPage()).init();
     }
 
+    @Step("Get number of 'Marked' questions")
     public int getMarkedNumber() {
         waitWithTimeout(2000);
         System.out.println(markedNumber.innerText());
@@ -151,18 +155,21 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
 //        return allCheckboxes.getByText(text).locator("svg");
 //    }
 
+    @Step("Click 'Automation testing for stats' checkbox")
     public TestListPage clickAutomationTestingForStatsCheckBox() {
         automationTestingForStatsText.click();
 
         return this;
     }
 
+    @Step("Click 'Stats' checkbox")
     public TestListPage clickHistoryAndCivilizationForStatsCheckBox() {
         statsTests.click();
 
         return this;
     }
 
+    @Step("Generate random number from available checkboxes")
     private void setRandomNumberOutOfAvailableCheckboxes() {
         activeCheckbox = activeCheckbox.filter(new Locator.FilterOptions().setHasText(Pattern.compile("\\d+")));
         activeCheckbox.last().waitFor();
@@ -179,6 +186,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
+    @Step("Get a number of available questions")
     private int getNumberOfAvailableQuestions() {
 
         return Integer.parseInt(activeCheckbox.nth(randomNumber)

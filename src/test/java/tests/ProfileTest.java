@@ -1,6 +1,11 @@
 package tests;
 
 import com.microsoft.playwright.Locator;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
+import io.qameta.allure.TmsLink;
+import jdk.jfr.Description;
 import org.testng.annotations.Test;
 import pages.*;
 import tests.helpers.TestData;
@@ -10,7 +15,14 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class ProfileTest extends BaseTest {
 
-    @Test
+    @Test(
+            testName = "LMS-TC1359 Покупка курса.https://app.qase.io/plan/LMS/1?case=1359",
+            description = "TC1359-01 - Opening the Profile Page")
+    @Description("Objective: To verify that the user can successfully navigate to the Profile page."
+            + "Assert that the headers H3 display as expected: “Account”, “Your Courses”, “Payment method”.")
+    @Story("Profile")
+    @TmsLink("bagw135rbhfe")
+    @Severity(SeverityLevel.NORMAL)
     public void testProfilePageDisplaysHeaders() {
         final String profileUrl = ProjectProperties.BASE_URL + TestData.PROFILE_END_POINT;
 
@@ -29,7 +41,14 @@ public class ProfileTest extends BaseTest {
         assertThat(addANewCourseButton).isVisible();
     }
 
-    @Test
+    @Test(
+            testName = "LMS-TC1359 Покупка курса.https://app.qase.io/plan/LMS/1?case=1359",
+            description = "TC1359-02 - Opening the 'Add New Course' Page from Profile")
+    @Description("Objective: To verify that clicking the '+ Add a new course' button on the Profile page opens the 'Add new course' page."
+            + " and verify the 'Add new course' page is opened.")
+    @Story("Profile page")
+    @TmsLink("wclaf9sah357")
+    @Severity(SeverityLevel.NORMAL)
     public void testAddNewCourseButtonNavigation() {
         final String addNewCourseUrl = ProjectProperties.BASE_URL + TestData.ADD_NEW_COURSE_END_POINT;
 
@@ -42,8 +61,15 @@ public class ProfileTest extends BaseTest {
         assertThat(addNewCoursePage.getAddNewCourseHeader()).hasText(TestData.ADD_NEW_COURSE);
     }
 
-
-    @Test
+    @Test(
+            testName = "LMS-TC1359 Покупка курса.https://app.qase.io/plan/LMS/1?case=1359",
+            description = "TC1359-03 - Opening the 'Choose a Product' Modal by Clicking 'Get' Button”).")
+    @Description("Objective: To confirm that clicking the 'Get' button on the " +
+            "'Add new course' page opens the 'Choose a product' modal window."
+            + " and Verify that the user is redirected to the 'Choose a product' page, displayed as a modal window.")
+    @Story("Add New Course Page")
+    @TmsLink("du8bq42dps6b")
+    @Severity(SeverityLevel.NORMAL)
     public void testOpenChooseAProductModalByClickAGetButton() {
         AddNewCourseModal addNewCourseModal =
                 new HomePage(getPage()).init()
@@ -61,7 +87,14 @@ public class ProfileTest extends BaseTest {
         assertThat(lifetimeButton).isEnabled();
     }
 
-    @Test
+    @Test(
+            testName = "LMS-TC1359 Покупка курса.https://app.qase.io/plan/LMS/1?case=1359",
+            description = "TC1359-04 - Purchasing Lifetime Course (Gold package)")
+    @Description("Objective: To verify the user's ability to purchase the Lifetime course."
+            + " and verify that the user is redirected to the Lifetime course purchase page.")
+    @Story("Add New Course Page")
+    @TmsLink("wxcm7w4fhzq0")
+    @Severity(SeverityLevel.NORMAL)
     public void testClickOnTheLifeTimeButton() {
         AddNewCourseModal addNewCourseModal =
                 new HomePage(getPage()).init()
@@ -83,7 +116,14 @@ public class ProfileTest extends BaseTest {
         assertThat(purchaseButton).isEnabled();
     }
 
-    @Test
+    @Test(
+            testName = "LMS-TC1359 Покупка курса.https://app.qase.io/plan/LMS/1?case=1359",
+            description = "TC1359-05 - Inputting Payment Information After Clicking 'Purchase'")
+    @Description("Objective: To verify the user's ability to input payment information after clicking the 'Purchase' button."
+            + " and verify the User is redirected to the 'Add a payment method' page.")
+    @Story("StripeModal")
+    @TmsLink("8afbdan400ta")
+    @Severity(SeverityLevel.NORMAL)
     public void testPurchaseButtonNavigatesToStripeElement() {
         StripeModal stripeModal =
                 new HomePage(getPage()).init()
@@ -101,7 +141,14 @@ public class ProfileTest extends BaseTest {
         assertThat(stripeElement).isVisible();
     }
 
-    @Test
+    @Test(
+            testName = "LMS-TC1359 Покупка курса.https://app.qase.io/plan/LMS/1?case=1359",
+            description = "TC1359-06 - Submitting Payment with Valid Credit Card")
+    @Description("Objective: To verify the user's ability to submit payment after entering valid credit card information."
+            + " and verify that the new course is shown in the Your Courses list on the Profile page.")
+    @Story("Subscription payment was successful")
+    @TmsLink("appnuxx2ck9l")
+    @Severity(SeverityLevel.NORMAL)
     public void testE2EPurchaseLifeTimeCourse() {
         StripeModal stripeModal =
                 new HomePage(getPage()).init()

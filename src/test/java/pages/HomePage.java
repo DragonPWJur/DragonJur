@@ -18,6 +18,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     private final Locator streaksButton = locator("button>svg+p").last();
     private final Locator checkboxImage = locator("label:has(input) svg");
     private final List<Locator> allCheckboxes = allCheckboxes("label");
+    private final Locator streakDaysModalWindowText = locator("div[role='dialog']>div>p");
 
     private final int randomIndex = getRandomInt(0, allCheckboxes.size());
 
@@ -56,12 +57,13 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return sideMenuPoints.innerText();
     }
 
-    @Step("Get Main Section Points number")
+    @Step("Get Side Menu Section Points number")
     public int getSideMenuPoints() {
 
         return TestUtils.getInt(getSideMenuPointsText());
     }
 
+    @Step("Find a block 'Week 1'")
     public HomePage focusWeek1Header() {
         week1Header.focus();
 
@@ -83,6 +85,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return allCheckboxes;
     }
 
+    @Step("Click on empty checkbox")
     public HomePage clickWeek1FirstCheckbox() {
         week1FirstCheckbox.click();
 
@@ -100,12 +103,14 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         waitWithTimeout(2000);
     }
 
+    @Step("Click on the 'Streaks' button")
     public HomePage clickStreaksButton() {
         streaksButton.click();
 
         return this;
     }
 
+    @Step("The modal window will be opened")
     public Locator getStreaksModalWindow() {
 
         return getDialog();
@@ -147,22 +152,26 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return allCheckboxes.stream().allMatch(Locator::isChecked);
     }
 
+    @Step("Click random checkbox ({randomIndex}).")
     public HomePage clickRandomCheckbox(){
         getNthCheckbox(randomIndex).click();
 
         return this;
     }
 
+    @Step("Get checkbox by number {number}.")
     public Locator getNthCheckbox(int number) {
 
         return allCheckboxes.get(number);
     }
 
+    @Step("Select any of the checkboxes on home page ({randomIndex}).")
     public Locator getRandomCheckbox() {
 
         return allCheckboxes.get(randomIndex);
     }
 
+    @Step("Click on {randomNumber}-nth checkbox")
     public HomePage clickNthCheckbox(int randomNumber) {
         getNthCheckbox(randomNumber).click();
 
@@ -189,15 +198,33 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return this;
     }
 
+    @Step("Click study this button.")
     public HomePage clickStudyThisButton() {
         studyThisButton.click();
 
         return this;
     }
 
+    @Step("Get checkbox image ({randomCheckBox}).")
     public Locator getCheckboxImage(Locator randomCheckBox) {
 
         return randomCheckBox.locator("svg");
+    }
+
+    @Step("The modal window contains the text: 'You are on a 1 day study streak!'")
+    public Locator getStreakDaysModalWindowTextLocator() {
+
+        return streakDaysModalWindowText;
+    }
+
+    public Locator getStreaksButton() {
+
+        return streaksButton;
+    }
+
+    public int getRandomCheckboxIndex(List<Locator> list) {
+
+        return getRandomNumber(list);
     }
 
 

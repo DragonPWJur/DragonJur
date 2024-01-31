@@ -59,6 +59,7 @@ public final class TestData {
     public static final String CVC_DATE = "333";
     public static final String COUNTRY_DATE = "United States";
     public static final String ZIP_CODE_DATE = "07920";
+    public static final String ONE_DAY_STUDY_STREAK_MESSAGE = "You are on a 1 day study streak!";
 
 
     public static final String[] STACKS_NAMES = {
