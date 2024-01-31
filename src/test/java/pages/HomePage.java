@@ -200,7 +200,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return this;
     }
 
-    @Step("Get checkbox image.")
+    @Step("Get checkbox image ({randomCheckBox}).")
     public Locator getCheckboxImage(Locator randomCheckBox) {
 
         return randomCheckBox.locator("svg");
