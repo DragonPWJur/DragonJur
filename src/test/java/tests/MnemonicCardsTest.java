@@ -52,4 +52,5 @@ public class MnemonicCardsTest extends BaseTest {
                         ") does NOT equals expected stack quantity: (" + expectedStackQuantity + ").\n"
         );
     }
+
 }
