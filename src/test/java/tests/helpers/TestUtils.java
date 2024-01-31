@@ -8,9 +8,14 @@ import java.util.Random;
 
 public final class TestUtils {
 
+    public static String onlyNumbers(String text) {
+
+        return text.replaceAll("[^0-9]", "");
+    }
+
     public static int getInt(String text) {
 
-        return Integer.parseInt(text);
+        return Integer.parseInt(onlyNumbers(text));
     }
 
     public static String getString(int number) {
