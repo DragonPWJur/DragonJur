@@ -8,6 +8,7 @@ import com.microsoft.playwright.APIRequest;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
+import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.json.JSONObject;
 import utils.reports.LoggerUtils;
@@ -29,12 +30,17 @@ public final class APIUtils {
 
     public static void cleanUserData(Playwright playwright) {
 
+
         APIResponse deleteCoursesResults = APIServices.deleteCoursesResults(playwright);
         checkStatus(deleteCoursesResults, "Delete Courses Results");
 
         APIResponse deleteCustomerPaymentMethod = APIServices.deleteCustomerPaymentMethod(playwright);
         checkStatus(deleteCustomerPaymentMethod, "Delete Customer Payment Method");
     }
+
+    private enum answerStatus {YES, NO, KINDA}
+
+    ;
 
 
     private static APIRequestContext createAdminAPIRequestContext() {
@@ -65,7 +71,17 @@ public final class APIUtils {
         return object;
     }
 
-
+    static void checkStatus(APIResponse apiResponse, String methodName) {
+        if (apiResponse.status() < 200 || apiResponse.status() >= 300) {
+            LoggerUtils.logException("EXCEPTION: API request FAILED. \n" +
+                    "response status: " + apiResponse.status()
+                    + "\n url: " + apiResponse.url()
+                    + "\n body: " + apiResponse.text());
+            Assert.fail();
+        } else {
+            LoggerUtils.logInfo("API: " + methodName + " " + apiResponse.status());
+        }
+    }
 
     public static void goToAdminAndChangeChapter1Unit1Text(String word, String action, APIRequestContext requestContext) {
         final String courseId = APIServices.getActiveCourse(requestContext).get("id").getAsString();
@@ -160,13 +176,14 @@ public final class APIUtils {
         }
     }
 
+    @Step("Mark check boxes.")
     public static void markCheckBoxes(APIRequestContext request) {
 
         JsonObject plans = APIServices.getPlans(request);
-        String _2WeekPlanId = get2WeekId(plans);
+        String _2WeeksPlanId = get2WeekId(plans);
 
-        APIServices.changeCurrentPlan(request, _2WeekPlanId);
-        JsonObject planPhases = APIServices.getPlanPhases(request, _2WeekPlanId);
+        APIServices.changeCurrentPlan(request, _2WeeksPlanId);
+        JsonObject planPhases = APIServices.getPlanPhases(request, _2WeeksPlanId);
 
         List<String> checkboxesIds = getPlanPhasesId(planPhases);
 
@@ -177,6 +194,7 @@ public final class APIUtils {
 
         markCheckBoxes(request, checkboxesIds);
     }
+
     public static APIRequestContext createApiRequestContext(Playwright playwright) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
@@ -243,7 +261,7 @@ public final class APIUtils {
         }
     }
 
-    public static void setAnswerOptionsForFlashcardPacks(APIRequestContext requestContext, String[] stacksNames ) {
+    public static void setAnswerOptionsForFlashcardPacks(APIRequestContext requestContext, String[] stacksNames) {
         final JsonArray allPacks = APIServices.getFlashcardsPacks(requestContext).getAsJsonArray("items");
 
         for (JsonElement packElm : allPacks) {
@@ -265,7 +283,7 @@ public final class APIUtils {
                     APIServices.saveFlashcardAnswer(requestContext, flashcards.get(i).getAsJsonObject().get("id").getAsString(), answerStatus.KINDA.name());
                 }
 
-                APIServices.completePack(requestContext , pack.get("id").getAsString());
+                APIServices.completePack(requestContext, pack.get("id").getAsString());
             }
         }
     }

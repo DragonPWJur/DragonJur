@@ -44,6 +44,7 @@ public final class FlashcardPacksPage extends BaseSideMenu<FlashcardPacksPage> i
         return getPackSplitText()[1].trim().split(" ")[0].split("/")[1];
     }
 
+    @Step("Retrieve the amount of cards marked for rechecking")
     public String getAmountOfCardsMarkedForRechecking() {
         String[] textToArray = markedForRecheckingButton.innerText().trim().split("\n");
 

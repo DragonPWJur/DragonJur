@@ -2,10 +2,10 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Step;
 import pages.constants.Constants;
 
 import java.util.List;
-import java.util.Random;
 
 public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPage> implements IRandom {
 
@@ -38,7 +38,7 @@ public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPag
 
         return textArray[0];
     }
-
+@Step("Click random 'Mnemonic Cards' stack.")
     public MnemonicCardsPage clickRandomMnemonicCardsStack() {
         randomStack.click();
 

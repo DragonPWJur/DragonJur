@@ -44,14 +44,7 @@ public final class PerformancePage extends BaseSideMenu<PerformancePage> {
         return createPage(new PerformancePage(getPage()), Constants.PERFORMANCE_END_POINT);
     }
 
-    @Step("Click on “Overall”.")
-    public PerformancePage clickOverallDropdown() {
-        overallButton.click();
-
-        return this;
-    }
-
-    @Step("Click dropdown from Overall")
+    @Step("Click dropdown filter menu.")
     public PerformancePage clickDropdown() {
         dropdownLocator.click();
 

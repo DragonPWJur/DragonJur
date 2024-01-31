@@ -16,7 +16,13 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class TestTutorTest extends BaseTest {
 
-    @Test
+    @Test(
+            testName = "LMS-1350 возможность для юзера помечать, https://app.qase.io/plan/LMS/1?case=1350",
+            description = "TC1350-01 User can mark the card."
+    )
+    @Description("Objective: To confirm the functionality allowing the user to mark a card for review and verify the change in the button's label from 'Mark for review' to 'Remove from marked.'")
+    @Story("Test page")
+    @TmsLink("2xfbdetx0jqy")
     public void testUserCanMarkTheCard() {
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
 
@@ -79,7 +85,6 @@ public class TestTutorTest extends BaseTest {
         assertThat(message).hasText(TestData.THE_REPORT_HAS_BEEN_SENT_SUCCESSFULLY);
     }
 
-    @Ignore
     @Test(description = "TC1344-02 Execute Tutor Mode with a randomly selected checkbox in the Domain section.")
     @Description("Objective: To verify that User can successfully activate Tutor mode by checking a random checkbox " +
             "in the Domain section and entering valid data in the ‘Number of Questions’ field.")
@@ -133,7 +138,13 @@ public class TestTutorTest extends BaseTest {
     }
 
     @Ignore
-    @Test
+    @Test(
+            testName = "LMS-1350 возможность для юзера помечать., https://app.qase.io/plan/LMS/1?case=1350",
+            description = "TC1350-02 After marking the card, the number of marked cards increased by 1. "
+    )
+    @Description("Objective: To confirm the functionality allowing the user to mark a card for review and the amount of marked cards increased by 1.")
+    @Story("Test page")
+    @TmsLink("7qvothosvy8q")
     public void testAfterMarkingTheCardTheNumberOfMarkedCardsIncreasedBy1() {
 
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
@@ -223,6 +234,8 @@ public class TestTutorTest extends BaseTest {
                         + ") are not greater then points before running test (" + mainSectionPointsBefore + ").\n"
         );
     }
+
+    @Ignore
     @Test(
             testName = "LMS-1364 Запуск тестов. https://app.qase.io/case/LMS-1364",
             description = "TC1364-01 - Running Test in Study Guide with Gold Subscription"

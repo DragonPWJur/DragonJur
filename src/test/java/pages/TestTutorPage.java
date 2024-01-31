@@ -18,7 +18,7 @@ public final class TestTutorPage extends BaseTestsPage<TestTutorPage> implements
     }
 
     @Override
-    public TestTutorPage init() {
+    TestTutorPage init() {
 
         return createPage(new TestTutorPage(getPage()), Constants.TEST_TUTOR_END_POINT);
     }

@@ -2,6 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Step;
 
 public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
     private final Locator lifeTimeButton = button("Life time");
@@ -21,7 +22,7 @@ public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
 
         return new AddNewCourseModal(getPage());
     }
-
+    @Step("User is on the 'Choose a product' page.Click on the 'Lifetime' button on the page.")
     public AddNewCourseModal clickLifeTimeButton() {
         lifeTimeButton.click();
 
@@ -57,7 +58,7 @@ public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
 
         return purchaseButton;
     }
-
+    @Step("Click on the 'Purchase' button on the page.")
     public StripeModal clickPurchaseButton() {
         purchaseButton.click();
 
