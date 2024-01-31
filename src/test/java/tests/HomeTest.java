@@ -11,9 +11,7 @@ import pages.HomePage;
 import pages.PreconditionPage;
 import pages.constants.Constants;
 import tests.helpers.TestData;
-import tests.helpers.TestUtils;
 
-import javax.swing.text.Utilities;
 import java.util.List;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;

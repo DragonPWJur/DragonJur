@@ -7,7 +7,6 @@ import pages.constants.Constants;
 import tests.helpers.TestUtils;
 
 import java.util.List;
-import java.util.regex.Pattern;
 
 public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     private final Locator studyThisButton = button("Study This");
