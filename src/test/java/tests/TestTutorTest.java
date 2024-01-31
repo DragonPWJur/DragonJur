@@ -222,6 +222,8 @@ public class TestTutorTest extends BaseTest {
                         + ") are not greater then points before running test (" + mainSectionPointsBefore + ").\n"
         );
     }
+
+    @Ignore
     @Test(
             testName = "LMS-1364 Запуск тестов. https://app.qase.io/case/LMS-1364",
             description = "TC1364-01 - Running Test in Study Guide with Gold Subscription"

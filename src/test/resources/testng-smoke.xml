@@ -4,6 +4,7 @@
 <suite name="Dragon Tests">
     <test name="Smoke tests">
         <classes>
+            <class name="tests.NewCustomerTest"/>
             <class name="tests.BronzeSubscriptionTest"/>
             <class name="tests.FlashcardPacksTest"/>
             <class name="tests.HomeTest"/>
