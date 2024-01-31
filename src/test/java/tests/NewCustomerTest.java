@@ -11,7 +11,7 @@ import tests.helpers.TestData;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-public class ANewCustomerTest extends BaseTest {
+public class NewCustomerTest extends BaseTest {
     @Test(
             testName = "LMS-1343 Отработка streaks. https://app.qase.io/plan/LMS/1?case=1343",
             description = "TC1343-02 - Verification of Text in the 'Streaks' Modal Window"

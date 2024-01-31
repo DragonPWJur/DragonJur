@@ -25,7 +25,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     public HomePage(Page page) {
         super(page);
     }
-    @Step("User has navigated to the Home page")
+
     @Override
     public HomePage init() {
 
@@ -164,7 +164,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
 
         return allCheckboxes.get(randomIndex);
     }
-
+    @Step("Click on {randomNumber}-nth checkbox")
     public HomePage clickNthCheckbox(int randomNumber) {
         getNthCheckbox(randomNumber).click();
 
