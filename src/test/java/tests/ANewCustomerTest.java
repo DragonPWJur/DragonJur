@@ -13,7 +13,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class ANewCustomerTest extends BaseTest {
     @Test(
-            testName = "LMS-1343 https://app.qase.io/plan/LMS/1?case=1343",
+            testName = "LMS-1343 Отработка streaks. https://app.qase.io/plan/LMS/1?case=1343",
             description = "TC1343-02 - Verification of Text in the 'Streaks' Modal Window"
     )
     @Description("Objective: To confirm that the user can view points greater than 0 and the text indicating the number of streak days in the modal window.")
@@ -21,8 +21,7 @@ public class ANewCustomerTest extends BaseTest {
     @TmsLink("j0y70alubidi")
     public void testStreaksModalWindowTextVerification() {
         HomePage homePage =
-                new HomePage(getPage())
-                        .init()
+                new HomePage(getPage()).init()
                         .clickHomeMenu();
 
         assertThat(homePage.getStreaksButton()).hasText("0");
@@ -33,7 +32,6 @@ public class ANewCustomerTest extends BaseTest {
                 .clickNthCheckbox(randomIndex);
 
         assertThat(homePage.getNthCheckbox(randomIndex)).isChecked();
-
         assertThat(homePage.getStreaksButton()).hasText("1");
 
         homePage
