@@ -8,6 +8,7 @@ import com.microsoft.playwright.APIRequest;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
+import io.qameta.allure.Step;
 import org.testng.Assert;
 import org.json.JSONObject;
 import utils.reports.LoggerUtils;
@@ -25,7 +26,9 @@ public final class APIUtils {
     public static final String BRONZE = "bronze";
     private static Playwright playwright;
 
-    private enum answerStatus {YES, NO, KINDA};
+    private enum answerStatus {YES, NO, KINDA}
+
+    ;
 
     private static APIRequestContext createAdminAPIRequestContext() {
         playwright = Playwright.create();
@@ -160,6 +163,7 @@ public final class APIUtils {
         }
     }
 
+    @Step("Mark check boxes.")
     public static void markCheckBoxes(APIRequestContext request) {
 
         JsonObject plans = APIServices.getPlans(request);
@@ -177,6 +181,7 @@ public final class APIUtils {
 
         markCheckBoxes(request, checkboxesIds);
     }
+
     public static APIRequestContext createApiRequestContext(Playwright playwright) {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
@@ -243,7 +248,7 @@ public final class APIUtils {
         }
     }
 
-    public static void setAnswerOptionsForFlashcardPacks(APIRequestContext requestContext, String[] stacksNames ) {
+    public static void setAnswerOptionsForFlashcardPacks(APIRequestContext requestContext, String[] stacksNames) {
         final JsonArray allPacks = APIServices.getFlashcardsPacks(requestContext).getAsJsonArray("items");
 
         for (JsonElement packElm : allPacks) {
@@ -265,7 +270,7 @@ public final class APIUtils {
                     APIServices.saveFlashcardAnswer(requestContext, flashcards.get(i).getAsJsonObject().get("id").getAsString(), answerStatus.KINDA.name());
                 }
 
-                APIServices.completePack(requestContext , pack.get("id").getAsString());
+                APIServices.completePack(requestContext, pack.get("id").getAsString());
             }
         }
     }

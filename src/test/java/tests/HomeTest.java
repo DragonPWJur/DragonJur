@@ -94,7 +94,7 @@ public final class HomeTest extends BaseTest {
 
         final List<Locator> allCheckboxesInAWeek2Plan =
                 precondition
-                        .getAllCheckboxesInA2WeeksPlan();
+                        .getAllCheckboxesWithinCurrentPlan();
 
         Assert.assertFalse(
                 allCheckboxesInAWeek2Plan.isEmpty(),
