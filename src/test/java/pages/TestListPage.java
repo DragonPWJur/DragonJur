@@ -150,10 +150,11 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return Integer.parseInt(markedNumber.innerText());
     }
 
-//    public Locator checkIcon(String text) {
-//
-//        return allCheckboxes.getByText(text).locator("svg");
-//    }
+    @Step("Get checkbox image for checkbox {text}")
+    public Locator getCheckboxImage(String text) {
+
+        return checkbox.getByText(text).locator("svg");
+    }
 
     @Step("Click 'Automation testing for stats' checkbox")
     public TestListPage clickAutomationTestingForStatsCheckBox() {
