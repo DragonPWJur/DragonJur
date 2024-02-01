@@ -17,6 +17,7 @@ import static utils.api.APIData.*;
 public final class APIUserServices {
     public static Playwright playwrightUser;
     private static APIRequestContext requestContext;
+
     private static final String USER_TOKEN = LoginUtils.getUserToken();
 
     private static APIRequestContext createAPIUserRequestContext() {
@@ -161,9 +162,9 @@ public final class APIUserServices {
     }
 
     static APIResponse postCoursesIdSubscribe(String courseId, String period, String type) {
-        Map<String, String> courseData = new HashMap<>();
-        courseData.put("period", period);
-        courseData.put("type", type);
+        Map<String, String> data = new HashMap<>();
+        data.put("period", period);
+        data.put("type", type);
 
         requestContext = createAPIUserRequestContext();
 
@@ -172,7 +173,7 @@ public final class APIUserServices {
                         COURSES + '/' + courseId + SUBSCRIBE,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
-                                .setData(courseData)
+                                .setData(data)
                 );
     }
 
@@ -246,7 +247,7 @@ public final class APIUserServices {
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
                 );
     }
-    public static void finishAnswers(String testId) {
+    public static void postPassagesIdFinish(String testId) {
         requestContext = createAPIUserRequestContext();
 
          requestContext
@@ -258,10 +259,11 @@ public final class APIUserServices {
                 );
     }
 
-    public static void answerQuestion(String testId, String optionId, String questionId) {
-        Map<String, String> payload = new HashMap<>();
-        payload.put("optionId", optionId);
-        payload.put("questionId", questionId);
+    public static void postPassagesIDAnswer(String testId, String optionId, String questionId) {
+        Map<String, String> data = new HashMap<>();
+        data.put("optionId", optionId);
+        data.put("questionId", questionId);
+
         requestContext = createAPIUserRequestContext();
 
         requestContext
@@ -270,14 +272,15 @@ public final class APIUserServices {
                         RequestOptions
                                 .create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
-                                .setData(payload)
+                                .setData(data)
                 );
     }
 
-    public static APIResponse getQuestions(List<String> id, int questionsAmount) {
-        Map<String, Object> payload = new HashMap<>();
-        payload.put("domainIds", id);
-        payload.put("questionsAmount", questionsAmount);
+    public static APIResponse postTutorTestStart(List<String> id, int questionsAmount) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("domainIds", id);
+        data.put("questionsAmount", questionsAmount);
+
         requestContext = createAPIUserRequestContext();
 
         return requestContext
@@ -286,14 +289,13 @@ public final class APIUserServices {
                         RequestOptions
                                 .create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
-                                .setData(payload)
+                                .setData(data)
                 );
     }
 
     public static APIResponse postQuestionDomains(String courseId) {
-
-        Map<String, String> courseData = new HashMap<>();
-        courseData.put("courseId", courseId);
+        Map<String, String> data = new HashMap<>();
+        data.put("courseId", courseId);
 
         requestContext = createAPIUserRequestContext();
 
@@ -302,7 +304,7 @@ public final class APIUserServices {
                         QUESTION_DOMAINS,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
-                                .setData(courseData)
+                                .setData(data)
                 );
     }
 }

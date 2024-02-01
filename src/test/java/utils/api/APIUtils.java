@@ -35,6 +35,17 @@ public final class APIUtils {
         return object;
     }
 
+    static JsonArray initJsonArray(String apiResponseBody) {
+        JsonArray array = new JsonArray();
+        try {
+            return new Gson().fromJson(apiResponseBody, JsonArray.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return array;
+    }
+
     private static JsonObject getActiveCourse() {
         final APIResponse getCoursesActive = APIUserServices.getCoursesActive();
         checkStatus(getCoursesActive, "getCoursesActive");
@@ -77,7 +88,7 @@ public final class APIUtils {
         return initJsonObject(getPlansIdPhases.text());
     }
 
-    private static JsonObject                                                                                                                                                 getFlashcardsPacks(int limit) {
+    private static JsonObject getFlashcardsPacks(int limit) {
         APIResponse getFlashcardsPacks = APIUserServices.getFlashcardsPacks(limit);
         checkStatus(getFlashcardsPacks, "getFlashcardsPacks");
 
@@ -124,6 +135,13 @@ public final class APIUtils {
     private static void deleteCoursesResults() {
         final APIResponse deleteCoursesResults = APIUserServices.deleteCoursesResults();
         checkStatus(deleteCoursesResults, "deleteCoursesResults");
+    }
+
+    private static JsonArray getAllDomains(String courseId) {
+        final APIResponse postQuestionDomains = APIUserServices.postQuestionDomains(courseId);
+        checkStatus(postQuestionDomains, "postQuestionDomains");
+
+        return initJsonArray(postQuestionDomains.text());
     }
 
     private static void deletePaymentMethod() {
@@ -333,45 +351,21 @@ public final class APIUtils {
         }
     }
 
-    private static List<List<Integer>> getParts(String[] packsNames){
-        int cardsAmount;
-        int lastPart = 0;
-        List<Integer> part1 = new ArrayList<>();
-        List<Integer> part2 = new ArrayList<>();
-        List<Integer> part3 = new ArrayList<>();
-        List<List<Integer>> result = new ArrayList<>();
-
-        if(packsNames.length % 3 == 0) {
-            cardsAmount = packsNames.length / 3;
-        } else {
-            cardsAmount = packsNames.length / 3;
-            lastPart = cardsAmount + packsNames.length % 3;
-        }
-
-        for(int i = 0; i < cardsAmount; i ++) {
-            part1.add(i);
-        }
-
-        for(int i = cardsAmount; i < cardsAmount + cardsAmount; i ++) {
-            part2.add(i);
-        }
-
-        for(int i = cardsAmount + cardsAmount; i < lastPart; i ++) {
-            part3.add(i);
-        }
-
-        result.add(part1);
-        result.add(part2);
-        result.add(part3);
-
-        return result;
-    }
-
     public static void getTotalQuestions() {
         String courseId = getActiveCourseId();
+        final JsonArray allDomains = getAllDomains(courseId);
 
-       JsonElement total = getAllQuestionDomains(courseId).getAsJsonArray().get(0).getAsJsonObject().get("all");
-//               .getAsJsonArray().get(0).getAsJsonObject().get("total").getAsInt();
+        List<String> ids = new ArrayList<>();
+        for(JsonElement domain : allDomains) {
+            JsonObject eachAll = domain.getAsJsonObject().get("all").getAsJsonObject();
+            if(eachAll.get("total").getAsInt() >= 20) {
+                ids.add(eachAll.get("id").getAsString());
+            }
+        }
+
+
+        System.out.println(ids);
+
 
 //        List<Integer> alls = new ArrayList<>();
 //        for (int i = 0; i < allQuestionDomains.size(); i++) {
@@ -392,11 +386,41 @@ public final class APIUtils {
 //        System.out.println(domainsIDs);
     }
 
-    private static JsonObject getAllQuestionDomains(String courseId) {
-        final APIResponse postQuestionDomains = APIUserServices.postQuestionDomains(courseId);
-        checkStatus(postQuestionDomains, "postQuestionDomains");
 
-        return initJsonObject(postQuestionDomains.text());
+    private static List<List<Integer>> getParts(String[] packsNames) {
+        int cardsAmount;
+        int lastPart = 0;
+        List<Integer> part1 = new ArrayList<>();
+        List<Integer> part2 = new ArrayList<>();
+        List<Integer> part3 = new ArrayList<>();
+        List<List<Integer>> result = new ArrayList<>();
+
+        if (packsNames.length % 3 == 0) {
+            cardsAmount = packsNames.length / 3;
+        } else {
+            cardsAmount = packsNames.length / 3;
+            lastPart = cardsAmount + packsNames.length % 3;
+        }
+
+        for (int i = 0; i < cardsAmount; i++) {
+            part1.add(i);
+        }
+
+        for (int i = cardsAmount; i < cardsAmount + cardsAmount; i++) {
+            part2.add(i);
+        }
+
+        for (int i = cardsAmount + cardsAmount; i < lastPart; i++) {
+            part3.add(i);
+        }
+
+        result.add(part1);
+        result.add(part2);
+        result.add(part3);
+
+        return result;
     }
+
+
 
 }
