@@ -4,6 +4,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import io.qameta.allure.Step;
+import tests.helpers.TestData;
 import utils.api.APIUtils;
 
 import java.util.List;
@@ -117,10 +118,10 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return false;
     }
 
-    @Step("Precondition: Ensure all checkboxes should be checked.")
-    public boolean areAllCheckboxesChecked() {
+    @Step("Precondition: Ensure all checkboxes should be checked within {planName}.")
+    public boolean areAllCheckboxesChecked(String planName) {
 
-        APIUtils.markCheckBoxes(getPage().request());
+        APIUtils.markTasks(planName);
         getPage().reload();
 
         return new HomePage(getPage()).init()
@@ -221,6 +222,6 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
 
     @Step("Precondition: Set answer options for 9 cards as: 3 cards - Yes, 3 cards - Kinda, 3 cards - No.")
     public void setOptionsYes3No3Kinda3(String[] stackNames) {
-        APIUtils.setAnswerOptionsForFlashcardPacks(getPage().request(), stackNames);
+        APIUtils.setMarkOptionsForFlashcardPacks(stackNames, 20);
     }
 }

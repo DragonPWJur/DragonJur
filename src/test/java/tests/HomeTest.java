@@ -6,7 +6,6 @@ import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
 
 import org.testng.Assert;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.PreconditionPage;
@@ -170,7 +169,7 @@ public final class HomeTest extends BaseTest {
     @TmsLink("nf0bbnl8cpe4")
     public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive(){
 
-        Assert.assertTrue(new PreconditionPage(getPage()).init().areAllCheckboxesChecked(),
+        Assert.assertTrue(new PreconditionPage(getPage()).init().areAllCheckboxesChecked(TestData.TWO_WEEKS_PLAN),
                 "If FAIL: Precondition 'All checkboxes should be checked' is NOT reached.\n"
         );
 
@@ -204,7 +203,7 @@ public final class HomeTest extends BaseTest {
 
         final boolean areAllCheckboxesChecked =
                 new PreconditionPage(getPage()).init()
-                        .areAllCheckboxesChecked();
+                        .areAllCheckboxesChecked(TestData.TWO_WEEKS_PLAN);
 
         Assert.assertTrue(
                 areAllCheckboxesChecked,

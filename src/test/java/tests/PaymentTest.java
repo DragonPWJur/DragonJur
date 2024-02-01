@@ -13,7 +13,7 @@ import utils.runner.ProjectProperties;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-public class ProfileTest extends BaseTest {
+public class PaymentTest extends BaseTest {
 
     @Test(
             testName = "LMS-TC1359 Покупка курса.https://app.qase.io/plan/LMS/1?case=1359",
@@ -23,7 +23,7 @@ public class ProfileTest extends BaseTest {
     @Story("Profile")
     @TmsLink("bagw135rbhfe")
     @Severity(SeverityLevel.NORMAL)
-    public void testProfilePageDisplaysHeaders() {
+    public void testProfilePageDisplaysBuyNewCourseHeaders() {
         final String profileUrl = ProjectProperties.BASE_URL + TestData.PROFILE_END_POINT;
 
         ProfilePage profilePage =
