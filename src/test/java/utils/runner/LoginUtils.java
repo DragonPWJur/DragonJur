@@ -15,7 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static utils.reports.LoggerUtils.*;
-import static utils.runner.ProjectProperties.isServerRun;
+import static utils.runner.ProjectProperties.IS_CREATING_NEW_CUSTOMER;
 
 public final class LoginUtils {
     public static final String COOKIES_FILE_PATH = "src/test/resources/state.json";
@@ -191,7 +191,7 @@ public final class LoginUtils {
     }
 
     public static void selectLocalOrCICustomer() {
-        if(isServerRun()) {
+        if(IS_CREATING_NEW_CUSTOMER) {
             username = APINewCustomerUtils.getUsername();
             password = APINewCustomerUtils.getPassword();
         } else {

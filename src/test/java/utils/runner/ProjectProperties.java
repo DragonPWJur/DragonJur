@@ -27,6 +27,7 @@ public final class ProjectProperties {
     public static final String API_BASE_URL = properties.getProperty("apiBaseUrl").trim();
     public static final String ADMIN_USERNAME = properties.getProperty("adminUsername").trim();
     public static final String ADMIN_PASSWORD = properties.getProperty("adminPassword").trim();
+    public static final boolean IS_CREATING_NEW_CUSTOMER = Boolean.parseBoolean(properties.getProperty("isCreatingNewCustomer").trim());
 
     private static Properties init_properties() {
         if (properties == null) {

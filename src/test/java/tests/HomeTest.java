@@ -4,9 +4,7 @@ import com.microsoft.playwright.Locator;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
-
 import org.testng.Assert;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.PreconditionPage;
