@@ -19,8 +19,7 @@ public class SearchTest extends BaseTest {
 
     @Test(
             testName = "LMS-1361 Поиск по конкретному слову. https://app.qase.io/plan/LMS/1?case=1361",
-            description = "TC1361-01 - Typing of not found text gives 'Nothing found. Try to use other keywords' message."
-    )
+            description = "TC1361-01 - Typing of not found text gives 'Nothing found. Try to use other keywords' message.")
     @Description("Objective: To confirm the display of the 'Nothing found. Try to use other keywords' message when" +
             " a non-existent keyword is typed.")
     @Story("Search")
@@ -42,8 +41,7 @@ public class SearchTest extends BaseTest {
 
     @Test(
             testName = "LMS-1361 Поиск по конкретному слову. https://app.qase.io/plan/LMS/1?case=1361",
-            description = "TC1361-02 - Displaying All Matches for the Searched Keyword."
-    )
+            description = "TC1361-02 - Displaying All Matches for the Searched Keyword.")
     @Description("Objective: To confirm that searching a keyword displays all partial or full matches under" +
             " the Search field.")
     @Story("Search")

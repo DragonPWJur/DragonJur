@@ -1,9 +1,7 @@
 package tests;
 
 import com.microsoft.playwright.Locator;
-import io.qameta.allure.Description;
-import io.qameta.allure.Story;
-import io.qameta.allure.TmsLink;
+import io.qameta.allure.*;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -19,11 +17,11 @@ public final class HomeTest extends BaseTest {
 
     @Test(
             testName = "LMS-1365 Начисление points. https://app.qase.io/plan/LMS/1?case=1365",
-            description = "TC1365-01 - Upon clicking the empty checkbox, the point count increases."
-    )
+            description = "TC1365-01 - Upon clicking the empty checkbox, the point count increases.")
     @Description("Objective: Verify that user points increase when you click on the empty checkbox.")
     @Story("Home Page")
     @TmsLink("fowvuhi3zcc7")
+    @Severity(SeverityLevel.NORMAL)
     public void testUponClickingCheckboxPointsCountIncreases() {
         HomePage homePage =
                 new HomePage(getPage()).init()
@@ -68,11 +66,11 @@ public final class HomeTest extends BaseTest {
 
     @Test(
             testName = "LMS-1343 Отработка streaks. https://app.qase.io/plan/LMS/1?case=1343",
-            description = "TC1343-01 - Verification “Streaks” modal window appears."
-    )
+            description = "TC1343-01 - Verification “Streaks” modal window appears.")
     @Description("Objective: To verify that the modal window will be opened after clicking on the “Streaks” button.")
     @Story("Home Page")
     @TmsLink("9rsd8ecq6x5y")
+    @Severity(SeverityLevel.NORMAL)
     public void testStreaksModalWindowIsAppeared() {
         HomePage homePage =
                 new HomePage(getPage()).init()
@@ -84,11 +82,11 @@ public final class HomeTest extends BaseTest {
 
     @Test(
             testName = "LMS-1341 Нажатие чекбоксов, https://app.qase.io/plan/LMS/1?case=1341",
-            description = "TC1341-01 - Deactivation of a single Already Active Checkbox when all checkboxes are active."
-    )
+            description = "TC1341-01 - Deactivation of a single Already Active Checkbox when all checkboxes are active.")
     @Description("To verify that a non-active checkbox can be successfully checked.")
     @Story("Home page")
     @TmsLink("oz4bwi8yjqj")
+    @Severity(SeverityLevel.NORMAL)
     public void testTheSingleNonActiveCheckboxCanBeChecked() {
 
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
@@ -131,6 +129,7 @@ public final class HomeTest extends BaseTest {
     @Description("To verify the functionality where an active checkbox becomes inactive upon being clicked again.")
     @Story("Home page")
     @TmsLink("khucr6xuqdib")
+    @Severity(SeverityLevel.NORMAL)
     public void testDeactivationOfAlreadyActiveSingleCheckbox() {
         PreconditionPage preconditionPage = new PreconditionPage(getPage()).init();
 
@@ -167,6 +166,7 @@ public final class HomeTest extends BaseTest {
     @Description("To verify the functionality when all checkboxes are checked, and a single active checkbox becomes inactive upon clicking again.")
     @Story("Home page")
     @TmsLink("nf0bbnl8cpe4")
+    @Severity(SeverityLevel.NORMAL)
     public void testDeactivationOfSingleCheckboxWhenAllCheckboxesAreActive(){
 
         Assert.assertTrue(new PreconditionPage(getPage()).init().areAllCheckboxesChecked(TestData.TWO_WEEKS_PLAN),
@@ -199,6 +199,7 @@ public final class HomeTest extends BaseTest {
     @Description("To verify that the deactivated single checkbox can be checked again and the amount of points is decreasing and increasing accordingly.")
     @Story("Home page")
     @TmsLink("sc19hl34f3cj")
+    @Severity(SeverityLevel.NORMAL)
     public void testDeactivationCheckboxWithAllCheckboxesActiveE2E(){
 
         final boolean areAllCheckboxesChecked =
@@ -256,6 +257,7 @@ public final class HomeTest extends BaseTest {
     @Description("To verify the modal window is open when clicking the Study This button.")
     @Story("Home page")
     @TmsLink("zhdhkv1f6nk7")
+    @Severity(SeverityLevel.NORMAL)
     public void testModalWindowStudyIsOpened() {
         HomePage homePage =
                 new HomePage(getPage()).init()

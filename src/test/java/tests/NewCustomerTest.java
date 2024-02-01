@@ -1,8 +1,6 @@
 package tests;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Story;
-import io.qameta.allure.TmsLink;
+import io.qameta.allure.*;
 
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -12,13 +10,14 @@ import tests.helpers.TestData;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class NewCustomerTest extends BaseTest {
+
     @Test(
             testName = "LMS-1343 Отработка streaks. https://app.qase.io/plan/LMS/1?case=1343",
-            description = "TC1343-02 - Verification of Text in the 'Streaks' Modal Window"
-    )
+            description = "TC1343-02 - Verification of Text in the 'Streaks' Modal Window")
     @Description("Objective: To confirm that the user can view points greater than 0 and the text indicating the number of streak days in the modal window.")
     @Story("Home Page")
     @TmsLink("j0y70alubidi")
+    @Severity(SeverityLevel.NORMAL)
     public void testStreaksModalWindowTextVerification() {
         HomePage homePage =
                 new HomePage(getPage()).init()

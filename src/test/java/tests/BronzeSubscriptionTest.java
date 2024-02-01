@@ -26,8 +26,7 @@ public class BronzeSubscriptionTest extends BaseTest {
     }
 
     @Test(
-            testName = "Verify the active course is on the Bronze plan."
-    )
+            description = "Verify the active course is on the Bronze plan.")
     @Description("To ensure that a user account has an active Bronze subscription course.")
     @Story("Tests")
     @Severity(SeverityLevel.BLOCKER)
@@ -94,7 +93,8 @@ public class BronzeSubscriptionTest extends BaseTest {
         Assert.assertTrue(testAnswersCount >= 1);
     }
 
-    @Test(testName = "LMS-1370 Доступность для юзера чаптеров в тестах. Invalid. https://app.qase.io/case/LMS-1370",
+    @Test(
+            testName = "LMS-1370 Доступность для юзера чаптеров в тестах. Invalid. https://app.qase.io/case/LMS-1370",
             description = "TC1370-01 - User can’t run tests for Chapter if the entered amount of questions exceeds the actual amount of questions in the test",
             dependsOnMethods = {"testBronzeSubscriptionCourseShouldBeActive"})
     @Description("To verify that the user cannot run tests if the entered amount of questions exceeds the actual number of questions in the test section.")
@@ -116,12 +116,13 @@ public class BronzeSubscriptionTest extends BaseTest {
 
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_LIST_END_POINT);
         assertThat(alertNotEnoughQuestions).isVisible();
-        Assert.assertEquals(alertMessage,TestData.ALERT_NOT_ENOUGH_QUESTIONS);
+        Assert.assertEquals(alertMessage, TestData.ALERT_NOT_ENOUGH_QUESTIONS);
     }
 
-    @Test(testName = "LMS-1346 Доступность для юзера доменов в тестах. Invalid. https://app.qase.io/case/LMS-1346",
-    description = "TC1346-01 - User can’t run tests for Domain if the entered amount of questions exceeds the actual amount of questions in the test",
-    dependsOnMethods = {"testBronzeSubscriptionCourseShouldBeActive"})
+    @Test(
+            testName = "LMS-1346 Доступность для юзера доменов в тестах. Invalid. https://app.qase.io/case/LMS-1346",
+            description = "TC1346-01 - User can’t run tests for Domain if the entered amount of questions exceeds the actual amount of questions in the test",
+            dependsOnMethods = {"testBronzeSubscriptionCourseShouldBeActive"})
     @Description("To verify that the user cannot run tests if the entered amount of questions exceeds the actual number of questions in the test section.")
     @Story("Tests")
     @TmsLink(".hdrouzq57h1v")
@@ -141,7 +142,6 @@ public class BronzeSubscriptionTest extends BaseTest {
 
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_LIST_END_POINT);
         assertThat(alertNotEnoughQuestions).isVisible();
-        Assert.assertEquals(alertMessage,TestData.ALERT_NOT_ENOUGH_QUESTIONS);
-
+        Assert.assertEquals(alertMessage, TestData.ALERT_NOT_ENOUGH_QUESTIONS);
     }
 }

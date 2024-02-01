@@ -20,8 +20,7 @@ public class PerformanceTest extends BaseTest {
 
     @Test(
             testName = "LMS-1356 Получение статистики по тестам. https://app.qase.io/plan/LMS/1?case=1356",
-            description = "ТC1356-02 - Displaying Statistics for Tests."
-    )
+            description = "ТC1356-02 - Displaying Statistics for Tests.")
     @Description("Objective: To confirm the accurate display of statistics for Tests in the Performance section.")
     @Story("Performance")
     @TmsLink("p0i1q95cgr11")
