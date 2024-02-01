@@ -5,6 +5,7 @@ import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.StudyGuidePage;
@@ -12,6 +13,7 @@ import tests.helpers.TestData;
 import utils.api.APIUtils;
 
 public class StudyGuideAdminTest extends BaseTest {
+
 
     @Test(
             testName = "LMS-TC1360-01 User is able to see the Study Guide text. https://app.qase.io/plan/LMS/1?case=1360",
