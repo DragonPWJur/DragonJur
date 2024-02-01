@@ -10,6 +10,7 @@ import utils.runner.LoginUtils;
 import utils.runner.ProjectProperties;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static utils.api.APIUtils.*;
@@ -32,6 +33,11 @@ public final class APIServices {
     private static final String SUBSCRIBE = "/subscribe";
     private static final String SET_ACTIVE = "/setActive";
     private static final String PAYMENT_METHOD = "/customer/paymentMethod";
+    private static final String FINISH = "/finish";
+    private static final String PASSAGES = "/passages";
+    private static final String ANSWER = "/answer";
+    private static final String TUTOR_TESTS_START = "/tutor-tests/start";
+    private static final String QUESTION_DOMAINS = "/question-domains";
 
     private static final String userToken = LoginUtils.getUserToken();
     private static String adminToken;
@@ -291,7 +297,7 @@ public final class APIServices {
 
     }
 
-    public static void completePack(APIRequestContext requestContext, String packId) {
+    public static void completePack(String packId) {
         APIResponse apiResponse = requestContext
                 .post(
                         ProjectProperties.API_BASE_URL + "/flashcards/packs/"+packId+"/complete",
@@ -301,7 +307,7 @@ public final class APIServices {
         checkStatus(apiResponse, "completePack");
     }
 
-    public static void resetFlashCardPacks(APIRequestContext requestContext) {
+    public static void resetFlashCardPacks() {
         APIResponse apiResponse = requestContext
                 .delete(
                         ProjectProperties.API_BASE_URL + "/flashcards/results",
@@ -310,4 +316,56 @@ public final class APIServices {
 
         checkStatus(apiResponse, "resetFlashCardPacks");
     }
+
+    public static void finishAnswers(String testId) {
+        apiRequestContext
+                .post(
+                        ProjectProperties.API_BASE_URL + PASSAGES + "/" + testId + FINISH,
+                        RequestOptions
+                                .create()
+                                .setHeader("Authorization", "Bearer" + userToken)
+                );
+    }
+
+    public static void answerQuestion(String testId, String optionId, String questionId) {
+        Map<String, String> payload = new HashMap<>();
+        payload.put("optionId", optionId);
+        payload.put("questionId", questionId);
+        apiRequestContext
+                .post(
+                        ProjectProperties.API_BASE_URL + PASSAGES + "/" + testId + ANSWER,
+                        RequestOptions
+                                .create()
+                                .setHeader("Authorization", "Bearer" + userToken)
+                                .setData(payload)
+                );
+    }
+
+    public static APIResponse getQuestions(List<String> id, int questionsAmount) {
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("domainIds", id);
+        payload.put("questionsAmount", questionsAmount);
+        return apiRequestContext
+                .post(
+                        ProjectProperties.API_BASE_URL + TUTOR_TESTS_START,
+                        RequestOptions
+                                .create()
+                                .setHeader("Authorization", "Bearer" + userToken)
+                                .setData(payload)
+                );
+    }
+
+    public static APIResponse getAllQuestionDomains(String courseId) {
+        Map<String, String> payload = new HashMap<>();
+        payload.put("courseId", courseId);
+        return apiRequestContext
+                .post(
+                        ProjectProperties.API_BASE_URL + QUESTION_DOMAINS,
+                        RequestOptions
+                                .create()
+                                .setHeader("Authorization", "Bearer" + userToken)
+                                .setData(payload)
+                );
+    }
+
 }

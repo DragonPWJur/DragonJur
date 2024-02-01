@@ -274,4 +274,8 @@ public final class APIUtils {
             }
         }
     }
+
+    public static void getTotalQuestions(String courseId) {
+
+    }
 }
