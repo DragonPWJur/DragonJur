@@ -42,4 +42,15 @@ public class NewCustomerTest extends BaseTest {
                 homePage.getMainSectionPoints() > 0,
                 "If FAIL: Expected result 'Upon opening the modal window, points greater than 0 are visible' is not reached.");
     }
+
+    @Test(
+            testName = "",
+            description = ""
+    )
+    @Description("Objective: ")
+    @Story("Home Page")
+    @TmsLink("j0y70alubidi")
+    public void testShowMessage() {
+
+    }
 }
