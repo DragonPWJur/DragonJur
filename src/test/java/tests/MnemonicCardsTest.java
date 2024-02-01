@@ -1,8 +1,6 @@
 package tests;
 
-import io.qameta.allure.Story;
-import io.qameta.allure.TmsLink;
-import jdk.jfr.Description;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
@@ -20,6 +18,7 @@ public class MnemonicCardsTest extends BaseTest {
     @Description("Objective: To verify that the user can successfully access and open any available Mnemonic cards pack.")
     @Story("Mnemonic Cards")
     @TmsLink("j6g9c58ocvl0")
+    @Severity(SeverityLevel.NORMAL)
     public void testUserCanRunAnyAvailableMnemonicCardsPack() {
 
         MnemonicCardListPage mnemonicCardListPage =
@@ -53,4 +52,5 @@ public class MnemonicCardsTest extends BaseTest {
                         ") does NOT equals expected stack quantity: (" + expectedStackQuantity + ").\n"
         );
     }
+
 }
