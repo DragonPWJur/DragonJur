@@ -117,4 +117,30 @@ public class BronzeSubscriptionTest extends BaseTest {
         assertThat(alertNotEnoughQuestions).isVisible();
         Assert.assertEquals(alertMessage,TestData.ALERT_NOT_ENOUGH_QUESTIONS);
     }
+
+    @Test(testName = "LMS-1346 Доступность для юзера доменов в тестах. Invalid. https://app.qase.io/case/LMS-1346",
+    description = "TC1346-01 - User can’t run tests for Domain if the entered amount of questions exceeds the actual amount of questions in the test",
+    dependsOnMethods = {"testBronzeSubscriptionCourseShouldBeActive"})
+    @Description("To verify that the user cannot run tests if the entered amount of questions exceeds the actual number of questions in the test section.")
+    @Story("Tests")
+    @TmsLink(".hdrouzq57h1v")
+    @Severity(SeverityLevel.NORMAL)
+    public void testNotRunDomainsTestsLimitValidation() {
+        TestListPage testListPage =
+                new HomePage(getPage()).init()
+                        .clickTestsMenu()
+                        .clickDomainsButtonIfNotActive()
+                        .clickRandomAvailableCheckbox()
+                        .clickTutorButton()
+                        .inputGreaterBy1NumberOfQuestions()
+                        .clickGenerateAndStartTimedTestButton();
+
+        final Locator alertNotEnoughQuestions = testListPage.getTostifyAlert();
+        final String alertMessage = testListPage.getTestifyAlertMessage();
+
+        assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_LIST_END_POINT);
+        assertThat(alertNotEnoughQuestions).isVisible();
+        Assert.assertEquals(alertMessage,TestData.ALERT_NOT_ENOUGH_QUESTIONS);
+
+    }
 }
