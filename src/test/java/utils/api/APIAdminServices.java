@@ -30,8 +30,6 @@ public final class APIAdminServices {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
-        System.out.println(playwrightAdmin);
-
         requestContext = playwrightAdmin
                 .request()
                 .newContext(new APIRequest.NewContextOptions()

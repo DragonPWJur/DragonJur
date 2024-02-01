@@ -1,12 +1,10 @@
 package utils.api;
 
-import com.google.gson.JsonObject;
 import com.microsoft.playwright.APIRequest;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.RequestOptions;
-import utils.reports.LoggerUtils;
 import utils.runner.LoginUtils;
 import utils.runner.ProjectProperties;
 
@@ -24,8 +22,6 @@ public final class APIUserServices {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
-        LoggerUtils.logInfo("API: RequestContext created");
-
         return playwrightUser
                 .request()
                 .newContext(new APIRequest.NewContextOptions()
@@ -37,9 +33,7 @@ public final class APIUserServices {
      static void disposeAPIUserRequestContext() {
         if (requestContext != null) {
             requestContext.dispose();
-            LoggerUtils.logInfo("API: RequestContext disposed");
         }
-        LoggerUtils.logInfo("API: RequestContext NOT found");
     }
 
     static APIResponse deleteCoursesResults() {

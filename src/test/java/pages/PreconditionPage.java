@@ -223,5 +223,6 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
     @Step("Precondition: Set answer options for 9 cards as: 3 cards - Yes, 3 cards - Kinda, 3 cards - No.")
     public void setOptionsYes3No3Kinda3(String[] stackNames) {
         APIUtils.setMarkOptionsForFlashcardPacks(stackNames, 20);
+
     }
 }

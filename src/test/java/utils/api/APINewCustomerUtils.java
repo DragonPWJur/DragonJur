@@ -126,7 +126,7 @@ public class APINewCustomerUtils {
         Playwright playwright = Playwright.create();
         APIRequestContext apiRequestContext = apiRequestContext(playwright);
 
-//        deleteCustomerAPI(apiRequestContext, customerId, adminToken);
+        deleteCustomerAPI(apiRequestContext, customerId, adminToken);
 
         apiRequestContext.dispose();
         playwright.close();

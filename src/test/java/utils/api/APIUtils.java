@@ -4,17 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.microsoft.playwright.APIRequest;
-import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
-import com.microsoft.playwright.Playwright;
 import io.qameta.allure.Step;
 import org.json.JSONObject;
 import org.testng.Assert;
-import tests.helpers.TestData;
 import utils.reports.LoggerUtils;
 import utils.reports.ReportUtils;
-import utils.runner.ProjectProperties;
 
 import java.util.*;
 
