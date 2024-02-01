@@ -23,7 +23,7 @@ public final class APIUtils {
     static void checkStatus(APIResponse apiResponse, String methodName) {
         if (apiResponse.status() < 200 || apiResponse.status() >= 300) {
             LoggerUtils.logException("API: EXCEPTION: Request " + methodName + " FAILED." + apiResponse.status());
-//            Assert.fail();
+            Assert.fail();
         } else {
             LoggerUtils.logInfo("API: " + methodName + " " + apiResponse.status());
         }

@@ -65,7 +65,7 @@ abstract class BaseTest {
     void createContextAndPage(Method method) {
         Allure.step("Precondition: User is logged in to the application.");
 
-//        APIUtils.isGoldSubscriptionActive();
+        APIUtils.isGoldSubscriptionActive();
 
         logInfo("RUN " + ReportUtils.getTestMethodName(method));
 
@@ -127,8 +127,6 @@ abstract class BaseTest {
                     + ReportUtils.getEndLine());
         }
 
-        APIAdminServices.closePlaywrightAdmin();
-
         APINewCustomerUtils.deleteNewCustomer();
     }
 
@@ -136,7 +134,7 @@ abstract class BaseTest {
         String pageUrl = ProjectProperties.BASE_URL + TestData.HOME_END_POINT;
 
         if (!getPage().url().equals(pageUrl) || getPage().content().isEmpty()) {
-            getPage().waitForTimeout(2000);
+            getPage().waitForTimeout(3000);
         }
 
         return !getPage().content().isEmpty();

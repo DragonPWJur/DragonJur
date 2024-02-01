@@ -27,8 +27,16 @@ public final class APIAdminServices {
     }
 
     private static void createAdminAPIRequestContext() {
-        requestContext = playwrightAdmin.request().newContext(new APIRequest.NewContextOptions()
-                .setBaseURL(ProjectProperties.BASE_URL)
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "application/json");
+
+        System.out.println(playwrightAdmin);
+
+        requestContext = playwrightAdmin
+                .request()
+                .newContext(new APIRequest.NewContextOptions()
+                        .setBaseURL(ProjectProperties.API_BASE_URL)
+                        .setExtraHTTPHeaders(headers)
         );
         LoggerUtils.logInfo("API: AdminAPIRequestContext created");
     }
