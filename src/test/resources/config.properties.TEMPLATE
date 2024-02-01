@@ -12,4 +12,4 @@ video=true
 apiBaseUrl=
 adminUsername=
 adminPassword=
-isUseNewCustomer=false
+isCreatingNewCustomer=false
