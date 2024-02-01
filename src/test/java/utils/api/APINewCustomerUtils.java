@@ -111,29 +111,25 @@ public class APINewCustomerUtils {
         }
     }
 
-    public static void createNewCustomerIsServerRun() throws Exception {
-        if(isServerRun()) {
-            Playwright playwright = Playwright.create();
-            APIRequestContext apiRequestContext = apiRequestContext(playwright);
+    public static void createNewCustomer() throws Exception {
+        Playwright playwright = Playwright.create();
+        APIRequestContext apiRequestContext = apiRequestContext(playwright);
 
-            signInAdminAPI(apiRequestContext);
-            inviteCustomerAPI(apiRequestContext, adminToken);
-            signUpPromoAPI(apiRequestContext, inviteCode);
+        signInAdminAPI(apiRequestContext);
+        inviteCustomerAPI(apiRequestContext, adminToken);
+        signUpPromoAPI(apiRequestContext, inviteCode);
 
-            apiRequestContext.dispose();
-            playwright.close();
-        }
+        apiRequestContext.dispose();
+        playwright.close();
     }
 
-    public static void deleteNewCustomerIsServerRun() {
-        if (isServerRun()) {
-            Playwright playwright = Playwright.create();
-            APIRequestContext apiRequestContext = apiRequestContext(playwright);
+    public static void deleteNewCustomer() {
+        Playwright playwright = Playwright.create();
+        APIRequestContext apiRequestContext = apiRequestContext(playwright);
 
-            deleteCustomerAPI(apiRequestContext, customerId, adminToken);
+        deleteCustomerAPI(apiRequestContext, customerId, adminToken);
 
-            apiRequestContext.dispose();
-            playwright.close();
-        }
+        apiRequestContext.dispose();
+        playwright.close();
     }
 }

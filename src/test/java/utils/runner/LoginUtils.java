@@ -15,7 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import static utils.reports.LoggerUtils.*;
-import static utils.runner.ProjectProperties.isServerRun;
 
 public final class LoginUtils {
     public static final String COOKIES_FILE_PATH = "src/test/resources/state.json";
@@ -28,9 +27,6 @@ public final class LoginUtils {
     private static Page page;
 
     private static String userToken;
-    private static String username;
-    private static String password;
-
 
     public static String getUserToken() {
 
@@ -148,13 +144,11 @@ public final class LoginUtils {
     }
 
     private static void login() {
-        selectLocalOrCICustomer();
-
         navigateToBaseUrl();
 
         if (isOnSignInPage()) {
-            page.fill("form input:only-child", username);
-            page.fill("input[type='password']", password);
+            page.fill("form input:only-child", APINewCustomerUtils.getUsername());
+            page.fill("input[type='password']", APINewCustomerUtils.getPassword());
             page.click("button[type='submit']");
 
             logInfo("Login context: Fill user credentials.");
@@ -187,16 +181,6 @@ public final class LoginUtils {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    public static void selectLocalOrCICustomer() {
-        if(isServerRun()) {
-            username = APINewCustomerUtils.getUsername();
-            password = APINewCustomerUtils.getPassword();
-        } else {
-            username = ProjectProperties.USERNAME;
-            password = ProjectProperties.PASSWORD;
         }
     }
 }

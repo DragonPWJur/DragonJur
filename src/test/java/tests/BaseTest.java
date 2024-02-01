@@ -33,7 +33,7 @@ abstract class BaseTest {
 
     @BeforeSuite
     void launchBrowser(ITestContext testContext) throws Exception {
-        APINewCustomerUtils.createNewCustomerIsServerRun();
+        APINewCustomerUtils.createNewCustomer();
 
         LoginUtils.loginAndCollectCookies();
 
@@ -121,7 +121,7 @@ abstract class BaseTest {
                     + ReportUtils.getEndLine());
         }
 
-        APINewCustomerUtils.deleteNewCustomerIsServerRun();
+        APINewCustomerUtils.deleteNewCustomer();
     }
 
     protected  boolean isOnHomePage() {
