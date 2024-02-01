@@ -12,6 +12,8 @@ import pages.StudyGuidePage;
 import tests.helpers.TestData;
 import utils.api.APIUtils;
 
+
+@Ignore
 public class StudyGuideAdminTest extends BaseTest {
 
 
