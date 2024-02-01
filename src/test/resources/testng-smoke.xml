@@ -12,7 +12,7 @@
             <class name="tests.MnemonicCardsTest"/>
             <class name="tests.NavigationTest"/>
             <class name="tests.PerformanceTest"/>
-            <class name="tests.ProfileTest"/>
+            <class name="tests.PaymentTest"/>
             <class name="tests.SearchTest"/>
             <class name="tests.StudyGuideAdminTest"/>
             <class name="tests.StudyGuideTest"/>

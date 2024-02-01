@@ -31,7 +31,7 @@ public class StudyGuideAdminTest extends BaseTest {
         );
 
         APIUtils
-                .goToAdminAndChangeChapter1Unit1Text(TestData.TEST, "add", getPage().request());
+                .adminChangeChapter1Unit1Text(TestData.TEST, "add");
 
         studyGuidePage
                 .reload();
@@ -44,6 +44,6 @@ public class StudyGuideAdminTest extends BaseTest {
     @AfterMethod
     public void restoreChapter1Unit1TextOnAdmin() {
         APIUtils
-                .goToAdminAndChangeChapter1Unit1Text(TestData.TEST, "remove", getPage().request());
+                .adminChangeChapter1Unit1Text(TestData.TEST, "remove");
     }
 }

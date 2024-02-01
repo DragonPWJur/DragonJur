@@ -18,12 +18,18 @@ public final class APIData {
     static final String SUBSCRIBE = "/subscribe";
     static final String SET_ACTIVE = "/setActive";
     static final String CUSTOMER_PAYMENT_METHOD = "/customer/paymentMethod";
+    static final String FLASHCARDS_PACKS = "/flashcards/packs";
+    static final String CARDS = "/cards";
+    static final String FLASHCARDS = "/flashcards";
+    static final String ANSWERS = "/answers";
+    static final String COMPLETE = "/complete";
+    static final String FLASHCARDS_RESULTS = "/flashcards/results";
 
-    private static final String _2_WEEK_PLAN = "2 Weeks";
     public static final String BRONZE_SUBSCRIPTION_ID = "f64edfa6-1aca-4d9a-9c49-8f29970790af";
-    public static final String GOLD_SUBSCRIPTION_ID = "bcf37a9f-af5f-47b0-b9aa-c8e36bbd8278";
-    public static final String MONTHLY = "monthly";
-    public static final String BRONZE = "bronze";
-    private enum answerStatus {YES, NO, KINDA};
+    static final String GOLD_SUBSCRIPTION_ID = "bcf37a9f-af5f-47b0-b9aa-c8e36bbd8278";
+    static final String MONTHLY = "monthly";
+    static final String BRONZE = "bronze";
+
+    enum answerStatus {YES, NO, KINDA};
 
 }
