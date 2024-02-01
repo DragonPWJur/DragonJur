@@ -6,13 +6,14 @@ import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.RequestOptions;
-import utils.runner.LoginUtils;
 import utils.runner.ProjectProperties;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static utils.api.APIUtils.*;
+import static utils.api.APIUtils.checkStatus;
+import static utils.api.APIUtils.initJsonObject;
+import static utils.runner.LoginUtils.getUserToken;
 
 public final class APIServices {
     private static final String COURSES_RESULTS = "/courses/results";
@@ -33,7 +34,6 @@ public final class APIServices {
     private static final String SET_ACTIVE = "/setActive";
     private static final String PAYMENT_METHOD = "/customer/paymentMethod";
 
-    private static final String userToken = LoginUtils.getUserToken();
     private static String adminToken;
 
     public static void cleanData(Playwright playwright) {
@@ -44,7 +44,7 @@ public final class APIServices {
                 .delete(
                         ProjectProperties.API_BASE_URL + COURSES_RESULTS,
                         RequestOptions.create()
-                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setHeader("Authorization", "Bearer " + getUserToken())
                 );
 
         checkStatus(apiResponse, "cleanData");
@@ -59,7 +59,7 @@ public final class APIServices {
                 .delete(
                         ProjectProperties.API_BASE_URL + PAYMENT_METHOD,
                         RequestOptions.create()
-                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setHeader("Authorization", "Bearer " + getUserToken())
                 );
     }
 
@@ -91,7 +91,7 @@ public final class APIServices {
                 .get(
                         ProjectProperties.API_BASE_URL + COURSES_ACTIVE,
                         RequestOptions.create()
-                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setHeader("Authorization", "Bearer " + getUserToken())
                 );
 
         checkStatus(apiResponse, "getActiveCourse");
@@ -104,7 +104,7 @@ public final class APIServices {
                 .get(
                         ProjectProperties.API_BASE_URL + GUIDES_COURSES + courseId,
                         RequestOptions.create()
-                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setHeader("Authorization", "Bearer " + getUserToken())
                 );
 
         checkStatus(apiResponse, "getStudyGuide");
@@ -117,7 +117,7 @@ public final class APIServices {
                 .get(
                         ProjectProperties.API_BASE_URL + GUIDES + guideId + TABLE_OF_CONTENT,
                         RequestOptions.create()
-                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setHeader("Authorization", "Bearer " + getUserToken())
                 );
 
         checkStatus(apiResponse, "getStudyGuideTable");
@@ -130,7 +130,7 @@ public final class APIServices {
                 .get(
                         ProjectProperties.API_BASE_URL + GUIDES + guideId + CHAPTERS + chapterid,
                         RequestOptions.create()
-                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setHeader("Authorization", "Bearer " + getUserToken())
                 );
 
         checkStatus(apiResponse, "getChapter");
@@ -157,7 +157,7 @@ public final class APIServices {
                         RequestOptions
                                 .create()
                                 .setHeader("accept", "application/json")
-                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setHeader("Authorization", "Bearer " + getUserToken())
                 );
 
         checkStatus(apiResponse, "getPlans");
@@ -177,7 +177,7 @@ public final class APIServices {
                                 .create()
                                 .setHeader("accept", "*/*")
                                 .setHeader("Content-Type", "application/json")
-                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setHeader("Authorization", "Bearer " + getUserToken())
                                 .setData(data)
                 );
 
@@ -192,7 +192,7 @@ public final class APIServices {
                         RequestOptions
                                 .create()
                                 .setHeader("accept", "application/json")
-                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setHeader("Authorization", "Bearer " + getUserToken())
                 );
 
         checkStatus(apiResponse, "planPhases");
@@ -208,7 +208,7 @@ public final class APIServices {
                         RequestOptions
                                 .create()
                                 .setHeader("accept", "application/json")
-                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setHeader("Authorization", "Bearer " + getUserToken())
                 );
 
         checkStatus(apiResponse, "markId");
@@ -223,7 +223,7 @@ public final class APIServices {
                         COURSES + courseId + SUBSCRIBE,
                         RequestOptions
                                 .create()
-                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setHeader("Authorization", "Bearer " + getUserToken())
                                 .setData(courseData)
                 );
     }
@@ -235,7 +235,7 @@ public final class APIServices {
                         COURSES + courseId + SET_ACTIVE,
                         RequestOptions
                                 .create()
-                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setHeader("Authorization", "Bearer " + getUserToken())
                 );
     }
 
@@ -246,7 +246,7 @@ public final class APIServices {
                         COURSES_ACTIVE,
                         RequestOptions
                                 .create()
-                                .setHeader("Authorization", "Bearer " + userToken));
+                                .setHeader("Authorization", "Bearer " + getUserToken()));
     }
 
     public static JsonObject getFlashcardsPacks(APIRequestContext requestContext) {
@@ -254,7 +254,7 @@ public final class APIServices {
                 .get(
                         ProjectProperties.API_BASE_URL + "/flashcards/packs?limit=20",
                         RequestOptions.create()
-                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setHeader("Authorization", "Bearer " + getUserToken())
                 );
 
         checkStatus(apiResponse, "getFlashcardsPacks");
@@ -267,7 +267,7 @@ public final class APIServices {
                 .get(
                         ProjectProperties.API_BASE_URL + "/flashcards/packs/cards?packType=cards&packId="+packId,
                         RequestOptions.create()
-                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setHeader("Authorization", "Bearer " + getUserToken())
                 );
 
         checkStatus(apiResponse, "getFlashcardsByPack");
@@ -284,7 +284,7 @@ public final class APIServices {
                 .post(
                         ProjectProperties.API_BASE_URL + "/flashcards/"+flashcardId+"/answers",
                         RequestOptions.create()
-                                .setHeader("Authorization", "Bearer " + userToken)
+                                .setHeader("Authorization", "Bearer " + getUserToken())
                                 .setData(data));
 
         checkStatus(apiResponse, "saveFlashcardAnswer");
@@ -296,7 +296,7 @@ public final class APIServices {
                 .post(
                         ProjectProperties.API_BASE_URL + "/flashcards/packs/"+packId+"/complete",
                         RequestOptions.create()
-                                .setHeader("Authorization", "Bearer " + userToken));
+                                .setHeader("Authorization", "Bearer " + getUserToken()));
 
         checkStatus(apiResponse, "completePack");
     }
@@ -306,7 +306,7 @@ public final class APIServices {
                 .delete(
                         ProjectProperties.API_BASE_URL + "/flashcards/results",
                         RequestOptions.create()
-                                .setHeader("Authorization", "Bearer " + userToken));
+                                .setHeader("Authorization", "Bearer " + getUserToken()));
 
         checkStatus(apiResponse, "resetFlashCardPacks");
     }
