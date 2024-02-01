@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static utils.api.APIServicesForNewCustomer.*;
-import static utils.api.APIUtils.GOLD_SUBSCRIPTION_ID;
 import static utils.reports.LoggerUtils.logError;
 import static utils.reports.LoggerUtils.logInfo;
 import static utils.runner.ProjectProperties.*;
@@ -70,7 +69,7 @@ public class APINewCustomerUtils {
     private static void inviteCustomerAPI(APIRequestContext apiRequestContext, String adminToken) {
         inviteCode = null;
 
-        APIResponse response = inviteCustomer(apiRequestContext, username, GOLD_SUBSCRIPTION_ID, adminToken);
+        APIResponse response = inviteCustomer(apiRequestContext, username, APIData.GOLD_SUBSCRIPTION_ID, adminToken);
 
         JSONObject object = new JSONObject(response.text());
 

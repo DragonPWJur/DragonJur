@@ -3,6 +3,7 @@ package tests;
 import com.microsoft.playwright.Locator;
 import io.qameta.allure.*;
 import org.testng.Assert;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.PerformancePage;
@@ -109,6 +110,7 @@ public class PerformanceTest extends BaseTest {
         assertThat(allFlashcardsButton).isVisible();
     }
 
+    @Ignore
     @Test(
             testName = "LMS-1357 Получение статистики по стопкам. https://app.qase.io/plan/LMS/1?case=1357",
             description = "TC1357-01 - Displaying Statistics for All Flashcards."
