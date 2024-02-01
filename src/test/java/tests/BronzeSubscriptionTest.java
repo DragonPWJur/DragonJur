@@ -8,6 +8,7 @@ import pages.HomePage;
 import pages.TestListPage;
 import pages.TestTutorPage;
 import tests.helpers.TestData;
+import utils.api.APIData;
 import utils.api.APIUtils;
 
 import java.lang.reflect.Method;
@@ -20,7 +21,7 @@ public class BronzeSubscriptionTest extends BaseTest {
 
     @BeforeMethod
     void activateRequiredCourse(Method method) {
-        APIUtils.activateBronzeSubscriptionCourse(getPlaywright());
+        APIUtils.activateBronzeSubscriptionCourse();
         getPage().reload();
     }
 
@@ -32,7 +33,7 @@ public class BronzeSubscriptionTest extends BaseTest {
     @Severity(SeverityLevel.BLOCKER)
     public void testBronzeSubscriptionCourseShouldBeActive() {
         Assert.assertEquals(
-                APIUtils.getActiveCourseId(getPlaywright()), APIUtils.BRONZE_SUBSCRIPTION_ID,
+                APIUtils.getActiveCourseId(), APIData.BRONZE_SUBSCRIPTION_ID,
                 "If FAIL: Active course id does NOT match the Bronze subscription id.\n"
         );
     }

@@ -7,6 +7,8 @@ import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 import utils.reports.LoggerUtils;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public final class StripeModal extends BaseModal<StripeModal> {
     private final Locator stripeDialog = dialog();
     private final Locator stripeModalHeader = text("Add a payment method");

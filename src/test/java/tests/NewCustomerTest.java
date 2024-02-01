@@ -8,6 +8,8 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.HomePage;
 import tests.helpers.TestData;
+import utils.api.APIUserServices;
+import utils.api.APIUtils;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
@@ -52,5 +54,6 @@ public class NewCustomerTest extends BaseTest {
     @TmsLink("j0y70alubidi")
     public void testShowMessage() {
 
+        APIUtils.getTotalQuestions();
     }
 }
