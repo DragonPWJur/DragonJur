@@ -112,7 +112,7 @@ public class APINewCustomerUtils {
     }
 
     public static void createNewCustomerIsServerRun() throws Exception {
-        if(isServerRun()) {
+        if(isServerRun() || IS_USE_NEW_CUSTOMER) {
             Playwright playwright = Playwright.create();
             APIRequestContext apiRequestContext = apiRequestContext(playwright);
 
@@ -126,7 +126,7 @@ public class APINewCustomerUtils {
     }
 
     public static void deleteNewCustomerIsServerRun() {
-        if (isServerRun()) {
+        if (isServerRun() || IS_USE_NEW_CUSTOMER) {
             Playwright playwright = Playwright.create();
             APIRequestContext apiRequestContext = apiRequestContext(playwright);
 

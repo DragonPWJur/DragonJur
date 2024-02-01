@@ -191,7 +191,7 @@ public final class LoginUtils {
     }
 
     public static void selectLocalOrCICustomer() {
-        if(isServerRun()) {
+        if(isServerRun() || ProjectProperties.IS_USE_NEW_CUSTOMER) {
             username = APINewCustomerUtils.getUsername();
             password = APINewCustomerUtils.getPassword();
         } else {
