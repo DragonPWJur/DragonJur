@@ -22,6 +22,10 @@ public final class APIUserServices {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
+        if(requestContext != null) {
+            disposeAPIUserRequestContext();
+        }
+
         return playwrightUser
                 .request()
                 .newContext(new APIRequest.NewContextOptions()
@@ -39,31 +43,23 @@ public final class APIUserServices {
     static APIResponse deleteCoursesResults() {
         requestContext = createAPIUserRequestContext();
 
-        APIResponse response = requestContext
+        return requestContext
                 .delete(
                         COURSES_RESULTS,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
                 );
-
-        disposeAPIUserRequestContext();
-
-        return response;
     }
 
     static APIResponse deleteCustomerPaymentMethod() {
         requestContext = createAPIUserRequestContext();
 
-        APIResponse response = requestContext
+        return requestContext
                 .delete(
                         CUSTOMER_PAYMENT_METHOD,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
                 );
-
-        disposeAPIUserRequestContext();
-
-        return response;
     }
 
     static APIResponse getCoursesActive() {
@@ -78,73 +74,57 @@ public final class APIUserServices {
     }
 
     static APIResponse getGuidesCoursesId(String courseId) {
-        APIRequestContext context = createAPIUserRequestContext();
+        requestContext = createAPIUserRequestContext();
 
-        APIResponse response = context
+        return requestContext
                 .get(
                         GUIDES_COURSES + "/" + courseId,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
                 );
-
-        disposeAPIUserRequestContext();
-
-        return response;
     }
 
     static APIResponse getGuidesIdTableOfContent(String guideId) {
-        APIRequestContext context = createAPIUserRequestContext();
+        requestContext = createAPIUserRequestContext();
 
-        APIResponse response = context
+        return requestContext
                 .get(
                         GUIDES + "/" + guideId + TABLE_OF_CONTENT,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
                 );
-
-        disposeAPIUserRequestContext();
-
-        return response;
     }
 
     static APIResponse getGuidesIdChaptersId(String guideTableId, String chapterId) {
-        APIRequestContext context = createAPIUserRequestContext();
+        requestContext = createAPIUserRequestContext();
 
-        APIResponse response = context
+        return requestContext
                 .get(
                         GUIDES + "/" + guideTableId + CHAPTERS + "/" + chapterId,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
                 );
-
-        disposeAPIUserRequestContext();
-
-        return response;
     }
 
     static APIResponse getPlans() {
-        APIRequestContext context = createAPIUserRequestContext();
+        requestContext = createAPIUserRequestContext();
 
-        APIResponse response = context
+        return requestContext
                 .get(
                         PLANS + "/",
                         RequestOptions.create()
                                 .setHeader("accept", "application/json")
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
                 );
-
-        disposeAPIUserRequestContext();
-
-        return response;
     }
 
     static APIResponse postPlansCurrent(String planId) {
         Map<String, Object> data = new HashMap<>();
         data.put("newPlanId", planId);
 
-        APIRequestContext context = createAPIUserRequestContext();
+        requestContext = createAPIUserRequestContext();
 
-        APIResponse response = context
+        return requestContext
                 .post(
                         PLANS_CURRENT,
                         RequestOptions.create()
@@ -153,42 +133,30 @@ public final class APIUserServices {
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
                                 .setData(data)
                 );
-
-        disposeAPIUserRequestContext();
-
-        return response;
     }
 
     static APIResponse getPlansIdPhases(String currentPlanId) {
-        APIRequestContext context = createAPIUserRequestContext();
+        requestContext = createAPIUserRequestContext();
 
-        APIResponse response = context
+        return requestContext
                 .get(
                         PLANS + "/" + currentPlanId + PHASES,
                         RequestOptions.create()
                                 .setHeader("accept", "application/json")
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
                 );
-
-        disposeAPIUserRequestContext();
-
-        return response;
     }
 
     static APIResponse postTasksIdMark(String markId) {
-        APIRequestContext context = createAPIUserRequestContext();
+        requestContext = createAPIUserRequestContext();
 
-        APIResponse response = context
+        return requestContext
                 .post(
                         TASKS + "/" + markId + MARK,
                         RequestOptions.create()
                                 .setHeader("accept", "application/json")
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
                 );
-
-        disposeAPIUserRequestContext();
-
-        return response;
     }
 
     static APIResponse postCoursesIdSubscribe(String courseId, String period, String type) {
@@ -196,64 +164,48 @@ public final class APIUserServices {
         courseData.put("period", period);
         courseData.put("type", type);
 
-        APIRequestContext context = createAPIUserRequestContext();
+        requestContext = createAPIUserRequestContext();
 
-        APIResponse response = context
+        return requestContext
                 .post(
                         COURSES + '/' + courseId + SUBSCRIBE,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
                                 .setData(courseData)
                 );
-
-        disposeAPIUserRequestContext();
-
-        return response;
     }
 
     static APIResponse postCoursesIdSetActive(String courseId) {
-        APIRequestContext context = createAPIUserRequestContext();
+        requestContext = createAPIUserRequestContext();
 
-        APIResponse response = context
+        return requestContext
                 .post(
                         COURSES + '/' + courseId + SET_ACTIVE,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
                 );
-
-        disposeAPIUserRequestContext();
-
-        return response;
     }
 
     static APIResponse getFlashcardsPacks(int limit) {
-        APIRequestContext context = createAPIUserRequestContext();
+        requestContext = createAPIUserRequestContext();
 
-        APIResponse response = context
+        return requestContext
                 .get(
                         FLASHCARDS_PACKS + "?limit=" + limit,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
                 );
-
-        disposeAPIUserRequestContext();
-
-        return response;
     }
 
     static APIResponse getFlashcardsPacksCardsPackTypeId(String packId) {
-        APIRequestContext context = createAPIUserRequestContext();
+        requestContext = createAPIUserRequestContext();
 
-        APIResponse response = context
+        return requestContext
                 .get(
                         FLASHCARDS_PACKS + CARDS + "?packType=cards&packId=" + packId,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
                 );
-
-        disposeAPIUserRequestContext();
-
-        return response;
     }
 
     static APIResponse postFlashcardsIDAnswers(String flashcardId, String answer) {
@@ -261,45 +213,36 @@ public final class APIUserServices {
         data.put("packType", "cards");
         data.put("answer", answer);
 
-        APIRequestContext context = createAPIUserRequestContext();
+        requestContext = createAPIUserRequestContext();
 
-        APIResponse response = context
+        return requestContext
                 .post(
                         FLASHCARDS + "/" + flashcardId + ANSWERS,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
-                                .setData(data));
-
-        disposeAPIUserRequestContext();
-
-        return response;
+                                .setData(data)
+                );
     }
 
     static APIResponse postFlashcardsPacksIdComplete(String packId) {
-        APIRequestContext context = createAPIUserRequestContext();
+        requestContext = createAPIUserRequestContext();
 
-        APIResponse response = context
+        return requestContext
                 .post(
                         FLASHCARDS_PACKS + "/" + packId + COMPLETE,
                         RequestOptions.create()
-                                .setHeader("Authorization", "Bearer " + USER_TOKEN));
-
-        disposeAPIUserRequestContext();
-
-        return response;
+                                .setHeader("Authorization", "Bearer " + USER_TOKEN)
+                );
     }
 
     static APIResponse deleteFlashcardsResults() {
-        APIRequestContext context = createAPIUserRequestContext();
+        requestContext = createAPIUserRequestContext();
 
-        APIResponse response = context
+        return requestContext
                 .delete(
                         FLASHCARDS_RESULTS,
                         RequestOptions.create()
-                                .setHeader("Authorization", "Bearer " + USER_TOKEN));
-
-        disposeAPIUserRequestContext();
-
-        return response;
+                                .setHeader("Authorization", "Bearer " + USER_TOKEN)
+                );
     }
 }
