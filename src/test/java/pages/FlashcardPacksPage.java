@@ -62,6 +62,7 @@ public final class FlashcardPacksPage extends BaseSideMenu<FlashcardPacksPage> i
         return new FlashcardsPackIDPage(getPage()).init();
     }
 
+    @Step("Click 'AUTOTEST FLASHCARDS' pack.")
     public FlashcardsPackIDPage clickAutotestFlashcardsPack() {
         getPage().reload();
         autotestFlashcards.click();

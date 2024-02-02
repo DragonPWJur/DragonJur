@@ -182,13 +182,12 @@ public final class FlashcardPacksTest extends BaseTest {
         );
     }
 
-    @Test(
-            testName = "LMS-1373 Возможность оставлять пометки kinda. https://app.qase.io/plan/LMS/1?case=1373",
-            description = "TC1373-01 - Possibility to leave a “Kinda” mark.")
-    @Description("Objective: Verify that the user can successfully leave a 'Kinda' mark on a flashcard when the card is turned.")
+    @Severity(SeverityLevel.NORMAL)
     @Story("Flashcards")
     @TmsLink("65ov9eivu5o5")
-    @Severity(SeverityLevel.NORMAL)
+    @Description("LMS-1373 Возможность оставлять пометки kinda. https://app.qase.io/plan/LMS/1?case=1373"
+            + "Objective: Verify that the user can successfully leave a 'Kinda' mark on a flashcard when the card is turned.")
+    @Test(description = "TC1373-01 - Possibility to leave a “Kinda” mark.")
     public void testUserCanLeaveKindaMark() {
         FlashcardsPackIDPage flashcardsPackIDPage =
                 new HomePage(getPage()).init()
@@ -199,28 +198,30 @@ public final class FlashcardPacksTest extends BaseTest {
 
         final String kindaCardsAmountBeforeClick = flashcardsPackIDPage.getKindaCardsAmount();
         final String expectedKindaCardsAmount = TestUtils.add(kindaCardsAmountBeforeClick, 1);
-        final Locator resetResultsButton = flashcardsPackIDPage.getResetResultsButton();
+
 
         flashcardsPackIDPage
                 .clickKindaMarkButton();
 
-        assertThat(resetResultsButton).isVisible();
-
+        final Locator resetResultsButton = flashcardsPackIDPage.getResetResultsButton();
         final String kindaCardsAmountAfterClick = flashcardsPackIDPage.getKindaCardsAmount();
 
+        Allure.step("Assert that '" + resetResultsButton.innerText() + "' is visible.");
+        assertThat(resetResultsButton).isVisible();
+
+        Allure.step("Assert that '" + kindaCardsAmountAfterClick + "' equals '" + expectedKindaCardsAmount + "'.");
         Assert.assertEquals(
                 kindaCardsAmountAfterClick, expectedKindaCardsAmount,
                 "If FAIL: Expected 'Kinda' cards amount does NOT increased by 1 after clicking the 'Kinda' button.\n"
         );
     }
 
-    @Test(
-            testName = "LMS-1374 Возможность оставлять пометки no. https://app.qase.io/plan/LMS/1?case=1374",
-            description = "TC1374-01 - Possibility to leave a “No” mark.")
-    @Description("Objective: Verify that the user can successfully leave a 'No' mark on a flashcard when the card is turned.")
+    @Severity(SeverityLevel.NORMAL)
     @Story("Flashcards")
     @TmsLink("8aif3r2l9kd2")
-    @Severity(SeverityLevel.NORMAL)
+    @Description("LMS-1374 Возможность оставлять пометки no. https://app.qase.io/plan/LMS/1?case=1374  "
+            + "Objective: Verify that the user can successfully leave a 'No' mark on a flashcard when the card is turned.")
+    @Test(description = "TC1374-01 - Possibility to leave a “No” mark.")
     public void testUserCanLeaveNoMark() {
         FlashcardsPackIDPage flashcardsPackIDPage =
                 new HomePage(getPage()).init()
@@ -231,15 +232,17 @@ public final class FlashcardPacksTest extends BaseTest {
 
         final String noCardsAmountBeforeClick = flashcardsPackIDPage.getNoCardsAmount();
         final String expectedNoCardsAmount = TestUtils.add(noCardsAmountBeforeClick, 1);
-        final Locator resetResultsButton = flashcardsPackIDPage.getResetResultsButton();
 
         flashcardsPackIDPage
                 .clickNoMarkButton();
 
-        assertThat(resetResultsButton).isVisible();
-
+        final Locator resetResultsButton = flashcardsPackIDPage.getResetResultsButton();
         final String noCardsAmountAfterClick = flashcardsPackIDPage.getNoCardsAmount();
 
+        Allure.step("Assert that '" + resetResultsButton.innerText() + "' is visible.");
+        assertThat(resetResultsButton).isVisible();
+
+        Allure.step("Assert that '" + noCardsAmountAfterClick + "' equals '" + expectedNoCardsAmount + "'.");
         Assert.assertEquals(
                 noCardsAmountAfterClick, expectedNoCardsAmount,
                 "If FAIL: Expected 'No' cards amount does NOT increased by 1 after clicking the 'No' button.\n"
