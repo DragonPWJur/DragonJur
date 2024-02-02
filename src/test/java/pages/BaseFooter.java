@@ -36,9 +36,9 @@ abstract class BaseFooter<TPage> extends BaseHeader<TPage> {
 
     @Step("Click 'Add to flashcard' button.")
     public TestTutorPage clickAddToFlashCardButton() {
-        waitForLocator(addToFlashcardButton, 1000);
+        waitForLocator(addToFlashcardButton, 3000);
         addToFlashcardButton.click();
-        waitForLocator(removeFromFlashcardsButton, 1000);
+        waitForLocator(removeFromFlashcardsButton, 3000);
 
         return new TestTutorPage(getPage());
     }

@@ -18,7 +18,7 @@ public final class TestResultPage extends BaseLocator<TestResultPage> {
         return createPage(new TestResultPage(getPage()), Constants.TEST_RESULT_END_POINT);
     }
 
-    @Step("Click 'Close the test' button")
+    @Step("Click 'Close the test' button.")
     public TestListPage clickCloseTheTestButton() {
         closeTheTestButton.click();
 
