@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.microsoft.playwright.APIResponse;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 import org.json.JSONObject;
 import org.testng.Assert;
@@ -281,6 +282,7 @@ public final class APIUtils {
         switch (status) {
             case 201 -> {
                 LoggerUtils.logInfo("API: 'TEST AUTOMATION _DO NOT DELETE_BRONZE' is active");
+                Allure.step("Precondition: Active course is under the BRONZE plan.");
             }
             case 422 -> {
                 LoggerUtils.logInfo("API: 'TEST AUTOMATION _DO NOT DELETE_BRONZE' course is exists");
@@ -293,7 +295,7 @@ public final class APIUtils {
         }
     }
 
-    public static void isGoldSubscriptionActive() {
+    public static void activateGoldSubscription() {
         String activeCourseId = getActiveCourseId();
 
         if (!APIData.GOLD_SUBSCRIPTION_ID.equals(activeCourseId)) {

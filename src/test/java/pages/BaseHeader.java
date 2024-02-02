@@ -17,7 +17,6 @@ abstract class BaseHeader<TPage> extends BaseModal<TPage> {
         super(page);
     }
 
-    @Step("Collect total amount of cards on the header ({initialTotal} Total).")
     public Locator cardsTotalText(String initialTotal) {
 
         return text(initialTotal + " Total");
@@ -25,7 +24,7 @@ abstract class BaseHeader<TPage> extends BaseModal<TPage> {
 
     @Step("Collect 'Yes' cards amount on the header.")
     public String getYesCardsAmount() {
-        waitForLocator(yesCardsAmount, 1000);
+        waitForLocator(yesCardsAmount, 5000);
         String[] textToArray = yesCardsAmount.innerText().split(" ");
 
         return textToArray[0];
@@ -33,7 +32,7 @@ abstract class BaseHeader<TPage> extends BaseModal<TPage> {
 
     @Step("Collect 'Kinda' cards amount on the header.")
     public String getKindaCardsAmount() {
-        waitForLocator(kindaCardsAmount, 1000);
+        waitForLocator(kindaCardsAmount, 5000);
         String[] textToArray = kindaCardsAmount.innerText().split(" ");
 
         return textToArray[0];
@@ -41,7 +40,7 @@ abstract class BaseHeader<TPage> extends BaseModal<TPage> {
 
     @Step("Collect 'No' cards amount on the header.")
     public String getNoCardsAmount() {
-        waitForLocator(noCardsAmount, 1000);
+        waitForLocator(noCardsAmount, 5000);
         String[] textToArray = noCardsAmount.innerText().split(" ");
 
         return textToArray[0];
@@ -54,9 +53,8 @@ abstract class BaseHeader<TPage> extends BaseModal<TPage> {
         return new TestTutorPage(getPage()).init();
     }
 
-    @Step("Collect the flashcard pack name in the header.")
     public String getPackName() {
-        waitForLocator(packName, 1000);
+        waitForLocator(packName, 5000);
         String flashcardHeader = packName.innerText();
         int flashcardHeaderLength = flashcardHeader.length();
         if (flashcardHeader.contains("...")) {
@@ -67,7 +65,7 @@ abstract class BaseHeader<TPage> extends BaseModal<TPage> {
     }
 
     public String getMnemonicCardName() {
-        waitForLocator(mnemonicCardHeader, 1000);
+        waitForLocator(mnemonicCardHeader, 5000);
         String mnemonicHeader = mnemonicCardHeader.innerText();
         int mnemonicHeaderLength = mnemonicHeader.length();
         if (mnemonicHeader.contains("...")) {

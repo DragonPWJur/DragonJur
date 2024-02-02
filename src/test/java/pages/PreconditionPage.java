@@ -25,25 +25,22 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return new PreconditionPage(getPage());
     }
 
-    @Step("Precondition: Collect random index.")
     public int getFlashcardsPackRandomIndex() {
 
         return flashcardsPackRandomIndex;
     }
 
-    @Step("Precondition: Collect chosen Flashcards pack name.")
     public String getFlashcardsPackName() {
 
         return flashcardsPackName;
     }
 
-    @Step("Precondition: Collect chosen Flashcards pack cards amount.")
     public String getFlashcardsPackCardsAmount() {
 
         return flashcardsPackCardsAmount;
     }
 
-    @Step("Precondition: Save the initial Flashcards pack information.")
+    @Step("Precondition: Save the initial amount of flashcards, marked for rechecking.")
     public String getInitialAmountOfCardsMarkedForRechecking() {
         final String amountMarkedForRechecking =
                 new HomePage(getPage()).init()
@@ -56,7 +53,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         return amountMarkedForRechecking;
     }
 
-    @Step("Precondition: Start random domain test with {number} of question(s).")
+    @Step("Precondition: Start random domain test with {number} question(s).")
     public TestTutorPage startRandomDomainTest(String number) {
         new HomePage(getPage()).init()
                 .clickTestsMenu()

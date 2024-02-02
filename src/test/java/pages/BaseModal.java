@@ -40,6 +40,7 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
     public FlashcardsPackIDPage clickGotItButton() {
         gotItButton.click();
 
+
         return new FlashcardsPackIDPage(getPage());
     }
 

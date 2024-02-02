@@ -24,7 +24,7 @@ public final class FlashcardsPackIDPage extends BaseFooter<FlashcardsPackIDPage>
         return createPage(new FlashcardsPackIDPage(getPage()), Constants.FLASHCARDS_PACK_ID_END_POINT);
     }
 
-    @Step("Collect 'Question' heading on the page.")
+    @Step("Collect 'Question' Heading on the page.")
     public Locator getQuestionHeading() {
 
         return questionHeading;
@@ -36,7 +36,6 @@ public final class FlashcardsPackIDPage extends BaseFooter<FlashcardsPackIDPage>
         return answerHeading;
     }
 
-    @Step("Collect 'Show answer' button on the page.")
     public Locator getShowAnswerButton() {
 
         return showAnswerButton;
@@ -62,7 +61,7 @@ public final class FlashcardsPackIDPage extends BaseFooter<FlashcardsPackIDPage>
 
     @Step("Click 'Show answer' button.")
     public FlashcardsPackIDPage clickShowAnswerButton() {
-        waitForLocator(showAnswerButton, 2000);
+        waitWithTimeout(3000);
         showAnswerButton.click();
 
         return this;
@@ -74,22 +73,27 @@ public final class FlashcardsPackIDPage extends BaseFooter<FlashcardsPackIDPage>
         return answerText;
     }
 
-    @Step("Click 'Yes' button.")
+    @Step("Click 'Yes' mark button.")
     public void clickYesMarkButton() {
         waitForLocator(yesButton, 2000);
         yesButton.click();
-        waitForLocator(showAnswerButton, 1000);
+        waitForPageLoad();
+        waitWithTimeout(6000);
     }
 
     @Step("Click 'Kinda' button.")
     public void clickKindaMarkButton() {
         waitForLocator(kindaButton, 2000);
         kindaButton.click();
+        waitForPageLoad();
+        waitWithTimeout(6000);
     }
 
     @Step("Click 'No' button.")
     public void clickNoMarkButton() {
         waitForLocator(noButton, 2000);
         noButton.click();
+        waitForPageLoad();
+        waitWithTimeout(6000);
     }
 }

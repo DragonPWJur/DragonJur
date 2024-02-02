@@ -44,7 +44,6 @@ public final class TestUtils {
     }
 
     public static List<Integer> getStatistic(Locator stack) {
-
         String[] statistic = stack.innerText().replace("%", "").split("\n");
         String packName = statistic[statistic.length - 1];
 
@@ -56,7 +55,6 @@ public final class TestUtils {
     }
 
     public static int getSum(List<Integer> stack) {
-
         int sum = 0;
         for (int i : stack) {
             sum += i;

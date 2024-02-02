@@ -11,6 +11,7 @@ public final class FlashcardPacksPage extends BaseSideMenu<FlashcardPacksPage> i
     private final Locator markedForRecheckingButton = button("Marked for re-checking");
     private final Locator learnedButton = button("Learned");
     private final List<Locator> allLearnedButtons = allButtons(learnedButton);
+    private final Locator autotestFlashcards = button("AUTOTEST FLASHCARDS");
 
     private final int randomPackIndex = getRandomNumber(allLearnedButtons);
 
@@ -24,6 +25,7 @@ public final class FlashcardPacksPage extends BaseSideMenu<FlashcardPacksPage> i
         return createPage(new FlashcardPacksPage(getPage()), Constants.FLASHCARD_PACKS_END_POINT);
     }
 
+    @Step("Precondition: Collect random index.")
     int getRandomPackIndex() {
 
         return randomPackIndex;
@@ -34,27 +36,37 @@ public final class FlashcardPacksPage extends BaseSideMenu<FlashcardPacksPage> i
         return allLearnedButtons.get(randomPackIndex).innerText().trim().split("\n");
     }
 
+    @Step("Precondition: Collect random Flashcards pack's name.")
     public String getFlashcardsPackName() {
 
         return getPackSplitText()[0];
     }
 
+    @Step("Precondition: Collect random Flashcards pack cards amount.")
     public String getAmountOfCardsInPack() {
 
         return getPackSplitText()[1].trim().split(" ")[0].split("/")[1];
     }
 
-    @Step("Retrieve the amount of cards marked for rechecking")
+    @Step("Save the amount of cards marked for rechecking.")
     public String getAmountOfCardsMarkedForRechecking() {
         String[] textToArray = markedForRecheckingButton.innerText().trim().split("\n");
 
         return textToArray[textToArray.length - 1];
     }
 
-    @Step("Click {randomIndex}-th Flashcards pack")
+    @Step("Click random ( {randomIndex}-th ) Flashcards pack.")
     public FlashcardsPackIDPage clickNthFlashcardPack(int randomIndex) {
         allLearnedButtons.get(randomIndex).click();
 
         return new FlashcardsPackIDPage(getPage()).init();
+    }
+
+    @Step("Click 'AUTOTEST FLASHCARDS' pack.")
+    public FlashcardsPackIDPage clickAutotestFlashcardsPack() {
+        getPage().reload();
+        autotestFlashcards.click();
+
+        return new FlashcardsPackIDPage(getPage());
     }
 }

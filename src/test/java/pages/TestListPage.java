@@ -39,7 +39,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return createPage(new TestListPage(getPage()), Constants.TEST_LIST_END_POINT);
     }
 
-    @Step("Click 'Domains' button if not active")
+    @Step("Click 'Domains' button if not active.")
     public TestListPage clickDomainsButtonIfNotActive() {
         domainsButton.click();
         getPage().reload();
@@ -68,14 +68,14 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    @Step("Click random checkbox")
+    @Step("Click random available checkbox.")
     public TestListPage clickRandomCheckbox() {
         getRandomValue(allCheckboxes).click();
 
         return this;
     }
 
-    @Step("Input '{number}' as number of questions")
+    @Step("Input '{number}' as number of questions.")
     public TestListPage inputNumberOfQuestions(String number) {
         numberOfQuestionsInputField.fill(number);
 
@@ -89,7 +89,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    @Step("Select a checkbox randomly and retrieve its name")
+    @Step("Select a checkbox randomly and retrieve its name.")
     public String clickRandomCheckboxAndReturnItsName() {
         int randomValue = getRandomNumber(allCheckboxes);
         allCheckboxes.get(randomValue).click();
@@ -97,14 +97,14 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return allCheckboxes.get(randomValue).textContent();
     }
 
-    @Step("Click 'Cancel' button to cancel 'Unfinished test' dialog if it's visible")
+    @Step("Click 'Cancel' button to cancel 'Unfinished test' dialog if it's visible.")
     public TestListPage cancelDialogIfVisible() {
         cancelDialog();
 
         return this;
     }
 
-    @Step("Click 'Chapters' button if not active")
+    @Step("Click 'Chapters' button if not active.")
     public TestListPage clickChaptersButton() {
         // while block was added due to a bug in the application (Generate And Start button inactive)
         if (!chaptersButton.isChecked()) {
@@ -121,28 +121,28 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    @Step("Click 'Timed' button")
+    @Step("Click 'Timed' button.")
     public TestListPage clickTimedButton() {
         timedButton.click();
 
         return this;
     }
 
-    @Step("Click 'Start test' button")
+    @Step("Click 'Start test' button.")
     public TestListPage clickStartTestButton() {
         startTestButton.click();
 
         return this;
     }
 
-    @Step("Click 'Start' button")
+    @Step("Click 'Start' button.")
     public TestTimedPage clickStartButton() {
         startButton.click();
 
         return new TestTimedPage(getPage()).init();
     }
 
-    @Step("Get number of 'Marked' questions")
+    @Step("Get number of 'Marked' questions.")
     public int getMarkedNumber() {
         waitWithTimeout(2000);
         System.out.println(markedNumber.innerText());
@@ -150,13 +150,13 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return Integer.parseInt(markedNumber.innerText());
     }
 
-    @Step("Get checkbox image for checkbox {text}")
+    @Step("Get checkbox image for checkbox {text}.")
     public Locator getCheckboxImage(String text) {
 
         return checkbox.getByText(text).locator("svg");
     }
 
-    @Step("Click 'Automation testing for stats' checkbox")
+    @Step("Click 'Automation testing for stats' checkbox.")
     public TestListPage clickAutomationTestingForStatsCheckBox() {
         automationTestingForStatsText.click();
 
@@ -170,7 +170,6 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    @Step("Generate random number from available checkboxes")
     private void setRandomNumberOutOfAvailableCheckboxes() {
         activeCheckbox = activeCheckbox.filter(new Locator.FilterOptions().setHasText(Pattern.compile("\\d+")));
         activeCheckbox.last().waitFor();
@@ -178,7 +177,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         this.randomNumber = getRandomNumber(activeCheckbox);
     }
 
-    @Step("Click random available checkbox")
+    @Step("Click random available checkbox.")
     public TestListPage clickRandomAvailableCheckbox() {
         setRandomNumberOutOfAvailableCheckboxes();
         activeCheckbox.nth(randomNumber).click();
@@ -187,7 +186,6 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    @Step("Get a number of available questions")
     private int getNumberOfAvailableQuestions() {
 
         return Integer.parseInt(activeCheckbox.nth(randomNumber)
@@ -195,7 +193,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
                 .replaceAll("[^\\d/]+", "").split("/")[0]);
     }
 
-    @Step("Input a random number within the range of available questions")
+    @Step("Input a random number within the range of available questions.")
     public TestListPage inputRandomNumberOfQuestions() {
         final int numberOfAvailableQuestions = getNumberOfAvailableQuestions();
         final String numberToInput = String.valueOf(getRandomInt(numberOfAvailableQuestions));
@@ -205,7 +203,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    @Step("Input a random number within the range of available questions")
+    @Step("Input a random number Greater than the number of available questions.")
     public TestListPage inputGreaterBy1NumberOfQuestions() {
         final int numberOfAvailableQuestions = getNumberOfAvailableQuestions() + 1;
         final String numberToInput = String.valueOf(numberOfAvailableQuestions);

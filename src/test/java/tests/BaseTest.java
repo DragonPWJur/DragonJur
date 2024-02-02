@@ -5,12 +5,10 @@ import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import io.qameta.allure.Allure;
-import io.qameta.allure.Step;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import tests.helpers.TestData;
-import utils.api.APIAdminServices;
 import utils.api.APINewCustomerUtils;
 import utils.api.APIUserServices;
 import utils.api.APIUtils;
@@ -36,14 +34,16 @@ abstract class BaseTest {
 
     @BeforeSuite
     void launchBrowser(ITestContext testContext) throws Exception {
-        APINewCustomerUtils.createNewCustomer();
 
+        APINewCustomerUtils.createNewCustomer();
         LoginUtils.loginAndCollectCookies();
 
         logInfo(ReportUtils.getReportHeader());
 
         if(playwright != null) {
             logInfo("Playwright " + LoggerInfo.getPlaywrightId(playwright) + " created.");
+
+            APIUserServices.playwrightUser = playwright;
         } else {
             logFatal("FATAL: Playwright is NOT created\n");
             System.exit(1);
@@ -57,15 +57,14 @@ abstract class BaseTest {
                     + ReportUtils.getEndLine());
             System.exit(1);
         }
-
-        APIUserServices.playwrightUser = playwright;
     }
 
     @BeforeMethod
     void createContextAndPage(Method method) {
-        Allure.step("Precondition: User is logged in to the application.");
+        Allure.step("User is logged into the application.");
 
-        APIUtils.isGoldSubscriptionActive();
+        APIUtils.activateGoldSubscription();
+        Allure.step("The active course has GOLD subscription.");
 
         logInfo("RUN " + ReportUtils.getTestMethodName(method));
 
@@ -86,7 +85,7 @@ abstract class BaseTest {
             getPage().onLoad(p -> page.content());
             if (!page.content().isEmpty()) {
                 logInfo("Open Home page");
-                Allure.step("Precondition: User has navigated to the Home page.");
+                Allure.step("User has navigated to the Home page.");
             }
             logInfo("Testing....");
         } else {
