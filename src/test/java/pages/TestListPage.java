@@ -68,7 +68,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    @Step("Click random checkbox")
+    @Step("Click random available checkbox.")
     public TestListPage clickRandomCheckbox() {
         getRandomValue(allCheckboxes).click();
 
@@ -170,7 +170,6 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    @Step("Generate random number from available checkboxes")
     private void setRandomNumberOutOfAvailableCheckboxes() {
         activeCheckbox = activeCheckbox.filter(new Locator.FilterOptions().setHasText(Pattern.compile("\\d+")));
         activeCheckbox.last().waitFor();
@@ -178,7 +177,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         this.randomNumber = getRandomNumber(activeCheckbox);
     }
 
-    @Step("Click random available checkbox")
+    @Step("Click random available checkbox.")
     public TestListPage clickRandomAvailableCheckbox() {
         setRandomNumberOutOfAvailableCheckboxes();
         activeCheckbox.nth(randomNumber).click();
@@ -187,7 +186,6 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    @Step("Get a number of available questions")
     private int getNumberOfAvailableQuestions() {
 
         return Integer.parseInt(activeCheckbox.nth(randomNumber)
@@ -195,7 +193,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
                 .replaceAll("[^\\d/]+", "").split("/")[0]);
     }
 
-    @Step("Input a random number within the range of available questions")
+    @Step("Input a random number within the range of available questions.")
     public TestListPage inputRandomNumberOfQuestions() {
         final int numberOfAvailableQuestions = getNumberOfAvailableQuestions();
         final String numberToInput = String.valueOf(getRandomInt(numberOfAvailableQuestions));
@@ -205,7 +203,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    @Step("Input a random number within the range of available questions")
+    @Step("Input a random number Greater than the number of available questions.")
     public TestListPage inputGreaterBy1NumberOfQuestions() {
         final int numberOfAvailableQuestions = getNumberOfAvailableQuestions() + 1;
         final String numberToInput = String.valueOf(numberOfAvailableQuestions);

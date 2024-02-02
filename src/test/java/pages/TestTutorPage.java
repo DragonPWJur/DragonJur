@@ -29,13 +29,11 @@ public final class TestTutorPage extends BaseTestsPage<TestTutorPage> implements
         return listOfActiveButtons.stream().map(Locator::innerText).toList();
     }
 
-    @Step("Count answers radio buttons")
     public int countAnswers() {
 
         return answerRadioButton.count();
     }
 
-    @Step("Get test question")
     public Locator getTestQuestion() {
 
         return testQuestion;

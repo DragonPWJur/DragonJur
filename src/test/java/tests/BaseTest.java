@@ -61,10 +61,10 @@ abstract class BaseTest {
 
     @BeforeMethod
     void createContextAndPage(Method method) {
-        Allure.step("Precondition: User is logged into the application.");
+        Allure.step("User is logged into the application.");
 
         APIUtils.activateGoldSubscription();
-        Allure.step("Precondition: The user's active course is under the GOLD subscription.");
+        Allure.step("The active course has GOLD subscription.");
 
         logInfo("RUN " + ReportUtils.getTestMethodName(method));
 
@@ -85,7 +85,7 @@ abstract class BaseTest {
             getPage().onLoad(p -> page.content());
             if (!page.content().isEmpty()) {
                 logInfo("Open Home page");
-                Allure.step("Precondition: User has navigated to the Home page.");
+                Allure.step("User has navigated to the Home page.");
             }
             logInfo("Testing....");
         } else {
