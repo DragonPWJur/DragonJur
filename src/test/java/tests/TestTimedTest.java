@@ -1,6 +1,7 @@
 package tests;
 
 import com.microsoft.playwright.Locator;
+import io.qameta.allure.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
@@ -14,7 +15,13 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public final class TestTimedTest extends BaseTest {
 
-    @Test
+    @Test(
+            testName = "LMS-1345 Запуск timed. https://app.qase.io/case/LMS-1345",
+            description = "TC1345-01 - Execute Timed Mode with a randomly selected test")
+    @Description("Objective: To verify that the user can select section Tests and activate the 'Timed' mode and run the test.")
+    @Story("Tests")
+    @TmsLink("k0bfbra127ay")
+    @Severity(SeverityLevel.NORMAL)
     public void testRunTimedMode() {
         TestTimedPage testTimedPage =
                 new HomePage(getPage()).init()

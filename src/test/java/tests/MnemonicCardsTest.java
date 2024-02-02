@@ -13,8 +13,7 @@ public class MnemonicCardsTest extends BaseTest {
 
     @Test(
             testName = "LMS-1355 Получение карточек. https://app.qase.io/plan/LMS/1?case=1355",
-            description = "TC1355-01 - User can run any available Mnemonic cards pack."
-    )
+            description = "TC1355-01 - User can run any available Mnemonic cards pack.")
     @Description("Objective: To verify that the user can successfully access and open any available Mnemonic cards pack.")
     @Story("Mnemonic Cards")
     @TmsLink("j6g9c58ocvl0")
@@ -52,5 +51,4 @@ public class MnemonicCardsTest extends BaseTest {
                         ") does NOT equals expected stack quantity: (" + expectedStackQuantity + ").\n"
         );
     }
-
 }

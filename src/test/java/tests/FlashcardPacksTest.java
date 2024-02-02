@@ -179,7 +179,6 @@ public final class FlashcardPacksTest extends BaseTest {
     }
 
     @Ignore
-
     @Test(
             testName = "LMS-1373 Возможность оставлять пометки kinda. https://app.qase.io/plan/LMS/1?case=1373",
             description = "TC1373-01 - Possibility to leave a “Kinda” mark.")

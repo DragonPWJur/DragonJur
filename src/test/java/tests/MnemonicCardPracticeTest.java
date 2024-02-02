@@ -14,8 +14,7 @@ public class MnemonicCardPracticeTest extends BaseTest {
 
     @Test(
             testName = "LMS-1355 Получение карточек. https://app.qase.io/plan/LMS/1?case=1355",
-            description = "TC1355-02 - Opening Mnemonic Card after Starting Practice."
-    )
+            description = "TC1355-02 - Opening Mnemonic Card after Starting Practice.")
     @Description("Objective: To verify that the user can successfully open any Mnemonic Card after clicking the Start Practice button.")
     @Story("Mnemonic Cards")
     @TmsLink("bhhgxa6zrj99")
