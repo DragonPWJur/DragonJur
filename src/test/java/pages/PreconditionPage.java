@@ -4,7 +4,6 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 import io.qameta.allure.Step;
-import tests.helpers.TestData;
 import utils.api.APIUtils;
 
 import java.util.List;
@@ -13,7 +12,6 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
     private int flashcardsPackRandomIndex;
     private String flashcardsPackName;
     private String flashcardsPackCardsAmount;
-    private int randomIndex;
 
     public PreconditionPage(Page page) {
         super(page);
@@ -80,55 +78,41 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 .clickHomeMenu();
     }
 
-    @Step("Precondition: Collect all checkboxes within current plan.")
-    public List<Locator> getAllCheckboxesWithinCurrentPlan() {
+    public List<Locator> getAllCheckboxes() {
 
         return new HomePage(getPage()).init()
-                .getAllCheckboxesInA2WeeksPlan();
+                .getAllCheckboxes();
     }
 
-    @Step("Precondition: Ensure all checkboxes should be unchecked.")
-    public boolean areAllCheckboxesUnchecked() {
+    public boolean allCheckboxesShouldNotBeActive() {
 
         return new HomePage(getPage()).init()
-                .areAllCheckboxesUnchecked();
+                .areAllCheckboxesNotActive();
     }
 
-    @Step("Precondition: One checkbox should be checked and all others unchecked.")
-    public boolean oneCheckboxShouldBeCheckedAndAllOthersUnchecked() {
-        HomePage homePage =
-                new HomePage(getPage()).init()
-                        .click2WeeksButton();
+    public int getRandomIndex() {
 
-        randomIndex = homePage.getSingleCheckedCheckboxIndex();
-
-        if (homePage.isListCheckboxesNotEmpty()) {
-            if (homePage.areAllCheckboxesUnchecked()) {
-                homePage
-                        .clickNthCheckbox(randomIndex)
-                        .waitForPointsAnimationToStop();
-
-                return homePage.getAllCheckedCheckboxes().size() == 1;
-            }
-        }
-
-        return false;
+        return new HomePage(getPage()).getRandomIndex();
     }
 
-    @Step("Precondition: Ensure all checkboxes should be checked within {planName}.")
-    public boolean areAllCheckboxesChecked(String planName) {
+    @Step("Precondition: A single checkbox should be active.")
+    public void checkRandomCheckbox(int randomIndex) {
+        HomePage homePage = new HomePage(getPage()).init();
 
+        homePage
+                .clickNthCheckbox(randomIndex)
+                .waitForPointsAnimationToStop();
+    }
+
+    @Step ("Precondition: Set All Checkboxes to Active state under the {planName} plan.")
+    public void setAllCheckboxesToBeChecked(String planName) {
         APIUtils.markTasks(planName);
         getPage().reload();
-
-        return new HomePage(getPage()).init()
-                .areAllCheckboxesChecked();
     }
 
-    @Step("Precondition: Get single checked checkbox index.")
-    public int getSingleCheckedCheckboxIndex() {
-
-        return randomIndex;
+    public boolean allCheckboxesShouldBeChecked() {
+        return new HomePage(getPage()).init()
+                .areAllCheckboxesActive();
     }
 
     @Step("Precondition: Start test for the stats.")
@@ -220,5 +204,10 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
     @Step("Precondition: Set answer options for 9 cards as: 3 cards - Yes, 3 cards - Kinda, 3 cards - No.")
     public void setOptionsYes3No3Kinda3(String[] stackNames) {
         APIUtils.setMarkOptionsForFlashcardPacks(stackNames, 20);
+    }
+
+    @Step("Get random checkbox image.")
+    public Locator getRandomImage(int index) {
+        return new HomePage(getPage()).init().getNthCheckboxImage(index);
     }
 }

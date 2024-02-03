@@ -255,7 +255,7 @@ public final class APIUtils {
         changeChapterText(unit1);
     }
 
-    @Step("Mark tasks for {planName} study plan.")
+    @Step("API: Mark tasks (activate checkboxes) for {planName} study plan.")
     public static void markTasks(String planName) {
         final JsonObject plans = getPlans();
         final String planId = getPlanId(plans, planName);
