@@ -37,33 +37,31 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return mainSectionPoints;
     }
 
-    @Step("Get Main Section Points text")
     public String getMainSectionPointsText() {
         waitForPointsAnimationToStop();
 
         return mainSectionPoints.innerText();
     }
 
-    @Step("Get Main Section Points number")
+    @Step("Get Main Section Points")
     public int getMainSectionPoints() {
 
         return TestUtils.getInt(getMainSectionPointsText());
     }
 
-    @Step("Get Side Menu Points text")
     public String getSideMenuPointsText() {
         waitForPointsAnimationToStop();
 
         return sideMenuPoints.innerText();
     }
 
-    @Step("Get Side Menu Section Points number")
+    @Step("Get Side Menu Points.")
     public int getSideMenuPoints() {
 
         return TestUtils.getInt(getSideMenuPointsText());
     }
 
-    @Step("Find a block 'Week 1'")
+    @Step("Find a block 'Week 1'.")
     public HomePage focusWeek1Header() {
         week1Header.focus();
 
@@ -80,12 +78,12 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return studyThisButton;
     }
 
-    public List<Locator> getAllCheckboxesInA2WeeksPlan() {
+    public List<Locator> getAllCheckboxes() {
 
         return allCheckboxes;
     }
 
-    @Step("Click on empty checkbox")
+    @Step("Click on first checkbox in 'Week 1' section.")
     public HomePage clickWeek1FirstCheckbox() {
         week1FirstCheckbox.click();
 
@@ -103,14 +101,13 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         waitWithTimeout(2000);
     }
 
-    @Step("Click on the 'Streaks' button")
+    @Step("Click 'Streaks' button")
     public HomePage clickStreaksButton() {
         streaksButton.click();
 
         return this;
     }
 
-    @Step("The modal window will be opened")
     public Locator getStreaksModalWindow() {
 
         return getDialog();
@@ -121,57 +118,39 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return randomIndex;
     }
 
-    public int getSingleCheckedCheckboxIndex() {
-        final int index = randomIndex;
+    @Step("Collect checkbox image.")
+    public Locator getNthCheckboxImage(int index) {
 
-        return index;
+        return allCheckboxes.get(index).locator("svg");
     }
 
-    private List<Locator> getAllCheckboxes() {
-
-        return allCheckboxes;
-    }
-
-    public Locator getCheckboxImage() {
-
-        return checkboxImage;
-    }
-
-    boolean isListCheckboxesNotEmpty() {
-
-        return !allCheckboxes.isEmpty();
-    }
-
-    public boolean areAllCheckboxesUnchecked() {
+    public boolean areAllCheckboxesNotActive() {
 
         return allCheckboxes.stream().noneMatch(Locator::isChecked);
     }
 
-    boolean areAllCheckboxesChecked() {
+    boolean areAllCheckboxesActive() {
 
         return allCheckboxes.stream().allMatch(Locator::isChecked);
     }
 
     @Step("Click random checkbox.")
-    public HomePage clickRandomCheckbox(){
+    public void clickRandomCheckbox(){
         getNthCheckbox(randomIndex).click();
-
-        return this;
     }
 
-    @Step("Get checkbox by number {number}.")
     public Locator getNthCheckbox(int number) {
 
         return allCheckboxes.get(number);
     }
 
-    @Step("Select any of the checkboxes.")
+    @Step("Select a random checkbox.")
     public Locator getRandomCheckbox() {
 
         return allCheckboxes.get(randomIndex);
     }
 
-    @Step("Click on {randomNumber}-nth checkbox")
+    @Step("Click random ({randomNumber}-nth) checkbox.")
     public HomePage clickNthCheckbox(int randomNumber) {
         getNthCheckbox(randomNumber).click();
 
@@ -183,32 +162,18 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return allCheckboxes.stream().filter(Locator::isChecked).toList();
     }
 
-    boolean isCheckboxChecked() {
 
-        return allCheckboxes.get(randomIndex).isChecked();
-    }
-
-    public HomePage clickCheckedCheckbox() {
-        for (Locator checkbox : allCheckboxes) {
-            if (checkbox.isChecked()) {
-                checkbox.click();
-                break;
-            }
-        }
-        return this;
-    }
-
-    @Step("Click study this button.")
+    @Step("Click 'Study This' button.")
     public HomePage clickStudyThisButton() {
         studyThisButton.click();
 
         return this;
     }
 
-    @Step("Get checkbox image ({randomCheckBox}).")
-    public Locator getCheckboxImage(Locator randomCheckBox) {
+    @Step("Get the random checkbox image.")
+    public Locator getCheckboxImage(Locator checkbox) {
 
-        return randomCheckBox.locator("svg");
+        return checkbox.locator("svg");
     }
 
     @Step("The modal window contains the text: 'You are on a 1 day study streak!'")
@@ -221,58 +186,5 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
 
         return streaksButton;
     }
-
-    public int getRandomCheckboxIndex(List<Locator> list) {
-
-        return getRandomNumber(list);
-    }
-
-
-//
-////    public boolean isCheckBoxChecked() {
-////
-////        return listCheckboxes.get(checkBoxNumber).isChecked();
-////    }
-//
-//    protected boolean areAllCheckBoxesChecked() {
-//
-//        return listCheckboxes.stream().allMatch(Locator::isChecked);
-//    }
-//
-//    public boolean isCheckBoxChecked() {
-//
-//        return listCheckboxes.get(checkBoxNumber).isChecked();
-//    }
-//
-//public HomePage checkAllCheckBoxes() {
-//
-//        for (int i = 0; i < listCheckboxes.size(); i++) {
-//            while (!listCheckboxes.get(i).isChecked()) {
-//                listCheckboxes.get(i).check();
-//                getPage().waitForTimeout(1000);
-//            }
-//            System.out.println(listCheckboxes.get(i).isChecked());
-//        }
-//        return this;
-//    }
-//
-//    protected List<Locator> getListCheckedCheckBoxes() {
-//
-//        return allCheckboxes.stream().filter(Locator::isChecked).toList();
-//    }
-//
-//    public HomePage clickCheckedBox() {
-//
-//        for (Locator checkBox : allCheckboxes) {
-//            if (checkBox.isChecked()) {
-//                checkBox.click();
-//                break;
-//            }
-//        }
-//        return this;
-//    }
-//
-
-
 
 }

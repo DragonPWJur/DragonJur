@@ -76,11 +76,10 @@ public final class LoginUtils {
 
     private static void setUpPlaywright() {
         playwright = Playwright.create();
-        logInfo("Login context: Playwright " + LoggerInfo.getPlaywrightId(playwright) + " created.");
+        logInfo("Login context: Playwright created.");
 
         browser = BrowserManager.createBrowser(playwright);
-        logInfo("Login context: Browser " + browser.browserType().name() + " "
-                + LoggerInfo.getBrowserId(browser) + " is launched");
+        logInfo("Login context: Browser " + browser.browserType().name() + " is launched");
 
         context = BrowserManager.createContext(browser);
         logInfo("Login context: Login Context created.");
