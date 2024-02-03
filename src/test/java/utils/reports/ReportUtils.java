@@ -126,7 +126,6 @@ public final class ReportUtils {
                         .put("Browser", browser.browserType().name())
                         .put("Browser.version", browser.version())
                         .put("Java.version", System.getProperty("java.version"))
-                        .put("Maven.version", System.getenv("MAVEN_HOME"))
                         .build());
     }
 }
