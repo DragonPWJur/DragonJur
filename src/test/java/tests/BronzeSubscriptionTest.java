@@ -62,16 +62,16 @@ public class BronzeSubscriptionTest extends BaseTest {
         final Locator testQuestion = testTutorPage.getTestQuestion();
         final int testAnswersCount = testTutorPage.countAnswers();
 
-        Allure.step("Verify that the user is redirected to the page with the endpoint “/test-tutor”.");
+        Allure.step("Assert that the user is redirected to the page with the endpoint “/test-tutor”.");
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
 
-        Allure.step("Verify that the question text is visible.");
+        Allure.step("Assert that the question text is visible.");
         assertThat(testQuestion).isVisible();
 
-        Allure.step("Verify that the question text contains the “?” mark.");
+        Allure.step("Assert that the question text contains the '?' mark.");
         assertThat(testQuestion).containsText(TestData.QUESTION_MARK);
 
-        Allure.step("Verify that the test has started, displaying at least one radio button (answer) on the page.");
+        Allure.step("Assert that the test has started, displaying at least one radio button (answer) on the page.");
         Assert.assertTrue(testAnswersCount >= 1);
     }
 
@@ -96,16 +96,16 @@ public class BronzeSubscriptionTest extends BaseTest {
         final Locator testQuestion = testTutorPage.getTestQuestion();
         final int testAnswersCount = testTutorPage.countAnswers();
 
-        Allure.step("Verify that the user is redirected to the page with the endpoint “/test-tutor”.");
+        Allure.step("Assert that the user is redirected to the page with the endpoint “/test-tutor”.");
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_TUTOR_END_POINT);
 
-        Allure.step("Verify that the question text is visible.");
+        Allure.step("Assert that the question text is visible.");
         assertThat(testQuestion).isVisible();
 
-        Allure.step("Verify that the question text contains the “?” mark.\n.");
+        Allure.step("Assert that the question text contains the '?' mark.\n.");
         assertThat(testQuestion).containsText(TestData.QUESTION_MARK);
 
-        Allure.step("Verify that the test has started, displaying at least one radio button (answer) on the page.");
+        Allure.step("Assert that the test has started, displaying at least one radio button (answer) on the page.");
         Assert.assertTrue(testAnswersCount >= 1);
     }
 
@@ -131,16 +131,17 @@ public class BronzeSubscriptionTest extends BaseTest {
         final Locator alertNotEnoughQuestions = testListPage.getTostifyAlert();
         final String alertMessage = testListPage.getTestifyAlertMessage();
 
-        Allure.step("Verify that the user stays on the page with the endpoint '/test-tutor'.");
+        Allure.step("Assert that the user stays on the page with the endpoint '/test-tutor'.");
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_LIST_END_POINT);
 
-        Allure.step("Verify that a toaster message is displayed.");
+        Allure.step("Assert that a toaster message is displayed.");
         assertThat(alertNotEnoughQuestions).isVisible();
 
-        Allure.step("Verify a toaster message should display: 'There are not enough questions in the sections that you have chosen.'");
+        Allure.step("Assert a toaster message should display: " +
+                "'There are not enough questions in the sections that you have chosen.'");
         Assert.assertEquals(alertMessage, TestData.ALERT_NOT_ENOUGH_QUESTIONS);
 
-        Allure.step("Verify that tests were not initiated. No answers are shown on the page.");
+        Allure.step("Assert that tests were not initiated. No answers are shown on the page.");
         assertThat(getPage().getByRole(AriaRole.RADIO)).not().isVisible();
     }
 
@@ -166,16 +167,17 @@ public class BronzeSubscriptionTest extends BaseTest {
         final Locator alertNotEnoughQuestions = testListPage.getTostifyAlert();
         final String alertMessage = testListPage.getTestifyAlertMessage();
 
-        Allure.step("Verify that the user stays on the page with the endpoint '/test-tutor'.");
+        Allure.step("Assert that the user stays on the page with the endpoint '/test-tutor'.");
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_LIST_END_POINT);
 
-        Allure.step("Verify that a toaster message is displayed.");
+        Allure.step("Assert that a toaster message is displayed.");
         assertThat(alertNotEnoughQuestions).isVisible();
 
-        Allure.step("Verify a toaster message should display: 'There are not enough questions in the sections that you have chosen.'");
+        Allure.step("Assert a toaster message should display: " +
+                "'There are not enough questions in the sections that you have chosen.'");
         Assert.assertEquals(alertMessage, TestData.ALERT_NOT_ENOUGH_QUESTIONS);
 
-        Allure.step("Verify that tests were not initiated. No answers are shown on the page.");
+        Allure.step("Assert that tests were not initiated. No answers are shown on the page.");
         assertThat(getPage().getByRole(AriaRole.RADIO)).not().isVisible();
     }
 }

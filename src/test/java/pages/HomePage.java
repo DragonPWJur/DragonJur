@@ -176,7 +176,6 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return checkbox.locator("svg");
     }
 
-    @Step("The modal window contains the text: 'You are on a 1 day study streak!'")
     public Locator getStreakDaysModalWindowTextLocator() {
 
         return streakDaysModalWindowText;
