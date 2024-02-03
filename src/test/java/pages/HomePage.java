@@ -19,8 +19,12 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     private final Locator checkboxImage = locator("label:has(input) svg");
     private final List<Locator> allCheckboxes = allCheckboxes("label");
     private final Locator streakDaysModalWindowText = locator("div[role='dialog']>div>p");
+//    private final List<Locator> allItems = allItems(".cuqXVX");
+//    private final List<Locator> allCheckboxesOfWeakestCategories = allCheckboxes(".cuqXVX>label");
+    private final Locator studyWeakestAreasButton = button("Study Weakest Areas");
 
     private final int randomIndex = getRandomInt(0, allCheckboxes.size());
+//    private final int randomIndexForCheckboxesOfWeakestCategories = getRandomInt(0, allCheckboxesOfWeakestCategories.size());
 
     public HomePage(Page page) {
         super(page);
@@ -227,8 +231,39 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return getRandomNumber(list);
     }
 
-
+//    public List<Locator> getAllWeakestCategories() {
 //
+//        return allItems;
+//    }
+
+//    public Locator getCategoryFromList() {
+//        for (Locator category : getAllWeakestCategories()) {
+//            return category;
+//        }
+//        return null;
+//    }
+
+//    public List<Locator> getAllCheckboxesOfWeakestCategories() {
+//
+//        return allCheckboxesOfWeakestCategories;
+//    }
+
+//    public HomePage clickRandomCheckboxOfWeakestCategories(){
+//        getNthCheckbox(randomIndexForCheckboxesOfWeakestCategories).click();
+//
+//        return this;
+//    }
+
+    public Locator getStudyWeakestAreasButton() {
+
+        return studyWeakestAreasButton;
+    }
+
+
+
+
+
+    //
 ////    public boolean isCheckBoxChecked() {
 ////
 ////        return listCheckboxes.get(checkBoxNumber).isChecked();

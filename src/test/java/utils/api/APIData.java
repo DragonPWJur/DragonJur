@@ -29,6 +29,7 @@ public final class APIData {
     static final String ANSWER = "/answer";
     static final String TUTOR_TESTS_START = "/tutor-tests/start";
     static final String QUESTION_DOMAINS = "/question-domains";
+    static final int QUESTION_AMOUNT = 45;
     public static final String BRONZE_SUBSCRIPTION_ID = "f64edfa6-1aca-4d9a-9c49-8f29970790af";
     static final String GOLD_SUBSCRIPTION_ID = "bcf37a9f-af5f-47b0-b9aa-c8e36bbd8278";
     static final String MONTHLY = "monthly";

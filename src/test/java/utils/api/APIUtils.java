@@ -137,13 +137,6 @@ public final class APIUtils {
         checkStatus(deleteCoursesResults, "deleteCoursesResults");
     }
 
-    private static JsonArray getAllDomains(String courseId) {
-        final APIResponse postQuestionDomains = APIUserServices.postQuestionDomains(courseId);
-        checkStatus(postQuestionDomains, "postQuestionDomains");
-
-        return initJsonArray(postQuestionDomains.text());
-    }
-
     private static void deletePaymentMethod() {
         final int status = APIUserServices.deleteCustomerPaymentMethod().status();
         switch (status) {
@@ -175,7 +168,7 @@ public final class APIUtils {
         return "";
     }
 
-    private static List<String> getTasksIds(JsonObject planPhases) {
+    private static List<String> getTasksIds(JsonObject   planPhases) {
         List<String> tasksIds = new ArrayList<>();
         try {
             JsonArray items = planPhases.getAsJsonArray("items");
@@ -351,8 +344,15 @@ public final class APIUtils {
         }
     }
 
-    public static void getTotalQuestions() {
-        String courseId = getActiveCourseId();
+    private static JsonArray getAllDomains(String courseId) {
+        final APIResponse postQuestionDomains = APIUserServices.postQuestionDomains(courseId);
+        checkStatus(postQuestionDomains, "postQuestionDomains");
+
+        return initJsonArray(postQuestionDomains.text());
+    }
+
+    public static List<String> getTotalQuestions() {
+        final String courseId = getActiveCourseId();
         final JsonArray allDomains = getAllDomains(courseId);
 
         List<String> ids = new ArrayList<>();
@@ -362,30 +362,76 @@ public final class APIUtils {
                 ids.add(eachAll.get("id").getAsString());
             }
         }
+        LoggerUtils.logInfo("API: ids of question domain has been created.");
+        if (ids.isEmpty()) {
+            LoggerUtils.logError("API: ERROR: ids list is EMPTY.");
+            Assert.fail();
+        }
 
-
-        System.out.println(ids);
-
-
-//        List<Integer> alls = new ArrayList<>();
-//        for (int i = 0; i < allQuestionDomains.size(); i++) {
-//            alls.add(allQuestionDomains.get(i).getAsJsonObject().get("total").getAsInt());
-//        }
-//        S elementEachDomain = allQuestionDomains.get("all").getAsJsonObject();
-//        int total = elementEachDomain.get("total").getAsInt();
-//        System.out.println(total);
-
-//        List<String> domainsIDs = new ArrayList<>();
-
-//        for(JsonElement element : elementEachDomain) {
-//            if(element.getAsJsonObject().get("total").getAsInt() >= 20)
-//            {
-//                domainsIDs.add(element.getAsJsonObject().get("id").getAsString());
-//            }
-//        }
-//        System.out.println(domainsIDs);
+        return ids;
     }
 
+    public static String startTutorTest() {
+        List<String> id = getTotalQuestions();
+        int questionsAmount = APIData.QUESTION_AMOUNT;
+
+        APIResponse postTutorTestStart = APIUserServices.postTutorTestStart(id, questionsAmount);
+        checkStatus(postTutorTestStart, "postTutorTestStart");
+
+        return postTutorTestStart.text();
+    }
+
+    public static void  answerQuestionsForIncorrectAnswersAndFinish() {
+        JsonObject startTutorTestObject = initJsonObject(startTutorTest());
+        JsonArray arrayQuestions = startTutorTestObject.getAsJsonArray("questions");
+        String testId = startTutorTestObject.getAsJsonObject().get("id").getAsString();
+
+        List<List<String>> questionOptionsIdsForIncorrectAnswers = new ArrayList<>();
+        List<List<String>> titlesIds = new ArrayList<>();
+
+        for (JsonElement question : arrayQuestions) {
+            List<String> questionOption = new ArrayList<>();
+            List<String> titles = new ArrayList<>();
+
+            questionOption.add(question.getAsJsonObject().getAsJsonPrimitive("id").getAsString());
+            JsonArray options = question.getAsJsonObject().getAsJsonArray("options");
+
+            for (JsonElement option : options) {
+                JsonObject optionObject = option.getAsJsonObject();
+                String title = optionObject.getAsJsonPrimitive("title").getAsString();
+
+                if (!title.contains("Correct")) {
+                    titles.add(title);
+                    titles.add(optionObject.getAsJsonPrimitive("id").getAsString());
+                    questionOption.add(optionObject.getAsJsonPrimitive("id").getAsString());
+                    break;
+                }
+            }
+            titlesIds.add(titles);
+            questionOptionsIdsForIncorrectAnswers.add(questionOption);
+        }
+        System.out.println(titlesIds);
+
+        if (questionOptionsIdsForIncorrectAnswers.isEmpty()) {
+            LoggerUtils.logError("API: ERROR: questionOptionIds list is EMPTY.");
+            Assert.fail();
+        }
+        LoggerUtils.logInfo("API: questionOptionIds list is received.");
+        try {
+            for (List<String> questionOptionList : questionOptionsIdsForIncorrectAnswers) {
+                String questionId = questionOptionList.get(0);
+                String optionId = questionOptionList.get(1);
+
+                APIUserServices.postPassagesIDAnswer(testId,questionId, optionId);
+                LoggerUtils.logInfo("API: question answered." + ReportUtils.getEndLine());
+            }
+        } catch (Exception e) {
+            LoggerUtils.logException("API: EXCEPTION: FAILED answer questions");
+        }
+
+        APIUserServices.postPassagesIdFinish(testId);
+        LoggerUtils.logInfo("API: Finish passage");
+    }
 
     private static List<List<Integer>> getParts(String[] packsNames) {
         int cardsAmount;

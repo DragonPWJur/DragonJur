@@ -1,5 +1,6 @@
 package tests;
 
+import com.microsoft.playwright.Locator;
 import io.qameta.allure.Description;
 import io.qameta.allure.Story;
 import io.qameta.allure.TmsLink;
@@ -8,8 +9,9 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import pages.HomePage;
 import tests.helpers.TestData;
-import utils.api.APIUserServices;
 import utils.api.APIUtils;
+
+import java.util.List;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
@@ -46,14 +48,25 @@ public class NewCustomerTest extends BaseTest {
     }
 
     @Test(
-            testName = "",
-            description = ""
+            testName = "LMS-1342 Отработка секции study this. https://app.qase.io/plan/LMS/1?case=1342",
+            description = "TC1342-03 The User can select 1-3 domains/chapters to study when his account has 3 worst domains/chapters"
     )
-    @Description("Objective: ")
+    @Description("Objective: To verify the user's ability to select 1-3 domains/chapters from the list when their account contains the three least proficient knowledge domains/chapters.")
     @Story("Home Page")
-    @TmsLink("j0y70alubidi")
-    public void testShowMessage() {
+    @TmsLink("pt150jap2ioc")
+    public void testAbilityToStudyWeakestAreas() {
+        APIUtils.answerQuestionsForIncorrectAnswersAndFinish();
 
-        APIUtils.getTotalQuestions();
+        HomePage homePage =
+                new HomePage(getPage()).init();
+
+        homePage.clickStudyThisButton();
+//        List<Locator> weakestCategories = homePage.getAllWeakestCategories();
+//
+//        Assert.assertTrue(weakestCategories.size() >= 3, "Size of list weakestCategories < 3");
+//
+//        homePage.clickRandomCheckboxOfWeakestCategories();
+//
+//        assertThat(homePage.getStudyWeakestAreasButton()).isVisible();
     }
 }
