@@ -2,7 +2,6 @@ package tests;
 
 import com.microsoft.playwright.Locator;
 import io.qameta.allure.*;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.StudyGuidePage;
@@ -33,7 +32,6 @@ public class StudyGuideTest extends BaseTest {
         assertThat(word).hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_62_48_179_0_2);
     }
 
-    @Ignore
     @Test(
             testName = "LMS-1363 Выделение части текста. https://app.qase.io/case/LMS-1363",
             description = "TC1363-02 - Highlighting Multiple Words")
@@ -45,13 +43,13 @@ public class StudyGuideTest extends BaseTest {
         StudyGuidePage studyGuidePage =
                 new HomePage(getPage()).init()
                         .clickStudyGuideMenu()
-                        .highlightWords(TestData.LONG_BONES);
+                        .highlightWords(TestData.PHALANGES_IN_THE_FINGERS);
 
         final Locator noteTextAria = studyGuidePage.getNoteTextAria();
-        final Locator word = studyGuidePage.getWord(TestData.PROJECTIONS);
+        final Locator words = studyGuidePage.getWords(TestData.PHALANGES_IN_THE_FINGERS);
 
         assertThat(noteTextAria).isVisible();
-        assertThat(word).hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_62_48_179_0_2);
+        assertThat(words).hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_62_48_179_0_2);
     }
 
     @Test(
@@ -67,7 +65,7 @@ public class StudyGuideTest extends BaseTest {
                         .clickStudyGuideMenu()
                         .doubleClickOnWord(TestData.PROJECTIONS)
                         .inputNoteText(TestUtils.getRandomString(10))
-                        .clickSaveButton();
+                        .clickNoteSaveButton();
 
         final Locator noteTextAria = studyGuidePage.getNoteTextAria();
         final Locator word = studyGuidePage.getWord(TestData.PROJECTIONS);
