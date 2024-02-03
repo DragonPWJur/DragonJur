@@ -1,0 +1,1 @@
+[{"values":["Linux"],"name":"OS"},{"values":["6.2.0-1019-azure"],"name":"OS.version"},{"values":["chromium"],"name":"Browser"},{"values":["119.0.6045.9"],"name":"Browser.version"},{"values":["17.0.10"],"name":"Java.version"},{"values":["/usr/share/apache-maven-3.8.8"],"name":"Maven.version"}]
