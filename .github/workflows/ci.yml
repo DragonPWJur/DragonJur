@@ -22,6 +22,9 @@ jobs:
       - name: Build & Install
         run: mvn -B install -D skipTests --no-transfer-progress
 
+      - name: save maven version
+        run: echo "MAVEN_HOME=$(mvn -version | head -1)" >> $GITHUB_ENV
+
       - name: Install Playwright
         run: mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"
 
