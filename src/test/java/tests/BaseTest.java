@@ -116,6 +116,8 @@ abstract class BaseTest {
 
     @AfterSuite(alwaysRun = true)
     void closeBrowser() {
+        ReportUtils.getEnvironmentForAllureReport(browser);
+
         if(browser != null) {
             browser.close();
             logInfo("Browser closed");
