@@ -74,11 +74,13 @@ public final class FlashcardsPackIDPage extends BaseFooter<FlashcardsPackIDPage>
     }
 
     @Step("Click 'Yes' mark button.")
-    public void clickYesMarkButton() {
+    public FlashcardsPackIDPage clickYesMarkButton() {
         waitForLocator(yesButton, 2000);
         yesButton.click();
         waitForPageLoad();
         waitWithTimeout(6000);
+
+        return this;
     }
 
     @Step("Click 'Kinda' button.")

@@ -150,7 +150,8 @@ public final class FlashcardPacksTest extends BaseTest {
     @Severity(SeverityLevel.NORMAL)
     @Story("Flashcards")
     @TmsLink("xgp7wuhi782")
-    @Description("LMS-1368 Возможность оставлять пометки yes. https://app.qase.io/plan/LMS/1?case=1368"
+    @Description("LMS-1368 Возможность оставлять пометки yes. https://app.qase.io/plan/LMS/1?case=1368" +
+            "  Duplicate LMS-1390 Логика Yes 1 https://app.qase.io/plan/LMS/1?case=1390 "
             + "Objective: Verify that the user can successfully leave a 'Yes' mark on a flashcard"
             + " when the card is turned.")
     @Test(description = "TC1368-02 - Possibility to leave a “Yes” mark.")
