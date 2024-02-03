@@ -2,6 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Step;
 import pages.constants.Constants;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public final class TestTimedPage extends BaseTestsPage<TestTimedPage> {
         return createPage(new TestTimedPage(getPage()), Constants.TEST_TIMED_END_POINT);
     }
 
+    @Step("Get timer element.")
     public Locator getTimer() {
 
         return timer;

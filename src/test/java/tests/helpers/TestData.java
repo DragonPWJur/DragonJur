@@ -56,9 +56,9 @@ public final class TestData {
     public static final String ALERT_NOT_ENOUGH_QUESTIONS = "There are not enough questions in the sections that you have chosen";
     public static final String PAYMENT_CARD_NUMBER = "4242424242424242";
     public static final String CARD_EXPIRATION_DATE = "12/26";
-    public static final String CVC_DATE = "333";
-    public static final String COUNTRY_DATE = "United States";
-    public static final String ZIP_CODE_DATE = "07920";
+    public static final String CVC = "333";
+    public static final String COUNTRY = "United States";
+    public static final String ZIP_CODE = "07920";
     public static final String ONE_DAY_STUDY_STREAK_MESSAGE = "You are on a 1 day study streak!";
     public static final String TWO_WEEKS_PLAN = "2 Weeks";
 

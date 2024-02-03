@@ -11,13 +11,12 @@ import utils.runner.ProjectProperties;
 
 public class MnemonicCardsTest extends BaseTest {
 
-    @Test(
-            testName = "LMS-1355 Получение карточек. https://app.qase.io/plan/LMS/1?case=1355",
-            description = "TC1355-01 - User can run any available Mnemonic cards pack.")
-    @Description("Objective: To verify that the user can successfully access and open any available Mnemonic cards pack.")
+    @Severity(SeverityLevel.NORMAL)
     @Story("Mnemonic Cards")
     @TmsLink("j6g9c58ocvl0")
-    @Severity(SeverityLevel.NORMAL)
+    @Description("LMS-1355 Получение карточек. https://app.qase.io/plan/LMS/1?case=1355" +
+            "Objective: To verify that the user can successfully access and open any available Mnemonic cards pack.")
+    @Test(description = "TC1355-01 - User can run any available Mnemonic cards pack.")
     public void testUserCanRunAnyAvailableMnemonicCardsPack() {
 
         MnemonicCardListPage mnemonicCardListPage =
@@ -36,15 +35,21 @@ public class MnemonicCardsTest extends BaseTest {
         final String actualStackName = mnemonicCardsPage.getMnemonicCardName();
         final String actualStackQuantity = mnemonicCardsPage.getMnemonicCardTotalQuantity();
 
+        Allure.step("Assert that the actual url has expected part '" + TestData.MNEMONIC_CARDS_END_POINT + "'");
         Assert.assertTrue(
                 actualUrl.contains(expectedUrlPart),
                 "If FAIL: The page URL " + actualUrl + " does NOT contains the url part: " + expectedUrlPart + ".\n"
         );
+
+        Allure.step("Assert that the Mnemonic cards Stack Name the same as on the list af all stacks.");
         Assert.assertTrue(
                 expectedStackName.contains(actualStackName),
                 "If FAIL: The expectedStackName " + expectedStackName
                         + " does NOT contains the actualStackName " + actualStackName + ".\n"
         );
+
+        Allure.step("Assert that the Mnemonic cards Stack Quantity (" + actualStackQuantity + ")" +
+                " is equal to expected quantity (" + expectedStackQuantity + ") on the list af all stacks.");
         Assert.assertEquals(
                 actualStackQuantity, expectedStackQuantity,
                 "If FAIL: The actual stack quantity (" + actualStackQuantity +

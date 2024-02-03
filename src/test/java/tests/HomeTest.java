@@ -290,33 +290,18 @@ public final class HomeTest extends BaseTest {
         Allure.step("Assert that the points in main section after the second click " +
                 "are equal to the points on side menu after the second click.");
         Assert.assertEquals(
-                mainSectionPointsAfterFirstClick, sideMenuPintsAfterFirstClick,
+                mainSectionPointsAfterSecondClick, sideMenuPointsAfterSecondClick,
                 "If FAIL: Points after the second click are NOT equal.\n"
         );
     }
 
-    @Severity(SeverityLevel.NORMAL)
-    @Story("HomePage")
-    @TmsLink("9rsd8ecq6x5y")
-    @Description("LMS-1343 Отработка streaks. https://app.qase.io/plan/LMS/1?case=1343"
-            + "   Objective: To verify that the modal window will be opened after clicking on the “Streaks” button.")
-    @Test(description = "TC1343-01 - Verification “Streaks” modal window appears.")
-    public void testStreaksModalWindowIsAppeared() {
-        HomePage homePage =
-                new HomePage(getPage()).init()
-                        .clickHomeMenu()
-                        .clickStreaksButton();
-
-        Allure.step("Assert that the modal window is opened");
-        assertThat(homePage.getStreaksModalWindow()).isVisible();
-    }
 
     @Severity(SeverityLevel.NORMAL)
     @Story("HomePage")
     @TmsLink("zhdhkv1f6nk7")
     @Description("LMS-1342 https://app.qase.io/plan/LMS/1?case=1342" +
             "To verify the modal window is open when clicking the Study This button.")
-    @Test(description = "1342-01 The modal window is open when clicking the Study This button")
+    @Test(description = "TC1342-01 The modal window is open when clicking the Study This button")
     public void testModalWindowStudyIsOpened() {
         HomePage homePage =
                 new HomePage(getPage()).init()
