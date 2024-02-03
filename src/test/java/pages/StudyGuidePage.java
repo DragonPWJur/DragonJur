@@ -87,7 +87,7 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return this;
     }
 
-    @Step("Get list of matches words")
+    @Step("Get a list of matching words.")
     public List<Locator> getMatchesList() {
 
         return allItems(match);

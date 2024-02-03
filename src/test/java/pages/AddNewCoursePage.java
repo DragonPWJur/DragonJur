@@ -19,7 +19,7 @@ public final class AddNewCoursePage extends BaseHeader<AddNewCoursePage> {
         return createPage(new AddNewCoursePage(getPage()), Constants.ADD_NEW_COURSE_END_POINT);
     }
 
-    @Step("Click on any 'Get' button.")
+    @Step("Click 'Get' button.")
     public AddNewCourseModal clickGetButton() {
         getButton.click();
 

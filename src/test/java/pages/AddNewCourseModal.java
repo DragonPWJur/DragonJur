@@ -22,7 +22,7 @@ public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
 
         return new AddNewCourseModal(getPage());
     }
-    @Step("User is on the 'Choose a product' page.Click on the 'Lifetime' button on the page.")
+    @Step("Click 'Lifetime' button.")
     public AddNewCourseModal clickLifeTimeButton() {
         lifeTimeButton.click();
 
@@ -58,7 +58,7 @@ public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
 
         return purchaseButton;
     }
-    @Step("Click on the 'Purchase' button on the page.")
+    @Step("Click 'Purchase' button.")
     public StripeModal clickPurchaseButton() {
         purchaseButton.click();
 

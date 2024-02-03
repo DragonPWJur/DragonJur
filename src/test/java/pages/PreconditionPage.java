@@ -157,7 +157,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 .clickHomeMenu();
     }
 
-    @Step("Precondition: Pass the test with one wrong answer of {questionsAmount} questions.")
+    @Step("Precondition: Pass the wrong answer to {questionsAmount} questions.")
     public void passTestOneAnswersIncorrect(String questionsAmount) {
         int numberOfQuestions = Integer.parseInt(questionsAmount);
 

@@ -31,21 +31,22 @@ public final class StripeModal extends BaseModal<StripeModal> {
             LoggerUtils.logInfo("Stripe Dialog is NOT visible");
             int count = 3;
             while (count > 0 && !getDialog().isVisible()) {
-                waitForLocator(stripeDialog, 4000);
+                waitForLocator(stripeDialog, 2000);
                 count--;
                 if (count == 0) {
                     LoggerUtils.logError("ERROR: Stripe modal is NOT visible");
                 }
             }
 
-            waitForLocator(stripeElement, 4000);
+            waitForLocator(stripeElement, 2000);
             if (stripeElement.isVisible()) {
-                waitForLocator(stripeModalHeader, 4000);
+                waitForLocator(stripeModalHeader, 2000);
             }
         }
+
         LoggerUtils.logInfo("Stripe Dialog is visible");
-        waitForLocator(stripeElement, 4000);
-        waitForLocator(stripeModalHeader, 4000);
+
+        waitForLocator(stripeElement, 8000);
 
         return stripeModalHeader;
     }
@@ -55,9 +56,10 @@ public final class StripeModal extends BaseModal<StripeModal> {
         return stripeElement;
     }
 
+    @Step("Wait for Stripe element.")
     private FrameLocator getStripePaymentInputFields() {
         waitForPageLoad();
-        waitWithTimeout(20000);
+        waitWithTimeout(10000);
 
         FrameLocator stripePaymentFrame = getPage().frameLocator("__privateStripeFrame85718");
         LoggerUtils.logInfo("STRIPE FRAME: Stripe Payment form is visible (" + stripePaymentFrame + ")");
@@ -68,7 +70,7 @@ public final class StripeModal extends BaseModal<StripeModal> {
         return inputFields;
     }
 
-    @Step("Input Payment Card Number {paymentCardNumber}.")
+    @Step("Input Payment Card Number.")
     public StripeModal inputCreditCardNumber(String paymentCardNumber) {
 
         Locator cardNumberPlaceholder = getStripePaymentInputFields().getByPlaceholder("1234 1234 1234 1234");
@@ -81,7 +83,8 @@ public final class StripeModal extends BaseModal<StripeModal> {
 
         return new StripeModal(getPage());
     }
-    @Step("Input Card Expiration Date {cardExpirationDate}.")
+
+    @Step("Input Card Expiration Date.")
     public StripeModal inputCardExpirationDate(String cardExpirationDate) {
 
         Locator expirationDatePlaceholder = getStripePaymentInputFields().getByPlaceholder("MM / YY");
@@ -95,42 +98,42 @@ public final class StripeModal extends BaseModal<StripeModal> {
         return new StripeModal(getPage());
     }
 
-    @Step("Input Card Expiration Date {cardExpirationDate}.")
-    public StripeModal inputCardCVCDate(String cardCVCDate) {
+    @Step("Input Card CVC.")
+    public StripeModal inputCardCVC(String cardCVC) {
 
-        Locator cvcDatePlaceholder = getStripePaymentInputFields().getByPlaceholder("CVC");
-        LoggerUtils.logInfo("STRIPE FRAME: Stripe Payment 'expirationDatePlaceholder' is visible (" + cvcDatePlaceholder + ")");
+        Locator cvcPlaceholder = getStripePaymentInputFields().getByPlaceholder("CVC");
+        LoggerUtils.logInfo("STRIPE FRAME: Stripe Payment 'cvcPlaceholder' is visible (" + cvcPlaceholder + ")");
 
-//        cvcDatePlaceholder.click();
-//        cvcDatePlaceholder.fill(cardCVCDate);
+//        cvcPlaceholder.click();
+//        cvcPlaceholder.fill(cardCVC);
+
+        LoggerUtils.logInfo("STRIPE FRAME: cvcPlaceholder is not iterable because of Error: 'Unexpected token'");
+
+        return new StripeModal(getPage());
+    }
+
+    @Step("Input country name.")
+    public StripeModal inputCardCountry(String countryName) {
+
+        Locator countryPlaceholder = getStripePaymentInputFields().getByPlaceholder("United States");
+        LoggerUtils.logInfo("STRIPE FRAME: Stripe Payment 'countryPlaceholder' is visible (" + countryPlaceholder + ")");
+
+//        countryPlaceholder.click();
+//        countryPlaceholder.fill(countryName);
 
         LoggerUtils.logInfo("STRIPE FRAME: expirationDate input is not iterable because of Error: 'Unexpected token'");
 
         return new StripeModal(getPage());
     }
 
-    @Step("Input Card Expiration Date {cardExpirationDate}.")
-    public StripeModal inputCardCountryDate(String cardCountryDate) {
+    @Step("Input card Zip code.")
+    public StripeModal inputZipCode(String cardZipCode) {
 
-        Locator countryDatePlaceholder = getStripePaymentInputFields().getByPlaceholder("United States");
-        LoggerUtils.logInfo("STRIPE FRAME: Stripe Payment 'expirationDatePlaceholder' is visible (" + countryDatePlaceholder + ")");
-
-//        countryDatePlaceholder.click();
-//        countryDatePlaceholder.fill(cardCountryDate);
-
-        LoggerUtils.logInfo("STRIPE FRAME: expirationDate input is not iterable because of Error: 'Unexpected token'");
-
-        return new StripeModal(getPage());
-    }
-
-    @Step("Input Card Expiration Date {cardExpirationDate}.")
-    public StripeModal inputCardZipCodeDate(String cardZipDate) {
-
-        Locator zipDatePlaceholder = getStripePaymentInputFields().getByPlaceholder("12345");
-        LoggerUtils.logInfo("STRIPE FRAME: Stripe Payment 'expirationDatePlaceholder' is visible (" + zipDatePlaceholder + ")");
+        Locator zipPlaceholder = getStripePaymentInputFields().getByPlaceholder("12345");
+        LoggerUtils.logInfo("STRIPE FRAME: Stripe Payment 'zipPlaceholder' is visible (" + zipPlaceholder + ")");
 
 //        zipDatePlaceholder.click();
-//        zipDatePlaceholder.fill(cardZipDate);
+//        zipDatePlaceholder.fill(cardZipCode);
 
         LoggerUtils.logInfo("STRIPE FRAME: expirationDate input is not iterable because of Error: 'Unexpected token'");
 

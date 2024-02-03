@@ -290,7 +290,7 @@ public final class HomeTest extends BaseTest {
         Allure.step("Assert that the points in main section after the second click " +
                 "are equal to the points on side menu after the second click.");
         Assert.assertEquals(
-                mainSectionPointsAfterFirstClick, sideMenuPintsAfterFirstClick,
+                mainSectionPointsAfterSecondClick, sideMenuPointsAfterSecondClick,
                 "If FAIL: Points after the second click are NOT equal.\n"
         );
     }
