@@ -51,13 +51,6 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return this;
     }
 
-    @Step("Click 'Save' button")
-    public StudyGuidePage clickSaveButton() {
-        saveButton.click();
-
-        return this;
-    }
-
     public Locator getNoteTextAria() {
 
         return noteTextAria;
@@ -108,15 +101,15 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     }
 
     @Step("Highlight words {words}")
-    public StudyGuidePage highlightWords(String words) {
-        final Locator wordsFirst = text(words).first();
+    public StudyGuidePage highlightWords(String string) {
+        final Locator words = exactText(string);
 
-        wordsFirst.hover();
-        BoundingBox box = wordsFirst.boundingBox();
+        words.hover();
+        BoundingBox box = words.boundingBox();
 
-        getPage().mouse().move(box.x, box.y + 10);
+        getPage().mouse().move(box.x, box.y + 5);
         getPage().mouse().down();
-        getPage().mouse().move(box.x + box.width, box.y + 10);
+        getPage().mouse().move(box.x + box.width - 5, box.y + 5);
         getPage().mouse().up();
 
         return this;
@@ -176,5 +169,10 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         searchField.fill(text);
 
         return this;
+    }
+
+    public Locator getWords(String words) {
+
+        return text(words);
     }
 }
