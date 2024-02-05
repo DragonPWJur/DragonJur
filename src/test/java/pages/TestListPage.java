@@ -42,18 +42,27 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
 
     @Step("Click 'Domains' button if not active.")
     public TestListPage clickDomainsButtonIfNotActive() {
-        // while block was added due to a bug in the application (Generate And Start button inactive)
+        domainsButton.click();
         getPage().reload();
-        waitForPageLoad();
-        if (!domainsButton.isChecked()) {
+        waitWithTimeout(2000);
+
+        if(!domainsButton.isChecked()) {
+            getPage().reload();
+            waitWithTimeout(2000);
+
             domainsButton.click();
 
-            int attempt = 0;
-            while (checkbox.count() <= 9 && attempt < 3) {
+            //A 'while' block is added to address the bug related to the 'Domains' button
+            int count = 3;
+            while (!domainsButton.isChecked() && count > 0) {
                 getPage().reload();
-                waitForPageLoad();
-                waitWithTimeout(5000);
-                attempt++;
+                waitWithTimeout(1000);
+                domainsButton.click();
+                waitWithTimeout(2000);
+                count--;
+                if (count == 0 && !domainsButton.isChecked() || count == 0 && text("Please select subject").isVisible()) {
+                    LoggerUtils.logError("ERROR: Domains button is not active.");
+                }
             }
         }
 
