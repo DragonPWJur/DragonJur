@@ -16,7 +16,6 @@ import utils.api.APIUtils;
 @Ignore
 public class StudyGuideAdminTest extends BaseTest {
 
-
     @Test(
             testName = "LMS-TC1360-01 User is able to see the Study Guide text. https://app.qase.io/plan/LMS/1?case=1360",
             description = "TC1360-01 - The user sees that the changes made in the admin site Study Guide appear on the user website.")

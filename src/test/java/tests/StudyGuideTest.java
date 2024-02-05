@@ -12,13 +12,12 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class StudyGuideTest extends BaseTest {
 
-    @Test(
-            testName = "LMS-1363 Выделение части текста. https://app.qase.io/case/LMS-1363",
-            description = "TC1363-01 - Executing Word Highlighting by Double Click")
-    @Description("To confirm the user's ability to successfully highlight a word")
+    @Severity(SeverityLevel.NORMAL)
     @Story("Study Guide")
     @TmsLink("f8cnmz6sy744")
-    @Severity(SeverityLevel.NORMAL)
+    @Description("LMS-1363 Выделение части текста. https://app.qase.io/case/LMS-1363" +
+            "   To confirm the user's ability to successfully highlight a word")
+    @Test(description = "TC1363-01 - Executing Word Highlighting by Double Click")
     public void testExecutingWordHighlightingByDoubleClick() {
         StudyGuidePage studyGuidePage =
                 new HomePage(getPage()).init()
@@ -28,17 +27,19 @@ public class StudyGuideTest extends BaseTest {
         final Locator noteTextAria = studyGuidePage.getNoteTextAria();
         final Locator word = studyGuidePage.getWord(TestData.PROJECTIONS);
 
+        Allure.step("Assert that text aria to put the note is visible.");
         assertThat(noteTextAria).isVisible();
+
+        Allure.step("Assert that selected word '" + TestData.PROJECTIONS + "' is highlighted.");
         assertThat(word).hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_62_48_179_0_2);
     }
 
-    @Test(
-            testName = "LMS-1363 Выделение части текста. https://app.qase.io/case/LMS-1363",
-            description = "TC1363-02 - Highlighting Multiple Words")
-    @Description("To confirm that the user can successfully highlight multiple words")
+    @Severity(SeverityLevel.NORMAL)
     @Story("Study Guide")
     @TmsLink("yerkt67nt8zq")
-    @Severity(SeverityLevel.NORMAL)
+    @Description("LMS-1363 Выделение части текста. https://app.qase.io/case/LMS-1363" +
+            "   To confirm that the user can successfully highlight multiple words")
+    @Test(description = "TC1363-02 - Highlighting Multiple Words")
     public void testHighlightingMultipleWords() {
         StudyGuidePage studyGuidePage =
                 new HomePage(getPage()).init()
@@ -48,17 +49,19 @@ public class StudyGuideTest extends BaseTest {
         final Locator noteTextAria = studyGuidePage.getNoteTextAria();
         final Locator words = studyGuidePage.getWords(TestData.PHALANGES_IN_THE_FINGERS);
 
+        Allure.step("Assert that text aria to put the note is visible.");
         assertThat(noteTextAria).isVisible();
+
+        Allure.step("Assert that selected words " + TestData.PHALANGES_IN_THE_FINGERS + " are highlighted.");
         assertThat(words).hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_62_48_179_0_2);
     }
 
-    @Test(
-            testName = "LMS-1362 Создание заметок. https://app.qase.io/case/LMS-1362",
-            description = "TC1362-01 - Creating a Note")
-    @Description("To verify that the User can successfully create a note")
+    @Severity(SeverityLevel.NORMAL)
     @Story("Study Guide")
     @TmsLink("qqog7vjki13b")
-    @Severity(SeverityLevel.NORMAL)
+    @Description("LMS-1362 Создание заметок. https://app.qase.io/case/LMS-1362" +
+            "  To verify that the User can successfully create a note")
+    @Test(description = "TC1362-01 - Creating a Note")
     public void testCreatingANote() {
         StudyGuidePage studyGuidePage =
                 new HomePage(getPage()).init()
@@ -70,7 +73,10 @@ public class StudyGuideTest extends BaseTest {
         final Locator noteTextAria = studyGuidePage.getNoteTextAria();
         final Locator word = studyGuidePage.getWord(TestData.PROJECTIONS);
 
+        Allure.step("Assert that text aria to put the note is Not visible.");
         assertThat(noteTextAria).not().isVisible();
+
+        Allure.step("Assert that selected word '" + TestData.PROJECTIONS + "' is highlighted.");
         assertThat(word).hasCSS(TestData.BACKGROUND_COLOR, TestData.RGBA_62_48_179_0_2);
 
         studyGuidePage
@@ -78,8 +84,16 @@ public class StudyGuideTest extends BaseTest {
 
         final Locator wordNoteButton = studyGuidePage.getHighlightedWordButton();
 
+        Allure.step("Assert that text aria to put the note is visible.");
         assertThat(wordNoteButton).isVisible();
-        assertThat(wordNoteButton).hasText(TestData.PROJECTIONS);
+
+        Allure.step("Assert that Note button is created on the right side menu.");
         assertThat(wordNoteButton).hasCount(1);
+
+        Allure.step("Assert that Note button is visible on the right side menu.");
+        assertThat(wordNoteButton).isVisible();
+
+        Allure.step("Assert that Note button has text '" + TestData.PROJECTIONS + "'.");
+        assertThat(wordNoteButton).hasText(TestData.PROJECTIONS);
     }
 }

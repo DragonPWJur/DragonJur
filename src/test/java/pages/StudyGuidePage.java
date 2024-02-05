@@ -37,14 +37,14 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return text(word).nth(1);
     }
 
-    @Step("Double click on the word {word}")
+    @Step("Double click on the word '{word}'")
     public StudyGuidePage doubleClickOnWord(String word) {
         getWord(word).dblclick();
 
         return this;
     }
 
-    @Step("Enter text {text} for the note")
+    @Step("Enter text '{text}' into the note modal.")
     public StudyGuidePage inputNoteText(String text) {
         noteTextAria.fill(text);
 
@@ -86,7 +86,7 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return allItems(match);
     }
 
-    @Step("Click the 'Save' button in the note")
+    @Step("Click the 'Save' button inside the note modal")
     public StudyGuidePage clickNoteSaveButton() {
         saveButton.click();
 
@@ -100,7 +100,7 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return this;
     }
 
-    @Step("Highlight words {words}")
+    @Step("Highlight words '{string}' by moving mouse.")
     public StudyGuidePage highlightWords(String string) {
         final Locator words = exactText(string);
 
