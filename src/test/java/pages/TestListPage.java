@@ -44,14 +44,15 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     public TestListPage clickDomainsButtonIfNotActive() {
         // while block was added due to a bug in the application (Generate And Start button inactive)
         getPage().reload();
-        waitWithTimeout(3000);
+        waitForPageLoad();
         if (!domainsButton.isChecked()) {
             domainsButton.click();
 
             int attempt = 0;
             while (checkbox.count() <= 9 && attempt < 3) {
                 getPage().reload();
-                waitWithTimeout(3000);
+                waitForPageLoad();
+                waitWithTimeout(5000);
                 attempt++;
             }
         }
