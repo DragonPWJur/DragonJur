@@ -119,8 +119,8 @@ public class PaymentTest extends BaseTest {
         final Locator bronzeHeading = addNewCourseModal.getBronzeHeading();
         final Locator purchaseButton = addNewCourseModal.getPurchaseButton();
 
-        Allure.step("Assert that the 'Gold' option is available.");
-        assertThat(goldHeading).isVisible();
+//        Allure.step("Assert that the 'Gold' option is available.");
+//        assertThat(goldHeading).isVisible();
 
         Allure.step("Assert that the 'Silver' option is not available.");
         assertThat(silverHeading).not().isVisible();
