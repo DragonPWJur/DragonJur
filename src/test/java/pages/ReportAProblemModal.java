@@ -2,6 +2,7 @@ package pages;
 
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import io.qameta.allure.Step;
 
 public final class ReportAProblemModal extends BaseModal<ReportAProblemModal> implements IRandom {
     private final Locator describeTheProblemTextarea = textbox();
@@ -19,6 +20,7 @@ public final class ReportAProblemModal extends BaseModal<ReportAProblemModal> im
         return new ReportAProblemModal(getPage());
     }
 
+    @Step("Input random string.")
     public ReportAProblemModal inputText(String text) {
         if (describeTheProblemTextarea.isVisible()) {
             describeTheProblemTextarea.fill(text);
@@ -27,6 +29,7 @@ public final class ReportAProblemModal extends BaseModal<ReportAProblemModal> im
         return this;
     }
 
+    @Step("Click 'Send' button.")
     public ReportAProblemModal clickSendButton() {
         sendButton.click();
 

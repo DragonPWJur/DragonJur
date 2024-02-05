@@ -154,12 +154,14 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
 
     @Step("Scroll to the bottom of the StudyGuide page")
     public StudyGuidePage scrollToPageBottom() {
+        waitForPageLoad();
         yesButton.scrollIntoViewIfNeeded();
         return this;
     }
 
-    @Step("Click 'Yes' button at the bottom of the StudyGiude page")
+    @Step("Click 'Yes' button.")
     public TestTutorPage clickYesButton() {
+        waitForLocator(yesButton, 3000);
         yesButton.click();
         return new TestTutorPage(getPage()).init();
     }

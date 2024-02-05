@@ -23,13 +23,11 @@ abstract class BaseFooter<TPage> extends BaseHeader<TPage> {
         return removeFromMarkedButton;
     }
 
-    @Step("Collect 'Reset results' button.")
     public Locator getResetResultsButton() {
 
         return resetResultsButton;
     }
 
-    @Step("Collect 'Mark for review' button.")
     public Locator getMarkForReviewButton() {
         waitForLocator(markForReviewButton, 2000);
 

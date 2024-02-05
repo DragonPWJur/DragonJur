@@ -23,7 +23,6 @@ public final class TestTutorPage extends BaseTestsPage<TestTutorPage> implements
         return createPage(new TestTutorPage(getPage()), Constants.TEST_TUTOR_END_POINT);
     }
 
-    @Step("Collect list of active button names in the footer")
     public List<String> listOfButtonNamesInFooter() {
 
         return listOfActiveButtons.stream().map(Locator::innerText).toList();

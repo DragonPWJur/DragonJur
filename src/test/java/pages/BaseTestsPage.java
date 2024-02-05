@@ -10,7 +10,6 @@ abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
     private final Locator testQuestion = locator("form span");
     private final Locator questionMark = exactText("?");
     private final List<Locator> radioButtons = allItems("input[type='radio']");
-//    private final List<Locator> radioButtons = allRadioButtons();
     private final Locator correctAnswer = text("Correct Answer");
     private final Locator correctAnswerBackgroundColor55B47D = locator("[fill='#55B47D']");
     private final Locator h3Header = locator("div h3");
@@ -25,13 +24,11 @@ abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
         super(page);
     }
 
-    @Step("Get Radio Buttons option by text.")
     public List<Locator> getRadioButtons() {
 
         return radioButtons;
     }
 
-    @Step("Get 'Correct Answer' option by text.")
     public Locator getCorrectAnswer() {
 
         return correctAnswer;
@@ -57,7 +54,6 @@ abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
         return explanationTextLocator;
     }
 
-    @Step("Get 'Confirm' button.")
     public Locator getConfirmButton() {
 
         return confirmButton;
@@ -84,7 +80,6 @@ abstract class BaseTestsPage<TPage> extends BaseFooter<TPage> {
         return testQuestion;
     }
 
-    @Step("Count answers radio buttons")
     public int getAnswersCount() {
 
         return radioButtons.size();

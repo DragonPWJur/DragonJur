@@ -23,6 +23,7 @@ public final class TestData {
     public static final String MNEMONIC_CARD_PRACTICE_END_POINT = "/mnemonic-card-practice/";
     public static final String FLASHCARDS_PACK_ID_END_POINT = "/flashcards?packId";
     public static final String ADD_NEW_COURSE_END_POINT = "/add-new-course";
+    public static final String TEST_TUTOR_CHAPTER_INDEX_0_END_POINT = "/test-tutor?chapterIndex=0";
 
     //Data
     public static final String ONE_QUESTION = "1";

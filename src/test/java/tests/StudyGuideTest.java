@@ -2,9 +2,11 @@ package tests;
 
 import com.microsoft.playwright.Locator;
 import io.qameta.allure.*;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.StudyGuidePage;
+import pages.TestTutorPage;
 import tests.helpers.TestData;
 import tests.helpers.TestUtils;
 
@@ -95,5 +97,47 @@ public class StudyGuideTest extends BaseTest {
 
         Allure.step("Assert that Note button has text '" + TestData.PROJECTIONS + "'.");
         assertThat(wordNoteButton).hasText(TestData.PROJECTIONS);
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Story("Study Guide")
+    @TmsLink("ufe2bohbd0sy")
+    @Description("LMS-1364 Запуск тестов. https://app.qase.io/case/LMS-1364" +
+            "   Objective: To confirm that users with a Gold subscription can successfully run a test in the Study Guide section.")
+    @Test(description = "TC1364-01 - Running Test in Study Guide with Gold Subscription")
+    public void testTestIsRunWhenOpenFromStudyGuide() {
+        TestTutorPage testTutorPage =
+                new HomePage(getPage()).init()
+                        .clickStudyGuideMenu()
+                        .scrollToPageBottom()
+                        .clickYesButton();
+
+        final String actualUrl = getPage().url();
+        final String expectedUrlPart = TestData.TEST_TUTOR_CHAPTER_INDEX_0_END_POINT;
+        final Locator question = testTutorPage.getTestQuestion();
+
+        Allure.step("Assert that user was redirected to '" + TestData.TEST_TUTOR_END_POINT + "' page.");
+        Assert.assertTrue(
+                actualUrl.contains(expectedUrlPart),
+                "If FAIL: actual url '" + actualUrl + "' does NOT contains the '" + expectedUrlPart + "' end point."
+        );
+
+        Allure.step("Assert that user can see the test question.");
+        assertThat(question).isVisible();
+
+        Allure.step("Assert that question text contains question mark.");
+        assertThat(question).containsText(TestData.QUESTION_MARK);
+
+        Allure.step("Assert that at least one answer is shown.");
+        Assert.assertTrue(
+                testTutorPage.getAnswersCount() > 0,
+                "If FAIL: The multiple-choice test should contain at least one answer.\n");
+
+        Allure.step("Assert that chapter test page has buttons " + TestData.LIST_OF_TUTOR_TEST_FOOTER_BUTTONS);
+        Assert.assertEquals(
+                TestData.LIST_OF_TUTOR_TEST_FOOTER_BUTTONS, testTutorPage.listOfButtonNamesInFooter(),
+                "If FAIL: Chapter 1 test tutor page does NOT has buttons "
+                        + TestData.LIST_OF_TUTOR_TEST_FOOTER_BUTTONS + " on the footer."
+        );
     }
 }

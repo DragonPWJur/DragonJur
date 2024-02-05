@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 public final class TestListPage extends BaseTestsListPage<TestListPage> implements IRandom {
     private final Locator domainsButton = text("Domains");
-    private final Locator domainsCheckbox = locator("label.sc-gHLcSH.colYoX");
+    private final Locator domainsCheckbox = locator("input[name='domainsQuestions']");
     private final Locator tutorButton = button("Tutor");
     private final Locator numberOfQuestionsInputField = locator("input[name = 'numberOfQuestions']");
     private final Locator chaptersButton = text("Chapters");
@@ -28,6 +28,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     private final Locator tostifyAlert = getPage().getByRole(AriaRole.ALERT).locator("div~div");
 
     private int randomNumber;
+    private int randomValue;
 
     TestListPage(Page page) {
         super(page);
@@ -41,27 +42,17 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
 
     @Step("Click 'Domains' button if not active.")
     public TestListPage clickDomainsButtonIfNotActive() {
-        domainsButton.click();
+        // while block was added due to a bug in the application (Generate And Start button inactive)
         getPage().reload();
-        waitWithTimeout(2000);
-
-        if(!domainsButton.isChecked()) {
-            getPage().reload();
-            waitWithTimeout(2000);
-
+        waitWithTimeout(3000);
+        if (!domainsButton.isChecked()) {
             domainsButton.click();
 
-            //A 'while' block is added to address the bug related to the 'Domains' button
-            int count = 3;
-            while (!domainsButton.isChecked() && count > 0) {
+            int attempt = 0;
+            while (checkbox.count() <= 9 && attempt < 3) {
                 getPage().reload();
-                waitWithTimeout(1000);
-                domainsButton.click();
-                waitWithTimeout(2000);
-                count--;
-                if (count == 0 && !domainsButton.isChecked() || count == 0 && text("Please select subject").isVisible()) {
-                    LoggerUtils.logError("ERROR: Domains button is not active.");
-                }
+                waitWithTimeout(3000);
+                attempt++;
             }
         }
 
@@ -89,10 +80,22 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    @Step("Select a checkbox randomly and retrieve its name.")
-    public String clickRandomCheckboxAndReturnItsName() {
-        int randomValue = getRandomNumber(allCheckboxes);
+    @Step("Click random checkbox.")
+    public TestListPage clickCheckboxRandom() {
+        randomValue = getRandomNumber(allCheckboxes);
         allCheckboxes.get(randomValue).click();
+
+        return this;
+    }
+
+    @Step("Get random checkbox.")
+    public Locator getRandomCheckbox() {
+
+        return domainsCheckbox.nth(randomValue);
+    }
+
+    @Step("Retrieve random checkbox name.")
+    public String getRandomCheckboxName() {
 
         return allCheckboxes.get(randomValue).textContent();
     }
