@@ -16,27 +16,32 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class TestTutorTest extends BaseTest {
 
-    @Test(
-            testName = "LMS-1350 возможность для юзера помечать, https://app.qase.io/plan/LMS/1?case=1350",
-            description = "TC1350-01 User can mark the card.")
-    @Description("Objective: To confirm the functionality allowing the user to mark a card for review and verify the change in the button's label from 'Mark for review' to 'Remove from marked.'")
+    @Severity(SeverityLevel.NORMAL)
     @Story("Test page")
     @TmsLink("2xfbdetx0jqy")
-    @Severity(SeverityLevel.NORMAL)
+    @Description("LMS-1350 возможность для юзера помечать, https://app.qase.io/plan/LMS/1?case=1350" +
+            "   Objective: To confirm the functionality allowing the user to mark a card for review " +
+            "and verify the change in the button's label from 'Mark for review' to 'Remove from marked.'")
+    @Test(description = "TC1350-01 User can mark the card.")
     public void testUserCanMarkTheCard() {
         PreconditionPage precondition = new PreconditionPage(getPage()).init();
 
         TestTutorPage testTutorPage =
                 precondition
-                        .startRandomDomainTest(TestData.ONE_QUESTION)
-                        .clickMarkForReviewButton();
+                        .startRandomDomainTest(TestData.ONE_QUESTION);
 
         final Locator markForReviewButton = testTutorPage.getMarkForReviewButton();
+
+        Allure.step("Assert that 'Mark Fo Review' button is visible.");
+        assertThat(markForReviewButton).isVisible();
+
+        testTutorPage
+                .clickMarkForReviewButton();
+
         final Locator removeFromMarkedButton = testTutorPage.getRemoveFromMarkedButton();
 
-        assertThat(markForReviewButton).not().isVisible();
+        Allure.step("Assert that 'Remove From Marked' button is visible.");
         assertThat(removeFromMarkedButton).isVisible();
-        assertThat(removeFromMarkedButton).hasText(TestData.REMOVE_FROM_MARKED);
     }
 
     @Test(

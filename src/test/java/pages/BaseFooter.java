@@ -10,7 +10,7 @@ abstract class BaseFooter<TPage> extends BaseHeader<TPage> {
     private final Locator addToFlashcardButton = exactButton("Add to flashcard");
     private final Locator removeFromFlashcardsButton = exactButton("Remove from flashcards");
     private final Locator resetResultsButton = exactButton("Reset results");
-    private final Locator removeFromMarkedButton = locator("button[disabled] + div > button").nth(2);
+    private final Locator removeFromMarkedButton = exactButton("Remove from marked");
 
     BaseFooter(Page page) {
         super(page);
@@ -18,6 +18,7 @@ abstract class BaseFooter<TPage> extends BaseHeader<TPage> {
 
     @Step("Collect 'Remove from marked' button.")
     public Locator getRemoveFromMarkedButton() {
+        waitForLocator(removeFromMarkedButton, 2000);
 
         return removeFromMarkedButton;
     }
@@ -30,6 +31,7 @@ abstract class BaseFooter<TPage> extends BaseHeader<TPage> {
 
     @Step("Collect 'Mark for review' button.")
     public Locator getMarkForReviewButton() {
+        waitForLocator(markForReviewButton, 2000);
 
         return markForReviewButton;
     }
