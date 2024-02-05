@@ -6,9 +6,9 @@ import io.qameta.allure.Step;
 
 abstract class BaseHeader<TPage> extends BaseModal<TPage> {
     private final Locator endButton = exactButton("End");
-    private final Locator yesCardsAmount = locator("span.eXzdQE").nth(3);
-    private final Locator kindaCardsAmount = locator("span.eXzdQE").nth(2);
-    private final Locator noCardsAmount = locator("span.eXzdQE").nth(1);
+    private final Locator yesCardsAmount = locator("div>div:not(:has(button)) + span").nth(3);
+    private final Locator kindaCardsAmount = locator("div>div:not(:has(button)) + span").nth(2);
+    private final Locator noCardsAmount = locator("div>div:not(:has(button)) + span").nth(1);
     private final Locator packName = locator("div:has(svg) + span");
     private final Locator mnemonicCardHeader = locator("div~span").first();
     private final Locator addNewCourseHeader = locator("div:has(svg + button) > span");

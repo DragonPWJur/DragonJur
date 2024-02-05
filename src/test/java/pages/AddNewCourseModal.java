@@ -5,7 +5,7 @@ import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 
 public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
-    private final Locator lifeTimeButton = button("Life time");
+    private final Locator lifeTimeButton = button("Lifetime");
     private final Locator chooseAProductHeading = locator(".ReactModalPortal div:has(> div > svg) > span");
     private final Locator goldHeader = exactText("Gold");
     private final Locator silverHeader = exactText("Silver");
