@@ -157,11 +157,13 @@ public class PaymentTest extends BaseTest {
         final Locator stripeModalHeader = stripeModal.getStripeModalHeader();
         final Locator stripeElement = stripeModal.getStripeElement();
 
-        Allure.step("Stripe payment modal window is visible.");
+        Allure.step("Assert that Stripe payment modal window is visible.");
         assertThat(stripeModalHeader).isVisible();
 
-        Allure.step("Stripe payment element is attached.");
+        Allure.step("Assert that Stripe payment element is attached.");
         assertThat(stripeElement).isAttached();
+
+        Allure.step("Assert thet Stripe payment element is visible.");
         assertThat(stripeElement).isVisible();
     }
 
@@ -189,8 +191,13 @@ public class PaymentTest extends BaseTest {
         final Locator stripeModalHeader = stripeModal.getStripeModalHeader();
         final Locator stripeElement = stripeModal.getStripeElement();
 
+        Allure.step("Assert that Stripe payment  form Header 'Add a payment method' is visible.");
         assertThat(stripeModalHeader).isVisible();
+
+        Allure.step("Assert that Stripe payment element is attached.");
         assertThat(stripeElement).isAttached();
+
+        Allure.step("Assert that Stripe payment element is visible.");
         assertThat(stripeElement).isVisible();
     }
 }
