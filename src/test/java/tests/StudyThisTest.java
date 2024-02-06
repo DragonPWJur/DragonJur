@@ -47,7 +47,7 @@ public class StudyThisTest extends BaseTest {
     @Description("Objective: To verify the user's ability to select 1-3 domains/chapters from the list when their account contains the three least proficient knowledge domains/chapters.")
     @Story("Home Page")
     @TmsLink("pt150jap2ioc")
-    public void testAbilityToStudyWeakestAreas() throws InterruptedException {
+    public void testAbilityToSeeWeakestAreas() throws InterruptedException {
 
         new PreconditionPage(getPage()).init()
                 .startDomainsTestAndAnswerIncorrect(TestData.QUESTIONS_PER_DOMAIN, TestData.QUESTIONS_AMOUNT);
