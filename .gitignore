@@ -16,7 +16,6 @@ config.properties
 debug.log
 *.puml
 logs/
-tokens/
 
 ### Eclipse ###
 .apt_generated
