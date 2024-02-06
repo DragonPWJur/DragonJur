@@ -56,7 +56,7 @@ public class TestTutorTest extends BaseTest {
                 new HomePage(getPage()).init()
                         .clickTestsMenu()
                         .cancelDialogIfVisible()
-                        .clickDomainsButtonIfNotActive()
+                        .clickDomainsButton()
                         .clickRandomCheckboxDomain()
                         .clickTutorButton()
                         .inputNumberOfQuestions(TestData.ONE_QUESTION)
@@ -127,7 +127,7 @@ public class TestTutorTest extends BaseTest {
         TestListPage testListPage = new HomePage(getPage()).init()
                 .clickTestsMenu()
                 .cancelDialogIfVisible()
-                .clickDomainsButtonIfNotActive()
+                .clickDomainsButton()
                 .clickCheckboxRandom();
 
         final Locator randomCheckbox = testListPage.getRandomCheckbox();
@@ -154,7 +154,7 @@ public class TestTutorTest extends BaseTest {
                 new HomePage(getPage()).init()
                         .clickTestsMenu()
                         .cancelDialogIfVisible()
-                        .clickDomainsButtonIfNotActive()
+                        .clickDomainsButton()
                         .clickRandomCheckboxDomain()
                         .clickTutorButton()
                         .inputNumberOfQuestions(TestData.ONE_QUESTION)
@@ -273,7 +273,7 @@ public class TestTutorTest extends BaseTest {
                 homePage
                         .clickTestsMenu()
                         .cancelDialogIfVisible()
-                        .clickDomainsButtonIfNotActive()
+                        .clickDomainsButton()
                         .clickRandomCheckboxDomain()
                         .inputNumberOfQuestions(TestData.ONE_QUESTION)
                         .clickGenerateAndStartTutorTestButton()

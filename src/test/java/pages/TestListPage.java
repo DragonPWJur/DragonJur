@@ -67,6 +67,35 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
         return this;
     }
 
+    @Step("Click 'Domains' button.")
+    public TestListPage clickDomainsButton() {
+        domainsButton.click();
+        getPage().reload();
+        waitWithTimeout(2000);
+
+        if(!domainsButton.isChecked()) {
+            getPage().reload();
+            waitWithTimeout(2000);
+
+            domainsButton.click();
+
+            //A 'while' block is added to address the bug related to the 'Domains' button
+            int count = 3;
+            while (!domainsButton.isChecked() && count > 0) {
+                getPage().reload();
+                waitWithTimeout(1000);
+                domainsButton.click();
+                waitWithTimeout(2000);
+                count--;
+                if (count == 0 && !domainsButton.isChecked() || count == 0 && text("Please select subject").isVisible()) {
+                    LoggerUtils.logError("ERROR: Domains button is not active.");
+                }
+            }
+        }
+
+        return this;
+    }
+
     @Step("Click random available checkbox.")
     public TestListPage clickRandomCheckboxDomain() {
         randomCheckbox = getRandomValue(allCheckboxes);
