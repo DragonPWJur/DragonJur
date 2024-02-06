@@ -57,7 +57,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 .clickTestsMenu()
                 .cancelDialogIfVisible()
                 .clickDomainsButtonIfNotActive()
-                .clickRandomCheckbox()
+                .clickRandomCheckboxDomain()
                 .inputNumberOfQuestions(number)
                 .clickGenerateAndStartTutorTestButton();
 

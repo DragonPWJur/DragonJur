@@ -48,7 +48,6 @@ public final class TestData {
     public static final String ALL_TESTS = "All tests";
     public static final String ADD_NEW_COURSE = "Add new course";
     public static final String CHOOSE_A_PRODUCT = "Choose a product";
-    public static final String REMOVE_FROM_MARKED = "Remove from marked";
     public static final String THE_REPORT_HAS_BEEN_SENT_SUCCESSFULLY = "The report has been sent successfully";
     public static final String STAND = "stand";
     public static final List<String> LIST_OF_TUTOR_TEST_FOOTER_BUTTONS = Arrays.asList(

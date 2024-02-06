@@ -133,9 +133,7 @@ public final class APIUtils {
             case 401 -> LoggerUtils.logError("API: ERROR: Unauthorized " + status);
             case 422 -> LoggerUtils.logInfo("API: Payment method NOT found " + status);
             case 204 -> LoggerUtils.logInfo("API: deleteCustomerPaymentMethod " + status);
-            default -> {
-                LoggerUtils.logException("API: EXCEPTION: Request FAILED deleteCustomerPaymentMethod " + status);
-            }
+            default -> LoggerUtils.logException("API: EXCEPTION: Request FAILED deleteCustomerPaymentMethod " + status);
         }
     }
 
@@ -289,9 +287,7 @@ public final class APIUtils {
                 setActiveCourse(APIData.BRONZE_SUBSCRIPTION_ID);
                 LoggerUtils.logInfo("API: Switched to 'TEST AUTOMATION _DO NOT DELETE_BRONZE'");
             }
-            default -> {
-                LoggerUtils.logError("API: ERROR: " + status + response.statusText());
-            }
+            default -> LoggerUtils.logError("API: ERROR: " + status + response.statusText());
         }
     }
 

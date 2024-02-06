@@ -118,10 +118,9 @@ abstract class BaseTest {
     void closeBrowser() {
         ReportUtils.getEnvironmentForAllureReport(browser);
 
-        if(browser != null) {
-            browser.close();
-            logInfo("Browser closed");
-        }
+        browser.close();
+        logInfo("Browser closed");
+
         if(playwright != null) {
             playwright.close();
             logInfo("Playwright closed"
@@ -146,8 +145,4 @@ abstract class BaseTest {
         return page;
     }
 
-    public Playwright getPlaywright() {
-
-        return playwright;
-    }
 }

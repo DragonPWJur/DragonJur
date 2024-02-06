@@ -73,7 +73,6 @@ public final class FlashcardPacksTest extends BaseTest {
         final String actualVisiblePackName = flashcardsPackIDPage.getPackName();
         final Locator cardsTotalText = flashcardsPackIDPage.cardsTotalText(expectedPackAmount);
         final Locator questionHeading = flashcardsPackIDPage.getQuestionHeading();
-        final Locator showAnswerButton = flashcardsPackIDPage.getShowAnswerButton();
 
         Allure.step("Assert that user was redirected to '" + expectedUrlPart + "' end point.");
         Assert.assertTrue(

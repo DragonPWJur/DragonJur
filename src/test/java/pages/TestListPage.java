@@ -30,6 +30,7 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
 
     private int randomNumber;
     private int randomValue;
+    private Locator randomCheckbox;
 
     TestListPage(Page page) {
         super(page);
@@ -43,25 +44,21 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
 
     @Step("Click 'Domains' button if not active.")
     public TestListPage clickDomainsButtonIfNotActive() {
-        domainsButton.click();
-        getPage().reload();
-        waitWithTimeout(2000);
-
+        waitForPageLoad();
+        numberOfQuestionsInputField.clear();
         if (!domainsButton.isChecked()) {
-            getPage().reload();
-            waitWithTimeout(2000);
-
             domainsButton.click();
-
+            waitWithTimeout(1000);
             //A 'while' block is added to address the bug related to the 'Domains' button
             int count = 3;
-            while (!domainsButton.isChecked() && count > 0) {
+            while (!domainsButton.isChecked() && count > 0
+                    || !domainsButton.isChecked() && count > 0 && !numberOfQuestionsInputField.innerText().isEmpty()) {
                 getPage().reload();
                 waitWithTimeout(1000);
+                numberOfQuestionsInputField.clear();
                 domainsButton.click();
-                waitWithTimeout(2000);
                 count--;
-                if (count == 0 && !domainsButton.isChecked() || count == 0 && text("Please select subject").isVisible()) {
+                if (count == 0 && !domainsButton.isChecked()) {
                     LoggerUtils.logError("ERROR: Domains button is not active.");
                 }
             }
@@ -71,14 +68,32 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
     }
 
     @Step("Click random available checkbox.")
-    public TestListPage clickRandomCheckbox() {
-        getRandomValue(allCheckboxes).click();
+    public TestListPage clickRandomCheckboxDomain() {
+        randomCheckbox = getRandomValue(allCheckboxes);
+        if (domainsButton.isChecked()) {
+            numberOfQuestionsInputField.clear();
+            randomCheckbox.click();
+            waitWithTimeout(1000);
+        }
+
+        return this;
+    }
+
+    @Step("Click random available checkbox.")
+    public TestListPage clickRandomCheckboxChapter() {
+        randomCheckbox = getRandomValue(allCheckboxes);
+        if (chaptersButton.isChecked()) {
+            numberOfQuestionsInputField.clear();
+            randomCheckbox.click();
+            waitWithTimeout(1000);
+        }
 
         return this;
     }
 
     @Step("Input '{number}' as number of questions.")
     public TestListPage inputNumberOfQuestions(String number) {
+        numberOfQuestionsInputField.clear();
         numberOfQuestionsInputField.fill(number);
 
         return this;
@@ -123,6 +138,11 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
         // while block was added due to a bug in the application (Generate And Start button inactive)
         if (!chaptersButton.isChecked()) {
             chaptersButton.click();
+            waitWithTimeout(1000);
+            if(!chaptersButton.isChecked()) {
+                chaptersButton.click();
+                waitWithTimeout(1000);
+            }
 
             int attempt = 0;
             while (checkbox.count() <= 24 && attempt < 3) {
@@ -227,12 +247,12 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
         return this;
     }
 
-    public Locator getTostifyAlert() {
+    public Locator getAlert() {
 
         return tostifyAlert;
     }
 
-    public String getTestifyAlertMessage() {
+    public String getAlertMessage() {
 
         return tostifyAlert.textContent();
     }

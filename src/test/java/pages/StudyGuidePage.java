@@ -6,7 +6,6 @@ import com.microsoft.playwright.options.BoundingBox;
 import io.qameta.allure.Step;
 import pages.constants.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements IRandom {

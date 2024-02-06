@@ -56,7 +56,7 @@ public final class StripeModal extends BaseModal<StripeModal> {
     @Step("Wait for Stripe element.")
     private FrameLocator getStripePaymentInputFields() {
         waitForPageLoad();
-        waitWithTimeout(10000);
+        waitWithTimeout(7000);
 
         FrameLocator stripePaymentFrame = getPage().frameLocator("__privateStripeFrame85718");
         LoggerUtils.logInfo("STRIPE FRAME: Stripe Payment form is visible (" + stripePaymentFrame + ")");

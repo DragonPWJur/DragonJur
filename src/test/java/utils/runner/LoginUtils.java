@@ -6,7 +6,6 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import org.json.JSONObject;
 import utils.api.APINewCustomerUtils;
-import utils.reports.LoggerInfo;
 import utils.reports.ReportUtils;
 import utils.reports.TracingUtils;
 

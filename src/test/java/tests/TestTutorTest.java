@@ -57,7 +57,7 @@ public class TestTutorTest extends BaseTest {
                         .clickTestsMenu()
                         .cancelDialogIfVisible()
                         .clickDomainsButtonIfNotActive()
-                        .clickRandomCheckbox()
+                        .clickRandomCheckboxDomain()
                         .clickTutorButton()
                         .inputNumberOfQuestions(TestData.ONE_QUESTION)
                         .clickGenerateAndStartTutorTestButton()
@@ -155,7 +155,7 @@ public class TestTutorTest extends BaseTest {
                         .clickTestsMenu()
                         .cancelDialogIfVisible()
                         .clickDomainsButtonIfNotActive()
-                        .clickRandomCheckbox()
+                        .clickRandomCheckboxDomain()
                         .clickTutorButton()
                         .inputNumberOfQuestions(TestData.ONE_QUESTION)
                         .clickGenerateAndStartTutorTestButton();
@@ -186,14 +186,15 @@ public class TestTutorTest extends BaseTest {
     @Description("LMS-1344 Запуск tutor. https://app.qase.io/case/LMS-1344" +
             "Objective: To verify that the User can successfully activate Tutor mode by checking a random checkbox"
             + "in the Chapter section and entering valid data in the ‘Number of Questions’ field")
-    @Test(description = "TC1344-03 - Execute Tutor Mode with a randomly selected checkbox in the Chapter section")
+    @Test(description = "TC1344-03 - Execute Tutor Mode with a randomly selected checkbox in the Chapter section",
+            priority = 1)
     public void testTutorModeWithRandomCheckboxInChapter() {
         TestTutorPage testTutorPage =
                 new HomePage(getPage()).init()
                         .clickTestsMenu()
                         .cancelDialogIfVisible()
                         .clickChaptersButton()
-                        .clickRandomCheckbox()
+                        .clickRandomCheckboxChapter()
                         .clickTutorButton()
                         .inputNumberOfQuestions(TestData.ONE_QUESTION)
                         .clickGenerateAndStartTutorTestButton();
@@ -269,11 +270,11 @@ public class TestTutorTest extends BaseTest {
         );
 
         CongratulationsModal congratulationsModal =
-                new HomePage(getPage()).init()
+                homePage
                         .clickTestsMenu()
                         .cancelDialogIfVisible()
                         .clickDomainsButtonIfNotActive()
-                        .clickRandomCheckbox()
+                        .clickRandomCheckboxDomain()
                         .inputNumberOfQuestions(TestData.ONE_QUESTION)
                         .clickGenerateAndStartTutorTestButton()
                         .clickCorrectAnswer()

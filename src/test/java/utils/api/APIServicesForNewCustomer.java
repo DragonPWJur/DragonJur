@@ -27,10 +27,10 @@ public class APIServicesForNewCustomer {
                 );
     }
 
-    public static APIResponse inviteCustomer(APIRequestContext apiRequestContext, String username, String coursId, String adminToken) {
+    public static APIResponse inviteCustomer(APIRequestContext apiRequestContext, String username, String courseId, String adminToken) {
         Map<String, String> inviteCustomerData = new HashMap<>();
         inviteCustomerData.put("customerEmail", username);
-        inviteCustomerData.put("courseId", coursId);
+        inviteCustomerData.put("courseId", courseId);
 
         return apiRequestContext
                 .post(

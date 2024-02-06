@@ -59,8 +59,8 @@ public final class ReportUtils {
 
     public static String getReportHeader() {
         String headerAndDate = """
-                T E S T     R E P O R T 
-                Date: %s 
+                T E S T     R E P O R T
+                Date: %s
                 """.formatted(getCurrentDateTime());
 
         return "\n" + H_LINE + headerAndDate + H_LINE;

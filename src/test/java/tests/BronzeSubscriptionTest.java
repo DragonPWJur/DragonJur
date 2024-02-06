@@ -128,8 +128,8 @@ public class BronzeSubscriptionTest extends BaseTest {
                         .inputGreaterBy1NumberOfQuestions()
                         .clickGenerateAndStartTestButton();
 
-        final Locator alertNotEnoughQuestions = testListPage.getTostifyAlert();
-        final String alertMessage = testListPage.getTestifyAlertMessage();
+        final Locator alertNotEnoughQuestions = testListPage.getAlert();
+        final String alertMessage = testListPage.getAlertMessage();
 
         Allure.step("Assert that the user stays on the page with the endpoint '/test-tutor'.");
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_LIST_END_POINT);
@@ -164,8 +164,8 @@ public class BronzeSubscriptionTest extends BaseTest {
                         .inputGreaterBy1NumberOfQuestions()
                         .clickGenerateAndStartTestButton();
 
-        final Locator alertNotEnoughQuestions = testListPage.getTostifyAlert();
-        final String alertMessage = testListPage.getTestifyAlertMessage();
+        final Locator alertNotEnoughQuestions = testListPage.getAlert();
+        final String alertMessage = testListPage.getAlertMessage();
 
         Allure.step("Assert that the user stays on the page with the endpoint '/test-tutor'.");
         assertThat(getPage()).hasURL(BASE_URL + TestData.TEST_LIST_END_POINT);
