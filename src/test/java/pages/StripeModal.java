@@ -1,13 +1,10 @@
 package pages;
 
-import com.microsoft.playwright.Frame;
 import com.microsoft.playwright.FrameLocator;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 import utils.reports.LoggerUtils;
-
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public final class StripeModal extends BaseModal<StripeModal> {
     private final Locator stripeDialog = dialog();

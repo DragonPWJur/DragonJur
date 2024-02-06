@@ -41,14 +41,4 @@ public final class ReportAProblemModal extends BaseModal<ReportAProblemModal> im
 
         return reportMessage;
     }
-
-    public Locator getDescribeTheProblemTextarea() {
-
-        return describeTheProblemTextarea;
-    }
-
-    public Locator getSendButton() {
-
-        return sendButton;
-    }
 }

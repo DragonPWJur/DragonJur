@@ -32,7 +32,7 @@ public class MnemonicCardsTest extends BaseTest {
 
         final String expectedUrlPart = ProjectProperties.BASE_URL + TestData.MNEMONIC_CARDS_END_POINT;
         final String actualUrl = getPage().url();
-        final String actualStackName = mnemonicCardsPage.getMnemonicCardName();
+        final String actualStackName = mnemonicCardsPage.getMnemonicCardsStackName();
         final String actualStackQuantity = mnemonicCardsPage.getMnemonicCardTotalQuantity();
 
         Allure.step("Assert that the actual url has expected part '" + TestData.MNEMONIC_CARDS_END_POINT + "'");

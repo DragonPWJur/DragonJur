@@ -13,7 +13,6 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
     private final Locator yesButton = exactButton("Yes");
     private final Locator skipButton = exactButton("Skip");
     private final Locator backButton = exactButton("Back");
-    private final Locator closeButton = exactButton("Close");
     private final Locator okButton = exactButton("Ok");
     private final Locator nextButton = exactButton("Next");
     private final Locator weakestExamAreasHeader = dialog.locator("span");
@@ -40,13 +39,12 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
     public FlashcardsPackIDPage clickGotItButton() {
         gotItButton.click();
 
-
         return new FlashcardsPackIDPage(getPage());
     }
 
     @Step("Click 'Yes' button on dialog window if visible.")
     public TestTutorPage clickYesButton() {
-        if(dialog.isVisible() && yesButton.isVisible()) {
+        if (dialog.isVisible() && yesButton.isVisible()) {
             yesButton.click();
         }
 
@@ -55,7 +53,7 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
 
     @Step("Click 'Yes' button on dialog window if visible.")
     public CongratulationsModal clickYesToCongratulationButton() {
-        if(dialog.isVisible() && yesButton.isVisible()) {
+        if (dialog.isVisible() && yesButton.isVisible()) {
             yesButton.click();
         }
 
@@ -64,7 +62,7 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
 
     @Step("Click 'Skip' button on dialog window if visible.")
     public TestResultPage clickSkipButton() {
-        if(skipButton.isVisible()) {
+        if (skipButton.isVisible()) {
             skipButton.click();
         } else {
             skipButton.waitFor();
@@ -86,7 +84,7 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
 
     @Step("Click 'Back' button on dialog window if visible.")
     protected TPage clickBackButton() {
-        if(dialog.isVisible() && backButton.isVisible()) {
+        if (dialog.isVisible() && backButton.isVisible()) {
             backButton.click();
         }
 
@@ -94,10 +92,8 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
     }
 
     @Step("Click 'Next' button on dialog pop-up.")
-    public CongratulationsModal clickNextButton() {
+    public void clickNextButton() {
         nextButton.click();
-
-        return new CongratulationsModal(getPage()).init();
     }
 
     @Step("Click 'Ok' button on dialog pop-up.")
@@ -106,6 +102,4 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
 
         return new TestResultPage(getPage()).init();
     }
-
-
 }

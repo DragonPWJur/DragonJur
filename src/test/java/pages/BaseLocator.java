@@ -23,29 +23,9 @@ abstract class BaseLocator<TPage> extends BaseWait<TPage> {
         return getPage().getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName(text).setExact(true));
     }
 
-    protected Locator link(String text) {
-
-        return getPage().getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(text));
-    }
-
-    protected Locator exactLink(String text) {
-
-        return getPage().getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName(text).setExact(true));
-    }
-
-    protected Locator heading(String text) {
-
-        return getPage().getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(text));
-    }
-
     protected Locator exactHeading(String text) {
 
         return getPage().getByRole(AriaRole.HEADING, new Page.GetByRoleOptions().setName(text).setExact(true));
-    }
-
-    protected Locator label(String text) {
-
-        return getPage().getByLabel(text);
     }
 
     protected Locator text(String text) {
@@ -58,24 +38,9 @@ abstract class BaseLocator<TPage> extends BaseWait<TPage> {
         return getPage().getByText(text, new Page.GetByTextOptions().setExact(true));
     }
 
-    protected Locator radio(String text) {
-
-        return getPage().getByRole(AriaRole.RADIO, new Page.GetByRoleOptions().setName(text));
-    }
-
     protected Locator radio() {
 
         return getPage().getByRole(AriaRole.RADIO);
-    }
-
-    protected Locator alert() {
-
-        return getPage().getByRole(AriaRole.ALERT);
-    }
-
-    protected Locator image(String text) {
-
-        return getPage().getByRole(AriaRole.IMG, new Page.GetByRoleOptions().setName(text));
     }
 
     protected Locator dialog() {
@@ -104,17 +69,6 @@ abstract class BaseLocator<TPage> extends BaseWait<TPage> {
         return getPage().getByRole(AriaRole.TEXTBOX);
     }
 
-    protected Locator checkbox(int number) {
-
-        return getPage().getByRole(AriaRole.CHECKBOX).nth(number);
-    }
-
-    protected List<Locator> allCheckboxes() {
-        Locator checkbox = getPage().getByRole(AriaRole.CHECKBOX);
-
-        return getList(checkbox);
-    }
-
     protected List<Locator> allCheckboxes(String css) {
 
         return getList(locator(css));
@@ -135,13 +89,8 @@ abstract class BaseLocator<TPage> extends BaseWait<TPage> {
         return getList(locator(css));
     }
 
-    protected List<Locator> allItems(Locator locator) {
-
-        return getList(locator);
-    }
-
     private List<Locator> getList(Locator locator) {
-        while(!locator.first().isVisible() && !locator.last().isVisible()) {
+        while (!locator.first().isVisible() && !locator.last().isVisible()) {
             locator.first().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
             locator.last().waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.ATTACHED));
             locator.last().scrollIntoViewIfNeeded();

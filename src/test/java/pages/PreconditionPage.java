@@ -104,7 +104,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 .waitForPointsAnimationToStop();
     }
 
-    @Step ("Precondition: Set All Checkboxes to Active state under the {planName} plan.")
+    @Step("Precondition: Set All Checkboxes to Active state under the {planName} plan.")
     public void setAllCheckboxesToBeChecked(String planName) {
         APIUtils.markTasks(planName);
         getPage().reload();

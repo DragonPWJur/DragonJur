@@ -9,7 +9,7 @@ import pages.constants.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements IRandom{
+public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements IRandom {
     private final Locator noteTextAria = locator("//textarea");
     private final Locator saveButton = button("Save");
     private final Locator highlightsAndNotesButton = button("Highlights and notes");
@@ -18,7 +18,6 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     private final Locator nothingFoundMessage = text(Constants.NOTHING_FOUND);
     private final Locator searchResultTextbox = locator("div:has(input[placeholder='Search']) + div>div");
     private final Locator unit1Text = locator("#body .ce-block__content").first();
-    private final Locator searchResult = locator("div:has(button > span) > button:not(:has(> *))");
     private final String match = "div:has(button > span) > button:not(:has(> *))";
     private final Locator yesButton = exactButton("Yes");
 
@@ -73,13 +72,6 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
         return this;
     }
 
-    @Step("Enter the search word {word}")
-    public StudyGuidePage inputSearchWord(String word) {
-        searchField.fill(word);
-
-        return this;
-    }
-
     @Step("Get a list of matching words.")
     public List<Locator> getMatchesList() {
 
@@ -89,13 +81,6 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     @Step("Click the 'Save' button inside the note modal")
     public StudyGuidePage clickNoteSaveButton() {
         saveButton.click();
-
-        return this;
-    }
-
-    @Step("Enter {text} into search field")
-    public StudyGuidePage inputRandomWordInSearchField(String text) {
-        searchField.fill(text);
 
         return this;
     }
@@ -133,23 +118,11 @@ public final class StudyGuidePage extends BaseFooter<StudyGuidePage> implements 
     }
 
     @Step("Reload current page.")
-    public StudyGuidePage reload() {
+    public void reload() {
         getPage().reload();
         this.waitForPageLoad();
 
-        return new StudyGuidePage(getPage()).init();
-    }
-
-    public List<String> getSearchResultText() {
-        waitWithTimeout(2000);
-        List<Locator> searchResultsList = allItems("div:has(button > span) > button:not(:has(> *))");
-
-        List<String> resultsText = new ArrayList<>();
-        for (Locator result : searchResultsList) {
-            resultsText.add(result.innerText());
-        }
-
-        return resultsText;
+        new StudyGuidePage(getPage()).init();
     }
 
     @Step("Scroll to the bottom of the StudyGuide page")

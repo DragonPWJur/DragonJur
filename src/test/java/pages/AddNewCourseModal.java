@@ -13,7 +13,6 @@ public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
     private final Locator purchaseButton = exactButton("Purchase");
 
     AddNewCourseModal(Page page) {
-
         super(page);
     }
 
@@ -22,6 +21,7 @@ public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
 
         return new AddNewCourseModal(getPage());
     }
+
     @Step("Click 'Lifetime' button.")
     public AddNewCourseModal clickLifeTimeButton() {
         lifeTimeButton.click();
@@ -58,6 +58,7 @@ public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
 
         return purchaseButton;
     }
+
     @Step("Click 'Purchase' button.")
     public StripeModal clickPurchaseButton() {
         purchaseButton.click();

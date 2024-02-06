@@ -8,7 +8,7 @@ import tests.helpers.TestUtils;
 
 import java.util.List;
 
-public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
+public final class HomePage extends BaseSideMenu<HomePage> implements IRandom {
     private final Locator studyThisButton = button("Study This");
     private final Locator twoWeeksButton = exactButton("2 Weeks");
     private final Locator week1Header = exactText("Week 1");
@@ -16,7 +16,6 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     private final Locator mainSectionPoints = locator("div>svg.CircularProgressbar+div>span").first();
     private final Locator sideMenuPoints = locator("div:has(.CircularProgressbar)+span").first();
     private final Locator streaksButton = locator("button>svg+p").last();
-    private final Locator checkboxImage = locator("label:has(input) svg");
     private final List<Locator> allCheckboxes = allCheckboxes("label");
     private final Locator streakDaysModalWindowText = locator("div[role='dialog']>div>p");
 
@@ -71,11 +70,6 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     public Locator getWeek1FirstCheckbox() {
 
         return week1FirstCheckbox;
-    }
-
-    public Locator getStudyThisButton() {
-
-        return studyThisButton;
     }
 
     public List<Locator> getAllCheckboxes() {
@@ -135,7 +129,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     }
 
     @Step("Click random checkbox.")
-    public void clickRandomCheckbox(){
+    public void clickRandomCheckbox() {
         getNthCheckbox(randomIndex).click();
     }
 
@@ -156,12 +150,6 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
 
         return this;
     }
-
-    List<Locator> getAllCheckedCheckboxes() {
-
-        return allCheckboxes.stream().filter(Locator::isChecked).toList();
-    }
-
 
     @Step("Click 'Study This' button.")
     public HomePage clickStudyThisButton() {
@@ -185,5 +173,4 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
 
         return streaksButton;
     }
-
 }

@@ -23,7 +23,8 @@ public final class MnemonicCardsPage extends BaseHeader<MnemonicCardsPage> {
 
         return mnemonicCardTotalQuantity.innerText().split("/")[1];
     }
-@Step("Click 'Start Practice' button.")
+
+    @Step("Click 'Start Practice' button.")
     public MnemonicCardPracticePage clickStartPracticeButton() {
         startPracticeButton.click();
 

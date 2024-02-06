@@ -30,6 +30,6 @@ public final class APIData {
     static final String MONTHLY = "monthly";
     static final String BRONZE = "bronze";
 
-    enum answerStatus {YES, NO, KINDA};
+    enum answerStatus {YES, NO, KINDA}
 
 }

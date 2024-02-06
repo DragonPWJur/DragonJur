@@ -42,6 +42,4 @@ public final class CongratulationsModal extends BaseModal<CongratulationsModal> 
 
         return parseInt(testProgressbarPoints.innerText());
     }
-
-
 }

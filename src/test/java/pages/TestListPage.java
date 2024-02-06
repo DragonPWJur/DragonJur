@@ -10,7 +10,7 @@ import utils.reports.LoggerUtils;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public final class TestListPage extends BaseTestsListPage<TestListPage> implements IRandom {
+public final class TestListPage extends BaseSideMenu<TestListPage> implements IRandom {
     private final Locator domainsButton = text("Domains");
     private final Locator domainsCheckbox = locator("input[name='domainsQuestions']");
     private final Locator tutorButton = button("Tutor");
@@ -21,11 +21,12 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     private final Locator startButton = exactButton("Start");
     private final Locator automationTestingForStatsText = text("Automation testing for stats");
     private final Locator checkbox = locator("button:has(input[type='checkbox'])>div");
-    private Locator activeCheckbox = checkbox.filter(new Locator.FilterOptions().setHasNot(locator("[disabled]")));
     private final Locator statsTests = exactText("Stats");
     private final List<Locator> allCheckboxes = allCheckboxes("div:has(button) label > span");
     private final Locator markedNumber = locator("label:has(input[value=\"MARKED\"])>span");
     private final Locator tostifyAlert = getPage().getByRole(AriaRole.ALERT).locator("div~div");
+    private final Locator generateAndStartButton = button("Generate & Start");
+    private Locator activeCheckbox = checkbox.filter(new Locator.FilterOptions().setHasNot(locator("[disabled]")));
 
     private int randomNumber;
     private int randomValue;
@@ -46,7 +47,7 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         getPage().reload();
         waitWithTimeout(2000);
 
-        if(!domainsButton.isChecked()) {
+        if (!domainsButton.isChecked()) {
             getPage().reload();
             waitWithTimeout(2000);
 
@@ -234,5 +235,26 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     public String getTestifyAlertMessage() {
 
         return tostifyAlert.textContent();
+    }
+
+    @Step("Click 'Generate and Start' button to start the Tutor test.")
+    public TestTutorPage clickGenerateAndStartTutorTestButton() {
+        generateAndStartButton.click();
+
+        return new TestTutorPage(getPage()).init();
+    }
+
+    @Step("Click 'Generate and Start' button to start the Timed test.")
+    public TestListPage clickGenerateAndStartTimedTestButton() {
+        generateAndStartButton.click();
+
+        return new TestListPage(getPage()).init();
+    }
+
+    @Step("Click 'Generate and Start' button to start the Tutor test.")
+    public TestListPage clickGenerateAndStartTestButton() {
+        generateAndStartButton.click();
+
+        return new TestListPage(getPage()).init();
     }
 }

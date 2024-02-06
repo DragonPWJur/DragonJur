@@ -59,6 +59,6 @@ public final class TestUtils {
         for (int i : stack) {
             sum += i;
         }
-        return (int) sum;
+        return sum;
     }
 }
