@@ -10,6 +10,7 @@ import utils.runner.LoginUtils;
 import utils.runner.ProjectProperties;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static utils.api.APIData.*;
@@ -155,9 +156,9 @@ public final class APIUserServices {
     }
 
     static APIResponse postCoursesIdSubscribe(String courseId, String period, String type) {
-        Map<String, String> courseData = new HashMap<>();
-        courseData.put("period", period);
-        courseData.put("type", type);
+        Map<String, String> data = new HashMap<>();
+        data.put("period", period);
+        data.put("type", type);
 
         requestContext = createAPIUserRequestContext();
 
@@ -166,7 +167,7 @@ public final class APIUserServices {
                         COURSES + '/' + courseId + SUBSCRIBE,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
-                                .setData(courseData)
+                                .setData(data)
                 );
     }
 
@@ -238,6 +239,67 @@ public final class APIUserServices {
                         FLASHCARDS_RESULTS,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
+                );
+    }
+
+    public static APIResponse postPassagesIdFinish(String testId) {
+        requestContext = createAPIUserRequestContext();
+
+        return requestContext
+                .post(
+                        PASSAGES + "/" + testId + FINISH,
+                        RequestOptions
+                                .create()
+                                .setHeader("Authorization", "Bearer " + USER_TOKEN)
+                );
+    }
+
+    public static APIResponse postPassagesIDAnswer(String testId, String optionId, String questionId) {
+        Map<String, String> data = new HashMap<>();
+        data.put("optionId", optionId);
+        data.put("questionId", questionId);
+
+        requestContext = createAPIUserRequestContext();
+
+        return requestContext
+                .post(
+                        PASSAGES + "/" + testId + ANSWER,
+                        RequestOptions
+                                .create()
+                                .setHeader("Authorization", "Bearer " + USER_TOKEN)
+                                .setData(data)
+                );
+    }
+
+    public static APIResponse postTutorTestStart(List<String> id, int questionsAmount) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("domainIds", id);
+        data.put("questionsAmount", questionsAmount);
+
+        requestContext = createAPIUserRequestContext();
+
+        return requestContext
+                .post(
+                        TUTOR_TESTS_START,
+                        RequestOptions
+                                .create()
+                                .setHeader("Authorization", "Bearer " + USER_TOKEN)
+                                .setData(data)
+                );
+    }
+
+    public static APIResponse postQuestionDomains(String courseId) {
+        Map<String, String> data = new HashMap<>();
+        data.put("courseId", courseId);
+
+        requestContext = createAPIUserRequestContext();
+
+        return requestContext
+                .post(
+                        QUESTION_DOMAINS,
+                        RequestOptions.create()
+                                .setHeader("Authorization", "Bearer " + USER_TOKEN)
+                                .setData(data)
                 );
     }
 }

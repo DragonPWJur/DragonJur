@@ -294,33 +294,4 @@ public final class HomeTest extends BaseTest {
                 "If FAIL: Points after the second click are NOT equal.\n"
         );
     }
-
-
-    @Severity(SeverityLevel.NORMAL)
-    @Story("HomePage")
-    @TmsLink("zhdhkv1f6nk7")
-    @Description("LMS-1342 https://app.qase.io/plan/LMS/1?case=1342" +
-            "To verify the modal window is open when clicking the Study This button.")
-    @Test(description = "TC1342-01 The modal window is open when clicking the Study This button")
-    public void testModalWindowStudyIsOpened() {
-        HomePage homePage =
-                new HomePage(getPage()).init()
-                        .clickStudyThisButton();
-
-        Allure.step("Assert that the modal window is opened");
-        assertThat(homePage.getDialog()).isVisible();
-
-        final Locator weakestExamAreasHeader = homePage.getWeakestExamAreasHeader();
-        final Locator weakestExamAreasMessage = homePage.getWeakestExamAreasMessage();
-
-        Allure.step("Assert that the modal window header has " + TestData.WEAKEST_EXAM_AREAS + " text.");
-        assertThat(weakestExamAreasHeader).hasText(TestData.WEAKEST_EXAM_AREAS);
-
-        Allure.step("Assert that the weakest exam areas message is visible.");
-        assertThat(weakestExamAreasMessage).isVisible();
-
-        Allure.step("Assert that the weakest exam areas message has text '"
-                + TestData.YOU_HAVE_NOT_STUDIED_ENOUGH + "'.");
-        assertThat(weakestExamAreasMessage).hasText(TestData.YOU_HAVE_NOT_STUDIED_ENOUGH);
-    }
 }

@@ -207,8 +207,15 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         APIUtils.setMarkOptionsForFlashcardPacks(packNames, 20);
     }
 
-    @Step("Get random checkbox image.")
+    @Step("Precondition: Get random checkbox image.")
     public Locator getRandomImage(int index) {
+
         return new HomePage(getPage()).init().getNthCheckboxImage(index);
+    }
+
+    @Step("Precondition: Choose domains with at least {questionsPerDomain} questions,  " +
+            "start tutor test with {numberOfQuestions} and answer incorrect.")
+    public void startDomainsTestAndAnswerIncorrect(int questionsPerDomain, int numberOfQuestions) {
+        APIUtils.answerIncorrectAndFinish(questionsPerDomain, numberOfQuestions);
     }
 }
