@@ -25,7 +25,6 @@ public final class APIUserServices {
 
         if (requestContext != null) {
             requestContext.dispose();
-            LoggerUtils.logInfo("API: User APIRequestContext disposed");
         }
 
         return playwrightUser
@@ -193,12 +192,12 @@ public final class APIUserServices {
                 );
     }
 
-    static APIResponse getFlashcardsPacksCardsPackTypeId(String packId) {
+    static APIResponse getFlashcardsPacksCardsPackTypeId(String packId, int limit) {
         requestContext = createAPIUserRequestContext();
 
         return requestContext
                 .get(
-                        FLASHCARDS_PACKS + CARDS + "?packType=cards&packId=" + packId,
+                        FLASHCARDS_PACKS + CARDS + "?page=1&limit=" + limit + "&packType=cards&packId=" + packId,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
                 );

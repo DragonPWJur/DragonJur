@@ -32,7 +32,6 @@ public final class APIAdminServices {
 
         if (requestContext != null) {
             requestContext.dispose();
-            LoggerUtils.logInfo("API: Admin APIRequestContext disposed");
         }
 
         return playwrightAdmin
@@ -48,11 +47,6 @@ public final class APIAdminServices {
             playwrightAdmin.close();
             LoggerUtils.logInfo("API: playwrightAdmin closed");
         }
-    }
-
-    public static Playwright getPlaywrightAdmin() {
-
-        return playwrightAdmin;
     }
 
     private static APIResponse postAuthAdminSignIn() {

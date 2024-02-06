@@ -201,9 +201,10 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 .getMarkedNumber();
     }
 
-    @Step("Precondition: Set answer options for 9 cards as: 3 cards - Yes, 3 cards - Kinda, 3 cards - No.")
-    public void setOptionsYes3No3Kinda3(String[] stackNames) {
-        APIUtils.setMarkOptionsForFlashcardPacks(stackNames, 20);
+    @Step("Precondition: Set answer options for 9 cards in each pack {packNames} as: " +
+            "3 cards - 'Yes', 3 cards - 'Kinda', 3 cards - 'No', 6 cards - 'Unused'.")
+    public void setOptionsYes3No3Kinda3(String[] packNames) {
+        APIUtils.setMarkOptionsForFlashcardPacks(packNames, 20);
     }
 
     @Step("Get random checkbox image.")

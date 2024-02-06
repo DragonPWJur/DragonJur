@@ -208,7 +208,6 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
     @Step("Get number of 'Marked' questions.")
     public int getMarkedNumber() {
         waitWithTimeout(2000);
-        System.out.println(markedNumber.innerText());
 
         return Integer.parseInt(markedNumber.innerText());
     }

@@ -78,15 +78,15 @@ public final class APIUtils {
         return initJsonObject(getPlansIdPhases.text());
     }
 
-    private static JsonObject                                                                                                                                                 getFlashcardsPacks(int limit) {
+    private static JsonObject getFlashcardsPacks(int limit) {
         APIResponse getFlashcardsPacks = APIUserServices.getFlashcardsPacks(limit);
         checkStatus(getFlashcardsPacks, "getFlashcardsPacks");
 
         return initJsonObject(getFlashcardsPacks.text());
     }
 
-    private static JsonObject getFlashcardsByPack(String packId) {
-        APIResponse getFlashcardsPacksCardsPackTypeId = APIUserServices.getFlashcardsPacksCardsPackTypeId(packId);
+    private static JsonObject getFlashcardsByPack(String packId, int limit) {
+        APIResponse getFlashcardsPacksCardsPackTypeId = APIUserServices.getFlashcardsPacksCardsPackTypeId(packId, limit);
         checkStatus(getFlashcardsPacksCardsPackTypeId, "getFlashcardsPacksCardsPackTypeId");
 
         return initJsonObject(getFlashcardsPacksCardsPackTypeId.text());
@@ -310,59 +310,69 @@ public final class APIUtils {
             final String packName = pack.get("name").getAsString();
             final String packId = pack.get("id").getAsString();
 
-            if (packsNames.length != 0 && Arrays.asList(packsNames).contains(packName)) {
-                JsonArray flashcards = getFlashcardsByPack(packId).getAsJsonArray("items");
-                List<List<Integer>> parts = getParts(packsNames);
-                for (int index : parts.get(0)) {
-                    String flashcardId = flashcards.get(index).getAsJsonObject().get("id").getAsString();
-                    saveFlashcardAnswer(flashcardId, APIData.answerStatus.YES.name());
-                }
-                for (int index : parts.get(1)) {
-                    String flashcardId = flashcards.get(index).getAsJsonObject().get("id").getAsString();
-                    saveFlashcardAnswer(flashcardId, APIData.answerStatus.NO.name());
-                }
-                for (int index : parts.get(2)) {
-                    String flashcardId = flashcards.get(index).getAsJsonObject().get("id").getAsString();
-                    saveFlashcardAnswer(flashcardId, APIData.answerStatus.KINDA.name());
-                }
+            if (packsNames.length != 0 && Arrays.asList(packsNames).contains(packName) && allPacks.size() != 0) {
+                JsonArray flashcards = getFlashcardsByPack(packId, limit).getAsJsonArray("items");
 
-                completePack(pack.get("id").getAsString());
+                List<List<Integer>> parts = getParts(flashcards);
+                assert parts != null;
+                if (parts.size() == 3) {
+                    for (int index : parts.get(0)) {
+                        String flashcardId = flashcards.get(index).getAsJsonObject().get("id").getAsString();
+                        saveFlashcardAnswer(flashcardId, APIData.answerStatus.YES.name());
+                    }
+                    for (int index : parts.get(1)) {
+                        String flashcardId = flashcards.get(index).getAsJsonObject().get("id").getAsString();
+                        saveFlashcardAnswer(flashcardId, APIData.answerStatus.NO.name());
+                    }
+                    for (int index : parts.get(2)) {
+                        String flashcardId = flashcards.get(index).getAsJsonObject().get("id").getAsString();
+                        saveFlashcardAnswer(flashcardId, APIData.answerStatus.KINDA.name());
+                    }
+
+                    completePack(pack.get("id").getAsString());
+                }
             }
         }
     }
 
-    private static List<List<Integer>> getParts(String[] packsNames){
-        int cardsAmount;
-        int lastPart = 0;
-        List<Integer> part1 = new ArrayList<>();
-        List<Integer> part2 = new ArrayList<>();
-        List<Integer> part3 = new ArrayList<>();
-        List<List<Integer>> result = new ArrayList<>();
+    private static List<List<Integer>> getParts(JsonArray flashcards) {
+        if (flashcards.size() != 0) {
+            List<Integer> part1 = new ArrayList<>();
+            List<Integer> part2 = new ArrayList<>();
+            List<Integer> part3 = new ArrayList<>();
+            List<List<Integer>> result = new ArrayList<>();
 
-        if(packsNames.length % 3 == 0) {
-            cardsAmount = packsNames.length / 3;
-        } else {
-            cardsAmount = packsNames.length / 3;
-            lastPart = cardsAmount + packsNames.length % 3;
+            if (flashcards.size() > 3) {
+                int cardsAmount = flashcards.size() / 4;
+
+
+                for (int i = 0; i < cardsAmount; i++) {
+                    part1.add(i);
+                }
+
+                for (int i = cardsAmount; i < (2 * cardsAmount); i++) {
+                    part2.add(i);
+                }
+
+                for (int i = 2 * cardsAmount; i < 3 * cardsAmount; i++) {
+                    part3.add(i);
+                }
+
+                result.add(part1);
+                result.add(part2);
+                result.add(part3);
+
+                return result;
+            } else {
+                for (int i = 0; i < flashcards.size(); i++) {
+                    part1.add(i);
+                }
+
+                result.add(part1);
+            }
         }
 
-        for(int i = 0; i < cardsAmount; i ++) {
-            part1.add(i);
-        }
-
-        for(int i = cardsAmount; i < cardsAmount + cardsAmount; i ++) {
-            part2.add(i);
-        }
-
-        for(int i = cardsAmount + cardsAmount; i < lastPart; i ++) {
-            part3.add(i);
-        }
-
-        result.add(part1);
-        result.add(part2);
-        result.add(part3);
-
-        return result;
+        return null;
     }
 
 }

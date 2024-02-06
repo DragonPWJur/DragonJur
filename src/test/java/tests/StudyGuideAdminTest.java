@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.StudyGuidePage;
 import tests.helpers.TestData;
+import utils.api.APIAdminServices;
 import utils.api.APIUtils;
 
 public class StudyGuideAdminTest extends BaseTest {
@@ -44,5 +45,7 @@ public class StudyGuideAdminTest extends BaseTest {
     public void restoreChapter1Unit1TextOnAdmin() {
         APIUtils
                 .adminChangeChapter1Unit1Text(TestData.TEST, "remove");
+
+        APIAdminServices.closePlaywrightAdmin();
     }
 }
