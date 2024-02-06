@@ -97,7 +97,7 @@ public final class APIUtils {
         checkStatus(postFlashcardsIDAnswers, "postFlashcardsIDAnswers");
     }
 
-    private static void changeChapterText(JsonObject unit) {
+    private static void adminChangeChapterText(JsonObject unit) {
         APIResponse patchAdminGuidesUnitsId = APIAdminServices.patchAdminGuidesUnitsId(unit.get("id").getAsString(), unit);
         checkStatus(patchAdminGuidesUnitsId, "patchAdminGuidesUnitsId");
     }
@@ -218,6 +218,7 @@ public final class APIUtils {
         deletePaymentMethod();
     }
 
+    @Step("API: ADMIN: Change Chapter1 Unit1 Text - {action} '{word}'.")
     public static void adminChangeChapter1Unit1Text(String word, String action) {
         final String courseId = getActiveCourse().get("id").getAsString();
         final String studyGuideId = getStudyGuide(courseId).get("id").getAsString();
@@ -250,7 +251,7 @@ public final class APIUtils {
                 .getAsJsonObject("data")
                 .addProperty("text", unit1Text);
 
-        changeChapterText(unit1);
+        adminChangeChapterText(unit1);
     }
 
     @Step("API: Mark tasks (activate checkboxes) for {planName} study plan.")

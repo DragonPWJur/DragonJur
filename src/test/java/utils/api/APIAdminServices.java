@@ -18,7 +18,7 @@ import static utils.api.APIData.AUTH_ADMIN_SIGN_IN;
 public final class APIAdminServices {
     private static final Playwright playwrightAdmin = createPlaywrightAdmin();
     private static APIRequestContext requestContext;
-    private static final String adminToken = getAdminToken();
+    private static String adminToken = getAdminToken();
 
     private static Playwright createPlaywrightAdmin() {
         LoggerUtils.logInfo("API: playwrightAdmin created");
@@ -26,25 +26,21 @@ public final class APIAdminServices {
         return Playwright.create();
     }
 
-    private static void createAdminAPIRequestContext() {
+    private static APIRequestContext createAdminAPIRequestContext() {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
-        requestContext = playwrightAdmin
+        if (requestContext != null) {
+            requestContext.dispose();
+            LoggerUtils.logInfo("API: Admin APIRequestContext disposed");
+        }
+
+        return playwrightAdmin
                 .request()
                 .newContext(new APIRequest.NewContextOptions()
                         .setBaseURL(ProjectProperties.API_BASE_URL)
                         .setExtraHTTPHeaders(headers)
-        );
-        LoggerUtils.logInfo("API: AdminAPIRequestContext created");
-    }
-
-    private static void disposeAdminAPIRequestContext() {
-        if (requestContext != null) {
-            requestContext.dispose();
-            requestContext = null;
-            LoggerUtils.logInfo("API: AdminAPIRequestContext disposed");
-        }
+                );
     }
 
     public static void closePlaywrightAdmin() {
@@ -59,45 +55,37 @@ public final class APIAdminServices {
         return playwrightAdmin;
     }
 
-    private static APIResponse authAdminSignIn() {
+    private static APIResponse postAuthAdminSignIn() {
         Map<String, String> data = new HashMap<>();
         data.put("email", ProjectProperties.ADMIN_USERNAME);
         data.put("password", ProjectProperties.ADMIN_PASSWORD);
 
-        createAdminAPIRequestContext();
+        requestContext = createAdminAPIRequestContext();
 
-        APIResponse apiResponse = requestContext
-                        .post(
-                                AUTH_ADMIN_SIGN_IN,
-                                RequestOptions.create()
-                                        .setData(data)
-                        );
-
-        disposeAdminAPIRequestContext();
-
-        return apiResponse;
+        return requestContext
+                .post(
+                        AUTH_ADMIN_SIGN_IN,
+                        RequestOptions.create()
+                                .setData(data)
+                );
     }
 
-     static APIResponse patchAdminGuidesUnitsId(String unitId, JsonObject unit) {
-        createAdminAPIRequestContext();
+    static APIResponse patchAdminGuidesUnitsId(String unitId, JsonObject unit) {
+        requestContext = createAdminAPIRequestContext();
 
-        APIResponse response = requestContext
+        return requestContext
                 .patch(ADMIN_GUIDES_UNITS + "/" + unitId,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + adminToken)
                                 .setData(unit)
                 );
-
-        disposeAdminAPIRequestContext();
-
-        return response;
     }
 
     private static String getAdminToken() {
-        APIResponse authAdminSignIn = authAdminSignIn();
-        APIUtils.checkStatus(authAdminSignIn, "Auth Admin Sign In");
+        APIResponse postAuthAdminSignIn = postAuthAdminSignIn();
+        APIUtils.checkStatus(postAuthAdminSignIn, "postAuthAdminSignIn");
 
-        JsonObject adminData = APIUtils.initJsonObject(authAdminSignIn.text());
+        JsonObject adminData = APIUtils.initJsonObject(postAuthAdminSignIn.text());
 
         return adminData.get("token").getAsString();
     }

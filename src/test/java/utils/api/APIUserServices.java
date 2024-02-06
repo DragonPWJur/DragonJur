@@ -5,6 +5,7 @@ import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.RequestOptions;
+import utils.reports.LoggerUtils;
 import utils.runner.LoginUtils;
 import utils.runner.ProjectProperties;
 
@@ -22,8 +23,9 @@ public final class APIUserServices {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
-        if(requestContext != null) {
-            disposeAPIUserRequestContext();
+        if (requestContext != null) {
+            requestContext.dispose();
+            LoggerUtils.logInfo("API: User APIRequestContext disposed");
         }
 
         return playwrightUser
@@ -32,12 +34,6 @@ public final class APIUserServices {
                         .setBaseURL(ProjectProperties.API_BASE_URL)
                         .setExtraHTTPHeaders(headers)
                 );
-    }
-
-     static void disposeAPIUserRequestContext() {
-        if (requestContext != null) {
-            requestContext.dispose();
-        }
     }
 
     static APIResponse deleteCoursesResults() {
