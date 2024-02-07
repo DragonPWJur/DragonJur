@@ -215,7 +215,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
 
     @Step("Precondition: Choose domains with at least {questionsPerDomain} questions,  " +
             "start tutor test with {numberOfQuestions} and answer incorrect.")
-    public void startDomainsTestAndAnswerIncorrect(int questionsPerDomain, int numberOfQuestions) throws InterruptedException {
+    public void startDomainsTestAndAnswerIncorrect(int questionsPerDomain, int numberOfQuestions) {
         APIUtils.answerIncorrectAndFinish(questionsPerDomain, numberOfQuestions);
     }
 }

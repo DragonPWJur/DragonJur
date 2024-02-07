@@ -62,6 +62,7 @@ public final class TestData {
     public static final String ONE_DAY_STUDY_STREAK_MESSAGE = "You are on a 1 day study streak!";
     public static final String TWO_WEEKS_PLAN = "2 Weeks";
     public static final int QUESTIONS_PER_TEST = 80;
+    public static final int QUESTIONS_PER_STUDY = 45;
     public static final int QUESTIONS_PER_DOMAIN = 20;
 
     public static final String[] STACKS_NAMES = {

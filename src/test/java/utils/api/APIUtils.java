@@ -409,7 +409,7 @@ public final class APIUtils {
         return null;
     }
 
-    public static List<String> getDomainsIds(int totalQuestions) {
+    private static List<String> getDomainsIds(int totalQuestions) {
         final String courseId = getActiveCourseId();
         final JsonArray questionDomains = getAllDomains(courseId);
 
@@ -435,10 +435,6 @@ public final class APIUtils {
         final String testId = tutorTest.getAsJsonObject().get("id").getAsString();
         final JsonArray questionsArray = tutorTest.getAsJsonArray("questions");
 
-//        System.out.println(" domainsIds  = " + domainsIds);
-//        System.out.println("testId = " + testId);
-//        System.out.println("questionsArray = " + Arrays.asList(questionsArray));
-
         for(JsonElement question : questionsArray) {
             String questionId = question.getAsJsonObject().get("id").getAsString();
             JsonArray options = question.getAsJsonObject().getAsJsonArray("options");
@@ -447,16 +443,12 @@ public final class APIUtils {
                 JsonObject optionObj = option.getAsJsonObject();
                 if(!optionObj.get("title").getAsString().toLowerCase().contains("Correct".toLowerCase())) {
                     String optionId = optionObj.get("id").getAsString();
-                    JsonObject answerObj = postIncorrectAnswer(testId, questionId, optionId);
-//                    System.out.println(answerObj.get("title"));
-//                    System.out.println(answerObj.get("isCorrect"));
+                    postIncorrectAnswer(testId, questionId, optionId);
                     break;
                 }
             }
         }
 
-        JsonObject finishTestObj = finishTest(testId);
-//        System.out.println(finishTestObj.get("passed"));
-//        System.out.println(finishTestObj.get("pointsEarned"));
+        finishTest(testId);
     }
 }

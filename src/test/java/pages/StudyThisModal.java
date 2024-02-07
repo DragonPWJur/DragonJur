@@ -11,6 +11,7 @@ public class StudyThisModal extends BaseModal<StudyThisModal> {
     private final Locator weakestExamAreasHeader = exactText("Weakest Exam Areas");
     private final Locator weakestExamAreasMessage = getDialog().getByText(Constants.YOU_HAVE_NOT_STUDIED_ENOUGH);
     private final String weakestCheckboxes = "div:has(p) + label:has(input)";
+    private final Locator studyWeakestAreas = text("Study Weakest Areas");
 
     StudyThisModal(Page page) {
         super(page);
@@ -37,8 +38,17 @@ public class StudyThisModal extends BaseModal<StudyThisModal> {
     }
 
     @Step("Select two weakest areas.")
-    public void selectWeakestAreas(int index1, int index2) {
+    public StudyThisModal selectWeakestAreas(int index1, int index2) {
         getWeakestAreasCheckboxes().get(index1).click();
         getWeakestAreasCheckboxes().get(index2).click();
+
+        return this;
+    }
+
+    @Step("Click StudyWeakestAreas button.")
+    public TestTutorPage clickStudyWeakestAreasButton() {
+        studyWeakestAreas.click();
+
+        return new TestTutorPage(getPage()).init();
     }
 }
