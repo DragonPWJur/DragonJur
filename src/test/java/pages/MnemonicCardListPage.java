@@ -28,17 +28,18 @@ public final class MnemonicCardListPage extends BaseSideMenu<MnemonicCardListPag
     }
 
     public String getRandomStackName() {
-        String[] textArray =getRandomStackText().split("\n");
+        String[] textArray = getRandomStackText().split("\n");
 
         return textArray[0];
     }
 
     public String getRandomStackCardsAmount() {
-        String[] textArray =getRandomStackText().split("\n")[1].split(" ");
+        String[] textArray = getRandomStackText().split("\n")[1].split(" ");
 
         return textArray[0];
     }
-@Step("Click random 'Mnemonic Cards' stack.")
+
+    @Step("Click random 'Mnemonic Cards' stack.")
     public MnemonicCardsPage clickRandomMnemonicCardsStack() {
         randomStack.click();
 

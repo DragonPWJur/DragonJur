@@ -35,7 +35,7 @@ public final class ProfilePage extends BaseSideMenu<ProfilePage> {
         return addANewCourseButton;
     }
 
-    @Step("Click on the '+ Add a new course' button.")
+    @Step("Click '+ Add a new course' button.")
     public AddNewCoursePage clickAddANewCourseButton() {
         addANewCourseButton.click();
 

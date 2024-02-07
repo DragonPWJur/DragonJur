@@ -56,8 +56,8 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
         new HomePage(getPage()).init()
                 .clickTestsMenu()
                 .cancelDialogIfVisible()
-                .clickDomainsButtonIfNotActive()
-                .clickRandomCheckbox()
+                .clickDomainsButton()
+                .clickRandomCheckboxDomain()
                 .inputNumberOfQuestions(number)
                 .clickGenerateAndStartTutorTestButton();
 
@@ -104,7 +104,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 .waitForPointsAnimationToStop();
     }
 
-    @Step ("Precondition: Set All Checkboxes to Active state under the {planName} plan.")
+    @Step("Precondition: Set All Checkboxes to Active state under the {planName} plan.")
     public void setAllCheckboxesToBeChecked(String planName) {
         APIUtils.markTasks(planName);
         getPage().reload();
@@ -157,7 +157,7 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 .clickHomeMenu();
     }
 
-    @Step("Precondition: Pass the test with one wrong answer of {questionsAmount} questions.")
+    @Step("Precondition: Pass the wrong answer to {questionsAmount} questions.")
     public void passTestOneAnswersIncorrect(String questionsAmount) {
         int numberOfQuestions = Integer.parseInt(questionsAmount);
 
@@ -201,13 +201,21 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 .getMarkedNumber();
     }
 
-    @Step("Precondition: Set answer options for 9 cards as: 3 cards - Yes, 3 cards - Kinda, 3 cards - No.")
-    public void setOptionsYes3No3Kinda3(String[] stackNames) {
-        APIUtils.setMarkOptionsForFlashcardPacks(stackNames, 20);
+    @Step("Precondition: Set answer options for 9 cards in each pack {packNames} as: " +
+            "3 cards - 'Yes', 3 cards - 'Kinda', 3 cards - 'No', 6 cards - 'Unused'.")
+    public void setOptionsYes3No3Kinda3(String[] packNames) {
+        APIUtils.setMarkOptionsForFlashcardPacks(packNames, 20);
     }
 
-    @Step("Get random checkbox image.")
+    @Step("Precondition: Get random checkbox image.")
     public Locator getRandomImage(int index) {
+
         return new HomePage(getPage()).init().getNthCheckboxImage(index);
+    }
+
+    @Step("Precondition: Choose domains with at least {questionsPerDomain} questions,  " +
+            "start tutor test with {numberOfQuestions} and answer incorrect.")
+    public void startDomainsTestAndAnswerIncorrect(int questionsPerDomain, int numberOfQuestions) {
+        APIUtils.answerIncorrectAndFinish(questionsPerDomain, numberOfQuestions);
     }
 }

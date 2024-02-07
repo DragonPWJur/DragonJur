@@ -16,7 +16,6 @@ config.properties
 debug.log
 *.puml
 logs/
-tokens/
 
 ### Eclipse ###
 .apt_generated
@@ -45,6 +44,7 @@ build/
 
 state.json
 keys.json
+user.json
 # Allure Report
 allure-results/
 .allure/

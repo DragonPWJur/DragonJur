@@ -36,11 +36,9 @@ public final class GmailUtils {
     public static Gmail getGmailService() throws Exception {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
-        Gmail service = new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
+        return new Gmail.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
                 .build();
-
-        return service;
     }
 
     private static Credential getCredentials(final NetHttpTransport HTTP_TRANSPORT) throws IOException {
@@ -61,9 +59,7 @@ public final class GmailUtils {
 
         LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
 
-        Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
-
-        return credential;
+        return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
     public static String extractPasswordFromEmail(Gmail service, String email) throws IOException {

@@ -5,7 +5,7 @@ import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
 
 public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
-    private final Locator lifeTimeButton = button("Life time");
+    private final Locator lifeTimeButton = button("Life");
     private final Locator chooseAProductHeading = locator(".ReactModalPortal div:has(> div > svg) > span");
     private final Locator goldHeader = exactText("Gold");
     private final Locator silverHeader = exactText("Silver");
@@ -13,7 +13,6 @@ public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
     private final Locator purchaseButton = exactButton("Purchase");
 
     AddNewCourseModal(Page page) {
-
         super(page);
     }
 
@@ -22,7 +21,8 @@ public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
 
         return new AddNewCourseModal(getPage());
     }
-    @Step("User is on the 'Choose a product' page.Click on the 'Lifetime' button on the page.")
+
+    @Step("Click 'Lifetime' button.")
     public AddNewCourseModal clickLifeTimeButton() {
         lifeTimeButton.click();
 
@@ -58,7 +58,8 @@ public final class AddNewCourseModal extends BaseModal<AddNewCourseModal> {
 
         return purchaseButton;
     }
-    @Step("Click on the 'Purchase' button on the page.")
+
+    @Step("Click 'Purchase' button.")
     public StripeModal clickPurchaseButton() {
         purchaseButton.click();
 

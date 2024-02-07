@@ -10,9 +10,9 @@ import utils.reports.LoggerUtils;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public final class TestListPage extends BaseTestsListPage<TestListPage> implements IRandom {
+public final class TestListPage extends BaseSideMenu<TestListPage> implements IRandom {
     private final Locator domainsButton = text("Domains");
-    private final Locator domainsCheckbox = locator("label.sc-gHLcSH.colYoX");
+    private final Locator domainsCheckbox = locator("input[name='domainsQuestions']");
     private final Locator tutorButton = button("Tutor");
     private final Locator numberOfQuestionsInputField = locator("input[name = 'numberOfQuestions']");
     private final Locator chaptersButton = text("Chapters");
@@ -21,13 +21,16 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     private final Locator startButton = exactButton("Start");
     private final Locator automationTestingForStatsText = text("Automation testing for stats");
     private final Locator checkbox = locator("button:has(input[type='checkbox'])>div");
-    private Locator activeCheckbox = checkbox.filter(new Locator.FilterOptions().setHasNot(locator("[disabled]")));
     private final Locator statsTests = exactText("Stats");
     private final List<Locator> allCheckboxes = allCheckboxes("div:has(button) label > span");
     private final Locator markedNumber = locator("label:has(input[value=\"MARKED\"])>span");
     private final Locator tostifyAlert = getPage().getByRole(AriaRole.ALERT).locator("div~div");
+    private final Locator generateAndStartButton = button("Generate & Start");
+    private Locator activeCheckbox = checkbox.filter(new Locator.FilterOptions().setHasNot(locator("[disabled]")));
 
     private int randomNumber;
+    private int randomValue;
+    private Locator randomCheckbox;
 
     TestListPage(Page page) {
         super(page);
@@ -41,6 +44,31 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
 
     @Step("Click 'Domains' button if not active.")
     public TestListPage clickDomainsButtonIfNotActive() {
+        waitForPageLoad();
+        numberOfQuestionsInputField.clear();
+        if (!domainsButton.isChecked()) {
+            domainsButton.click();
+            waitWithTimeout(1000);
+            //A 'while' block is added to address the bug related to the 'Domains' button
+            int count = 3;
+            while (!domainsButton.isChecked() && count > 0
+                    || !domainsButton.isChecked() && count > 0 && !numberOfQuestionsInputField.innerText().isEmpty()) {
+                getPage().reload();
+                waitWithTimeout(1000);
+                numberOfQuestionsInputField.clear();
+                domainsButton.click();
+                count--;
+                if (count == 0 && !domainsButton.isChecked()) {
+                    LoggerUtils.logError("ERROR: Domains button is not active.");
+                }
+            }
+        }
+
+        return this;
+    }
+
+    @Step("Click 'Domains' button.")
+    public TestListPage clickDomainsButton() {
         domainsButton.click();
         getPage().reload();
         waitWithTimeout(2000);
@@ -69,14 +97,32 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     }
 
     @Step("Click random available checkbox.")
-    public TestListPage clickRandomCheckbox() {
-        getRandomValue(allCheckboxes).click();
+    public TestListPage clickRandomCheckboxDomain() {
+        randomCheckbox = getRandomValue(allCheckboxes);
+        if (domainsButton.isChecked()) {
+            numberOfQuestionsInputField.clear();
+            randomCheckbox.click();
+            waitWithTimeout(1000);
+        }
+
+        return this;
+    }
+
+    @Step("Click random available checkbox.")
+    public TestListPage clickRandomCheckboxChapter() {
+        randomCheckbox = getRandomValue(allCheckboxes);
+        if (chaptersButton.isChecked()) {
+            numberOfQuestionsInputField.clear();
+            randomCheckbox.click();
+            waitWithTimeout(1000);
+        }
 
         return this;
     }
 
     @Step("Input '{number}' as number of questions.")
     public TestListPage inputNumberOfQuestions(String number) {
+        numberOfQuestionsInputField.clear();
         numberOfQuestionsInputField.fill(number);
 
         return this;
@@ -89,15 +135,27 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    @Step("Select a checkbox randomly and retrieve its name.")
-    public String clickRandomCheckboxAndReturnItsName() {
-        int randomValue = getRandomNumber(allCheckboxes);
+    @Step("Click random checkbox.")
+    public TestListPage clickCheckboxRandom() {
+        randomValue = getRandomNumber(allCheckboxes);
         allCheckboxes.get(randomValue).click();
+
+        return this;
+    }
+
+    @Step("Get random checkbox.")
+    public Locator getRandomCheckbox() {
+
+        return domainsCheckbox.nth(randomValue);
+    }
+
+    @Step("Retrieve random checkbox name.")
+    public String getRandomCheckboxName() {
 
         return allCheckboxes.get(randomValue).textContent();
     }
 
-    @Step("Click 'Cancel' button to cancel 'Unfinished test' dialog if it's visible.")
+    @Step("Cancel 'Unfinished test' dialog if visible.")
     public TestListPage cancelDialogIfVisible() {
         cancelDialog();
 
@@ -109,6 +167,11 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         // while block was added due to a bug in the application (Generate And Start button inactive)
         if (!chaptersButton.isChecked()) {
             chaptersButton.click();
+            waitWithTimeout(1000);
+            if(!chaptersButton.isChecked()) {
+                chaptersButton.click();
+                waitWithTimeout(1000);
+            }
 
             int attempt = 0;
             while (checkbox.count() <= 24 && attempt < 3) {
@@ -145,7 +208,6 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
     @Step("Get number of 'Marked' questions.")
     public int getMarkedNumber() {
         waitWithTimeout(2000);
-        System.out.println(markedNumber.innerText());
 
         return Integer.parseInt(markedNumber.innerText());
     }
@@ -213,13 +275,34 @@ public final class TestListPage extends BaseTestsListPage<TestListPage> implemen
         return this;
     }
 
-    public Locator getTostifyAlert() {
+    public Locator getAlert() {
 
         return tostifyAlert;
     }
 
-    public String getTestifyAlertMessage() {
+    public String getAlertMessage() {
 
         return tostifyAlert.textContent();
+    }
+
+    @Step("Click 'Generate and Start' button to start the Tutor test.")
+    public TestTutorPage clickGenerateAndStartTutorTestButton() {
+        generateAndStartButton.click();
+
+        return new TestTutorPage(getPage()).init();
+    }
+
+    @Step("Click 'Generate and Start' button to start the Timed test.")
+    public TestListPage clickGenerateAndStartTimedTestButton() {
+        generateAndStartButton.click();
+
+        return new TestListPage(getPage()).init();
+    }
+
+    @Step("Click 'Generate and Start' button to start the Tutor test.")
+    public TestListPage clickGenerateAndStartTestButton() {
+        generateAndStartButton.click();
+
+        return new TestListPage(getPage()).init();
     }
 }

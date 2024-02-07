@@ -12,6 +12,8 @@ public final class FlashcardPacksPage extends BaseSideMenu<FlashcardPacksPage> i
     private final Locator learnedButton = button("Learned");
     private final List<Locator> allLearnedButtons = allButtons(learnedButton);
     private final Locator autotestFlashcards = button("AUTOTEST FLASHCARDS");
+    private final Locator learned = locator("//div/span[text() = 'AUTOTEST FLASHCARDS']" +
+                    "/parent::div//parent::button/div[contains(text(), 'Learned')]");
 
     private final int randomPackIndex = getRandomNumber(allLearnedButtons);
 
@@ -68,5 +70,12 @@ public final class FlashcardPacksPage extends BaseSideMenu<FlashcardPacksPage> i
         autotestFlashcards.click();
 
         return new FlashcardsPackIDPage(getPage());
+    }
+
+    @Step("Collect Learned Cards Amount")
+    public String getLearnedCardsAmount() {
+        waitForLocator(learned, 2000);
+
+        return learned.innerText().split("/")[0];
     }
 }

@@ -7,13 +7,13 @@ import java.util.Random;
 
 interface IRandom {
 
-     default <T> T getRandomValue(List<T> listValues) {
+    default <T> T getRandomValue(List<T> listValues) {
         Random random = new Random();
 
         return listValues.get(random.nextInt(listValues.size()));
     }
 
-     default int getRandomNumber(Locator locator) {
+    default int getRandomNumber(Locator locator) {
         if (locator.count() == 0) {
             return 0;
         }

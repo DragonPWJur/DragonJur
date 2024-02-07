@@ -69,6 +69,7 @@ public final class PerformancePage extends BaseSideMenu<PerformancePage> {
         return Integer.parseInt(totalTests.innerText().replaceAll("[^0-9]", ""));
     }
 
+    @Step("Collect the total amount of flashcards")
     public int getNumberOfFlashcards() {
 
         return Integer.parseInt(totalFlashcards.innerText().replaceAll("[^0-9]", ""));
@@ -134,7 +135,7 @@ public final class PerformancePage extends BaseSideMenu<PerformancePage> {
         return Integer.parseInt(unusedNumberText.innerText());
     }
 
-    public List<Locator> getStacks() {
+    public List<Locator> getPacks() {
 
         return stacks;
     }
@@ -149,22 +150,26 @@ public final class PerformancePage extends BaseSideMenu<PerformancePage> {
         return stackList;
     }
 
+    @Step("Set last test locator.")
     public PerformancePage setLastTest() {
         lastTestLocator.click();
 
         return this;
     }
 
+    @Step("Get 'Tests' button.")
     public Locator getTestsButtonInBanner() {
 
         return testsButtonInBanner;
     }
 
+    @Step("Get 'Overall' button.")
     public Locator getOverallButtonInBanner() {
 
         return overallButtonInBanner;
     }
 
+    @Step("Get 'All Flashcards' button.")
     public Locator getAllFlashcardsButtonInBanner() {
 
         return allFlashcardsButtonInBanner;

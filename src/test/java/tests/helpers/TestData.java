@@ -23,6 +23,7 @@ public final class TestData {
     public static final String MNEMONIC_CARD_PRACTICE_END_POINT = "/mnemonic-card-practice/";
     public static final String FLASHCARDS_PACK_ID_END_POINT = "/flashcards?packId";
     public static final String ADD_NEW_COURSE_END_POINT = "/add-new-course";
+    public static final String TEST_TUTOR_CHAPTER_INDEX_0_END_POINT = "/test-tutor?chapterIndex=0";
 
     //Data
     public static final String ONE_QUESTION = "1";
@@ -34,7 +35,7 @@ public final class TestData {
     public static final String PRACTICE = "Practice";
     public static final String NOTHING_FOUND = "Nothing found. Try to use other key words";
     public static final String PROJECTIONS = "Projections";
-    public static final String LONG_BONES = "Long bones";
+    public static final String PHALANGES_IN_THE_FINGERS = "Phalanges in the fingers";
     public static final String WEAKEST_EXAM_AREAS = "Weakest Exam Areas";
     public static final String YOU_HAVE_NOT_STUDIED_ENOUGH =
             "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03";
@@ -47,7 +48,6 @@ public final class TestData {
     public static final String ALL_TESTS = "All tests";
     public static final String ADD_NEW_COURSE = "Add new course";
     public static final String CHOOSE_A_PRODUCT = "Choose a product";
-    public static final String REMOVE_FROM_MARKED = "Remove from marked";
     public static final String THE_REPORT_HAS_BEEN_SENT_SUCCESSFULLY = "The report has been sent successfully";
     public static final String STAND = "stand";
     public static final List<String> LIST_OF_TUTOR_TEST_FOOTER_BUTTONS = Arrays.asList(
@@ -56,11 +56,16 @@ public final class TestData {
     public static final String ALERT_NOT_ENOUGH_QUESTIONS = "There are not enough questions in the sections that you have chosen";
     public static final String PAYMENT_CARD_NUMBER = "4242424242424242";
     public static final String CARD_EXPIRATION_DATE = "12/26";
-    public static final String CVC_DATE = "333";
-    public static final String COUNTRY_DATE = "United States";
-    public static final String ZIP_CODE_DATE = "07920";
+    public static final String CVC = "333";
+    public static final String COUNTRY = "United States";
+    public static final String ZIP_CODE = "07920";
     public static final String ONE_DAY_STUDY_STREAK_MESSAGE = "You are on a 1 day study streak!";
     public static final String TWO_WEEKS_PLAN = "2 Weeks";
+    public static final int QUESTIONS_PER_TEST = 80;
+    public static final int QUESTIONS_PER_STUDY = 45;
+    public static final int QUESTIONS_PER_DOMAIN = 20;
+    public static final String FIRST_CARD_TEXT = "soup";
+    public static final String NEXT_CARD_TEXT = "Panton";
 
     public static final String[] STACKS_NAMES = {
             "Rustic Granite Pants",
@@ -79,6 +84,15 @@ public final class TestData {
                 {"Mnemonic cards", ProjectProperties.BASE_URL + MNEMONIC_CARDS_LIST_END_POINT},
                 {"Performance", ProjectProperties.BASE_URL + PERFORMANCE_END_POINT},
                 {"Profile", ProjectProperties.BASE_URL + PROFILE_END_POINT}
+        };
+    }
+
+    @DataProvider
+    public static Object[][] yesKindaNoButtons() {
+        return new Object[][]{
+                {"Yes"},
+                {"Kinda"},
+                {"No"}
         };
     }
 }

@@ -5,10 +5,12 @@ import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.options.RequestOptions;
+import utils.reports.LoggerUtils;
 import utils.runner.LoginUtils;
 import utils.runner.ProjectProperties;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static utils.api.APIData.*;
@@ -22,8 +24,8 @@ public final class APIUserServices {
         Map<String, String> headers = new HashMap<>();
         headers.put("Content-Type", "application/json");
 
-        if(requestContext != null) {
-            disposeAPIUserRequestContext();
+        if (requestContext != null) {
+            requestContext.dispose();
         }
 
         return playwrightUser
@@ -32,12 +34,6 @@ public final class APIUserServices {
                         .setBaseURL(ProjectProperties.API_BASE_URL)
                         .setExtraHTTPHeaders(headers)
                 );
-    }
-
-     static void disposeAPIUserRequestContext() {
-        if (requestContext != null) {
-            requestContext.dispose();
-        }
     }
 
     static APIResponse deleteCoursesResults() {
@@ -160,9 +156,9 @@ public final class APIUserServices {
     }
 
     static APIResponse postCoursesIdSubscribe(String courseId, String period, String type) {
-        Map<String, String> courseData = new HashMap<>();
-        courseData.put("period", period);
-        courseData.put("type", type);
+        Map<String, String> data = new HashMap<>();
+        data.put("period", period);
+        data.put("type", type);
 
         requestContext = createAPIUserRequestContext();
 
@@ -171,7 +167,7 @@ public final class APIUserServices {
                         COURSES + '/' + courseId + SUBSCRIBE,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
-                                .setData(courseData)
+                                .setData(data)
                 );
     }
 
@@ -197,12 +193,12 @@ public final class APIUserServices {
                 );
     }
 
-    static APIResponse getFlashcardsPacksCardsPackTypeId(String packId) {
+    static APIResponse getFlashcardsPacksCardsPackTypeId(String packId, int limit) {
         requestContext = createAPIUserRequestContext();
 
         return requestContext
                 .get(
-                        FLASHCARDS_PACKS + CARDS + "?packType=cards&packId=" + packId,
+                        FLASHCARDS_PACKS + CARDS + "?page=1&limit=" + limit + "&packType=cards&packId=" + packId,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
                 );
@@ -243,6 +239,67 @@ public final class APIUserServices {
                         FLASHCARDS_RESULTS,
                         RequestOptions.create()
                                 .setHeader("Authorization", "Bearer " + USER_TOKEN)
+                );
+    }
+
+    public static APIResponse postPassagesIdFinish(String testId) {
+        requestContext = createAPIUserRequestContext();
+
+        return requestContext
+                .post(
+                        PASSAGES + "/" + testId + FINISH,
+                        RequestOptions
+                                .create()
+                                .setHeader("Authorization", "Bearer " + USER_TOKEN)
+                );
+    }
+
+    public static APIResponse postPassagesIDAnswer(String testId, String questionId, String optionId) {
+        Map<String, String> data = new HashMap<>();
+        data.put("questionId", questionId);
+        data.put("optionId", optionId);
+
+        requestContext = createAPIUserRequestContext();
+
+        return requestContext
+                .post(
+                        PASSAGES + "/" + testId + ANSWER,
+                        RequestOptions
+                                .create()
+                                .setHeader("Authorization", "Bearer " + USER_TOKEN)
+                                .setData(data)
+                );
+    }
+
+    public static APIResponse postTutorTestStart(List<String> id, int questionsAmount) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("domainIds", id);
+        data.put("questionsAmount", questionsAmount);
+
+        requestContext = createAPIUserRequestContext();
+
+        return requestContext
+                .post(
+                        TUTOR_TESTS_START,
+                        RequestOptions
+                                .create()
+                                .setHeader("Authorization", "Bearer " + USER_TOKEN)
+                                .setData(data)
+                );
+    }
+
+    public static APIResponse postQuestionDomains(String courseId) {
+        Map<String, String> data = new HashMap<>();
+        data.put("courseId", courseId);
+
+        requestContext = createAPIUserRequestContext();
+
+        return requestContext
+                .post(
+                        QUESTION_DOMAINS,
+                        RequestOptions.create()
+                                .setHeader("Authorization", "Bearer " + USER_TOKEN)
+                                .setData(data)
                 );
     }
 }

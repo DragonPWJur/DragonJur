@@ -6,10 +6,9 @@ import io.qameta.allure.Step;
 import pages.constants.Constants;
 
 public final class AddNewCoursePage extends BaseHeader<AddNewCoursePage> {
-    private final Locator getButton = locator("div:nth-child(3) > .sc-jKDlA-D > .sc-dkzDqf");
+    private final Locator getButton = locator("main > div > div:nth-child(9) > div > button");
 
     AddNewCoursePage(Page page) {
-
         super(page);
     }
 
@@ -19,7 +18,7 @@ public final class AddNewCoursePage extends BaseHeader<AddNewCoursePage> {
         return createPage(new AddNewCoursePage(getPage()), Constants.ADD_NEW_COURSE_END_POINT);
     }
 
-    @Step("Click on any 'Get' button.")
+    @Step("Click 'Get' button.")
     public AddNewCourseModal clickGetButton() {
         getButton.click();
 

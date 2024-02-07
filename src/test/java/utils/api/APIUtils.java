@@ -36,6 +36,17 @@ public final class APIUtils {
         return object;
     }
 
+    private static JsonArray initJsonArray(String apiResponseBody) {
+        JsonArray array = new JsonArray();
+        try {
+            return new Gson().fromJson(apiResponseBody, JsonArray.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return array;
+    }
+
     private static JsonObject getActiveCourse() {
         final APIResponse getCoursesActive = APIUserServices.getCoursesActive();
         checkStatus(getCoursesActive, "getCoursesActive");
@@ -78,15 +89,15 @@ public final class APIUtils {
         return initJsonObject(getPlansIdPhases.text());
     }
 
-    private static JsonObject                                                                                                                                                 getFlashcardsPacks(int limit) {
+    private static JsonObject getFlashcardsPacks(int limit) {
         APIResponse getFlashcardsPacks = APIUserServices.getFlashcardsPacks(limit);
         checkStatus(getFlashcardsPacks, "getFlashcardsPacks");
 
         return initJsonObject(getFlashcardsPacks.text());
     }
 
-    private static JsonObject getFlashcardsByPack(String packId) {
-        APIResponse getFlashcardsPacksCardsPackTypeId = APIUserServices.getFlashcardsPacksCardsPackTypeId(packId);
+    private static JsonObject getFlashcardsByPack(String packId, int limit) {
+        APIResponse getFlashcardsPacksCardsPackTypeId = APIUserServices.getFlashcardsPacksCardsPackTypeId(packId, limit);
         checkStatus(getFlashcardsPacksCardsPackTypeId, "getFlashcardsPacksCardsPackTypeId");
 
         return initJsonObject(getFlashcardsPacksCardsPackTypeId.text());
@@ -97,7 +108,7 @@ public final class APIUtils {
         checkStatus(postFlashcardsIDAnswers, "postFlashcardsIDAnswers");
     }
 
-    private static void changeChapterText(JsonObject unit) {
+    private static void adminChangeChapterText(JsonObject unit) {
         APIResponse patchAdminGuidesUnitsId = APIAdminServices.patchAdminGuidesUnitsId(unit.get("id").getAsString(), unit);
         checkStatus(patchAdminGuidesUnitsId, "patchAdminGuidesUnitsId");
     }
@@ -127,15 +138,41 @@ public final class APIUtils {
         checkStatus(deleteCoursesResults, "deleteCoursesResults");
     }
 
+    private static JsonArray getAllDomains(String courseId) {
+        final APIResponse postQuestionDomains = APIUserServices.postQuestionDomains(courseId);
+        checkStatus(postQuestionDomains, "postQuestionDomains");
+
+        return initJsonArray(postQuestionDomains.text());
+    }
+
+    private static JsonObject startTutorTest(List<String> domainsIds, int questionsAmount) {
+        APIResponse postTutorTestStart = APIUserServices.postTutorTestStart(domainsIds, questionsAmount);
+        checkStatus(postTutorTestStart, "postTutorTestStart");
+
+        return initJsonObject(postTutorTestStart.text());
+    }
+
+    private static JsonObject postIncorrectAnswer(String testId, String questionId, String answerId) {
+        APIResponse postPassagesIDAnswer = APIUserServices.postPassagesIDAnswer(testId, questionId, answerId);
+        checkStatus(postPassagesIDAnswer, "postPassagesIDAnswer");
+
+        return initJsonObject(postPassagesIDAnswer.text());
+    }
+
+    private static JsonObject finishTest(String testId) {
+        APIResponse postPassagesIdFinish = APIUserServices.postPassagesIdFinish(testId);
+        checkStatus(postPassagesIdFinish, "postPassagesIdFinish");
+
+        return initJsonObject(postPassagesIdFinish.text());
+    }
+
     private static void deletePaymentMethod() {
         final int status = APIUserServices.deleteCustomerPaymentMethod().status();
         switch (status) {
             case 401 -> LoggerUtils.logError("API: ERROR: Unauthorized " + status);
             case 422 -> LoggerUtils.logInfo("API: Payment method NOT found " + status);
             case 204 -> LoggerUtils.logInfo("API: deleteCustomerPaymentMethod " + status);
-            default -> {
-                LoggerUtils.logException("API: EXCEPTION: Request FAILED deleteCustomerPaymentMethod " + status);
-            }
+            default -> LoggerUtils.logException("API: EXCEPTION: Request FAILED deleteCustomerPaymentMethod " + status);
         }
     }
 
@@ -220,6 +257,7 @@ public final class APIUtils {
         deletePaymentMethod();
     }
 
+    @Step("API: ADMIN: Change Chapter1 Unit1 Text - {action} '{word}'.")
     public static void adminChangeChapter1Unit1Text(String word, String action) {
         final String courseId = getActiveCourse().get("id").getAsString();
         final String studyGuideId = getStudyGuide(courseId).get("id").getAsString();
@@ -252,7 +290,7 @@ public final class APIUtils {
                 .getAsJsonObject("data")
                 .addProperty("text", unit1Text);
 
-        changeChapterText(unit1);
+        adminChangeChapterText(unit1);
     }
 
     @Step("API: Mark tasks (activate checkboxes) for {planName} study plan.")
@@ -289,9 +327,7 @@ public final class APIUtils {
                 setActiveCourse(APIData.BRONZE_SUBSCRIPTION_ID);
                 LoggerUtils.logInfo("API: Switched to 'TEST AUTOMATION _DO NOT DELETE_BRONZE'");
             }
-            default -> {
-                LoggerUtils.logError("API: ERROR: " + status + response.statusText());
-            }
+            default -> LoggerUtils.logError("API: ERROR: " + status + response.statusText());
         }
     }
 
@@ -313,59 +349,106 @@ public final class APIUtils {
             final String packName = pack.get("name").getAsString();
             final String packId = pack.get("id").getAsString();
 
-            if (packsNames.length != 0 && Arrays.asList(packsNames).contains(packName)) {
-                JsonArray flashcards = getFlashcardsByPack(packId).getAsJsonArray("items");
-                List<List<Integer>> parts = getParts(packsNames);
-                for (int index : parts.get(0)) {
-                    String flashcardId = flashcards.get(index).getAsJsonObject().get("id").getAsString();
-                    saveFlashcardAnswer(flashcardId, APIData.answerStatus.YES.name());
-                }
-                for (int index : parts.get(1)) {
-                    String flashcardId = flashcards.get(index).getAsJsonObject().get("id").getAsString();
-                    saveFlashcardAnswer(flashcardId, APIData.answerStatus.NO.name());
-                }
-                for (int index : parts.get(2)) {
-                    String flashcardId = flashcards.get(index).getAsJsonObject().get("id").getAsString();
-                    saveFlashcardAnswer(flashcardId, APIData.answerStatus.KINDA.name());
-                }
+            if (packsNames.length != 0 && Arrays.asList(packsNames).contains(packName) && allPacks.size() != 0) {
+                JsonArray flashcards = getFlashcardsByPack(packId, limit).getAsJsonArray("items");
 
-                completePack(pack.get("id").getAsString());
+                final List<List<Integer>> parts = getParts(flashcards);
+                assert parts != null;
+                if (parts.size() == 3) {
+                    for (int index : parts.get(0)) {
+                        String flashcardId = flashcards.get(index).getAsJsonObject().get("id").getAsString();
+                        saveFlashcardAnswer(flashcardId, APIData.answerStatus.YES.name());
+                    }
+                    for (int index : parts.get(1)) {
+                        String flashcardId = flashcards.get(index).getAsJsonObject().get("id").getAsString();
+                        saveFlashcardAnswer(flashcardId, APIData.answerStatus.NO.name());
+                    }
+                    for (int index : parts.get(2)) {
+                        String flashcardId = flashcards.get(index).getAsJsonObject().get("id").getAsString();
+                        saveFlashcardAnswer(flashcardId, APIData.answerStatus.KINDA.name());
+                    }
+
+                    completePack(pack.get("id").getAsString());
+                }
             }
         }
     }
 
-    private static List<List<Integer>> getParts(String[] packsNames){
-        int cardsAmount;
-        int lastPart = 0;
-        List<Integer> part1 = new ArrayList<>();
-        List<Integer> part2 = new ArrayList<>();
-        List<Integer> part3 = new ArrayList<>();
-        List<List<Integer>> result = new ArrayList<>();
+    private static List<List<Integer>> getParts(JsonArray flashcards) {
+        if (flashcards.size() != 0) {
+            List<Integer> part1 = new ArrayList<>();
+            List<Integer> part2 = new ArrayList<>();
+            List<Integer> part3 = new ArrayList<>();
+            List<List<Integer>> result = new ArrayList<>();
 
-        if(packsNames.length % 3 == 0) {
-            cardsAmount = packsNames.length / 3;
-        } else {
-            cardsAmount = packsNames.length / 3;
-            lastPart = cardsAmount + packsNames.length % 3;
+            if (flashcards.size() > 3) {
+                int cardsAmount = flashcards.size() / 4;
+                for (int i = 0; i < cardsAmount; i++) {
+                    part1.add(i);
+                }
+                for (int i = cardsAmount; i < (2 * cardsAmount); i++) {
+                    part2.add(i);
+                }
+                for (int i = 2 * cardsAmount; i < 3 * cardsAmount; i++) {
+                    part3.add(i);
+                }
+                result.add(part1);
+                result.add(part2);
+                result.add(part3);
+
+                return result;
+            } else {
+                for (int i = 0; i < flashcards.size(); i++) {
+                    part1.add(i);
+                }
+
+                result.add(part1);
+            }
         }
 
-        for(int i = 0; i < cardsAmount; i ++) {
-            part1.add(i);
-        }
-
-        for(int i = cardsAmount; i < cardsAmount + cardsAmount; i ++) {
-            part2.add(i);
-        }
-
-        for(int i = cardsAmount + cardsAmount; i < lastPart; i ++) {
-            part3.add(i);
-        }
-
-        result.add(part1);
-        result.add(part2);
-        result.add(part3);
-
-        return result;
+        return null;
     }
 
+    private static List<String> getDomainsIds(int totalQuestions) {
+        final String courseId = getActiveCourseId();
+        final JsonArray questionDomains = getAllDomains(courseId);
+
+        List<String> domainsIds = new ArrayList<>();
+        for (JsonElement domain : questionDomains) {
+            JsonObject eachDomainAll = domain.getAsJsonObject().get("all").getAsJsonObject();
+            if (eachDomainAll.get("total").getAsInt() >= totalQuestions) {
+                domainsIds.add(eachDomainAll.get("id").getAsString());
+            }
+        }
+
+        if (domainsIds.isEmpty()) {
+            LoggerUtils.logError("API: ERROR: Domains Ids List is EMPTY.");
+            Assert.fail();
+        }
+
+        return domainsIds;
+    }
+
+    public static void answerIncorrectAndFinish(int totalQuestionsPerDomain, int questionsAmount) {
+        final List<String> domainsIds = getDomainsIds(totalQuestionsPerDomain);
+        final JsonObject tutorTest = startTutorTest(domainsIds, questionsAmount);
+        final String testId = tutorTest.getAsJsonObject().get("id").getAsString();
+        final JsonArray questionsArray = tutorTest.getAsJsonArray("questions");
+
+        for(JsonElement question : questionsArray) {
+            String questionId = question.getAsJsonObject().get("id").getAsString();
+            JsonArray options = question.getAsJsonObject().getAsJsonArray("options");
+
+            for(JsonElement option : options) {
+                JsonObject optionObj = option.getAsJsonObject();
+                if(!optionObj.get("title").getAsString().toLowerCase().contains("Correct".toLowerCase())) {
+                    String optionId = optionObj.get("id").getAsString();
+                    postIncorrectAnswer(testId, questionId, optionId);
+                    break;
+                }
+            }
+        }
+
+        finishTest(testId);
+    }
 }

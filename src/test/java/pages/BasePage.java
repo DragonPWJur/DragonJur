@@ -35,7 +35,7 @@ abstract class BasePage<TPage> {
             getPage().waitForTimeout(3000);
         } else {
             getPage().onLoad(p -> getPage().content());
-            if(!getPage().content().isEmpty()) {
+            if (!getPage().content().isEmpty()) {
                 logInfo("On page '" + endPoint + "'");
             }
 

@@ -8,7 +8,7 @@ import tests.helpers.TestUtils;
 
 import java.util.List;
 
-public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
+public final class HomePage extends BaseSideMenu<HomePage> implements IRandom {
     private final Locator studyThisButton = button("Study This");
     private final Locator twoWeeksButton = exactButton("2 Weeks");
     private final Locator week1Header = exactText("Week 1");
@@ -16,9 +16,11 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     private final Locator mainSectionPoints = locator("div>svg.CircularProgressbar+div>span").first();
     private final Locator sideMenuPoints = locator("div:has(.CircularProgressbar)+span").first();
     private final Locator streaksButton = locator("button>svg+p").last();
-    private final Locator checkboxImage = locator("label:has(input) svg");
     private final List<Locator> allCheckboxes = allCheckboxes("label");
     private final Locator streakDaysModalWindowText = locator("div[role='dialog']>div>p");
+    private final Locator yesPerformance = locator("//div/span[text()='Yes']/parent::div/div/span[2]");
+    private final Locator kindaPerformance = locator("//div/span[text()='Kinda']/parent::div/div/span[2]");
+    private final Locator noPerformance = locator("//div/span[text()='No']/parent::div/div/span[2]");
 
     private final int randomIndex = getRandomInt(0, allCheckboxes.size());
 
@@ -71,11 +73,6 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     public Locator getWeek1FirstCheckbox() {
 
         return week1FirstCheckbox;
-    }
-
-    public Locator getStudyThisButton() {
-
-        return studyThisButton;
     }
 
     public List<Locator> getAllCheckboxes() {
@@ -135,7 +132,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
     }
 
     @Step("Click random checkbox.")
-    public void clickRandomCheckbox(){
+    public void clickRandomCheckbox() {
         getNthCheckbox(randomIndex).click();
     }
 
@@ -157,17 +154,12 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return this;
     }
 
-    List<Locator> getAllCheckedCheckboxes() {
-
-        return allCheckboxes.stream().filter(Locator::isChecked).toList();
-    }
-
-
     @Step("Click 'Study This' button.")
-    public HomePage clickStudyThisButton() {
+    public StudyThisModal clickStudyThisButton() {
         studyThisButton.click();
+        waitWithTimeout(1000);
 
-        return this;
+        return new StudyThisModal(getPage()).init();
     }
 
     @Step("Get the random checkbox image.")
@@ -176,7 +168,6 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return checkbox.locator("svg");
     }
 
-    @Step("The modal window contains the text: 'You are on a 1 day study streak!'")
     public Locator getStreakDaysModalWindowTextLocator() {
 
         return streakDaysModalWindowText;
@@ -187,4 +178,27 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom{
         return streaksButton;
     }
 
+    public void waitForAPIPrecondition(int timeout) {
+        waitWithTimeout(timeout);
+        getPage().reload();
+        waitWithTimeout(2000);
+    }
+
+    public String getYesPerformanceAmount() {
+        waitForLocator(yesPerformance, 2000);
+
+        return yesPerformance.innerText();
+    }
+
+    public String getKindaPerformanceAmount() {
+        waitForLocator(kindaPerformance, 2000);
+
+        return kindaPerformance.innerText();
+    }
+
+    public String getNoPerformanceAmount() {
+        waitForLocator(noPerformance, 2000);
+
+        return noPerformance.innerText();
+    }
 }

@@ -26,6 +26,7 @@ public final class CongratulationsModal extends BaseModal<CongratulationsModal> 
 
     @Step("Get Points text on 'Congratulation' dialog pop-up.")
     public String getCongratulationPointsText() {
+        waitWithTimeout(3000);
 
         return congratulationPoints.innerText();
     }
@@ -38,10 +39,8 @@ public final class CongratulationsModal extends BaseModal<CongratulationsModal> 
     }
 
     @Step("Get Points number on the second 'Congratulation' dialog pop-up.")
-    public int getTestPoints() {
-
+    public int getPoints() {
+        waitWithTimeout(2000);
         return parseInt(testProgressbarPoints.innerText());
     }
-
-
 }

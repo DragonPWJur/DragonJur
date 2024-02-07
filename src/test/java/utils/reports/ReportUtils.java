@@ -1,5 +1,7 @@
 package utils.reports;
 
+import com.google.common.collect.ImmutableMap;
+import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Allure;
 import org.testng.ITestResult;
@@ -8,12 +10,13 @@ import utils.runner.ProjectProperties;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
+import static com.github.automatedowl.tools.AllureEnvironmentWriter.allureEnvironmentWriter;
 import static utils.reports.LoggerUtils.*;
 
 public final class ReportUtils {
@@ -56,8 +59,8 @@ public final class ReportUtils {
 
     public static String getReportHeader() {
         String headerAndDate = """
-                T E S T     R E P O R T 
-                Date: %s 
+                T E S T     R E P O R T
+                Date: %s
                 """.formatted(getCurrentDateTime());
 
         return "\n" + H_LINE + headerAndDate + H_LINE;
@@ -113,5 +116,16 @@ public final class ReportUtils {
                     Files.readAllBytes(Paths.get("target/testTracing/" + testMethod.getName() + ".zip")));
             logInfo("Tracing added to Allure report");
         }
+    }
+
+    public static void getEnvironmentForAllureReport(Browser browser) {
+        allureEnvironmentWriter(
+                ImmutableMap.<String, String>builder()
+                        .put("OS", System.getProperty("os.name"))
+                        .put("OS.version", System.getProperty("os.version"))
+                        .put("Browser", browser.browserType().name())
+                        .put("Browser.version", browser.version())
+                        .put("Java.version", System.getProperty("java.version"))
+                        .build());
     }
 }
