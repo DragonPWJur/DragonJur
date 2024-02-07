@@ -7,15 +7,17 @@
             <class name="tests.NewCustomerStreaksTest"/>
             <class name="tests.BronzeSubscriptionTest"/>
             <class name="tests.FlashcardPacksTest"/>
+            <class name="tests.FlashcardsLogicTest"/>
             <class name="tests.HomeTest"/>
             <class name="tests.MnemonicCardPracticeTest"/>
             <class name="tests.MnemonicCardsTest"/>
             <class name="tests.NavigationTest"/>
-            <class name="tests.PerformanceTest"/>
             <class name="tests.PaymentTest"/>
+            <class name="tests.PerformanceTest"/>
             <class name="tests.SearchTest"/>
             <class name="tests.StudyGuideAdminTest"/>
             <class name="tests.StudyGuideTest"/>
+            <class name="tests.StudyThisTest"/>
             <class name="tests.TestTimedTest"/>
             <class name="tests.TestTutorTest"/>
         </classes>
