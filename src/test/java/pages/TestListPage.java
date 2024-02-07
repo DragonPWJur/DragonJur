@@ -99,6 +99,13 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
     @Step("Click random available checkbox.")
     public TestListPage clickRandomCheckboxDomain() {
         randomCheckbox = getRandomValue(allCheckboxes);
+        int attempt = 0;
+        while (checkbox.count() < 9 && attempt < 3) {
+            getPage().reload();
+            waitWithTimeout(3000);
+            attempt++;
+        }
+
         if (domainsButton.isChecked()) {
             numberOfQuestionsInputField.clear();
             randomCheckbox.click();
