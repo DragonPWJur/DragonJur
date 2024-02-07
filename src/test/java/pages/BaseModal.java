@@ -4,7 +4,6 @@ import com.microsoft.playwright.Dialog;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;
-import pages.constants.Constants;
 
 abstract class BaseModal<TPage> extends BaseLocator<TPage> {
     private final Locator dialog = dialog();
@@ -15,8 +14,6 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
     private final Locator backButton = exactButton("Back");
     private final Locator okButton = exactButton("Ok");
     private final Locator nextButton = exactButton("Next");
-    private final Locator weakestExamAreasHeader = dialog.locator("span");
-    private final Locator weakestExamAreasMessage = dialog.getByText(Constants.YOU_HAVE_NOT_STUDIED_ENOUGH);
 
     BaseModal(Page page) {
         super(page);
@@ -70,16 +67,6 @@ abstract class BaseModal<TPage> extends BaseLocator<TPage> {
         }
 
         return new TestResultPage(getPage()).init();
-    }
-
-    public Locator getWeakestExamAreasHeader() {
-
-        return weakestExamAreasHeader;
-    }
-
-    public Locator getWeakestExamAreasMessage() {
-
-        return weakestExamAreasMessage;
     }
 
     @Step("Click 'Back' button on dialog window if visible.")

@@ -254,10 +254,10 @@ public final class APIUserServices {
                 );
     }
 
-    public static APIResponse postPassagesIDAnswer(String testId, String optionId, String questionId) {
+    public static APIResponse postPassagesIDAnswer(String testId, String questionId, String optionId) {
         Map<String, String> data = new HashMap<>();
-        data.put("optionId", optionId);
         data.put("questionId", questionId);
+        data.put("optionId", optionId);
 
         requestContext = createAPIUserRequestContext();
 

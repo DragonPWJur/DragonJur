@@ -152,10 +152,11 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom {
     }
 
     @Step("Click 'Study This' button.")
-    public HomePage clickStudyThisButton() {
+    public StudyThisModal clickStudyThisButton() {
         studyThisButton.click();
+        waitWithTimeout(1000);
 
-        return this;
+        return new StudyThisModal(getPage()).init();
     }
 
     @Step("Get the random checkbox image.")
@@ -172,5 +173,11 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom {
     public Locator getStreaksButton() {
 
         return streaksButton;
+    }
+
+    public void waitForAPIPrecondition(int timeout) {
+        waitWithTimeout(timeout);
+        getPage().reload();
+        waitWithTimeout(2000);
     }
 }

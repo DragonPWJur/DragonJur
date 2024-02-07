@@ -152,14 +152,18 @@ public final class APIUtils {
         return initJsonObject(postTutorTestStart.text());
     }
 
-    private static void postIncorrectAnswer(String testId, String questionId, String answerId) {
+    private static JsonObject postIncorrectAnswer(String testId, String questionId, String answerId) {
         APIResponse postPassagesIDAnswer = APIUserServices.postPassagesIDAnswer(testId, questionId, answerId);
         checkStatus(postPassagesIDAnswer, "postPassagesIDAnswer");
+
+        return initJsonObject(postPassagesIDAnswer.text());
     }
 
-    private static void finishTest(String testId) {
+    private static JsonObject finishTest(String testId) {
         APIResponse postPassagesIdFinish = APIUserServices.postPassagesIdFinish(testId);
         checkStatus(postPassagesIdFinish, "postPassagesIdFinish");
+
+        return initJsonObject(postPassagesIdFinish.text());
     }
 
     private static void deletePaymentMethod() {
@@ -407,74 +411,52 @@ public final class APIUtils {
 
     public static List<String> getDomainsIds(int totalQuestions) {
         final String courseId = getActiveCourseId();
-        final JsonArray allDomains = getAllDomains(courseId);
+        final JsonArray questionDomains = getAllDomains(courseId);
 
         List<String> domainsIds = new ArrayList<>();
-        for (JsonElement domain : allDomains) {
-            JsonObject eachAll = domain.getAsJsonObject().get("all").getAsJsonObject();
-            if (eachAll.get("total").getAsInt() >= totalQuestions) {
-                domainsIds.add(eachAll.get("id").getAsString());
+        for (JsonElement domain : questionDomains) {
+            JsonObject eachDomainAll = domain.getAsJsonObject().get("all").getAsJsonObject();
+            if (eachDomainAll.get("total").getAsInt() >= totalQuestions) {
+                domainsIds.add(eachDomainAll.get("id").getAsString());
             }
         }
+
         if (domainsIds.isEmpty()) {
-            LoggerUtils.logError("API: ERROR: allDomains total >= 20 domainsIds list is EMPTY.");
+            LoggerUtils.logError("API: ERROR: Domains Ids List is EMPTY.");
             Assert.fail();
         }
 
         return domainsIds;
     }
 
-    //totalQuestionsPerDomain - 20, questionsAmount = 45 (APIData)
     public static void answerIncorrectAndFinish(int totalQuestionsPerDomain, int questionsAmount) {
         final List<String> domainsIds = getDomainsIds(totalQuestionsPerDomain);
-        final JsonObject startTutorTest = startTutorTest(domainsIds, questionsAmount);
-        final String testId = startTutorTest.getAsJsonObject().get("id").getAsString();
-        final JsonArray questionsArray = startTutorTest.getAsJsonArray("questions");
+        final JsonObject tutorTest = startTutorTest(domainsIds, questionsAmount);
+        final String testId = tutorTest.getAsJsonObject().get("id").getAsString();
+        final JsonArray questionsArray = tutorTest.getAsJsonArray("questions");
 
-        List<List<String>> questionsWithIncorrectAnswer = new ArrayList<>();
-        List<List<String>> incorrectAnswers = new ArrayList<>();
+//        System.out.println(" domainsIds  = " + domainsIds);
+//        System.out.println("testId = " + testId);
+//        System.out.println("questionsArray = " + Arrays.asList(questionsArray));
 
-        for (JsonElement question : questionsArray) {
-            List<String> questionToAnswer = new ArrayList<>();
-            List<String> incorrectAnswer = new ArrayList<>();
+        for(JsonElement question : questionsArray) {
+            String questionId = question.getAsJsonObject().get("id").getAsString();
+            JsonArray options = question.getAsJsonObject().getAsJsonArray("options");
 
-            final String questionId = question.getAsJsonObject().getAsJsonPrimitive("id").getAsString();
-            final JsonArray options = question.getAsJsonObject().getAsJsonArray("options");
-
-            questionToAnswer.add(questionId);
-
-            for (JsonElement option : options) {
-                final JsonObject optionObject = option.getAsJsonObject();
-                final String title = optionObject.getAsJsonPrimitive("title").getAsString();
-
-                if (!title.contains("Correct")) {
-                    final String incorrectAnswerId = optionObject.getAsJsonPrimitive("id").getAsString();
-
-                    incorrectAnswer.add(title);
-                    incorrectAnswer.add(incorrectAnswerId);
-                    questionToAnswer.add(incorrectAnswerId);
+            for(JsonElement option : options) {
+                JsonObject optionObj = option.getAsJsonObject();
+                if(!optionObj.get("title").getAsString().toLowerCase().contains("Correct".toLowerCase())) {
+                    String optionId = optionObj.get("id").getAsString();
+                    JsonObject answerObj = postIncorrectAnswer(testId, questionId, optionId);
+//                    System.out.println(answerObj.get("title"));
+//                    System.out.println(answerObj.get("isCorrect"));
                     break;
                 }
             }
-            incorrectAnswers.add(incorrectAnswer);
-            questionsWithIncorrectAnswer.add(questionToAnswer);
-        }
-        System.out.println(incorrectAnswers);
-
-        if (questionsWithIncorrectAnswer.isEmpty()) {
-            LoggerUtils.logError("API: ERROR: questionsWithIncorrectAnswer list is EMPTY.");
-            Assert.fail();
         }
 
-        for (List<String> questionWithAnswer : questionsWithIncorrectAnswer) {
-            String questionId = questionWithAnswer.get(0);
-            String answerId = questionWithAnswer.get(1);
-
-            postIncorrectAnswer(testId, questionId, answerId);
-            LoggerUtils.logInfo("API: Question answered.");
-        }
-
-        finishTest(testId);
-        LoggerUtils.logInfo("API: Finish test");
+        JsonObject finishTestObj = finishTest(testId);
+//        System.out.println(finishTestObj.get("passed"));
+//        System.out.println(finishTestObj.get("pointsEarned"));
     }
 }
