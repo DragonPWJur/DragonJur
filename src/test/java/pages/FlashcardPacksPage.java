@@ -74,7 +74,7 @@ public final class FlashcardPacksPage extends BaseSideMenu<FlashcardPacksPage> i
 
     @Step("Collect Learned Cards Amount")
     public String getLearnedCardsAmount() {
-        waitForLocator(learned, 2000);
+        waitForLocator(learned, 4000);
 
         return learned.innerText().split("/")[0];
     }

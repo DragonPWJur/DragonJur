@@ -15,14 +15,14 @@ public final class PerformancePage extends BaseSideMenu<PerformancePage> {
     private final Locator testsButtonInBanner = buttonInBanner("Tests");
     private final Locator overallButtonInBanner = buttonInBanner("Overall").nth(1);
     private final Locator allFlashcardsButtonInBanner = buttonInBanner("All flashcards");
-    private final Locator dropdownLocator = locator(".bIQFHP");
+    private final Locator dropdownLocator = locator("header>form button:has(div>svg)");
     private final Locator totalTests = text("Tests").locator("~span");
     private final Locator totalFlashcards = text("Flashcards").locator("~span");
     private final Locator correctPercentageText = exactText("Total:").first().locator("~div>span:first-child");
     private final Locator correctNumberText = exactText("Total:").first().locator("~div>span:last-child");
     private final Locator incorrectPercentageText = exactText("Total:").last().locator("~div>span:first-child");
     private final Locator incorrectNumberText = exactText("Total:").last().locator("~div>span:last-child");
-    private final Locator lastTestLocator = locator(".eaNKjL>div:nth-child(2)");
+    private final Locator lastTestLocator = text("Tutor test").first();
     private final Locator yesPercentageText = exactText("Total:").first().locator("~div>span:first-child");
     private final Locator yesNumberText = exactText("Total:").first().locator("~div>span:last-child");
     private final Locator kindaPercentageText = exactText("Total:").nth(1).locator("~div>span:first-child");

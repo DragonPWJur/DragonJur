@@ -95,7 +95,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom {
 
     public void waitForPointsAnimationToStop() {
 
-        waitWithTimeout(2000);
+        waitWithTimeout(4000);
     }
 
     @Step("Click 'Streaks' button")
