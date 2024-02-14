@@ -66,11 +66,11 @@ public class PerformanceTest extends BaseTest {
         final int numberOfQuestions = precondition.getNumberOfQuestions();
 
         precondition
-                .startTestDomainForStats(TestData.HISTORY_AND_CIVILIZATION_FOR_STATS, TestData.FOUR_QUESTIONS);
+                .startTestDomainForStats(TestData.STATS, TestData.FOUR_QUESTIONS);
         precondition
                 .passTestOneAnswersIncorrect(TestData.FOUR_QUESTIONS);
         precondition
-                .startTestDomainForStats(TestData.AUTOMATION_TESTING_FOR_STATS, TestData.FIVE_QUESTIONS);
+                .startTestDomainForStats(TestData.AUTOMATION_TESTING, TestData.FIVE_QUESTIONS);
         precondition
                 .passTestAllAnswersCorrect(TestData.FIVE_QUESTIONS);
 

@@ -19,7 +19,7 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
     private final Locator timedButton = exactButton("Timed");
     private final Locator startTestButton = exactButton("Start test");
     private final Locator startButton = exactButton("Start");
-    private final Locator automationTestingForStatsText = text("Automation testing for stats");
+    private final Locator automationTestingForStatsText = text("Automation testing");
     private final Locator checkbox = locator("button:has(input[type='checkbox'])>div");
     private final Locator statsTests = exactText("Stats");
     private final List<Locator> allCheckboxes = allCheckboxes("label:has(span>input[type='checkbox'])");
@@ -44,23 +44,10 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
     @Step("Click 'Domains' button if not active.")
     public TestListPage clickDomainsButtonIfNotActive() {
         waitForPageLoad();
-        numberOfQuestionsInputField.clear();
+        domainsButton.click();
         if (!domainsButton.isChecked()) {
             domainsButton.click();
             waitWithTimeout(3000);
-            //A 'while' block is added to address the bug related to the 'Domains' button
-            int count = 3;
-            while (!domainsButton.isChecked() && count > 0
-                    || !domainsButton.isChecked() && count > 0 && !numberOfQuestionsInputField.innerText().isEmpty()) {
-                getPage().reload();
-                waitWithTimeout(1000);
-                numberOfQuestionsInputField.clear();
-                domainsButton.click();
-                count--;
-                if (count == 0 && !domainsButton.isChecked()) {
-                    LoggerUtils.logError("ERROR: Domains button is not active.");
-                }
-            }
         }
 
         return this;
@@ -69,7 +56,7 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
     @Step("Click 'Domains' button.")
     public TestListPage clickDomainsButton() {
         waitForPageLoad();
-        while(!domainsButton.isChecked()) {
+        while (!domainsButton.isChecked()) {
             domainsButton.click();
             getPage().reload();
             waitForPageLoad();
@@ -83,15 +70,11 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
     @Step("Click random available checkbox.")
     public TestListPage clickRandomCheckboxDomain() {
         randomNumber = getRandomNumber(allCheckboxes);
-        System.out.println(allCheckboxes.size());
-        System.out.println(randomNumber);
         randomCheckbox = allCheckboxes.get(randomNumber);
-        System.out.println(randomCheckbox);
         if (domainsButton.isChecked()) {
             String checkboxText = randomCheckbox.innerText();
-            System.out.println(checkboxText);
             exactText(checkboxText).click();
-                waitWithTimeout(1000);
+            waitWithTimeout(1000);
         }
 
         return this;
@@ -157,7 +140,7 @@ public final class TestListPage extends BaseSideMenu<TestListPage> implements IR
         if (!chaptersButton.isChecked()) {
             chaptersButton.click();
             waitWithTimeout(1000);
-            if(!chaptersButton.isChecked()) {
+            if (!chaptersButton.isChecked()) {
                 chaptersButton.click();
                 waitWithTimeout(1000);
             }

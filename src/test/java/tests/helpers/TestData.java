@@ -41,9 +41,9 @@ public final class TestData {
             "You have not studied enough in order for us to calculate your weakest areas. Keep Studying \uD83D\uDE03";
     public static final String SEARCH_WORD = TestUtils.getRandomString(10);
     public static final String TEST = "Test";
-    public static final String HISTORY_AND_CIVILIZATION_FOR_STATS = "History and Civilization for Stats";
+    public static final String STATS = "Stats";
     public static final String FOUR_QUESTIONS = "4";
-    public static final String AUTOMATION_TESTING_FOR_STATS = "Automation testing for stats";
+    public static final String AUTOMATION_TESTING = "Automation testing";
     public static final String FIVE_QUESTIONS = "5";
     public static final String ALL_TESTS = "All tests";
     public static final String ADD_NEW_COURSE = "Add new course";
