@@ -76,7 +76,8 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom {
     }
 
     public List<Locator> getAllCheckboxes() {
-
+        click2WeeksButton();
+        waitWithTimeout(3000);
         return allCheckboxes;
     }
 
@@ -181,7 +182,7 @@ public final class HomePage extends BaseSideMenu<HomePage> implements IRandom {
     public void waitForAPIPrecondition(int timeout) {
         waitWithTimeout(timeout);
         getPage().reload();
-        waitWithTimeout(2000);
+        waitWithTimeout(5000);
     }
 
     public String getYesPerformanceAmount() {

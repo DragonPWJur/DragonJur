@@ -121,13 +121,13 @@ public final class PreconditionPage extends BasePage<PreconditionPage> {
                 new HomePage(getPage()).init()
                         .clickTestsMenu()
                         .cancelDialogIfVisible()
-                        .clickDomainsButtonIfNotActive();
-        if (nameTest.equals("Automation testing for stats")) {
+                        .clickDomainsButton();
+        if (nameTest.equals("Automation testing")) {
             testListPage
                     .clickAutomationTestingForStatsCheckBox()
                     .inputNumberOfQuestions(numberOfQuestions)
                     .clickGenerateAndStartTutorTestButton();
-        } else if (nameTest.equals("History and Civilization for Stats")) {
+        } else if (nameTest.equals("Stats")) {
             testListPage
                     .clickHistoryAndCivilizationForStatsCheckBox()
                     .inputNumberOfQuestions(numberOfQuestions)

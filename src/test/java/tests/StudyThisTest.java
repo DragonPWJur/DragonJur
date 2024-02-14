@@ -56,7 +56,7 @@ public class StudyThisTest extends BaseTest {
 
         HomePage homePage = new HomePage(getPage()).init();
 
-        homePage.waitForAPIPrecondition(2000);
+        homePage.waitForAPIPrecondition(5000);
 
         StudyThisModal studyThisModal =
                 homePage
@@ -98,7 +98,7 @@ public class StudyThisTest extends BaseTest {
 
         HomePage homePage = new HomePage(getPage()).init();
 
-        homePage.waitForAPIPrecondition(2000);
+        homePage.waitForAPIPrecondition(5000);
 
         TestTutorPage testTutorPage =
                 homePage
